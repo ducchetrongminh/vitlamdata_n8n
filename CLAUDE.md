@@ -56,7 +56,9 @@ Need `bash`, `python3` (standard library only) and `git`.
   settings pinData nodeGroups`, then `description` and tags if they differ. It never changes
   `active` or `isArchived`. Before an update it refuses if the live workflow differs from the last
   pulled or pushed version; `--force` overwrites, and needs the user's go-ahead. Afterwards it
-  rewrites the file from the live result.
+  rewrites the file from the live result. Given the path of a deleted `workflows/<id>.json`, it
+  deactivates and deletes that workflow in n8n, refusing if it changed since the last pull; ask
+  before running it.
 - `.n8n-state/<id>.json` (gitignored) holds that last known live version. Without it, push
   compares against the committed file.
 

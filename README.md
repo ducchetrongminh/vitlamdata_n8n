@@ -20,6 +20,7 @@ scripts/pull.sh                # export every workflow to workflows/<id>.json
 scripts/pull.sh <id>...        # refresh only these
 scripts/push.sh workflows/<id>.json   # update; refuses if it changed in n8n since last pull
 scripts/push.sh workflows/new.json    # no "id" in the file: create, rename to <id>.json
+scripts/push.sh workflows/<id>.json   # file deleted: delete the workflow in n8n
 ```
 
 Both take `--force`: pull overwrites local edits not pushed yet, push overwrites changes made in

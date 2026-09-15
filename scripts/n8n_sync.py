@@ -164,8 +164,34 @@ def sync_tags(wid, names):
     api("PUT", f"/workflows/{wid}/tags", ids)
 
 
+def delete(src, args):
+    """The file of a pulled workflow was deleted: delete the workflow in n8n too."""
+    wid = src.stem
+    base = last_known(wid) if src.parent == WORKFLOWS.resolve() else None
+    if base is None:
+        sys.exit(f"{args.file} does not exist and is not a pulled workflow")
+    try:
+        live = fetch(wid)
+    except ApiError as e:
+        if "HTTP 404" not in str(e):
+            raise
+        (STATE / f"{wid}.json").unlink(missing_ok=True)
+        print(f"gone     {wid}  already deleted in n8n")
+        return
+    if live != base and not args.force:
+        sys.exit(f"{wid} changed in n8n since the last pull. Restore the file and pull it to "
+                 "review, or rerun with --force to delete anyway.")
+    if live["active"]:
+        api("POST", f"/workflows/{wid}/deactivate")
+    api("DELETE", f"/workflows/{wid}")
+    (STATE / f"{wid}.json").unlink(missing_ok=True)
+    print(f"deleted  {wid}  {live['name']}")
+
+
 def cmd_push(args):
     src = Path(args.file).resolve()
+    if not src.exists():
+        return delete(src, args)
     local = normalize_file(json.loads(src.read_text(encoding="utf-8")))
     for field in ("name", "nodes", "connections"):
         if local[field] is None:
