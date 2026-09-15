@@ -35,7 +35,7 @@
       "name": "MCP Server Trigger",
       "parameters": {
         "authentication": "n8nOAuth2",
-        "instructions": "Tools for the user's library of Facebook posts kept as references for content ideation (NocoDB table content_ideation.facebook_posts, one row per post_url).\n\nBefore save_facebook_post: expand \"See more\" so the text is complete, open the comments (switch to \"All comments\" or \"Most relevant\" as the user asks) and expand replies you want to keep. Saving a post that is already stored updates it; empty values never overwrite stored ones.\n\nUse find_facebook_posts to check whether a post is saved or to pull references when the user brainstorms content.",
+        "instructions": "Tools for the user's library of Facebook posts kept as references for content ideation (NocoDB table content_ideation.facebook_posts).\n\nBefore save_facebook_post: expand \"See more\" so the text is complete, open the comments (switch to \"All comments\" or \"Most relevant\" as the user asks) and expand replies you want to keep.\n\nUse find_facebook_posts to check whether a post is saved or to pull references when the user brainstorms content.",
         "path": "content-ideation"
       },
       "position": [
@@ -47,43 +47,26 @@
       "webhookId": "3f6c1a52-8d4e-4b7a-9c2d-5e1f0a7b6c93"
     },
     {
-      "id": "a215e70d-ab3a-4b45-8f3f-69248b8d13ae",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "5ec03a81-981d-47b8-a8fb-1f58f0ba0125",
       "name": "save_facebook_post",
       "parameters": {
-        "description": "Save one Facebook post (text, engagement, comments) as a content reference. Creates the row, or updates it when post_url is already saved. Returns status created or updated.",
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "8BTStszIaGKtAVC3"
-        },
-        "workflowInputs": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "descriptionType": "manual",
+        "fieldsMapper": {
           "attemptToConvertTypes": false,
           "convertFieldsToString": false,
           "mappingMode": "defineBelow",
           "matchingColumns": [],
           "schema": [
             {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "post_url",
-              "id": "post_url",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "hook",
-              "id": "hook",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
+              "canBeUsedToMatch": false,
               "defaultMatch": false,
               "display": true,
               "displayName": "author_name",
@@ -93,7 +76,7 @@
               "type": "string"
             },
             {
-              "canBeUsedToMatch": true,
+              "canBeUsedToMatch": false,
               "defaultMatch": false,
               "display": true,
               "displayName": "author_url",
@@ -103,57 +86,7 @@
               "type": "string"
             },
             {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "source_type",
-              "id": "source_type",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "posted_at",
-              "id": "posted_at",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "format",
-              "id": "format",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "text",
-              "id": "text",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "reaction_count",
-              "id": "reaction_count",
-              "removed": false,
-              "required": false,
-              "type": "number"
-            },
-            {
-              "canBeUsedToMatch": true,
+              "canBeUsedToMatch": false,
               "defaultMatch": false,
               "display": true,
               "displayName": "comment_count",
@@ -163,17 +96,7 @@
               "type": "number"
             },
             {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "share_count",
-              "id": "share_count",
-              "removed": false,
-              "required": false,
-              "type": "number"
-            },
-            {
-              "canBeUsedToMatch": true,
+              "canBeUsedToMatch": false,
               "defaultMatch": false,
               "display": true,
               "displayName": "comments",
@@ -183,11 +106,101 @@
               "type": "string"
             },
             {
-              "canBeUsedToMatch": true,
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "format",
+              "id": "format",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "hook",
+              "id": "hook",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_url",
+              "id": "post_url",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "posted_at",
+              "id": "posted_at",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "reaction_count",
+              "id": "reaction_count",
+              "removed": false,
+              "required": false,
+              "type": "number"
+            },
+            {
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "share_count",
+              "id": "share_count",
+              "removed": false,
+              "required": false,
+              "type": "number"
+            },
+            {
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "source_type",
+              "id": "source_type",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "text",
+              "id": "text",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": false,
               "defaultMatch": false,
               "display": true,
               "displayName": "why_it_works",
               "id": "why_it_works",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": false,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "captured_at",
+              "id": "captured_at",
               "removed": false,
               "required": false,
               "type": "string"
@@ -196,6 +209,7 @@
           "value": {
             "author_name": "={{ $fromAI('author_name', `Name of the page, person or group member who posted.`, 'string') }}",
             "author_url": "={{ $fromAI('author_url', `Profile or page URL of the author, without query parameters.`, 'string') }}",
+            "captured_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
             "comment_count": "={{ $fromAI('comment_count', `Total comments as an integer (1.2K = 1200). 0 if not shown.`, 'number') }}",
             "comments": "={{ $fromAI('comments', `The visible comments as markdown. Each top-level comment starts with (N reactions), then its text. Replies follow it as indented list items, each starting with (N reactions). A line with --- separates top-level comments. Example:\n(120 reactions) Top-level comment\n  - (8 reactions) Reply\n  - (2 reactions) Another reply\n---\n(45 reactions) Next top-level comment\nEmpty string if there are no comments.`, 'string') }}",
             "format": "={{ $fromAI('format', `One of: text, image, carousel, video, reel, link, live.`, 'string') }}",
@@ -208,14 +222,27 @@
             "text": "={{ $fromAI('text', `Full post text after expanding See more, keeping line breaks and emoji.`, 'string') }}",
             "why_it_works": "={{ $fromAI('why_it_works', `Short analysis of why the post performs: hook, structure, angle, emotional trigger, call to action, and what the comments reveal about the audience.`, 'string') }}"
           }
-        }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pgco4wrfalgnpja"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mlfvqztd76vculj"
+        },
+        "toolDescription": "Save one Facebook post (text, engagement, comments) as a content reference. Always appends a new row."
       },
       "position": [
         0,
         220
       ],
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2
+      "type": "n8n-nodes-base.nocoDbTool",
+      "typeVersion": 4
     },
     {
       "credentials": {

@@ -1,5 +1,5 @@
 {
-  "description": "Facebook posts captured as references for content ideation. One row per post_url.",
+  "description": "Facebook posts captured as references for content ideation. Append-only: a post saved twice has two rows.",
   "display_field": "hook",
   "fields": [
     {
@@ -8,14 +8,10 @@
       "type": "ID"
     },
     {
-      "description": "Canonical post URL, the upsert key.",
+      "description": "Post permalink.",
       "id": "c35mjw73uge9w9e",
-      "options": {
-        "validation": true
-      },
       "title": "post_url",
-      "type": "URL",
-      "unique": true
+      "type": "URL"
     },
     {
       "description": "First line of the post.",
