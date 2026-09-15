@@ -35,7 +35,7 @@
       "name": "MCP Server Trigger",
       "parameters": {
         "authentication": "n8nOAuth2",
-        "instructions": "Tools for the user's library of Facebook posts kept as references for content ideation (NocoDB table content_ideation.facebook_posts).\n\nBefore save_facebook_post: expand \"See more\" so the text is complete.\n\nUse find_facebook_posts to pull references when the user brainstorms content.",
+        "instructions": "Tools for the user's library of Facebook posts kept as references for content ideation (NocoDB table content_ideation.facebook_posts).\n\nBefore save_facebook_post: expand \"See more\" so the text is complete. Save comments in this markdown format: (N reactions) and the commenter's name on one line, the comment text below, replies as indented '- ' items in the same shape, and --- between top-level comments:\n(120 reactions) Commenter Name\nComment text\n  - (8 reactions) Reply Author\n    Reply text\n---\n(45 reactions) Commenter Name\nNext comment text\n\nUse find_facebook_posts to pull references when the user brainstorms content.",
         "path": "content-ideation"
       },
       "position": [
@@ -211,7 +211,7 @@
             "author_url": "={{ $fromAI('author_url', `Profile or page URL of the author, without query parameters.`, 'string') }}",
             "captured_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
             "comment_count": "={{ $fromAI('comment_count', `Total comments as an integer (1.2K = 1200). 0 if not shown.`, 'number') }}",
-            "comments": "={{ $fromAI('comments', `The visible comments as markdown. Each top-level comment starts with (N reactions), then its text. Replies follow it as indented list items, each starting with (N reactions). A line with --- separates top-level comments. Example:\n(120 reactions) Top-level comment\n  - (8 reactions) Reply\n  - (2 reactions) Another reply\n---\n(45 reactions) Next top-level comment\nEmpty string if there are no comments.`, 'string') }}",
+            "comments": "={{ $fromAI('comments', `Visible comments as markdown. Each comment is (N reactions) and the commenter's name on one line, then the comment text on the next. Replies go under their comment as indented '- ' list items in the same shape. A line with --- separates top-level comments. Example:\n(120 reactions) Commenter Name\nComment text\n  - (8 reactions) Reply Author\n    Reply text\n---\n(45 reactions) Commenter Name\nNext comment text\nEmpty string if there are no comments.`, 'string') }}",
             "format": "={{ $fromAI('format', `One of: text, image, carousel, video, reel, link, live.`, 'string') }}",
             "hook": "={{ $fromAI('hook', `First line of the post text, as written.`, 'string') }}",
             "post_url": "={{ $fromAI('post_url', `Canonical permalink of the post, such as https://www.facebook.com/<page>/posts/<id>, https://www.facebook.com/groups/<group>/posts/<id> or https://www.facebook.com/reel/<id>. Remove tracking query parameters.`, 'string') }}",

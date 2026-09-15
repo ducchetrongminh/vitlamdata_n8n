@@ -133,7 +133,7 @@
       "type": "Number"
     },
     {
-      "description": "Markdown. Top-level comments separated by a --- line, replies as indented '- ' list items, each comment starting with '(N reactions)'.",
+      "description": "Markdown. Each comment: '(N reactions) Name' line, then the comment text. Replies as indented '- ' items in the same shape. A --- line separates top-level comments.",
       "id": "cdztx0j97furyxl",
       "title": "comments",
       "type": "LongText"
