@@ -219,7 +219,7 @@
             "reaction_count": "={{ $fromAI('reaction_count', `Total reactions as an integer (1.2K = 1200). 0 if not shown.`, 'number') }}",
             "share_count": "={{ $fromAI('share_count', `Total shares as an integer (1.2K = 1200). 0 if not shown.`, 'number') }}",
             "source_type": "={{ $fromAI('source_type', `Where the post lives: page, profile or group.`, 'string') }}",
-            "text": "={{ $fromAI('text', `Full post text after expanding See more, keeping line breaks and emoji.`, 'string') }}",
+            "text": "={{ $fromAI('text', `Full post text after expanding See more, keeping line breaks and emoji. If the post has images, add a short description of each after the text, one per line: [Image: short description]`, 'string') }}",
             "why_it_works": "={{ $fromAI('why_it_works', `Short analysis of why the post performs: hook, structure, angle, emotional trigger, call to action, and what the comments reveal about the audience.`, 'string') }}"
           }
         },
