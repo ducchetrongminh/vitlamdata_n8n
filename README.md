@@ -24,3 +24,18 @@ scripts/push.sh workflows/new.json    # no "id" in the file: create, rename to <
 
 Both take `--force`: pull overwrites local edits not pushed yet, push overwrites changes made in
 n8n. Commit `workflows/` after every pull or push that changed something.
+
+## Credentials
+
+`credentials/<id>.json` holds a credential's name, type and fields. Secret fields are
+placeholders: `${VAR}` comes from `.credentials.env`, `${file:NAME}` from `secrets/NAME`. Both
+are gitignored and filled in by hand. Keep a copy of the values in a password manager: they
+exist nowhere else.
+
+```bash
+scripts/pull-credentials.sh     # add files for credentials that workflows reference
+scripts/push-credentials.sh     # create/update every credential whose placeholders all have values
+```
+
+n8n cannot return credentials through the API, so changes made in the UI are not pulled back and
+get overwritten by the next push that changes the file.

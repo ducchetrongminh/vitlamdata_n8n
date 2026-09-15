@@ -1,2 +1,5 @@
 .env
+.credentials.env
+secrets/
 .n8n-state/
+__pycache__/
