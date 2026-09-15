@@ -58,6 +58,6 @@ field from the file deletes its data, so push refuses unless given `--delete`.
 
 Workflow `Content ideation MCP` serves an MCP server at
 `https://n8n.vitlamdata.com/mcp/content-ideation` with two tools, `save_facebook_post` and
-`find_facebook_posts`, backed by NocoDB `content_ideation.fb_posts`. Add it in claude.ai under
+`find_facebook_posts`, backed by NocoDB `content_ideation.facebook_posts`. Add it in claude.ai under
 Settings > Connectors > Add custom connector; it signs in with your n8n account (OAuth). Then, in
 Claude in Chrome on a Facebook post: "save this post".

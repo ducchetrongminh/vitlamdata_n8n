@@ -24,7 +24,7 @@
       ]
     }
   },
-  "description": "MCP server for Claude (Claude in Chrome, claude.ai): save Facebook posts to NocoDB content_ideation.fb_posts and search them for content ideation.",
+  "description": "MCP server for Claude (Claude in Chrome, claude.ai): save Facebook posts to NocoDB content_ideation.facebook_posts and search them for content ideation.",
   "id": "u6ilpWkpxHquhpQx",
   "isArchived": false,
   "name": "Content ideation MCP",
@@ -35,7 +35,7 @@
       "name": "MCP Server Trigger",
       "parameters": {
         "authentication": "n8nOAuth2",
-        "instructions": "Tools for the user's library of Facebook posts kept as references for content ideation (NocoDB table content_ideation.fb_posts, one row per post_url).\n\nBefore save_facebook_post: expand \"See more\" so the text is complete, open the comments (switch to \"All comments\" or \"Most relevant\" as the user asks) and expand replies you want to keep. Saving a post that is already stored updates it; empty values never overwrite stored ones.\n\nUse find_facebook_posts to check whether a post is saved or to pull references when the user brainstorms content.",
+        "instructions": "Tools for the user's library of Facebook posts kept as references for content ideation (NocoDB table content_ideation.facebook_posts, one row per post_url).\n\nBefore save_facebook_post: expand \"See more\" so the text is complete, open the comments (switch to \"All comments\" or \"Most relevant\" as the user asks) and expand replies you want to keep. Saving a post that is already stored updates it; empty values never overwrite stored ones.\n\nUse find_facebook_posts to check whether a post is saved or to pull references when the user brainstorms content.",
         "path": "content-ideation"
       },
       "position": [
@@ -146,8 +146,8 @@
               "canBeUsedToMatch": true,
               "defaultMatch": false,
               "display": true,
-              "displayName": "reactions",
-              "id": "reactions",
+              "displayName": "reaction_count",
+              "id": "reaction_count",
               "removed": false,
               "required": false,
               "type": "number"
@@ -166,8 +166,8 @@
               "canBeUsedToMatch": true,
               "defaultMatch": false,
               "display": true,
-              "displayName": "shares",
-              "id": "shares",
+              "displayName": "share_count",
+              "id": "share_count",
               "removed": false,
               "required": false,
               "type": "number"
@@ -202,8 +202,8 @@
             "hook": "={{ $fromAI('hook', `First line of the post text, as written.`, 'string') }}",
             "post_url": "={{ $fromAI('post_url', `Canonical permalink of the post, such as https://www.facebook.com/<page>/posts/<id>, https://www.facebook.com/groups/<group>/posts/<id> or https://www.facebook.com/reel/<id>. Remove tracking query parameters.`, 'string') }}",
             "posted_at": "={{ $fromAI('posted_at', `Publish time as ISO 8601 with offset, e.g. 2026-09-15T08:30:00+07:00. Read the exact time from the timestamp tooltip. Empty string if unknown.`, 'string') }}",
-            "reactions": "={{ $fromAI('reactions', `Total reactions as an integer (1.2K = 1200). 0 if not shown.`, 'number') }}",
-            "shares": "={{ $fromAI('shares', `Total shares as an integer (1.2K = 1200). 0 if not shown.`, 'number') }}",
+            "reaction_count": "={{ $fromAI('reaction_count', `Total reactions as an integer (1.2K = 1200). 0 if not shown.`, 'number') }}",
+            "share_count": "={{ $fromAI('share_count', `Total shares as an integer (1.2K = 1200). 0 if not shown.`, 'number') }}",
             "source_type": "={{ $fromAI('source_type', `Where the post lives: page, profile or group.`, 'string') }}",
             "text": "={{ $fromAI('text', `Full post text after expanding See more, keeping line breaks and emoji.`, 'string') }}",
             "why_it_works": "={{ $fromAI('why_it_works', `Short analysis of why the post performs: hook, structure, angle, emotional trigger, call to action, and what the comments reveal about the audience.`, 'string') }}"
@@ -244,7 +244,7 @@
               }
             ]
           },
-          "where": "={{ $fromAI('where', `NocoDB filter. Examples: (post_url,eq,https://www.facebook.com/x/posts/1) ; (text,like,%keyword%)~or(hook,like,%keyword%) ; (reactions,gt,1000)~and(format,eq,reel). Use (post_url,isnot,null) to list everything.`, 'string') }}"
+          "where": "={{ $fromAI('where', `NocoDB filter. Examples: (post_url,eq,https://www.facebook.com/x/posts/1) ; (text,like,%keyword%)~or(hook,like,%keyword%) ; (reaction_count,gt,1000)~and(format,eq,reel). Use (post_url,isnot,null) to list everything.`, 'string') }}"
         },
         "projectId": {
           "__rl": true,
@@ -258,7 +258,7 @@
           "mode": "id",
           "value": "mlfvqztd76vculj"
         },
-        "toolDescription": "Search saved Facebook reference posts, newest capture first. Columns: post_url, hook, author_name, author_url, source_type, posted_at, format, text, reactions, comment_count, shares, comments, why_it_works, notes, captured_at."
+        "toolDescription": "Search saved Facebook reference posts, newest capture first. Columns: post_url, hook, author_name, author_url, source_type, posted_at, format, text, reaction_count, comment_count, share_count, comments, why_it_works, notes, captured_at."
       },
       "position": [
         240,
@@ -270,6 +270,7 @@
   ],
   "pinData": null,
   "settings": {
+    "availableInMCP": true,
     "executionOrder": "v1"
   },
   "tags": []

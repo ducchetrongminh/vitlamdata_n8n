@@ -111,8 +111,9 @@ from these files.
 - Verified: `PATCH /bases/{b}/fields/{f}` ignores `"description": null`; `""` clears it. Created
   tables get `Id`, `CreatedAt` and `UpdatedAt`; only `Id` shows in the meta API. Data API
   DateTime values with an offset (`2026-09-15T08:30:00+07:00`) store correctly. NocoDB's own
-  `CreatedAt`/`UpdatedAt` read 7 hours behind real UTC (its database timezone, a
-  `vitlamdata_infras` matter), so workflows write their own timestamps from `$now`.
+  `CreatedAt`/`UpdatedAt` read 7 hours behind real UTC: the app Postgres runs with
+  `TZ: Asia/Ho_Chi_Minh` (`vitlamdata_infras`), and NocoDB writes UTC times without an offset,
+  which Postgres reads as +07. Workflows write their own timestamps from `$now`.
 
 ## Loop
 

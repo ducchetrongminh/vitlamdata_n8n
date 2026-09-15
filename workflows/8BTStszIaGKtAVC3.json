@@ -46,7 +46,7 @@
       ]
     }
   },
-  "description": "Upserts one Facebook post into NocoDB content_ideation.fb_posts, keyed on post_url. Called by the save_facebook_post MCP tool.",
+  "description": "Upserts one Facebook post into NocoDB content_ideation.facebook_posts, keyed on post_url. Called by the save_facebook_post MCP tool.",
   "id": "8BTStszIaGKtAVC3",
   "isArchived": false,
   "name": "FB post: save to NocoDB",
@@ -92,7 +92,7 @@
               "type": "string"
             },
             {
-              "name": "reactions",
+              "name": "reaction_count",
               "type": "number"
             },
             {
@@ -100,7 +100,7 @@
               "type": "number"
             },
             {
-              "name": "shares",
+              "name": "share_count",
               "type": "number"
             },
             {
@@ -162,7 +162,7 @@
       "id": "4fffbc68-48ef-4e84-918f-bc4d87887356",
       "name": "Build row",
       "parameters": {
-        "jsCode": "// Only non-empty inputs are written, so a re-capture never blanks a field, and notes stay\n// the user's. captured_at records the first capture.\nconst input = $('When Executed by Another Workflow').first().json;\nconst existingId = $input.first().json.id ?? '';\nconst keys = ['post_url', 'hook', 'author_name', 'author_url', 'source_type', 'posted_at', 'format',\n  'text', 'reactions', 'comment_count', 'shares', 'comments', 'why_it_works'];\nconst fields = {};\nfor (const key of keys) {\n  const value = input[key];\n  if (value !== undefined && value !== null && value !== '') fields[key] = value;\n}\nif (!fields.post_url) throw new Error('post_url is required');\nif (!existingId) fields.captured_at = $now.toISO({ suppressMilliseconds: true });\nreturn [{ json: { id: existingId, fields } }];"
+        "jsCode": "// Only non-empty inputs are written, so a re-capture never blanks a field, and notes stay\n// the user's. captured_at records the first capture.\nconst input = $('When Executed by Another Workflow').first().json;\nconst existingId = $input.first().json.id ?? '';\nconst keys = ['post_url', 'hook', 'author_name', 'author_url', 'source_type', 'posted_at', 'format',\n  'text', 'reaction_count', 'comment_count', 'share_count', 'comments', 'why_it_works'];\nconst fields = {};\nfor (const key of keys) {\n  const value = input[key];\n  if (value !== undefined && value !== null && value !== '') fields[key] = value;\n}\nif (!fields.post_url) throw new Error('post_url is required');\nif (!existingId) fields.captured_at = $now.toISO({ suppressMilliseconds: true });\nreturn [{ json: { id: existingId, fields } }];"
       },
       "position": [
         440,
