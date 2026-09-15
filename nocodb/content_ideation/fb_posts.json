@@ -1,0 +1,166 @@
+{
+  "description": "Facebook posts captured as references for content ideation. One row per post_url.",
+  "display_field": "hook",
+  "fields": [
+    {
+      "id": "c32f5eehynt80le",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "description": "Canonical post URL, the upsert key.",
+      "id": "c35mjw73uge9w9e",
+      "options": {
+        "validation": true
+      },
+      "title": "post_url",
+      "type": "URL",
+      "unique": true
+    },
+    {
+      "description": "First line of the post.",
+      "id": "curm4t1gq74k257",
+      "title": "hook",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cgxm0xmjvgbn9sd",
+      "title": "author_name",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "c349y9ckk3vc59y",
+      "title": "author_url",
+      "type": "URL"
+    },
+    {
+      "id": "csmpo11hw42ihld",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "snflnr66pcq6wee",
+            "title": "page"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s09a3o8bm88ks90",
+            "title": "profile"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "shh7znz0399473z",
+            "title": "group"
+          }
+        ]
+      },
+      "title": "source_type",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "cdhoxn06xtq6iho",
+      "title": "posted_at",
+      "type": "DateTime"
+    },
+    {
+      "id": "c6ug1j73czzqrbi",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s62o1huwo1p99pk",
+            "title": "text"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "skqx0ibq5w5obek",
+            "title": "image"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "sn8shwtub4tmp9c",
+            "title": "carousel"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "s8uciw95v36z27u",
+            "title": "video"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "sthtkm60nf6phvs",
+            "title": "reel"
+          },
+          {
+            "color": "#fee2d5",
+            "id": "sqqbybn6f9xhost",
+            "title": "link"
+          },
+          {
+            "color": "#ffeab6",
+            "id": "s98duapklny3jn1",
+            "title": "live"
+          }
+        ]
+      },
+      "title": "format",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "Full post text.",
+      "id": "c9fnth7xevmnyyn",
+      "title": "text",
+      "type": "LongText"
+    },
+    {
+      "id": "cu1p21y8ruxmkez",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "reactions",
+      "type": "Number"
+    },
+    {
+      "id": "c1cfnedflkdywtw",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "comment_count",
+      "type": "Number"
+    },
+    {
+      "id": "ch51lxkf5y2con8",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "shares",
+      "type": "Number"
+    },
+    {
+      "description": "Markdown. Top-level comments separated by a --- line, replies as indented '- ' list items, each comment starting with '(N reactions)'.",
+      "id": "cdztx0j97furyxl",
+      "title": "comments",
+      "type": "LongText"
+    },
+    {
+      "description": "Why the post performs: hook, structure, angle, emotion.",
+      "id": "c5zrlekxh869bys",
+      "title": "why_it_works",
+      "type": "LongText"
+    },
+    {
+      "description": "Your own notes. The capture workflow never writes this field.",
+      "id": "cmxyo2fokz7i8wv",
+      "title": "notes",
+      "type": "LongText"
+    },
+    {
+      "description": "When the post was first captured.",
+      "id": "cass91wkjj5ftrk",
+      "title": "captured_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mlfvqztd76vculj",
+  "title": "fb_posts"
+}

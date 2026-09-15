@@ -40,3 +40,24 @@ scripts/push-credentials.sh     # create/update every credential whose placehold
 
 n8n cannot return credentials through the API, so changes made in the UI are not pulled back and
 get overwritten by the next push that changes the file.
+
+## NocoDB tables
+
+`nocodb/<base>/_base.json` and `nocodb/<base>/<table>.json` declare NocoDB bases and tables. They
+use `NOCODB_HOST` and `NOCODB_API_KEY` from `.credentials.env`.
+
+```bash
+scripts/nocodb-push.sh          # create/alter bases and tables from the files
+scripts/nocodb-pull.sh          # refresh the files after edits in the NocoDB UI
+```
+
+Add a field by appending it without `id`. Rename by changing `title` (the `id` stays). Removing a
+field from the file deletes its data, so push refuses unless given `--delete`.
+
+## Content ideation MCP
+
+Workflow `Content ideation MCP` serves an MCP server at
+`https://n8n.vitlamdata.com/mcp/content-ideation` with two tools, `save_facebook_post` and
+`find_facebook_posts`, backed by NocoDB `content_ideation.fb_posts`. Add it in claude.ai under
+Settings > Connectors > Add custom connector; it signs in with your n8n account (OAuth). Then, in
+Claude in Chrome on a Facebook post: "save this post".
