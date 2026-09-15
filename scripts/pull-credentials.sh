@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Write credentials/<id>.json for every credential referenced in workflows/*.json that has no
+# Write credentials/<type>_<id>.json for every credential referenced in workflows/*.json that has no
 # file yet, with a ${VAR} placeholder per string field. Existing files are left alone.
 # Usage: scripts/pull-credentials.sh
 set -euo pipefail

@@ -32,6 +32,11 @@ def rel(path):
         return str(path)
 
 
+def credential_path(ctype, cid):
+    # The type prefix tells what a credential is for without opening the file.
+    return CREDENTIALS / f"{ctype}_{cid}.json"
+
+
 def load_env():
     values = {}
     if not ENV_FILE.exists():
@@ -87,18 +92,16 @@ def push_one(src, env, force):
     digest = hashlib.sha256(dumps(body).encode()).hexdigest()
 
     cid = local.get("id")
+    hash_file = HASHES / f"{cid}.sha256"
     if cid is None:
         cid = api("POST", "/credentials", body)["id"]
-        local["id"] = cid
-        dest = CREDENTIALS / f"{cid}.json"
-        write(dest, local)
-        status, detail = "created", f"as {rel(dest)}"
-        if src.resolve() != dest.resolve() and src.resolve().parent == CREDENTIALS.resolve():
-            src.unlink()
-    else:
         hash_file = HASHES / f"{cid}.sha256"
-        if not force and hash_file.exists() and hash_file.read_text().strip() == digest:
-            return "same", ""
+        local["id"] = cid
+        write(src, local)
+        status = "created"
+    elif not force and hash_file.exists() and hash_file.read_text().strip() == digest:
+        status = "same"
+    else:
         try:
             # PATCH validates data against the type's schema as a whole (required fields
             # included), so the full data is always sent.
@@ -108,10 +111,18 @@ def push_one(src, env, force):
                 raise ApiError(f"{e} Either it was deleted (remove 'id' to create it again) or "
                                "it is not shared with the API user.") from None
             raise
-        status, detail = "updated", ""
-    HASHES.mkdir(parents=True, exist_ok=True)
-    (HASHES / f"{cid}.sha256").write_text(digest + "\n", encoding="utf-8")
-    return status, detail
+        status = "updated"
+    if status != "same":
+        HASHES.mkdir(parents=True, exist_ok=True)
+        hash_file.write_text(digest + "\n", encoding="utf-8")
+
+    dest = credential_path(local["type"], cid)
+    if src.resolve().parent == CREDENTIALS.resolve() and src.resolve() != dest.resolve():
+        if dest.exists():
+            raise ApiError(f"pushed, but cannot rename to {rel(dest)}: it already exists")
+        src.rename(dest)
+        return status, f"renamed to {rel(dest)}"
+    return status, ""
 
 
 def cmd_push(args):
@@ -145,7 +156,7 @@ def cmd_pull(args):
 
     failed = False
     for cid, (name, ctype) in sorted(refs.items(), key=lambda r: r[1]):
-        path = CREDENTIALS / f"{cid}.json"
+        path = credential_path(ctype, cid)
         if cid in known:
             print(f"exists   {rel(path)}  {name}")
             continue
@@ -176,7 +187,7 @@ def main():
         stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(prog="n8n_credentials")
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("pull", help="write credentials/<id>.json for credentials workflows use")
+    sub.add_parser("pull", help="write credentials/<type>_<id>.json for credentials workflows use")
     push = sub.add_parser("push", help="create or update credentials from files")
     push.add_argument("files", nargs="*", help="default: every credentials/*.json")
     push.add_argument("--force", action="store_true", help="push even if unchanged since last push")

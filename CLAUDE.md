@@ -66,7 +66,7 @@ The API cannot list or read credentials, so `credentials/*.json` is the source o
 sync goes one way, repo to n8n. Edits made in the n8n UI are overwritten on the next push that
 changes the file.
 
-- `credentials/<id>.json`: `id name type data`. In any string of `data`, `${VAR}` is replaced
+- `credentials/<type>_<id>.json`: `id name type data`. In any string of `data`, `${VAR}` is replaced
   by `VAR` from `.credentials.env` (`KEY=value` lines, quotes optional) and `${file:NAME}` by
   the contents of `secrets/NAME` minus a trailing newline, for multi-line values like private
   keys. Non-secret values and numbers or booleans go in literally. Field names come from
@@ -80,8 +80,8 @@ changes the file.
   never touched.
 - `scripts/push-credentials.sh [--force] [file...]` (default: all files) skips a credential if
   any placeholder has no value, or an empty one. Otherwise it creates the credential (no `id`:
-  then writes the id and renames the file to `credentials/<id>.json`) or sends a `PATCH` with
-  the full `name type data`. `.n8n-state/credentials/<id>.sha256` holds a hash of the last body
+  then writes the id into the file) or sends a `PATCH` with the full `name type data`. After a
+  push, a file in `credentials/` is renamed to `<type>_<id>.json` if it has another name. `.n8n-state/credentials/<id>.sha256` holds a hash of the last body
   sent, and a push with the same body does nothing unless `--force`.
 - The API user can update only credentials it owns or that are shared with it. Others return
   404, which is also what a deleted credential returns.

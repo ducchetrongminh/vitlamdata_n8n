@@ -27,7 +27,7 @@ n8n. Commit `workflows/` after every pull or push that changed something.
 
 ## Credentials
 
-`credentials/<id>.json` holds a credential's name, type and fields. Secret fields are
+`credentials/<type>_<id>.json` holds a credential's name, type and fields. Secret fields are
 placeholders: `${VAR}` comes from `.credentials.env`, `${file:NAME}` from `secrets/NAME`. Both
 are gitignored and filled in by hand: copy `.credentials.env.example` to `.credentials.env` to
 start. Keep a copy of the values in a password manager: they
