@@ -71,6 +71,8 @@ changes the file.
   the contents of `secrets/NAME` minus a trailing newline, for multi-line values like private
   keys. Non-secret values and numbers or booleans go in literally. Field names come from
   `GET /credentials/schema/<type>`.
+- `.credentials.env.example` (committed) lists every `${VAR}` the credential files use, with
+  empty values. Add a variable to it whenever a credential file gains one.
 - `scripts/pull-credentials.sh` writes a file for every credential that `workflows/*.json`
   references and that has no file yet, including credentials other users created in the UI. It
   puts a placeholder in each plain string field (not enums, numbers, booleans or
