@@ -1,5 +1,5 @@
 {
-  "permissions": { "deny": ["Read(./.env)"] },
+  "permissions": { "deny": ["Read(./.env)", "Read(./.credentials.env)", "Read(./secrets/**)"] },
   "hooks": {
     "SessionStart": [{ "hooks": [{ "type": "command",
       "command": "f=\"$CLAUDE_PROJECT_DIR/.env\"; [ -f \"$f\" ] && [ -n \"$CLAUDE_ENV_FILE\" ] && tr -d '\\r' < \"$f\" | grep -E '^[A-Za-z_][A-Za-z0-9_]*=' | sed 's/^/export /' >> \"$CLAUDE_ENV_FILE\"; exit 0"

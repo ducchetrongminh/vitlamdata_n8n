@@ -31,9 +31,11 @@ session is needed after `.env` changes. Reading `.env` with the Read tool is den
   After a UI edit, pull and commit.
 - Ask before deleting a workflow, deactivating an active workflow, or overwriting a workflow
   that changed in n8n since the last pull.
-- Never put secrets in workflow JSON: nodes reference n8n credentials. Create a credential
-  through the API only with values the user provides out-of-band. The API cannot read
-  credential secrets back.
+- Never put secrets in workflow or credential JSON: nodes reference n8n credentials, and
+  credential files reference placeholders. The user fills `.credentials.env` and `secrets/`
+  themselves; never read them (Read is denied), print resolved values, or write a real secret
+  there. The API cannot read credential secrets back.
+- Ask before deleting a credential.
 - Keep the instance constraints above in mind: built-in nodes only, no `$env`, no
   private-network HTTP targets.
 - Docs and comments state what is true now, plus a short reason when it isn't obvious. History
@@ -57,6 +59,32 @@ Need `bash`, `python3` (standard library only) and `git`.
   rewrites the file from the live result.
 - `.n8n-state/<id>.json` (gitignored) holds that last known live version. Without it, push
   compares against the committed file.
+
+## Credentials
+
+The API cannot list or read credentials, so `credentials/*.json` is the source of truth and
+sync goes one way, repo to n8n. Edits made in the n8n UI are overwritten on the next push that
+changes the file.
+
+- `credentials/<type>_<id>.json`: `id name type data`. In any string of `data`, `${VAR}` is replaced
+  by `VAR` from `.credentials.env` (`KEY=value` lines, quotes optional) and `${file:NAME}` by
+  the contents of `secrets/NAME` minus a trailing newline, for multi-line values like private
+  keys. Non-secret values and numbers or booleans go in literally. Field names come from
+  `GET /credentials/schema/<type>`.
+- `.credentials.env.example` (committed) lists every `${VAR}` the credential files use, with
+  empty values. Add a variable to it whenever a credential file gains one.
+- `scripts/pull-credentials.sh` writes a file for every credential that `workflows/*.json`
+  references and that has no file yet, including credentials other users created in the UI. It
+  puts a placeholder in each plain string field (not enums, numbers, booleans or
+  `allowedDomains`). Delete the placeholders a credential does not use. Existing files are
+  never touched.
+- `scripts/push-credentials.sh [--force] [file...]` (default: all files) skips a credential if
+  any placeholder has no value, or an empty one. Otherwise it creates the credential (no `id`:
+  then writes the id into the file) or sends a `PATCH` with the full `name type data`. After a
+  push, a file in `credentials/` is renamed to `<type>_<id>.json` if it has another name. `.n8n-state/credentials/<id>.sha256` holds a hash of the last body
+  sent, and a push with the same body does nothing unless `--force`.
+- The API user can update only credentials it owns or that are shared with it. Others return
+  404, which is also what a deleted credential returns.
 
 ## Loop
 
@@ -101,8 +129,18 @@ api() { local p=$1; shift; curl -sS -H "X-N8N-API-KEY: $N8N_API_KEY" -H 'Content
 - `POST /workflows/{id}/archive` and `/unarchive` exist. `DELETE /workflows/{id}` deletes for good.
 - Tags: `GET`/`POST /tags`, `GET`/`PUT /workflows/{id}/tags` with body `[{"id": ...}]`.
   `DELETE /tags/{id}` is 403 for this user.
-- 403 for this user: `GET /credentials`, `GET /projects`, `GET /variables`. Credential ids for
-  nodes come from existing workflow JSON. Creating credentials was not tried.
+- 403 for this user: `GET /credentials`, `GET /credentials/{id}`, `GET /projects`,
+  `GET /variables`.
+- Credentials: `GET /credentials/schema/<type>` returns a JSON schema of the `data` fields
+  (`properties`, `required`). `POST /credentials` takes `name type data` and returns metadata
+  only (`id name type createdAt updatedAt isManaged isGlobal isResolvable ...`, never `data`).
+  An unknown type or a missing required field is a 400.
+  - `PATCH /credentials/{id}` takes any of `name type data` (`PUT` is 405). `data` is checked
+    against the schema as a whole, so a partial `data` without the required fields is a 400.
+    Unknown `data` keys are a 400. Changing `type` needs `data`. Unknown body keys like `id` are
+    ignored.
+  - `DELETE /credentials/{id}` returns the deleted metadata. An unknown id is 404 for PATCH and
+    DELETE.
 - `GET /executions` filters: `workflowId`, `status` (`canceled crashed error new running success
   unknown waiting`), `includeData`. `GET /executions/{id}?includeData=true` adds `workflowData`
   and `data.resultData` with `lastNodeExecuted`, `error.message`, and per-node
