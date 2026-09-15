@@ -35,7 +35,7 @@
       "name": "MCP Server Trigger",
       "parameters": {
         "authentication": "n8nOAuth2",
-        "instructions": "Tools for the user's library of Facebook posts kept as references for content ideation (NocoDB table content_ideation.facebook_posts).\n\nBefore save_facebook_post: expand \"See more\" so the text is complete. Save comments in this markdown format: (N reactions) and the commenter's name on one line, the comment text below, replies as indented '- ' items in the same shape, and --- between top-level comments:\n(120 reactions) Commenter Name\nComment text\n  - (8 reactions) Reply Author\n    Reply text\n---\n(45 reactions) Commenter Name\nNext comment text\n\nUse find_facebook_posts to pull references when the user brainstorms content.",
+        "instructions": "Tools for the user's library of Facebook posts kept as references for content ideation (NocoDB table content_ideation.facebook_posts).\n\nBefore save_facebook_post: expand \"See more\" so the text is complete.\n\nUse find_facebook_posts to pull references when the user brainstorms content.",
         "path": "content-ideation"
       },
       "position": [
