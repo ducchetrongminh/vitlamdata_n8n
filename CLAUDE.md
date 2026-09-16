@@ -56,7 +56,9 @@ Need `bash`, `python3` (standard library only) and `git`.
   settings pinData nodeGroups`, then `description` and tags if they differ. It never changes
   `active` or `isArchived`. Before an update it refuses if the live workflow differs from the last
   pulled or pushed version; `--force` overwrites, and needs the user's go-ahead. Afterwards it
-  rewrites the file from the live result.
+  rewrites the file from the live result. Given the path of a deleted `workflows/<id>.json`, it
+  deactivates and deletes that workflow in n8n, refusing if it changed since the last pull; ask
+  before running it.
 - `.n8n-state/<id>.json` (gitignored) holds that last known live version. Without it, push
   compares against the committed file.
 
@@ -85,6 +87,35 @@ changes the file.
   sent, and a push with the same body does nothing unless `--force`.
 - The API user can update only credentials it owns or that are shared with it. Others return
   404, which is also what a deleted credential returns.
+
+## NocoDB
+
+NocoDB tables live in `nocodb/<base>/` and sync both ways through NocoDB's v3 meta API
+(`$NOCODB_HOST/api/v3/meta`, header `xc-token`), with `NOCODB_HOST` and `NOCODB_API_KEY` read from
+`.credentials.env` (the Nocodb bot credential's values). Workflows reference base and table ids
+from these files.
+
+- `_base.json`: `id title workspace_id`. `<table title>.json`: `id title description
+  display_field fields`, each field `id title type description default_value unique options`.
+  Empty values are left out. Field types and options follow `FieldBase` and `FieldOptions_*` in
+  NocoDB's `packages/nocodb/src/schema/swagger-v3.json`.
+- `scripts/nocodb-push.sh [--force] [--delete] [file...]` (default: all files, bases first)
+  creates a base or table without `id`, then rewrites the file from the live result with ids.
+  On a table with `id` it adds fields without `id` and changes fields whose values differ,
+  matched by `id`, so a rename keeps the data. It refuses if the table changed in NocoDB since
+  the last pull (`--force` overwrites) and if a live field is missing from the file (`--delete`
+  deletes it with its data; ask first). Fields of type `ID` are never touched.
+- `scripts/nocodb-pull.sh [--force] [base_id...]` rewrites every table of the bases that have a
+  pushed `_base.json` (or the given ids) and removes files of deleted tables. It refuses to
+  overwrite local edits not pushed.
+- `.n8n-state/nocodb/<id>.json` holds the last known live base or table.
+- A type change converts existing values in NocoDB and can lose data; check the field first.
+- Verified: `PATCH /bases/{b}/fields/{f}` ignores `"description": null`; `""` clears it. Created
+  tables get `Id`, `CreatedAt` and `UpdatedAt`; only `Id` shows in the meta API. Data API
+  DateTime values with an offset (`2026-09-15T08:30:00+07:00`) store correctly. NocoDB's own
+  `CreatedAt`/`UpdatedAt` read 7 hours behind real UTC: the app Postgres runs with
+  `TZ: Asia/Ho_Chi_Minh` (`vitlamdata_infras`), and NocoDB writes UTC times without an offset,
+  which Postgres reads as +07. Workflows write their own timestamps from `$now`.
 
 ## Loop
 
