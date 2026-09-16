@@ -115,7 +115,8 @@ from these files.
   DateTime values with an offset (`2026-09-15T08:30:00+07:00`) store correctly. NocoDB's own
   `CreatedAt`/`UpdatedAt` read 7 hours behind real UTC: the app Postgres runs with
   `TZ: Asia/Ho_Chi_Minh` (`vitlamdata_infras`), and NocoDB writes UTC times without an offset,
-  which Postgres reads as +07. Workflows write their own timestamps from `$now`.
+  which Postgres reads as +07. Workflows write their own timestamps from `$now`. A data API
+  bulk `DELETE` of 40 records answered 422; batches of 10 work.
 
 ## Loop
 
@@ -195,6 +196,19 @@ Verified on this instance while building `Idea shaping` and `Finalize content`.
   Read values from `$json.fields`, not from `$json`.
 - Its `update` operation needs the row id in the top-level `id` parameter. `matchingColumns` is
   not enough: activating fails with `Missing or invalid required parameters: id`.
+- It returns DateTime values in UTC as `2026-09-17 13:00:00+00:00` (space, not `T`).
+- A node runs once per input item. A search after a node that outputs several items runs that many
+  times unless the node has `executeOnce: true`.
+- Activating a workflow with an Execute Workflow node fails while the sub-workflow it calls is
+  inactive: `Cannot publish workflow: Node "X" references workflow <id> ("Y") which is not
+  published`. Activate sub-workflows first; a sub-workflow with only an Execute Workflow Trigger
+  activates fine.
+- `@n8n/n8n-nodes-langchain.chainLlm` with a DeepSeek model set to `responseFormat: json_object`
+  outputs the parsed JSON object as the item, not `{text}`. With the default text format it
+  outputs `{text}`. Braces in its system message are escaped; the prompt text is passed as a
+  variable, so JSON in either is safe.
+- Branches from one node run top to bottom by canvas position (`executionOrder: v1`), and an error
+  in one stops the rest: put database writes above Lark or other outbound calls.
 
 ## Monitoring
 
