@@ -111,6 +111,13 @@ playbook changes. It also learns during work: a refused plan or a failed check b
 Your preferences become manager directives, which outrank its own lessons and which only you can
 change. Reply to anything to correct it.
 
+**Pictures.** The agent decides per post whether a real picture would help (a screenshot, a result,
+a class moment) and asks for it on the draft card. Reply to that card with the photo or photos
+(up to 10); the bot confirms, and they go out with the post. Send them any time before the post's
+time, before or after approving. Without a picture the post goes out as text, so the agent writes
+every text to stand on its own. Each post records its format (text, photo, photos), and the weekly
+review compares results by format.
+
 **Set up Lark (once).**
 
 1. At https://open.larksuite.com/app create a custom app (e.g. "Content agent") and enable its

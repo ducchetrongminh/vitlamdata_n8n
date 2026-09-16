@@ -267,6 +267,43 @@
       "id": "cggyf04f2aci3xz",
       "title": "created_at",
       "type": "DateTime"
+    },
+    {
+      "description": "The picture the agent wants with the post. Empty: a text post.",
+      "id": "cg5e98yd64qdywv",
+      "title": "image_brief",
+      "type": "LongText"
+    },
+    {
+      "description": "Pictures the manager sent in Lark for this post, one per line: <lark message id> <image key>. Published with the post, at most 10.",
+      "id": "ck0v99jzxhbml0h",
+      "title": "images",
+      "type": "LongText"
+    },
+    {
+      "description": "What was published: text, one photo, or several photos.",
+      "id": "c37h85lvzsqjvmc",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s3z1opq7qkfgrkc",
+            "title": "text"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s7m8pq4qz3zu2px",
+            "title": "photo"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "su04qi5h5q8o9jz",
+            "title": "photos"
+          }
+        ]
+      },
+      "title": "format",
+      "type": "SingleSelect"
     }
   ],
   "id": "mu013k4ij3s0jii",

@@ -17,7 +17,12 @@
         [
           {
             "index": 0,
-            "node": "Log message",
+            "node": "Pictures?",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Has text?",
             "type": "main"
           }
         ]
@@ -29,6 +34,17 @@
           {
             "index": 0,
             "node": "Tell agent",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Attach pictures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Picture added?",
             "type": "main"
           }
         ]
@@ -136,6 +152,17 @@
         ]
       ]
     },
+    "Has text?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Lark event": {
       "main": [
         [
@@ -202,6 +229,51 @@
         ]
       ]
     },
+    "Picture added?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save pictures",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Confirm pictures",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Confirm pictures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Picture post": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Attach pictures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Pictures?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Picture post",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Read message": {
       "main": [
         [
@@ -255,6 +327,17 @@
           {
             "index": 0,
             "node": "Log decision",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save pictures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log pictures",
             "type": "main"
           }
         ]
@@ -703,7 +786,7 @@
       "id": "7014975d-9b97-515a-a934-a87007f5e0c3",
       "name": "Read message",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst settings = settingsOf('Load settings');\nconst r = $json;\nif (r.code !== 0) throw new Error(`Lark get message failed: ${r.code} ${r.msg}`);\nconst m = ((r.data && r.data.items) || [])[0];\nif (!m || !m.sender || m.sender.sender_type !== 'user') return [];\nif (settings.lark_open_id && m.sender.id !== settings.lark_open_id) return [];\n\nconst textOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => el.text || el.href || '').join(''))].filter(Boolean).join('\\n');\n    }\n  } catch (e) {}\n  return '';\n};\nconst text = textOf(m).replace(/@_user_\\d+/g, '').trim();\nif (!text) return [];\nconst settingsRow = $('Load settings').all().map((i) => i.json).find((j) => j.fields && j.fields.key === 'lark_open_id');\nreturn [{\n  json: {\n    text,\n    message_id: m.message_id,\n    parent_id: m.parent_id || '',\n    open_id: m.sender.id,\n    link: !settings.lark_open_id,\n    settings_row_id: settingsRow ? settingsRow.id : null,\n    auth: $('Get Lark token').first().json.tenant_access_token,\n  },\n}];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst settings = settingsOf('Load settings');\nconst r = $json;\nif (r.code !== 0) throw new Error(`Lark get message failed: ${r.code} ${r.msg}`);\nconst m = ((r.data && r.data.items) || [])[0];\nif (!m || !m.sender || m.sender.sender_type !== 'user') return [];\nif (settings.lark_open_id && m.sender.id !== settings.lark_open_id) return [];\n\nconst textOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => el.text || el.href || '').join(''))].filter(Boolean).join('\\n');\n    }\n  } catch (e) {}\n  return '';\n};\nconst text = textOf(m).replace(/@_user_\\d+/g, '').trim();\n// Pictures: an image message, or images inside a rich text message.\nconst images = [];\ntry {\n  const c = JSON.parse((m.body && m.body.content) || '{}');\n  if (m.msg_type === 'image' && c.image_key) images.push(c.image_key);\n  if (m.msg_type === 'post') (Array.isArray(c.content) ? c.content : []).flat().forEach((el) => { if (el && el.tag === 'img' && el.image_key) images.push(el.image_key); });\n} catch (e) {}\nif (!text && !images.length) return [];\nconst settingsRow = $('Load settings').all().map((i) => i.json).find((j) => j.fields && j.fields.key === 'lark_open_id');\nreturn [{\n  json: {\n    text,\n    images,\n    message_id: m.message_id,\n    parent_id: m.parent_id || '',\n    open_id: m.sender.id,\n    link: !settings.lark_open_id,\n    settings_row_id: settingsRow ? settingsRow.id : null,\n    auth: $('Get Lark token').first().json.tenant_access_token,\n  },\n}];"
       },
       "position": [
         1760,
@@ -854,7 +937,7 @@
       "id": "15f4dbdd-50b2-5c6c-bf4c-9382abe2a3ef",
       "name": "Agent input",
       "parameters": {
-        "jsCode": "const m = $('Read message').first().json;\nlet replyTo = '';\nlet postId = null;\nlet offerId = null;\nif ($('Fetch parent').isExecuted) {\n  const p = (($('Fetch parent').first().json.data || {}).items || [])[0];\n  if (p) {\n    const raw = (p.body && p.body.content) || '';\n    let plain = raw;\n    try {\n      const c = JSON.parse(raw);\n      plain = c.text || JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ');\n    } catch (e) {}\n    replyTo = plain.slice(0, 1500);\n    const post = raw.match(/[Pp]ost #(\\d+)/);\n    const offer = raw.match(/[Oo]ffer #(\\d+)/);\n    postId = post ? Number(post[1]) : null;\n    offerId = offer ? Number(offer[1]) : null;\n  }\n}\nconst lines = [];\nif (m.link) lines.push('(This is the first message from your manager: introduce yourself in two lines and, if goals or brand docs are missing, ask for them.)');\nif (replyTo) lines.push(`They replied to this message of yours: <<<\n${replyTo}\n>>>`);\nlines.push(`Your manager wrote: <<<\n${m.text}\n>>>`);\nreturn [{\n  json: {\n    mode: 'chat',\n    text: lines.join('\\n'),\n    reply_to: m.message_id,\n    open_id: m.open_id,\n    event: {\n      type: postId && replyTo ? 'change_request' : 'manager_note',\n      post_id: postId,\n      offer_id: offerId,\n      text: replyTo ? `${m.text}\\n(in reply to: ${replyTo.slice(0, 300)})` : m.text,\n    },\n  },\n}];"
+        "jsCode": "const m = $('Read message').first().json;\nlet replyTo = '';\nlet postId = null;\nlet offerId = null;\nif ($('Fetch parent').isExecuted) {\n  const p = (($('Fetch parent').first().json.data || {}).items || [])[0];\n  if (p) {\n    const raw = (p.body && p.body.content) || '';\n    let plain = raw;\n    try {\n      const c = JSON.parse(raw);\n      plain = c.text || JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ');\n    } catch (e) {}\n    replyTo = plain.slice(0, 1500);\n    const post = raw.match(/[Pp]ost #(\\d+)/);\n    const offer = raw.match(/[Oo]ffer #(\\d+)/);\n    postId = post ? Number(post[1]) : null;\n    offerId = offer ? Number(offer[1]) : null;\n  }\n}\nconst lines = [];\nif (m.link) lines.push('(This is the first message from your manager: introduce yourself in two lines and, if goals or brand docs are missing, ask for them.)');\nif (replyTo) lines.push(`They replied to this message of yours: <<<\n${replyTo}\n>>>`);\nlines.push(`Your manager wrote: <<<\n${m.text}\n>>>`);\nreturn [{\n  json: {\n    images: m.images,\n    post_id: postId,\n    has_text: Boolean(m.text),\n    mode: 'chat',\n    text: lines.join('\\n'),\n    reply_to: m.message_id,\n    open_id: m.open_id,\n    event: {\n      type: postId && replyTo ? 'change_request' : 'manager_note',\n      post_id: postId,\n      offer_id: offerId,\n      text: replyTo ? `${m.text}\\n(in reply to: ${replyTo.slice(0, 300)})` : m.text,\n    },\n  },\n}];"
       },
       "position": [
         2860,
@@ -862,6 +945,270 @@
       ],
       "type": "n8n-nodes-base.code",
       "typeVersion": 2
+    },
+    {
+      "id": "9e4194fd-a2bf-5b36-914d-d0dc687c1213",
+      "name": "Pictures?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "0c59663c-9d08-566d-8b19-5c1759d8e58d",
+              "leftValue": "={{ $json.images.length > 0 }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        3080,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "4ca5d77e-c579-5567-860d-ed4769eb039d",
+      "name": "Picture post",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ $('Agent input').first().json.post_id || 0 }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        3300,
+        -200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "91ee161e-dd8a-54ef-9090-7bd24adc519d",
+      "name": "Attach pictures",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst a = $('Agent input').first().json;\nconst p = rowsOf('Picture post')[0];\nconst reply_to = a.reply_to;\nif (!a.post_id || !p) {\n  return [{ json: { ok: false, reply_to, text: 'To add a picture, reply to that post\\'s draft card with it, so I know which post it belongs to.' } }];\n}\nif (!['planned', 'awaiting_approval', 'approved', 'publish_failed'].includes(p.status)) {\n  return [{ json: { ok: false, reply_to, text: `Post #${p.Id} is ${p.status}; the picture was not added.` } }];\n}\nconst lines = (p.images || '').split('\\n').filter((l) => l.trim());\na.images.forEach((key) => lines.push(`${a.reply_to} ${key}`));\nconst kept = lines.slice(-10);\nreturn [{\n  json: {\n    ok: true,\n    Id: p.Id,\n    images: kept.join('\\n'),\n    reply_to,\n    text: `📷 Got ${a.images.length} picture${a.images.length > 1 ? 's' : ''} for post #${p.Id}. ${kept.length > 1 ? `All ${kept.length} go` : 'It goes'} out with it.${lines.length > 10 ? ' Facebook takes 10 at most, so only the last 10 are kept.' : ''}`,\n    event: `Manager sent ${a.images.length} picture(s) for post #${p.Id} \"${p.title}\"`,\n  },\n}];"
+      },
+      "position": [
+        3520,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "3945815a-ee78-50d4-a7be-c2d486bc922d",
+      "name": "Picture added?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "e14ce830-a144-56b6-9275-5a8abd034f3b",
+              "leftValue": "={{ $json.ok }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        3740,
+        -200
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "d1811263-0c10-558b-a3ec-c01e92c43cfd",
+      "name": "Save pictures",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "images": "={{ $json.images }}"
+          }
+        },
+        "id": "={{ $json.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        3960,
+        -400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "89717c55-4700-51ac-b1c3-7aee06e02354",
+      "name": "Log pictures",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "post_id": "={{ $('Attach pictures').first().json.Id }}",
+            "text": "={{ $('Attach pictures').first().json.event }}",
+            "type": "manager_note"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        4180,
+        -400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "a593cbc9-5d77-51d8-af37-4514737cacb4",
+      "name": "Confirm pictures",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SRT1dYKEzsyQyQBR"
+        }
+      },
+      "position": [
+        3960,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "be89050d-6d5a-5fa5-990c-e31e04aa6745",
+      "name": "Has text?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d9e6059d-cd8a-557d-aa55-d45f55df9d08",
+              "leftValue": "={{ $('Agent input').first().json.has_text }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        3080,
+        400
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
     },
     {
       "credentials": {
@@ -883,10 +1230,10 @@
           "schema": [],
           "value": {
             "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
-            "offer_id": "={{ $json.event.offer_id }}",
-            "post_id": "={{ $json.event.post_id }}",
-            "text": "={{ $json.event.text }}",
-            "type": "={{ $json.event.type }}"
+            "offer_id": "={{ $('Agent input').first().json.event.offer_id }}",
+            "post_id": "={{ $('Agent input').first().json.event.post_id }}",
+            "text": "={{ $('Agent input').first().json.event.text }}",
+            "type": "={{ $('Agent input').first().json.event.type }}"
           }
         },
         "operation": "create",
@@ -903,7 +1250,7 @@
         }
       },
       "position": [
-        3080,
+        3300,
         400
       ],
       "type": "n8n-nodes-base.nocoDb",

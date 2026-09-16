@@ -240,6 +240,10 @@ Verified with the Lark content bot (custom app, credential `Lark content bot`).
   `msg_type`, `parent_id` and `body.content` as a JSON string.
 - A wiki link resolves with `GET wiki/v2/spaces/get_node?token=` to `node.obj_token`, and `GET
   docx/v1/documents/<obj_token>/raw_content` returns the text once the app is added to the doc.
+- A picture sent to the bot arrives as `msg_type: image` with content `{"image_key"}`, or as `img`
+  elements inside a `post` message. `GET im/v1/messages/<message id>/resources/<image key>?type=image`
+  returns the file with the scopes above; a key that is not in the message answers `234003 File not
+  in msg`.
 - An execution retried with `POST /executions/<id>/retry` reuses the stored output of the nodes
   before the failed one, so a stale token is reused. Replay the webhook body instead.
 
@@ -254,6 +258,10 @@ everything on your Page").
 - Post insights `post_impressions` and `post_impressions_unique` answer `(#100) The value must be a
   valid insights metric`. `post_total_media_view_unique`, `post_media_view`, `post_clicks` and
   `post_reactions_by_type_total` work.
+- A post with photos: upload each with `POST me/photos` (multipart `source`, `published=false`),
+  then `POST me/feed` with JSON `{"message", "attached_media": [{"media_fbid": <photo id>}]}`.
+  Deleting the post deletes its photos. In n8n the upload is an HTTP Request node with
+  `contentType: multipart-form-data` and a `formBinaryData` body parameter named `source`.
 - `GET /<post id>/comments` returns the text but no `from` for commenters: that needs the Business
   Asset User Profile Access feature.
 - `debug_token` on the page token shows `expires_at: 0` but a `data_access_expires_at` 90 days out.
