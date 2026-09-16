@@ -133,15 +133,20 @@ change. Reply to anything to correct it.
 before they are due, to post by hand. Automatic publishing, post metrics and audience comments
 need a Page access token that does not expire:
 
-1. At https://developers.facebook.com create an app (type Business).
-2. In Graph API Explorer, pick the app and get a User token with `pages_show_list`,
-   `pages_read_engagement`, `pages_manage_posts` and `pages_read_user_content`, choosing the
-   page.
-3. Exchange it for a long-lived token:
+1. At https://developers.facebook.com create an app with the use case "Manage everything on your
+   Page" (Meta no longer has app types). On an existing app: Use cases, Add use case. The agent
+   needs no Messenger use case.
+2. Use cases, "Manage everything on your Page", Customize: add `pages_manage_posts`,
+   `pages_read_engagement`, `pages_read_user_content` and `read_insights`. Remove
+   `pages_manage_engagement` unless the agent should reply to comments. You manage the Page and
+   the app, so standard access works without App Review.
+3. In Graph API Explorer, pick the app, Get User Access Token with those permissions, and choose
+   the page in the dialog.
+4. Exchange it for a long-lived token:
    `GET /oauth/access_token?grant_type=fb_exchange_token&client_id=<app id>&client_secret=<app secret>&fb_exchange_token=<token>`.
-4. `GET /me/accounts` with the long-lived token returns the page's `access_token`. Check it in the
+5. `GET /me/accounts` with the long-lived token returns the page's `access_token`. Check it in the
    Access Token Debugger: it should never expire.
-5. Switch the app to Live mode (it needs a privacy policy URL); posts made by an app in
+6. Switch the app to Live mode (it needs a privacy policy URL); posts made by an app in
    development mode can be hidden from the public.
-6. Put the token in `.credentials.env` as `FACEBOOK_PAGE_TOKEN`, the page id in `facebook_page_id`,
+7. Put the token in `.credentials.env` as `FACEBOOK_PAGE_TOKEN`, the page id in `facebook_page_id`,
    and ask Claude to connect publishing and metrics.
