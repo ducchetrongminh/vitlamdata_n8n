@@ -497,7 +497,7 @@
       "id": "220d1c99-4448-485f-8912-292f2032815c",
       "name": "Show structures",
       "parameters": {
-        "completionMessage": "={{ (() => {\n  const s = $('Split structures').first().json;\n  const id = $json.Id;\n  const base = 'https://n8n.vitlamdata.com/webhook/idea-approve?id=' + id + '&token=' + s.approval_token + '&structure=';\n  return [\n    'STRUCTURE 1', s.structure_1, '',\n    'STRUCTURE 2', s.structure_2, '',\n    'STRUCTURE 3', s.structure_3, '',\n    'EVALUATION', s.evaluation, '',\n    'The judge picks structure ' + s.chosen_structure + '. Approve by opening one link:',\n    '1: ' + base + '1',\n    '2: ' + base + '2',\n    '3: ' + base + '3',\n    '',\n    'Do nothing and the post is written from structure ' + s.chosen_structure + ' one day from now.'\n  ].join('\\n');\n})() }}",
+        "completionMessage": "={{ (() => {\n  const s = $('Split structures').first().json;\n  const id = $json.id;\n  const base = 'https://n8n.vitlamdata.com/webhook/idea-approve?id=' + id + '&token=' + s.approval_token + '&structure=';\n  return [\n    'STRUCTURE 1', s.structure_1, '',\n    'STRUCTURE 2', s.structure_2, '',\n    'STRUCTURE 3', s.structure_3, '',\n    'EVALUATION', s.evaluation, '',\n    'The judge picks structure ' + s.chosen_structure + '. Approve by opening one link:',\n    '1: ' + base + '1',\n    '2: ' + base + '2',\n    '3: ' + base + '3',\n    '',\n    'Do nothing and the post is written from structure ' + s.chosen_structure + ' one day from now.'\n  ].join('\\n');\n})() }}",
         "completionTitle": "=Three ways to write it",
         "operation": "completion",
         "options": {},
