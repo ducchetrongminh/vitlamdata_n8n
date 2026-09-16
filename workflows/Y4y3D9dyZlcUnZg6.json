@@ -1,0 +1,778 @@
+{
+  "active": true,
+  "connections": {
+    "Build draft card": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Send draft card",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Check draft": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Evaluate",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "DeepSeek judge": {
+      "ai_languageModel": [
+        [
+          {
+            "index": 0,
+            "node": "Check draft",
+            "type": "ai_languageModel"
+          }
+        ]
+      ]
+    },
+    "DeepSeek writer": {
+      "ai_languageModel": [
+        [
+          {
+            "index": 0,
+            "node": "Write draft",
+            "type": "ai_languageModel"
+          }
+        ]
+      ]
+    },
+    "Done?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Draft fields",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Write draft",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Draft fields": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save draft",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Evaluate": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Done?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Get context": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load offer",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Guard": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Mark drafting",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Judge input": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Check draft",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load offer": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load series",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load piece": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Guard",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load series": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load stories",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load stories": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Writer input",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Mark drafting": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Get context",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save draft": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Build draft card",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Send draft card": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load piece",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Write draft": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Judge input",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Writer input": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Write draft",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Sub-workflow called with {piece_id, feedback?, material?}: drafts one content_strategy.pieces row with the framework of its kind, runs the pre-publish check (relevant, closer, connected, structure, rules, invented facts) and rewrites up to 3 drafts in total until it passes, then saves the draft as awaiting_approval (or needs_attention) and sends it to Lark with approve/reject buttons.",
+  "id": "Y4y3D9dyZlcUnZg6",
+  "isArchived": false,
+  "name": "Strategy: write piece",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "30657132-a927-5ef4-a6d0-40642e87a66d",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "200b6e78-0af0-5ed0-8f75-9bf9ae98499f",
+      "name": "Load piece",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ Number($json.piece_id) || 0 }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m5olbr51c58e7u4"
+        }
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "faf4c81a-71ec-58da-add9-5983cd8ac61b",
+      "name": "Guard",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst input = $('When called').first().json;\nconst piece = rowsOf('Load piece')[0];\nif (!piece) throw new Error(`Piece ${input.piece_id} not found`);\nconst feedback = (input.feedback || '').toString().trim();\nconst material = (input.material || '').toString().trim();\nif (['published', 'scheduled'].includes(piece.status)) {\n  throw new Error(`Piece ${piece.Id} \"${piece.title}\" is already ${piece.status}; it is not rewritten.`);\n}\nif (piece.status === 'rejected' && !feedback && !material) {\n  throw new Error(`Piece ${piece.Id} \"${piece.title}\" is rejected; reply to its card with changes to revive it.`);\n}\nconst stamp = DateTime.now().setZone(TZ).toFormat('yyyy-MM-dd HH:mm');\nconst append = (old, add) => (add ? [old, `[${stamp}] ${add}`].filter(Boolean).join('\\n\\n') : (old || ''));\nreturn [{\n  json: {\n    piece,\n    feedback_new: feedback,\n    feedback: append(piece.feedback, feedback),\n    material: append(piece.material, material),\n  },\n}];"
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "765dea98-f238-5f1e-8456-ff5691828a0e",
+      "name": "Mark drafting",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "feedback": "={{ $json.feedback }}",
+            "material": "={{ $json.material }}",
+            "status": "drafting"
+          }
+        },
+        "id": "={{ $json.piece.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m5olbr51c58e7u4"
+        }
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "eaab4665-49d4-5a82-a9ad-aa28dc05d61f",
+      "name": "Get context",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ybUCcL7dsxaCKM2d"
+        }
+      },
+      "position": [
+        880,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "89d99302-6ca7-5c67-a7d6-fffeb71c17bb",
+      "name": "Load offer",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ Number($('Guard').first().json.piece.offer_id) || 0 }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mthoz2omggbl955"
+        }
+      },
+      "position": [
+        1100,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "81f5c508-60e3-5d62-8446-b78e8c7fa28a",
+      "name": "Load series",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "asc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "publish_at"
+                }
+              }
+            ]
+          },
+          "where": "=(offer_id,eq,{{ Number($('Guard').first().json.piece.offer_id) || 0 }})~and(status,neq,rejected)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m5olbr51c58e7u4"
+        }
+      },
+      "position": [
+        1320,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "d2fad7f7-a8da-5782-9a37-1b0926756de6",
+      "name": "Load stories",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 20,
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "desc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "created_at"
+                }
+              }
+            ]
+          }
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mrixvhkbw2zn63n"
+        }
+      },
+      "position": [
+        1540,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "917be261-7333-5491-a990-a81521a5650a",
+      "name": "Writer input",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst FRAMEWORK = {\n  education: 'Education. Makes the brand the authority on this problem. Open with the problem in the reader\\'s own words and what it costs them. Then a clear sequence of 3 to 7 steps or points, each concrete and doable, visibly separated (numbered or one per paragraph). The title does not need to be a list; the body does. Close with what changes when they do this, and a light question or invitation to save. It sets up the offer by teaching what the reader must understand, never by pitching.',\n  story: 'Story. Intent, obstacle, resolution: we set out to give you [benefit]; but [problem] got in the way; so we [sacrifice or decision], because giving you [benefit] matters that much. Told as one episode of the brand\\'s mission, with a concrete moment, a real tension and the value that was tested. End on what it means for the reader. No selling.',\n  offer_launch: 'Sales, offer launch. Open with a hook tied to the reason. Weave in a short story (intent, obstacle, resolution) that leads to the offer. State the offer plainly: product, deal, end date. Give the reason explicitly: why this offer exists now. Say who it is for and what they get, using what the run-up taught. One clear call to action, with the link when there is one.',\n  offer_reminder: 'Sales, offer reminder. Shorter than the launch. A new angle: a proof point, an answered objection, or the approaching end date. Restate the offer, the reason and the end date plainly. One clear call to action, with the link when there is one.',\n};\n\nconst g = $('Guard').first().json;\nconst piece = g.piece;\nconst ctx = $('Get context').first().json;\nconst offer = rowsOf('Load offer')[0] || null;\nconst series = rowsOf('Load series');\nconst stories = rowsOf('Load stories');\nconst at = parseDt(piece.publish_at);\nconst sales = ['offer_launch', 'offer_reminder'].includes(piece.kind);\nconst lines = (s) => (s || '').split('\\n').filter(Boolean).map((l) => `- ${l}`).join('\\n');\n\nconst index = series.findIndex((p) => p.Id === piece.Id);\nconst before = series.slice(0, Math.max(index, 0));\nconst after = index >= 0 ? series.slice(index + 1) : [];\nconst seriesText = [\n  ...before.map((p, i) => {\n    const head = `- ${parseDt(p.publish_at).toFormat('dd/MM')} ${p.kind}: ${p.title}`;\n    const recentDraft = i >= before.length - 2 && p.draft ? `\\n  Opening of that post: ${p.draft.slice(0, 280).replace(/\\n+/g, ' ')}` : '';\n    return head + recentDraft;\n  }),\n  `- ${at.toFormat('dd/MM')} ${piece.kind}: ${piece.title}   <== THIS POST`,\n  ...after.map((p) => `- ${parseDt(p.publish_at).toFormat('dd/MM')} ${p.kind}: ${p.title}`),\n].join('\\n');\n\nconst offerText = offer ? [\n  `${offer.title}: ${offer.product}, ${offer.offer}.`,\n  `Reason (${offer.reason_type}): ${offer.reason}`,\n  `Launch ${offer.launch_date}, reminder ${offer.reminder_date}, ends ${offer.ends_on}.${offer.landing_url ? ` Link: ${offer.landing_url}` : ''}`,\n  `Must know:\\n${lines(offer.must_know)}`,\n  `Must feel:\\n${lines(offer.must_feel)}`,\n].join('\\n') : '(no offer linked)';\n\nconst facts = [\n  `Author's material (true, use it):\\n${g.material || '(none)'}`,\n  `Story bank (true events you may use):\\n${stories.map((s) => `#${s.Id}: ${(s.text || '').toString().slice(0, 800)}`).join('\\n') || '(empty)'}`,\n  `Brand docs:\\n${ctx.brand}`,\n].join('\\n\\n');\n\nconst base = [\n  `Brand: ${ctx.page_name}. Language of the post: ${ctx.language}.`,\n  `Kind: ${piece.kind}. Framework: ${FRAMEWORK[piece.kind] || ''}`,\n  sales ? '' : 'This post must not sell: no price, discount, deadline, link or call to buy. It may end with a question, or an invitation to comment or save.',\n  '',\n  `Offer this post leads toward:\\n${offerText}`,\n  '',\n  `Post: ${piece.title}`,\n  `Publishes: ${at.toFormat('cccc dd/MM/yyyy HH:mm')}`,\n  `Sets up: ${piece.sets_up || '(not stated)'}`,\n  `Brief:\\n${piece.brief || ''}`,\n  '',\n  `The author's change requests (apply every one; newest last):\\n${g.feedback || '(none)'}`,\n  '',\n  `The series leading to the offer (keep continuity, do not repeat what earlier posts said):\\n${seriesText}`,\n  '',\n  `Rules learned from past months:\\n${ctx.rules || '(none yet)'}`,\n  '',\n  `Hooks that did well for similar pages (rhythm only, never copy):\\n${ctx.references.map((r) => `- ${r.hook}`).join('\\n') || '(none)'}`,\n  '',\n  facts,\n].join('\\n');\n\nconst previous = g.feedback_new && piece.draft ? piece.draft : '';\nconst writer_text = previous\n  ? `${base}\\n\\nThe current draft, to rewrite with the author's newest change request:\\n<<<\\n${previous}\\n>>>`\n  : base;\n\nreturn [{\n  json: {\n    attempt: 1,\n    writer_text,\n    base,\n    facts,\n    offer_text: offerText,\n    piece,\n    sales,\n    language: ctx.language,\n    landing_url: offer ? offer.landing_url || '' : '',\n    ends_on: offer ? offer.ends_on || '' : '',\n  },\n}];"
+      },
+      "position": [
+        1760,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "deepSeekApi": {
+          "id": "0kIQ7WLWq3QZFpAf",
+          "name": "DeepSeek bot"
+        }
+      },
+      "id": "e6b2bf22-0e66-5ab7-a277-e412664f7b8d",
+      "name": "DeepSeek writer",
+      "parameters": {
+        "model": "deepseek-chat",
+        "options": {
+          "temperature": 0.8
+        }
+      },
+      "position": [
+        1980,
+        200
+      ],
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1
+    },
+    {
+      "credentials": {
+        "deepSeekApi": {
+          "id": "0kIQ7WLWq3QZFpAf",
+          "name": "DeepSeek bot"
+        }
+      },
+      "id": "083dd782-e950-5420-96ea-1ac6428c413b",
+      "name": "DeepSeek judge",
+      "parameters": {
+        "model": "deepseek-chat",
+        "options": {
+          "responseFormat": "json_object",
+          "temperature": 0
+        }
+      },
+      "position": [
+        2420,
+        200
+      ],
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1
+    },
+    {
+      "id": "784d1a33-6b9f-5c9b-a017-7b31fa837855",
+      "name": "Write draft",
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You write one Facebook post for a small Vietnamese brand from a plan. You follow the brand's strategy and the framework for the post's kind exactly.\n\nHard rules:\n- Use only facts from the brand docs, the author's material, the story bank and the offer. Invent no numbers, names, clients, results, quotes or events. General know-how (how SQL works, how to structure a report) and hypotheticals addressed to the reader are fine. When a beat needs a real detail you do not have, write the beat so it works without it.\n- In anything that happened to the author, the brand, a client or a student, tell only what the facts state. Add no scenes, dialogue, people, actions, reasons, reactions, timings or numbers they do not state. When the story feels thin, spend the words on what it means for the reader.\n- Sound like the author talking to one reader, not like a brand. Short paragraphs, one idea each. Cut every sentence that carries no information.\n- No hashtags. At most two emojis. No markdown headings.\n- Output the post text only: no title line, no notes, no quotation marks around it."
+            }
+          ]
+        },
+        "promptType": "define",
+        "text": "={{ $json.writer_text }}"
+      },
+      "position": [
+        1980,
+        0
+      ],
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7
+    },
+    {
+      "id": "7a79dd89-c3fe-549e-affc-29d77154dc02",
+      "name": "Judge input",
+      "parameters": {
+        "jsCode": "const FRAMEWORK = {\n  education: 'Education. Makes the brand the authority on this problem. Open with the problem in the reader\\'s own words and what it costs them. Then a clear sequence of 3 to 7 steps or points, each concrete and doable, visibly separated (numbered or one per paragraph). The title does not need to be a list; the body does. Close with what changes when they do this, and a light question or invitation to save. It sets up the offer by teaching what the reader must understand, never by pitching.',\n  story: 'Story. Intent, obstacle, resolution: we set out to give you [benefit]; but [problem] got in the way; so we [sacrifice or decision], because giving you [benefit] matters that much. Told as one episode of the brand\\'s mission, with a concrete moment, a real tension and the value that was tested. End on what it means for the reader. No selling.',\n  offer_launch: 'Sales, offer launch. Open with a hook tied to the reason. Weave in a short story (intent, obstacle, resolution) that leads to the offer. State the offer plainly: product, deal, end date. Give the reason explicitly: why this offer exists now. Say who it is for and what they get, using what the run-up taught. One clear call to action, with the link when there is one.',\n  offer_reminder: 'Sales, offer reminder. Shorter than the launch. A new angle: a proof point, an answered objection, or the approaching end date. Restate the offer, the reason and the end date plainly. One clear call to action, with the link when there is one.',\n};\n\n// In a rewrite round the state comes from the last Evaluate, else from Writer input.\nconst state = $('Evaluate').isExecuted ? $('Evaluate').last().json : $('Writer input').first().json;\nconst draft = ($json.text || '').toString().trim().replace(/^[\"“](.*)[\"”]$/s, '$1');\nconst p = state.piece;\nconst judge_text = [\n  `${state.facts}`,\n  '',\n  `Kind: ${p.kind}. Framework: ${FRAMEWORK[p.kind] || ''}`,\n  `Assigned offer:\\n${state.offer_text}`,\n  `Plan: ${p.title}\\nSets up: ${p.sets_up || ''}\\nBrief:\\n${p.brief || ''}`,\n  '',\n  `Draft (language must be ${state.language}):`,\n  '<<<',\n  draft,\n  '>>>',\n  '',\n  'Check the draft:',\n  '1. relevant: is it useful, interesting or important to this audience?',\n  '2. closer: does it bring the reader closer to the brand and its product?',\n  '3. connected: does it clearly lead toward the assigned offer? Education and story do it by setting up what the audience must know or feel, without selling. Name the offer it leads to.',\n  '4. structure: does it follow its framework? Education: a clear sequence of steps or points. Story: intent, obstacle, resolution. Launch: offer, reason, story, call to action. Reminder: offer, reason, end date, a new angle.',\n  '5. violations: selling in an education or story post; a sales post missing the reason or the end date; offer details that differ from the assigned offer; a title line or notes around the post; the wrong language.',\n  '6. claims: list every concrete claim in the draft about the author, the brand, a product, a client, a student or an event: who did what, what happened, numbers, durations, quotes, details of a scene. For each, copy into source the exact sentence from the author material, story bank, offer or brand docs above that states it, character for character; leave source empty when nothing there states it. general is true only for know-how or a hypothetical addressed to the reader; anything that happened to someone is never general.',\n  '',\n  'Answer with JSON in exactly this shape:',\n  '{\"relevant\": {\"pass\": true, \"why\": \"\"}, \"closer\": {\"pass\": true, \"why\": \"\"}, \"connected\": {\"pass\": true, \"leads_to\": \"\", \"why\": \"\"}, \"structure\": {\"pass\": true, \"why\": \"\"}, \"violations\": [], \"claims\": [{\"claim\": \"\", \"source\": \"\", \"general\": false}], \"fix\": \"\", \"question_for_author\": \"\"}',\n  'why: one sentence in English. fix: concrete rewrite instructions in English, empty when everything passes. question_for_author: only when the post needs a real detail only the author knows, in the post language; else empty.',\n].join('\\n');\nreturn [{ json: { ...state, draft, judge_text } }];"
+      },
+      "position": [
+        2200,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "b86b7e4c-e2df-52a1-ad9f-360ab46b09ca",
+      "name": "Check draft",
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are the pre-publish checker of a small Vietnamese brand's Facebook page. Be strict: a weak post spends the audience's trust. Judge the draft against the strategy, its kind's framework and its plan, and answer with JSON only.\n\nThe strategy (follow it exactly):\n- All content is one of three types: sales, education or story. Education and story build trust between offers; offers turn that trust into revenue.\n- Two offers per month. Each offer is one launch post plus one reminder post. There is no other sales content.\n- Sales: keep the offer simple (percent off, amount off, a free extra, buy one get one, bundle and save). Always give a reason: a calendar date, limited capacity, a milestone, or a playful reason that fits the brand. People buy on emotion and justify with logic; the reason is the logic.\n- Education makes the brand the authority the audience trusts. Topics come from the problems the products solve: for each problem, what must the customer understand before the product is clearly the best solution? Each answer is a piece. Every piece is a clear sequence of steps or points. Education published before an offer sets up that specific offer.\n- Story: intent, obstacle, resolution. \"We set out to give you [benefit]. But [problem] got in the way. So we [sacrifice or decision], because giving you [benefit] matters that much to us.\" The brand mission is the series and each post is an episode. Stories come from the mission, brand values, product values and what the brand stands against. The strongest stories test those values while solving the problem the product addresses. Stories are also built into sales and education posts.\n- Pre-publish check, every post: Relevant (useful, interesting or important to the audience), Closer (brings people closer to the brand and product), Connected (leads toward a specific offer). A post failing any is reworked or cut."
+            }
+          ]
+        },
+        "promptType": "define",
+        "text": "={{ $json.judge_text }}"
+      },
+      "position": [
+        2420,
+        0
+      ],
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7
+    },
+    {
+      "id": "b8814733-2e1a-5b47-b7ed-5d87313976bb",
+      "name": "Evaluate",
+      "parameters": {
+        "jsCode": "const parseJson = (s) => {\n  const t = String(s || '').replace(/```(?:json)?/gi, '');\n  const a = t.indexOf('{');\n  const b = t.lastIndexOf('}');\n  if (a < 0 || b <= a) throw new Error('no JSON object in the model output');\n  return JSON.parse(t.slice(a, b + 1));\n};\n\nconst state = $('Judge input').last().json;\nconst draft = state.draft;\n// In JSON response mode the chain node returns the parsed object instead of { text }.\nlet v;\ntry {\n  v = $json.text === undefined ? $json : parseJson($json.text);\n} catch (e) {\n  v = { fix: 'The check could not be read; tighten the post and follow the framework exactly.' };\n}\nconst arr = (x) => (Array.isArray(x) ? x : x ? [x] : []).map((s) => s.toString().trim()).filter(Boolean);\nconst checks = ['relevant', 'closer', 'connected', 'structure'];\nconst violations = arr(v.violations);\n\n// A claim counts as supported only if its quoted source really is in the facts.\nconst norm = (t) => String(t || '').toLowerCase().normalize('NFC').replace(/[^\\p{L}\\p{N}]+/gu, ' ').trim();\nconst facts = norm(`${state.facts}\n${state.offer_text}`);\nconst factWords = new Set(facts.split(' '));\nconst supported = (source) => {\n  const src = norm(source);\n  if (src.length < 8) return false;\n  if (facts.includes(src)) return true;\n  const words = src.split(' ').filter((w) => w.length > 1);\n  return words.length >= 4 && words.filter((w) => factWords.has(w)).length / words.length >= 0.85;\n};\nconst claims = Array.isArray(v.claims) ? v.claims : [];\nconst invented = claims\n  .filter((c) => c && c.claim && c.general !== true && !supported(c.source))\n  .map((c) => c.claim.toString().trim());\n\n// Rules the model tends to miss, checked by code.\nif (/(^|\\s)#[\\p{L}\\d_]+/u.test(draft)) violations.push('Contains hashtags.');\nif ((draft.match(/\\p{Extended_Pictographic}/gu) || []).length > 2) violations.push('More than two emojis.');\nif (!state.sales) {\n  if (state.landing_url && draft.includes(state.landing_url)) violations.push('Links the offer in a non-sales post.');\n  if (/(\\d+\\s?%|giảm giá|khuyến mãi|ưu đãi|mã giảm|voucher|đăng ký ngay|mua ngay|chốt đơn)/i.test(draft)) violations.push('Mentions a discount or a call to buy in a non-sales post.');\n}\nif (draft.length < 200) violations.push('Too short to deliver the brief.');\n\nconst failed = checks.filter((k) => !(v[k] && v[k].pass === true));\nconst passed = failed.length === 0 && violations.length === 0 && invented.length === 0;\nconst mark = (k) => `${v[k] && v[k].pass === true ? '✅' : '❌'} ${k}: ${(v[k] && v[k].why) || 'not judged'}`;\nconst report = [\n  ...checks.map(mark),\n  v.connected && v.connected.leads_to ? `Leads to: ${v.connected.leads_to}` : '',\n  violations.length ? `❌ rules: ${violations.join(' ')}` : '✅ rules',\n  invented.length ? `❌ invented: ${invented.join(' | ')}` : '✅ nothing invented',\n].filter(Boolean).join('\\n');\nconst question = (v.question_for_author || '').toString().trim();\n\nif (passed || state.attempt >= 3) {\n  return [{ json: { ...state, done: true, passed, report, question, draft } }];\n}\nconst fix = [\n  ...failed.map((k) => `${k}: ${(v[k] && v[k].why) || 'failed'}`),\n  ...violations,\n  ...invented.map((c) => `Remove this claim, or tell it only as far as the facts state it: ${c}`),\n  v.fix || '',\n].filter(Boolean).map((l) => `- ${l}`).join('\\n');\nreturn [{\n  json: {\n    ...state,\n    done: false,\n    attempt: state.attempt + 1,\n    writer_text: `${state.base}\\n\\nYour previous draft failed the pre-publish check:\\n<<<\\n${draft}\\n>>>\\n\\nWrite a new draft that fixes all of this:\\n${fix}`,\n  },\n}];"
+      },
+      "position": [
+        2640,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "387db035-9226-5ee1-924c-fc37295d7cc2",
+      "name": "Done?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "476f98b5-5a6a-5ddb-820f-896217fe1feb",
+              "leftValue": "={{ $json.done }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        2860,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "98b55e7b-0214-59c3-9bbb-ab7deb4efad4",
+      "name": "Draft fields",
+      "parameters": {
+        "jsCode": "const newToken = () => Array.from({ length: 24 }, () => 'abcdefghijklmnopqrstuvwxyz0123456789'[Math.floor(Math.random() * 36)]).join('');\n\nconst e = $json;\nreturn [{\n  json: {\n    ...e,\n    status: e.passed ? 'awaiting_approval' : 'needs_attention',\n    approval_token: newToken(),\n    check_report: e.question ? `${e.report}\\n❓ ${e.question}` : e.report,\n  },\n}];"
+      },
+      "position": [
+        3080,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "ff408585-6000-5220-8d5e-1b6e31ebfb84",
+      "name": "Save draft",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "approval_token": "={{ $json.approval_token }}",
+            "check_passed": "={{ $json.passed }}",
+            "check_report": "={{ $json.check_report }}",
+            "draft": "={{ $json.draft }}",
+            "revisions": "={{ $json.attempt }}",
+            "status": "={{ $json.status }}"
+          }
+        },
+        "id": "={{ $json.piece.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m5olbr51c58e7u4"
+        }
+      },
+      "position": [
+        3300,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "32d1d154-230e-5b32-a018-16befe5cafc8",
+      "name": "Build draft card",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst d = $('Draft fields').first().json;\nconst p = d.piece;\nconst at = parseDt(p.publish_at);\nconst kindLabel = { education: 'Education', story: 'Story', offer_launch: 'Offer launch', offer_reminder: 'Offer reminder' };\nconst color = { education: 'blue', story: 'purple', offer_launch: 'red', offer_reminder: 'orange' };\nconst elements = [\n  { tag: 'markdown', content: `**Goes out** ${at.toFormat('cccc dd/MM HH:mm')}\\n**Sets up:** ${p.sets_up || '-'}` },\n  { tag: 'hr' },\n  { tag: 'div', text: { tag: 'plain_text', content: d.draft } },\n  { tag: 'hr' },\n  {\n    tag: 'markdown',\n    content: (d.passed\n      ? `**Pre-publish check passed** (draft ${d.attempt})\\n`\n      : `**⚠️ Still failing the check after ${d.attempt} drafts.** Approve it anyway, reject it, or reply with what it needs.\\n`) + d.check_report,\n  },\n  {\n    tag: 'column_set',\n    flex_mode: 'flow',\n    columns: [['Approve', 'primary', 'piece_approve'], ['Reject', 'danger', 'piece_reject']].map(([label, type, a]) => ({\n      tag: 'column',\n      width: 'auto',\n      elements: [{\n        tag: 'button',\n        type,\n        text: { tag: 'plain_text', content: label },\n        behaviors: [{ type: 'callback', value: { a, id: p.Id, t: d.approval_token } }],\n      }],\n    })),\n  },\n  { tag: 'markdown', content: 'Reply to this card with changes or missing facts and I rewrite it.' },\n];\nreturn [{\n  json: {\n    card: {\n      schema: '2.0',\n      header: {\n        title: { tag: 'plain_text', content: `${kindLabel[p.kind] || p.kind} · ${at.toFormat('dd/MM')} · ${p.title}`.slice(0, 100) },\n        template: d.passed ? (color[p.kind] || 'blue') : 'grey',\n      },\n      body: { elements },\n    },\n    ref: `piece:${p.Id}`,\n    purpose: 'draft_card',\n  },\n}];"
+      },
+      "position": [
+        3520,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "34d7969e-3b57-525a-8943-02697e31409f",
+      "name": "Send draft card",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "b7JEQEXu4C6TiOa5"
+        }
+      },
+      "position": [
+        3740,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "430a0a32-98b6-54d7-9421-1364430ab889",
+      "name": "Result",
+      "parameters": {
+        "jsCode": "const d = $('Draft fields').first().json;\nreturn [{ json: { piece_id: d.piece.Id, status: d.status, attempts: d.attempt } }];"
+      },
+      "position": [
+        3960,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "VykjVIzsFCNavyQp",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

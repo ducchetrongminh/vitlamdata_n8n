@@ -1,0 +1,596 @@
+{
+  "active": true,
+  "connections": {
+    "Approve offer": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load month offers",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Approve piece": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Publish if due",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Decide": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Route",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Reply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load month offers": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Month ready?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load row": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Decide",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load row",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Month ready?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Plan month",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Reject offer": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Replacement request",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Replacement request": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Propose replacement",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Route": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Approve offer",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Reject offer",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Approve piece",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Reject piece",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load settings",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Sub-workflow for Lark card buttons {action, id, token, operator, message_id}. Accepts a click only from the open_id in settings and with the row's current approval_token. Offer approve: plans the month once it has two approved offers and none proposed. Offer reject: proposes a replacement. Piece approve: runs 'Strategy: publish due'. Replies in Lark either way.",
+  "id": "pi6kXrwpmS7B4feS",
+  "isArchived": false,
+  "name": "Strategy: handle action",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "794ba7eb-5eac-5a1b-a03d-ca794e88f52a",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "6d23c788-de68-56ce-9fac-97fc9cf4c06a",
+      "name": "Load settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mv7h46mjq28a42m"
+        }
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "0ba2aeb6-ef67-58b4-833c-4615ed55d2d8",
+      "name": "Load row",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ Number($('When called').first().json.id) || 0 }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ String($('When called').first().json.action || '').startsWith('offer') ? 'mthoz2omggbl955' : 'm5olbr51c58e7u4' }}"
+        }
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "818ea56f-1eca-58c0-8b53-48c4bc752bc3",
+      "name": "Decide",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\n// route: 0 offer approved, 1 offer rejected, 2 piece approved, 3 piece rejected, 4 reply only\nconst input = $('When called').first().json;\nconst settings = settingsOf('Load settings');\nif (!settings.lark_open_id || input.operator !== settings.lark_open_id) return [];\n\nconst row = rowsOf('Load row')[0];\nconst now = DateTime.now().setZone(TZ);\nconst at = row && row.publish_at ? parseDt(row.publish_at) : null;\nlet route = 4;\nlet text = 'That card is out of date: use the newest card for this item.';\nlet update = null;\n\nif (row && input.token && row.approval_token === input.token) {\n  const a = input.action;\n  if (a === 'offer_approve' || a === 'offer_reject') {\n    if (row.status !== 'proposed') {\n      text = `\"${row.title}\" is already ${row.status}.`;\n    } else if (a === 'offer_approve') {\n      route = 0;\n      update = { status: 'approved', approved_at: now.toISO({ suppressMilliseconds: true }) };\n      text = `✅ Approved: ${row.title}. Planning starts once ${row.month} has two approved offers.`;\n    } else {\n      route = 1;\n      update = { status: 'rejected' };\n      text = `Rejected: ${row.title}. Proposing a replacement; reply to the new card to steer it.`;\n    }\n  } else if (a === 'piece_approve' || a === 'piece_reject') {\n    const open = ['awaiting_approval', 'needs_attention'];\n    if (a === 'piece_approve' && open.includes(row.status)) {\n      route = 2;\n      update = { status: 'approved', approved_at: now.toISO({ suppressMilliseconds: true }) };\n      text = `✅ Approved: ${row.title}. I send it to you to post at ${at.toFormat('HH:mm dd/MM')}.`;\n    } else if (a === 'piece_reject' && [...open, 'approved'].includes(row.status)) {\n      route = 3;\n      update = { status: 'rejected' };\n      text = `Rejected: ${row.title}. Its day stays empty. To get a rewrite instead, reply to the card with what to change.`;\n    } else {\n      text = `\"${row.title}\" is ${row.status}; nothing changed.`;\n    }\n  }\n}\n\nreturn [{\n  json: {\n    route,\n    table: String(input.action || '').startsWith('offer') ? 'offers' : 'pieces',\n    row_id: row ? row.Id : null,\n    month: row ? row.month : null,\n    title: row ? row.title : null,\n    offer: row ? row.offer : null,\n    update,\n    text,\n    reply_to: input.message_id,\n    purpose: 'reply',\n  },\n}];"
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "b7cf9869-b2fa-56ba-95c0-719e526f4a15",
+      "name": "Route",
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 5,
+        "output": "={{ $('Decide').first().json.route }}"
+      },
+      "position": [
+        1100,
+        -200
+      ],
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2
+    },
+    {
+      "id": "227f1c36-8f77-52ab-bd7e-a8235052ca2a",
+      "name": "Reply",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "b7JEQEXu4C6TiOa5"
+        }
+      },
+      "position": [
+        880,
+        600
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "51d4d042-8276-5ae1-87c9-5fc49da52798",
+      "name": "Approve offer",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "approved_at": "={{ $('Decide').first().json.update.approved_at }}",
+            "status": "approved"
+          }
+        },
+        "id": "={{ $('Decide').first().json.row_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mthoz2omggbl955"
+        }
+      },
+      "position": [
+        1320,
+        -600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "e993fceb-fa37-5fc3-8197-05a8562ddbaf",
+      "name": "Load month offers",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "where": "=(month,eq,{{ $('Decide').first().json.month }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mthoz2omggbl955"
+        }
+      },
+      "position": [
+        1540,
+        -600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "dc33aa4c-bcb4-53a5-81f5-ae60c90452fd",
+      "name": "Month ready?",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst month = $('Decide').first().json.month;\nconst offers = rowsOf('Load month offers');\nconst n = (s) => offers.filter((o) => o.status === s).length;\nif (n('proposed') === 0 && n('approved') > 0 && n('approved') + n('planned') + n('done') >= 2) return [{ json: { month } }];\nreturn [];"
+      },
+      "position": [
+        1760,
+        -600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "ba1199b8-658b-5539-8265-4cfef9b7b284",
+      "name": "Plan month",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "NmPMQxv7ApikNVE3"
+        }
+      },
+      "position": [
+        1980,
+        -600
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "33df44f2-6901-5cd2-8f98-73dd32991064",
+      "name": "Reject offer",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "status": "rejected"
+          }
+        },
+        "id": "={{ $('Decide').first().json.row_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mthoz2omggbl955"
+        }
+      },
+      "position": [
+        1320,
+        -400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "5457211f-e163-59d5-a272-2e61d72ccd4a",
+      "name": "Replacement request",
+      "parameters": {
+        "jsCode": "const d = $('Decide').first().json;\nreturn [{ json: { month: d.month, feedback: `The author rejected \"${d.title}\" (${d.offer}). Propose something different.`, replace_proposed: false } }];"
+      },
+      "position": [
+        1540,
+        -400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "3dab7966-f24c-589b-8944-56caecb59a49",
+      "name": "Propose replacement",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "V6sSlMrlijUUzcVF"
+        }
+      },
+      "position": [
+        1760,
+        -400
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "583278c7-0a54-525a-8630-0d600fb03e96",
+      "name": "Approve piece",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "approved_at": "={{ $('Decide').first().json.update.approved_at }}",
+            "status": "approved"
+          }
+        },
+        "id": "={{ $('Decide').first().json.row_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m5olbr51c58e7u4"
+        }
+      },
+      "position": [
+        1320,
+        -200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "9701a9eb-3792-509b-84e7-d4bff3f5b3fd",
+      "name": "Publish if due",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "Yv4ch8SkozB3I7n1"
+        }
+      },
+      "position": [
+        1540,
+        -200
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "1cce4658-2ced-58b7-9562-010b45edc4c3",
+      "name": "Reject piece",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "status": "rejected"
+          }
+        },
+        "id": "={{ $('Decide').first().json.row_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m5olbr51c58e7u4"
+        }
+      },
+      "position": [
+        1320,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "VykjVIzsFCNavyQp",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

@@ -1,0 +1,486 @@
+{
+  "active": true,
+  "connections": {
+    "Anything to plan?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Each offer",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Send nothing to plan",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Build cycles": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Anything to plan?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Each offer": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Plan summary",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Plan cycle",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Get context": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load offers",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load offers": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load pieces",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load pieces": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load stories",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load stories": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Build cycles",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Plan cycle": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Each offer",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Plan summary": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Send plan",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Send plan": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Draft what is due",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Get context",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Called with {month} once the month's offers are approved: for each approved offer, finds the free days from the day after the previous offer's reminder (at most 30 days back, never before tomorrow) to its own reminder, has 'Strategy: plan cycle' plan them, sends the plan to Lark and starts 'Strategy: daily' so posts due soon get drafted.",
+  "id": "NmPMQxv7ApikNVE3",
+  "isArchived": false,
+  "name": "Strategy: plan month",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "3500e010-8e5c-58d5-aa72-516fdf0c2e9b",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "f3f3f086-cad8-5262-926b-2e7cc90c4800",
+      "name": "Get context",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ybUCcL7dsxaCKM2d"
+        }
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "d34fa634-f323-5db6-8e07-cefa07a06b3f",
+      "name": "Load offers",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "asc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "launch_date"
+                }
+              }
+            ]
+          }
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mthoz2omggbl955"
+        }
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "b8e467aa-5e04-599d-a663-6d787af023ab",
+      "name": "Load pieces",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "asc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "publish_at"
+                }
+              }
+            ]
+          },
+          "where": "=(publish_at,gte,exactDate,{{ $now.minus(60, 'days').toISO() }})~and(status,neq,rejected)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m5olbr51c58e7u4"
+        }
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "5646b7ce-b152-59fa-b1e2-da600923b504",
+      "name": "Load stories",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 30,
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "desc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "created_at"
+                }
+              }
+            ]
+          }
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pqg5zgq440rbdg7"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mrixvhkbw2zn63n"
+        }
+      },
+      "position": [
+        880,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "131aa116-79de-59ef-b643-e5fc3c9d7a04",
+      "name": "Build cycles",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst month = ($('When called').first().json.month || '').toString().trim();\nif (!/^\\d{4}-\\d{2}$/.test(month)) throw new Error(`Plan month needs {month: \"YYYY-MM\"}, got \"${month}\"`);\nconst ctx = $('Get context').first().json;\nconst offers = rowsOf('Load offers');\nconst pieces = rowsOf('Load pieces');\nconst stories = rowsOf('Load stories');\nconst today = DateTime.now().setZone(TZ).startOf('day');\n\nconst taken = new Set(pieces.map((p) => parseDt(p.publish_at).toISODate()));\nconst active = offers\n  .filter((o) => ['approved', 'planned', 'done'].includes(o.status) && o.launch_date && o.reminder_date)\n  .sort((a, b) => (a.launch_date < b.launch_date ? -1 : 1));\nconst toPlan = active.filter((o) => o.month === month && o.status === 'approved');\n\nconst storyList = stories.map((s) => ({ id: s.Id, text: (s.text || '').toString().slice(0, 600) }));\n\nconst cycles = [];\nfor (const offer of toPlan) {\n  const prev = active[active.indexOf(offer) - 1];\n  const launch = parseDate(offer.launch_date);\n  const reminder = parseDate(offer.reminder_date);\n  let start = DateTime.max(today.plus({ days: 1 }), launch.minus({ days: 30 }));\n  if (prev) start = DateTime.max(start, parseDate(prev.reminder_date).plus({ days: 1 }));\n  const slots = [];\n  for (let d = start; d <= reminder; d = d.plus({ days: 1 })) {\n    const iso = d.toISODate();\n    if (taken.has(iso)) continue;\n    const kind = iso === launch.toISODate() ? 'offer_launch' : iso === reminder.toISODate() ? 'offer_reminder' : 'open';\n    slots.push({ date: iso, weekday: d.toFormat('cccc'), kind });\n    taken.add(iso);\n  }\n  if (!slots.length) continue;\n  cycles.push({\n    json: {\n      offer,\n      slots,\n      month,\n      stories: storyList,\n      brand: ctx.brand,\n      rules: ctx.rules,\n      page_name: ctx.page_name,\n      language: ctx.language,\n      post_time: ctx.post_time,\n    },\n  });\n}\nif (!cycles.length) {\n  return [{ json: { skip: true, text: `Nothing to plan for ${month}: no approved offer with free days left.`, ref: `month:${month}`, purpose: 'plan_summary' } }];\n}\nreturn cycles;"
+      },
+      "position": [
+        1100,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "5147e566-3cb2-50a6-a6e6-5b263d17fa53",
+      "name": "Anything to plan?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "f642db43-b001-5498-9101-abcd376e07a3",
+              "leftValue": "={{ !$json.skip }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1320,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "bcd79ca2-7690-541b-8ccb-6a91763395ae",
+      "name": "Each offer",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        1540,
+        0
+      ],
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3
+    },
+    {
+      "id": "123dfbed-7d48-5f40-8f61-9aad8f849607",
+      "name": "Plan cycle",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "osC7QVEur3pNsNDB"
+        }
+      },
+      "position": [
+        1760,
+        200
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "be294a3d-ed07-5bcd-8ced-4ba1bbfce18f",
+      "name": "Plan summary",
+      "parameters": {
+        "jsCode": "const month = $('When called').first().json.month;\nconst label = { education: 'edu', story: 'story', offer_launch: 'LAUNCH', offer_reminder: 'REMINDER' };\nconst fmt = (d) => `${d.slice(8, 10)}/${d.slice(5, 7)}`;\nconst cycles = $input.all().map((i) => i.json).filter((c) => c.pieces);\nconst total = cycles.reduce((n, c) => n + c.pieces.length, 0);\nconst asks = cycles.reduce((n, c) => n + c.pieces.filter((p) => p.needs_material).length, 0);\nconst text = [\n  `🗓 Plan for ${month}: ${total} posts.`,\n  ...cycles.map((c) => [\n    '',\n    `${c.offer_title} (launch ${fmt(c.launch_date)}, reminder ${fmt(c.reminder_date)})`,\n    ...c.pieces.map((p) => `${fmt(p.date)} ${label[p.kind] || p.kind}: ${p.title}${p.needs_material ? ' ❓' : ''}`),\n  ].join('\\n')),\n  '',\n  asks ? `❓ ${asks} post(s) need a real detail from you: I ask about each a week before it goes out.` : '',\n  'Drafts arrive for approval a few days before each post.',\n].filter((l) => l !== null).join('\\n');\nreturn [{ json: { text, ref: `month:${month}`, purpose: 'plan_summary' } }];"
+      },
+      "position": [
+        1760,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "8929f2f4-4f2d-5dbd-98e5-387e2be5767d",
+      "name": "Send plan",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "b7JEQEXu4C6TiOa5"
+        }
+      },
+      "position": [
+        1980,
+        -200
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "31f5592b-89cb-50ce-b818-83b9b230d11f",
+      "name": "Draft what is due",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "46h1RYzMVnjNffTG"
+        }
+      },
+      "position": [
+        2200,
+        -200
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "b6e77798-3c65-5d14-9f68-521eec082f4b",
+      "name": "Send nothing to plan",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "b7JEQEXu4C6TiOa5"
+        }
+      },
+      "position": [
+        1540,
+        400
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "VykjVIzsFCNavyQp",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
