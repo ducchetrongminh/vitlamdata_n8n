@@ -1,0 +1,520 @@
+{
+  "active": true,
+  "connections": {
+    "Answer questions": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Assemble idea",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ask clarifying questions": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Build question fields",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Assemble idea": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Collect reference posts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Build proposal input": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Propose 3 structures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Build question fields": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Answer questions",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Collect reference posts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Build proposal input",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "DeepSeek chat": {
+      "ai_languageModel": [
+        [
+          {
+            "index": 0,
+            "node": "Ask clarifying questions",
+            "type": "ai_languageModel"
+          }
+        ]
+      ]
+    },
+    "DeepSeek reasoner": {
+      "ai_languageModel": [
+        [
+          {
+            "index": 0,
+            "node": "Propose 3 structures",
+            "type": "ai_languageModel"
+          },
+          {
+            "index": 0,
+            "node": "Judge structures",
+            "type": "ai_languageModel"
+          }
+        ]
+      ]
+    },
+    "Judge structures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Split structures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "On idea submitted": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ask clarifying questions",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Propose 3 structures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Judge structures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save idea": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Show structures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Split structures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save idea",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Form at /form/idea: takes a raw content idea, asks clarifying questions, proposes 3 content structures, judges them, and stores everything in NocoDB content_ideation.ideas as awaiting_approval. Workflow 'Finalize content' writes the post once approved or after one day.",
+  "id": "EBufGP7BFaWqG4dq",
+  "isArchived": false,
+  "name": "Idea shaping",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "4a9977e7-11cf-4c49-9fc0-a351d91406b0",
+      "name": "On idea submitted",
+      "parameters": {
+        "formDescription": "Dump the idea as it is. The next page asks what it needs to become interesting.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "draft",
+              "fieldType": "textarea",
+              "placeholder": "The idea, however rough. First line is used as the title.",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "platform",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "facebook"
+                  },
+                  {
+                    "option": "linkedin"
+                  },
+                  {
+                    "option": "threads"
+                  },
+                  {
+                    "option": "tiktok"
+                  },
+                  {
+                    "option": "youtube"
+                  },
+                  {
+                    "option": "other"
+                  }
+                ]
+              },
+              "fieldType": "dropdown",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "goal",
+              "fieldType": "text",
+              "placeholder": "What the post should do: build trust, get leads, start an argument..."
+            }
+          ]
+        },
+        "formTitle": "New content idea",
+        "options": {},
+        "path": "idea"
+      },
+      "position": [
+        -600,
+        0
+      ],
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "webhookId": "b1d3c5a7-9e21-4f68-8c05-7a4d2e6b9013"
+    },
+    {
+      "credentials": {
+        "deepSeekApi": {
+          "id": "0kIQ7WLWq3QZFpAf",
+          "name": "DeepSeek bot"
+        }
+      },
+      "id": "1a0f9047-efb8-4c9b-b39d-4eba22c1492c",
+      "name": "DeepSeek chat",
+      "parameters": {
+        "model": "deepseek-chat",
+        "options": {}
+      },
+      "position": [
+        -380,
+        200
+      ],
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1
+    },
+    {
+      "credentials": {
+        "deepSeekApi": {
+          "id": "0kIQ7WLWq3QZFpAf",
+          "name": "DeepSeek bot"
+        }
+      },
+      "id": "d8958ddd-c07a-408a-806d-328f5b963930",
+      "name": "DeepSeek reasoner",
+      "parameters": {
+        "model": "deepseek-reasoner",
+        "options": {}
+      },
+      "position": [
+        340,
+        200
+      ],
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1
+    },
+    {
+      "id": "a6d72d38-051b-4700-ac59-b89c3c542940",
+      "name": "Ask clarifying questions",
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a social content editor. A rough idea is given to you. Ask the questions that turn it from generic into something worth reading.\n\nAim at: the specific angle, who exactly it is for and what they are stuck on, the personal story or moment behind it, concrete proof (numbers, names, before/after), what most people believe that this contradicts, and what the reader should feel.\n\nRules:\n- Output 5 questions, one per line, nothing else. No numbering, no preamble, no closing line.\n- Each question is one sentence, concrete, answerable in two sentences.\n- Never ask something the draft already answers.\n- Write the questions in the language of the draft."
+            }
+          ]
+        },
+        "promptType": "define",
+        "text": "=Platform: {{ $json.platform }}\nGoal: {{ $json.goal }}\n\nDraft idea:\n{{ $json.draft }}"
+      },
+      "position": [
+        -380,
+        0
+      ],
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7
+    },
+    {
+      "id": "4a244952-135b-4875-8bde-32aa46d4539a",
+      "name": "Build question fields",
+      "parameters": {
+        "jsCode": "// Turn the model's question lines into form fields for the next page.\nconst raw = $input.first().json.text || '';\nconst questions = raw\n  .split('\\n')\n  .map((l) => l.replace(/^\\s*(?:[-*\\u2022]|\\d+[.)])\\s*/, '').trim())\n  .filter((l) => l.length > 0)\n  .slice(0, 6);\n\nconst formFields = questions.map((q) => ({\n  fieldLabel: q,\n  fieldType: 'textarea',\n  requiredField: false,\n}));\n\nreturn [{ json: { questions, formFields } }];"
+      },
+      "position": [
+        -160,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "9e2dd75e-8e18-478c-90ff-c276acc44090",
+      "name": "Answer questions",
+      "parameters": {
+        "defineForm": "json",
+        "formDescription": "Answer what you can. Blank answers are fine, they just leave the AI guessing.",
+        "formTitle": "Sharpen the idea",
+        "jsonOutput": "={{ JSON.stringify($json.formFields) }}",
+        "operation": "page",
+        "options": {}
+      },
+      "position": [
+        60,
+        0
+      ],
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "webhookId": "c2e4d6b8-0f32-4a79-9d16-8b5e3f7c0124"
+    },
+    {
+      "id": "208bbfe2-90f4-48fd-84d6-ff7f4f649bb8",
+      "name": "Assemble idea",
+      "parameters": {
+        "jsCode": "// Pair every question with its answer and carry the form data forward.\nconst form = $('On idea submitted').first().json;\nconst questions = $('Build question fields').first().json.questions || [];\nconst answers = $input.first().json || {};\n\nconst clarifying_qa = questions\n  .map((q) => `**${q}**\\n${(answers[q] || '').toString().trim()}`)\n  .join('\\n\\n');\n\nreturn [\n  {\n    json: {\n      draft: form.draft,\n      platform: form.platform,\n      goal: form.goal || '',\n      clarifying_qa,\n    },\n  },\n];"
+      },
+      "position": [
+        280,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "28dd01d1-bec4-4bb8-98d3-f92c9ba0173e",
+      "name": "Collect reference posts",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 8,
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "desc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "reaction_count"
+                }
+              }
+            ]
+          },
+          "where": "(hook,isnot,null)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pgco4wrfalgnpja"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mlfvqztd76vculj"
+        }
+      },
+      "position": [
+        500,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "a6865af8-d610-4ed5-8713-d1cd9c56dcd7",
+      "name": "Build proposal input",
+      "parameters": {
+        "jsCode": "// Compact the best-performing saved posts into a short voice reference.\nconst idea = $('Assemble idea').first().json;\n\nconst references = $input\n  .all()\n  .map((i) => i.json)\n  .filter((r) => r && r.hook)\n  .slice(0, 8)\n  .map((r) => `- hook: ${r.hook}\\n  why it works: ${(r.why_it_works || '').toString().slice(0, 300)}`)\n  .join('\\n');\n\nreturn [{ json: { ...idea, references: references || '(none saved yet)' } }];"
+      },
+      "position": [
+        720,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "fe0f6cab-78c6-4345-8d99-33017f274332",
+      "name": "Propose 3 structures",
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are a social content strategist. From one idea, propose exactly three different structures for the post. They must differ in angle and shape, not in wording: e.g. personal story, contrarian argument, step-by-step teardown, list of mistakes, before/after case, question-led.\n\nFor each structure output exactly these lines:\nName: <4 words or fewer>\nHook: <the first line of the post, written out, ready to publish>\nBeats:\n- <what each section says, 4 to 6 beats>\nCTA: <the closing ask>\nWhy this angle: <one sentence on who it hits and why they read on>\n\nSeparate the three structures with a line containing only ===STRUCTURE===\nPut that separator between blocks only, not before the first or after the last.\nNo preamble, no numbering, no closing commentary.\nWrite in the language of the draft.\nUse the reference posts for voice and hook patterns only; never copy their content."
+            }
+          ]
+        },
+        "promptType": "define",
+        "text": "=Platform: {{ $json.platform }}\nGoal: {{ $json.goal }}\n\nDraft idea:\n{{ $json.draft }}\n\nClarifying questions and answers:\n{{ $json.clarifying_qa }}\n\nReference posts that performed well for this author:\n{{ $json.references }}"
+      },
+      "position": [
+        940,
+        0
+      ],
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7
+    },
+    {
+      "id": "7b81633e-fe49-434b-b034-f5c9cd62f072",
+      "name": "Judge structures",
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You judge three proposed content structures for the same idea. Be blunt; do not flatter.\n\nScore each 1-10 on: hook strength, fit for the stated audience and goal, novelty against what everyone else posts, concreteness of proof, and payoff for the effort the reader spends.\n\nOutput:\n- One short paragraph per structure: its score line and the one thing that decides it.\n- Then one paragraph on what the winner must not lose in the writing.\n- Last line exactly: BEST: <1, 2 or 3>\n\nWrite in the language of the structures."
+            }
+          ]
+        },
+        "promptType": "define",
+        "text": "=Platform: {{ $('Build proposal input').first().json.platform }}\nGoal: {{ $('Build proposal input').first().json.goal }}\n\nDraft idea:\n{{ $('Build proposal input').first().json.draft }}\n\nClarifying questions and answers:\n{{ $('Build proposal input').first().json.clarifying_qa }}\n\nProposed structures:\n{{ $json.text }}"
+      },
+      "position": [
+        1160,
+        0
+      ],
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7
+    },
+    {
+      "id": "0969568f-fbdb-4543-80c6-ce777ed8fd1d",
+      "name": "Split structures",
+      "parameters": {
+        "jsCode": "// Split the proposal into three columns and read the judge's pick.\nconst proposal = $('Propose 3 structures').first().json.text || '';\nconst evaluation = $input.first().json.text || '';\nconst idea = $('Build proposal input').first().json;\n\nconst parts = proposal\n  .split(/^\\s*={2,}\\s*STRUCTURE\\s*={2,}\\s*$/im)\n  .map((s) => s.trim())\n  .filter((s) => s.length > 0);\nwhile (parts.length < 3) parts.push('');\n\nconst best = evaluation.match(/BEST:\\s*([123])/i);\n\nconst title = (idea.draft || '').split('\\n')[0].trim().slice(0, 80) || 'Untitled idea';\n\nconst alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';\nconst approval_token = Array.from({ length: 24 }, () => alphabet[Math.floor(Math.random() * alphabet.length)]).join('');\n\nreturn [\n  {\n    json: {\n      title,\n      draft: idea.draft,\n      platform: idea.platform,\n      goal: idea.goal,\n      clarifying_qa: idea.clarifying_qa,\n      structure_1: parts[0],\n      structure_2: parts[1],\n      structure_3: parts[2],\n      evaluation,\n      chosen_structure: best ? Number(best[1]) : 1,\n      approval_token,\n    },\n  },\n];"
+      },
+      "position": [
+        1380,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "ae48a268-0002-49a1-b668-a4e3c1449bd9",
+      "name": "Save idea",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "approval_token": "={{ $json.approval_token }}",
+            "chosen_structure": "={{ $json.chosen_structure }}",
+            "clarifying_qa": "={{ $json.clarifying_qa }}",
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "draft": "={{ $json.draft }}",
+            "evaluation": "={{ $json.evaluation }}",
+            "goal": "={{ $json.goal }}",
+            "platform": "={{ $json.platform }}",
+            "proposed_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "status": "awaiting_approval",
+            "structure_1": "={{ $json.structure_1 }}",
+            "structure_2": "={{ $json.structure_2 }}",
+            "structure_3": "={{ $json.structure_3 }}",
+            "title": "={{ $json.title }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pgco4wrfalgnpja"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "myls429um57xh0i"
+        }
+      },
+      "position": [
+        1600,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "220d1c99-4448-485f-8912-292f2032815c",
+      "name": "Show structures",
+      "parameters": {
+        "completionMessage": "={{ (() => {\n  const s = $('Split structures').first().json;\n  const id = $json.Id;\n  const base = 'https://n8n.vitlamdata.com/webhook/idea-approve?id=' + id + '&token=' + s.approval_token + '&structure=';\n  return [\n    'STRUCTURE 1', s.structure_1, '',\n    'STRUCTURE 2', s.structure_2, '',\n    'STRUCTURE 3', s.structure_3, '',\n    'EVALUATION', s.evaluation, '',\n    'The judge picks structure ' + s.chosen_structure + '. Approve by opening one link:',\n    '1: ' + base + '1',\n    '2: ' + base + '2',\n    '3: ' + base + '3',\n    '',\n    'Do nothing and the post is written from structure ' + s.chosen_structure + ' one day from now.'\n  ].join('\\n');\n})() }}",
+        "completionTitle": "=Three ways to write it",
+        "operation": "completion",
+        "options": {},
+        "respondWith": "showText"
+      },
+      "position": [
+        1820,
+        0
+      ],
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "webhookId": "d3f5e7c9-1a43-4b80-8e27-9c6f4a8d1235"
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
