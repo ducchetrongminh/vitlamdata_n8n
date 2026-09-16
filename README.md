@@ -129,24 +129,41 @@ change. Reply to anything to correct it.
 7. Message the bot in Lark. The first sender becomes its manager, and it ignores everyone else
    (clear `lark_open_id` to re-link). It introduces itself and asks for your goals.
 
-**Publishing to Facebook (not connected yet).** Approved posts are sent to you in Lark an hour
-before they are due, to post by hand. Automatic publishing, post metrics and audience comments
-need a Page access token that does not expire:
+**Publishing to Facebook (not connected yet).** Until then, approved posts are sent to you in Lark
+an hour before they are due, to post by hand. Automatic publishing, post metrics and audience
+comments need a Page access token that never expires. It takes about 10 minutes:
 
-1. At https://developers.facebook.com create an app with the use case "Manage everything on your
-   Page" (Meta no longer has app types). On an existing app: Use cases, Add use case. The agent
-   needs no Messenger use case.
-2. Use cases, "Manage everything on your Page", Customize: add `pages_manage_posts`,
-   `pages_read_engagement`, `pages_read_user_content` and `read_insights`. Remove
-   `pages_manage_engagement` unless the agent should reply to comments. You manage the Page and
-   the app, so standard access works without App Review.
-3. In Graph API Explorer, pick the app, Get User Access Token with those permissions, and choose
-   the page in the dialog.
-4. Exchange it for a long-lived token:
-   `GET /oauth/access_token?grant_type=fb_exchange_token&client_id=<app id>&client_secret=<app secret>&fb_exchange_token=<token>`.
-5. `GET /me/accounts` with the long-lived token returns the page's `access_token`. Check it in the
-   Access Token Debugger: it should never expire.
-6. Switch the app to Live mode (it needs a privacy policy URL); posts made by an app in
-   development mode can be hidden from the public.
-7. Put the token in `.credentials.env` as `FACEBOOK_PAGE_TOKEN`, the page id in `facebook_page_id`,
-   and ask Claude to connect publishing and metrics.
+*A. The app* (once)
+
+1. Go to https://developers.facebook.com/apps and click Create app. Name it (e.g. "Vịt Làm Data
+   agent"), then on Use cases pick "Manage everything on your Page". Meta has no app types any
+   more. Skip the business portfolio. On an app you already made, add it under Use cases, Add use
+   case, and remove any Messenger use case: the agent does not need it.
+2. Open Use cases, "Manage everything on your Page", Customize. Click Add next to
+   `pages_manage_posts`, `pages_read_engagement`, `pages_read_user_content` and `read_insights`.
+   Remove `pages_manage_engagement` unless the agent should reply to comments. You manage both the
+   page and the app, so no App Review is needed.
+3. App settings, Basic: fill Privacy Policy URL (any page of yours that states what the app does
+   with data), save, and switch App Mode to Live. Posts made by an app in development mode can
+   be hidden from the public.
+
+*B. The token*
+
+1. Open Graph API Explorer: https://developers.facebook.com/tools/explorer. Top right, pick the
+   app; under User or Page pick "Get User Access Token"; tick the four permissions from A2; click
+   Generate Access Token and choose the Vịt Làm Data page when Facebook asks which pages. This
+   token lasts an hour.
+2. Make it last 60 days: copy it, open the Access Token Debugger
+   (https://developers.facebook.com/tools/debug/accesstoken), paste it, click Debug, then Extend
+   Access Token at the bottom. Copy the new token.
+3. Get the page token: back in Graph API Explorer, paste the extended token into the Access Token
+   field, set the request to `GET` `me/accounts?fields=name,access_token` and click Submit. The
+   `access_token` next to Vịt Làm Data is the page token. A page token taken from an extended user
+   token never expires.
+4. Check it: paste the page token into the Access Token Debugger. It must say Expires: Never and
+   list the permissions from A2. If it shows an expiry, you ran step 3 with the one-hour token.
+5. Put it in `.credentials.env` as `FACEBOOK_PAGE_TOKEN=...` and run
+   `scripts/push-credentials.sh credentials/facebookGraphApi.json`. Never paste it into a chat.
+   The token can post to the page; if it leaks, remove the app under the page's Settings, Business
+   integrations, which invalidates it.
+6. Ask Claude to connect publishing, metrics and comments.
