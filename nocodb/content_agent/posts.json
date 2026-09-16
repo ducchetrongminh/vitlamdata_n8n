@@ -147,6 +147,7 @@
       "type": "Number"
     },
     {
+      "description": "publishing: being sent to Facebook right now. publish_failed: Facebook refused it; the reason is in check_report.",
       "id": "chc7y7e592t3cbz",
       "options": {
         "choices": [
@@ -179,6 +180,16 @@
             "color": "#fee2d5",
             "id": "sz95mz9u6fk7fq1",
             "title": "cancelled"
+          },
+          {
+            "color": "#ffeab6",
+            "id": "s96nvopol6itqyq",
+            "title": "publishing"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "sowqwghkrg0wjex",
+            "title": "publish_failed"
           }
         ]
       },
@@ -207,6 +218,7 @@
       "type": "LongText"
     },
     {
+      "description": "Unique people who viewed the post (Facebook insight post_total_media_view_unique).",
       "id": "ctt6rgp2qsl2ovt",
       "options": {
         "separator": "none_period"

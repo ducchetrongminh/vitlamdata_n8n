@@ -221,8 +221,26 @@ Verified on this instance while building `Idea shaping` and `Finalize content`.
   values there may be plain expressions such as `$('Task').first().json.mode`, which the model
   cannot set. Keep quotes and braces out of `$fromAI` descriptions and put formats in the tool
   description.
+- An HTTP Request node with `authentication: predefinedCredentialType` and `nodeCredentialType:
+  facebookGraphApi` adds the credential's token as the `access_token` query parameter.
+
 - Branches from one node run top to bottom by canvas position (`executionOrder: v1`), and an error
   in one stops the rest: put database writes above Lark or other outbound calls.
+
+## Facebook Graph API
+
+Verified with the page token of Vịt làm Data (credential `Facebook page`, app use case "Manage
+everything on your Page").
+
+- With a page token, `me` is the page: `POST me/feed` publishes, `GET me?fields=followers_count`.
+- `POST me/feed` with `published=false` creates an unpublished post (`is_published: false`) that
+  `DELETE /<post id>` removes: a way to test publishing without posting publicly.
+- Post insights `post_impressions` and `post_impressions_unique` answer `(#100) The value must be a
+  valid insights metric`. `post_total_media_view_unique`, `post_media_view`, `post_clicks` and
+  `post_reactions_by_type_total` work.
+- `GET /<post id>/comments` returns the text but no `from` for commenters: that needs the Business
+  Asset User Profile Access feature.
+- `debug_token` on the page token shows `expires_at: 0` but a `data_access_expires_at` 90 days out.
 
 ## Monitoring
 

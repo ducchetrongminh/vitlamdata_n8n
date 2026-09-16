@@ -129,9 +129,16 @@ change. Reply to anything to correct it.
 7. Message the bot in Lark. The first sender becomes its manager, and it ignores everyone else
    (clear `lark_open_id` to re-link). It introduces itself and asks for your goals.
 
-**Publishing to Facebook (not connected yet).** Until then, approved posts are sent to you in Lark
-an hour before they are due, to post by hand. Automatic publishing, post metrics and audience
-comments need a Page access token that never expires. It takes about 10 minutes:
+**Publishing to Facebook.** An approved post is published to the page by `Content agent:
+publisher` within five minutes of its time, and you get the link in Lark; if Facebook refuses it,
+the post becomes `publish_failed` with the reason and you are told. Every morning at 07:00
+`Content agent: facebook signals` reads, for posts of the last 8 days, unique viewers, clicks,
+reactions, comments and shares, and saves signals for the agent: metrics after one day and seven
+days, new audience comments, edits you made on Facebook, and the follower count.
+
+It uses a page access token that never expires (credential `Facebook page`). To make one again,
+for example after a leak or if Facebook stops accepting it (its data access runs out 90 days after
+it was made; the Access Token Debugger shows the date):
 
 *A. The app* (once)
 
@@ -163,7 +170,7 @@ comments need a Page access token that never expires. It takes about 10 minutes:
 4. Check it: paste the page token into the Access Token Debugger. It must say Expires: Never and
    list the permissions from A2. If it shows an expiry, you ran step 3 with the one-hour token.
 5. Put it in `.credentials.env` as `FACEBOOK_PAGE_TOKEN=...` and run
-   `scripts/push-credentials.sh credentials/facebookGraphApi.json`. Never paste it into a chat.
+   `scripts/push-credentials.sh credentials/facebookGraphApi_ycN0mxXZoPw0v4Nz.json`. Never paste it
+   into a chat.
    The token can post to the page; if it leaks, remove the app under the page's Settings, Business
    integrations, which invalidates it.
-6. Ask Claude to connect publishing, metrics and comments.

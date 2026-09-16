@@ -1,0 +1,570 @@
+{
+  "active": true,
+  "connections": {
+    "Any recent posts?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "With Facebook ids",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Signals",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Comment requests": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Comments",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Comments": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Signals",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Engagement": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Insight requests",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Event rows": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save signals",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Every morning": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Page",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Insight requests": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Insights",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Insights": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Comment requests",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Page": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Recent posts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Post updates": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save metrics",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Recent posts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Any recent posts?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Signals": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Post updates",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Event rows",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Page",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "With Facebook ids": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Engagement",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Daily at 07:00 before the agent's shift, or when called: for posts published in the last 8 days, reads unique viewers (post_total_media_view_unique), clicks, reactions, comments and shares into content_agent.posts, and records signals in content_agent.events: metrics at one day and at seven days, each new audience comment of the last 24 hours, edits made to a post on Facebook, and the page's follower count.",
+  "id": "5tupN4R0XY8KDCAG",
+  "isArchived": false,
+  "name": "Content agent: facebook signals",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "f065bc7d-0a21-55c7-949c-dd9981c1959d",
+      "name": "Every morning",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "expression": "0 7 * * *",
+              "field": "cronExpression"
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        -200
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "eda99c01-8669-5851-ac8c-e55918ea8789",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        200
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "executeOnce": true,
+      "id": "7140e11f-827c-527c-93d6-2c51dbebad8b",
+      "name": "Page",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "method": "GET",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "url": "https://graph.facebook.com/me?fields=id,followers_count"
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "726d8238-d4ef-5738-b8ab-22404af2192f",
+      "name": "Recent posts",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "asc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "published_at"
+                }
+              }
+            ]
+          },
+          "where": "=(status,eq,published)~and(published_at,gte,exactDate,{{ $now.minus(8, 'days').toISODate() }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "a6bf734f-9ee3-5c84-9506-82ed00ff5513",
+      "name": "Any recent posts?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "f470fb1e-a697-5b5e-a234-d3d446701b1f",
+              "leftValue": "={{ $('Recent posts').all().some((i) => i.json.fields && i.json.fields.fb_post_id) }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "ebb23544-61dd-5021-a1bf-e24dee0a11dc",
+      "name": "With Facebook ids",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nreturn rowsOf('Recent posts').filter((p) => p.fb_post_id).map((p) => ({ json: p }));"
+      },
+      "position": [
+        880,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "e5f5af66-59fa-5581-813c-13681970b64e",
+      "name": "Engagement",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "method": "GET",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "url": "=https://graph.facebook.com/{{ $json.fb_post_id }}?fields=message,reactions.summary(total_count),comments.summary(total_count),shares"
+      },
+      "position": [
+        1100,
+        -200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "3668d095-0139-50e1-ab85-e2388cdf6d93",
+      "name": "Insight requests",
+      "parameters": {
+        "jsCode": "return $('With Facebook ids').all();"
+      },
+      "position": [
+        1320,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "fe602865-0594-51b9-b0ce-4018de0a740a",
+      "name": "Insights",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "method": "GET",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "url": "=https://graph.facebook.com/{{ $json.fb_post_id }}/insights?metric=post_total_media_view_unique,post_clicks&period=lifetime"
+      },
+      "position": [
+        1540,
+        -200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "eb6f7e2c-2299-5796-b380-60b84cfbc933",
+      "name": "Comment requests",
+      "parameters": {
+        "jsCode": "const since = Math.floor(Date.now() / 1000) - 24 * 3600;\nreturn $('With Facebook ids').all().map((i) => ({ json: { ...i.json, since } }));"
+      },
+      "position": [
+        1760,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "62d771a8-3b28-5f71-bec8-860c3ff5443c",
+      "name": "Comments",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "method": "GET",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "url": "=https://graph.facebook.com/{{ $json.fb_post_id }}/comments?fields=id,message,created_time,like_count&filter=stream&limit=50&since={{ $json.since }}"
+      },
+      "position": [
+        1980,
+        -200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "26ec4ae3-4644-5304-8944-1695207d3fec",
+      "name": "Signals",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst now = DateTime.now().setZone(TZ);\nconst stamp = now.toISO({ suppressMilliseconds: true });\nconst fetched = $('Comments').isExecuted;\nconst posts = fetched ? $('With Facebook ids').all().map((i) => i.json) : [];\nconst eng = fetched ? $('Engagement').all().map((i) => i.json || {}) : [];\nconst ins = fetched ? $('Insights').all().map((i) => i.json || {}) : [];\nconst com = fetched ? $('Comments').all().map((i) => i.json || {}) : [];\nconst squash = (t) => String(t || '').replace(/\\s+/g, ' ').trim();\nconst updates = [];\nconst events = [];\nposts.forEach((p, i) => {\n  const e = eng[i] || {};\n  if (e.error) { events.push({ type: 'metrics', post_id: p.Id, text: `Could not read post #${p.Id} from Facebook: ${e.error.message || JSON.stringify(e.error)}`, value: null }); return; }\n  const metric = (name) => {\n    const m = ((ins[i] || {}).data || []).find((x) => x.name === name);\n    return m && m.values && m.values.length ? Number(m.values[0].value) || 0 : null;\n  };\n  const row = {\n    Id: p.Id,\n    reach: metric('post_total_media_view_unique'),\n    clicks: metric('post_clicks'),\n    reactions: (e.reactions && e.reactions.summary && e.reactions.summary.total_count) || 0,\n    comments: (e.comments && e.comments.summary && e.comments.summary.total_count) || 0,\n    shares: (e.shares && e.shares.count) || 0,\n    metrics_at: stamp,\n    final_text: p.final_text || p.draft,\n  };\n  if (e.message !== undefined && squash(e.message) !== squash(row.final_text)) {\n    events.push({ type: 'edit_diff', post_id: p.Id, text: `Post #${p.Id} was edited on Facebook.\\nBefore: ${row.final_text}\\nAfter: ${e.message}`, value: null });\n    row.final_text = e.message;\n  }\n  updates.push(row);\n  // Runs once a day, so each window is crossed once.\n  const age = now.diff(parseDt(p.published_at), 'hours').hours;\n  const label = age >= 24 && age < 48 ? '1 day' : age >= 168 && age < 192 ? '7 days' : '';\n  if (label) {\n    const engagement = row.reactions + 2 * row.comments + 3 * row.shares;\n    events.push({ type: 'metrics', post_id: p.Id, value: engagement, text: `Post #${p.Id} (${p.kind}, hook ${p.hook_type || '-'}) after ${label}: ${row.reach ?? '?'} unique viewers, ${row.reactions} reactions, ${row.comments} comments, ${row.shares} shares, ${row.clicks ?? '?'} clicks. Tested: ${p.hypothesis || '-'}` });\n  }\n  ((com[i] || {}).data || [])\n    .filter((c) => squash(c.message))\n    .forEach((c) => events.push({ type: 'audience_comment', post_id: p.Id, value: Number(c.like_count) || 0, text: `On post #${p.Id} \"${p.title}\": ${squash(c.message)}` }));\n});\nconst followers = Number(($('Page').first().json || {}).followers_count);\nif (Number.isFinite(followers) && followers > 0) events.push({ type: 'followers', post_id: null, value: followers, text: `${followers} followers` });\nreturn [{ json: { updates, events, stamp } }];"
+      },
+      "position": [
+        2200,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "4d673263-86d8-53c2-a46a-462c3d4eff42",
+      "name": "Post updates",
+      "parameters": {
+        "jsCode": "return $json.updates.map((u) => ({ json: u }));"
+      },
+      "position": [
+        2420,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "7a52e6b2-3eb0-55f5-bb65-f684978b2960",
+      "name": "Save metrics",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "clicks": "={{ $json.clicks }}",
+            "comments": "={{ $json.comments }}",
+            "final_text": "={{ $json.final_text }}",
+            "metrics_at": "={{ $json.metrics_at }}",
+            "reach": "={{ $json.reach }}",
+            "reactions": "={{ $json.reactions }}",
+            "shares": "={{ $json.shares }}"
+          }
+        },
+        "id": "={{ $json.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        2640,
+        -200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "1c9d2486-f13f-5cd0-9025-2396cc50fc73",
+      "name": "Event rows",
+      "parameters": {
+        "jsCode": "const s = $('Signals').first().json;\nreturn s.events.map((e) => ({ json: { ...e, created_at: s.stamp } }));"
+      },
+      "position": [
+        2420,
+        200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "3d56db4a-8ee4-5ca7-8fe8-ca9a144ca065",
+      "name": "Save signals",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $json.created_at }}",
+            "post_id": "={{ $json.post_id }}",
+            "text": "={{ $json.text }}",
+            "type": "={{ $json.type }}",
+            "value": "={{ $json.value }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        2640,
+        200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "R9RDKGHveGXK2jcu",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

@@ -1,76 +1,131 @@
 {
   "active": true,
   "connections": {
-    "Every hour": {
+    "Due now": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Load due posts",
+            "node": "Mark publishing",
             "type": "main"
           }
         ]
       ]
     },
-    "Load due posts": {
+    "Every 5 minutes": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Reminders",
+            "node": "Load approved posts",
             "type": "main"
           }
         ]
       ]
     },
-    "Reminders": {
+    "Load approved posts": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Send reminders",
+            "node": "Due now",
             "type": "main"
           }
         ]
       ]
     },
-    "Send reminders": {
+    "Mark publishing": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Sent posts",
+            "node": "Messages",
             "type": "main"
           }
         ]
       ]
     },
-    "Sent posts": {
+    "Messages": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Mark published",
+            "node": "Publish",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Notices": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Tell manager",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Outcome": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save outcome",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Publish": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Outcome",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save outcome": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Notices",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load approved posts",
             "type": "main"
           }
         ]
       ]
     }
   },
-  "description": "Hourly: every approved post due within the next hour is sent to the manager in Lark to post by hand, then marked published. (No Facebook Page token yet, so no automatic publishing and no post metrics.)",
+  "description": "Every 5 minutes, or when called: publishes each approved post whose time has come to the Facebook page. A post is marked publishing before the call, so a failed save can never post it twice. Published posts get their Facebook id and a Lark notice; refused ones become publish_failed with Facebook's reason in check_report, and the manager is told.",
   "id": "m92DxPVFVONuRgrr",
   "isArchived": false,
   "name": "Content agent: publisher",
   "nodeGroups": [],
   "nodes": [
     {
-      "id": "79fb2374-93ec-5466-9209-3a3d4cca4e71",
-      "name": "Every hour",
+      "id": "082197ae-04ea-5200-ad95-d6de57327bb3",
+      "name": "Every 5 minutes",
       "parameters": {
         "rule": {
           "interval": [
             {
-              "expression": "0 * * * *",
+              "expression": "*/5 * * * *",
               "field": "cronExpression"
             }
           ]
@@ -78,10 +133,23 @@
       },
       "position": [
         0,
-        0
+        -200
       ],
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2
+    },
+    {
+      "id": "4ce04058-f826-5680-b554-65d13ab9069f",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        200
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
     },
     {
       "alwaysOutputData": true,
@@ -92,8 +160,8 @@
         }
       },
       "executeOnce": true,
-      "id": "178d6943-8737-5020-b6cc-5706f48bd09d",
-      "name": "Load due posts",
+      "id": "5cd2192b-c447-51b6-9dd3-15e8f75e8b95",
+      "name": "Load approved posts",
       "parameters": {
         "authentication": "nocoDbApiToken",
         "operation": "search",
@@ -110,7 +178,7 @@
               }
             ]
           },
-          "where": "=(status,eq,approved)~and(publish_at,lte,exactDate,{{ $now.plus(1, 'hours').toISO() }})"
+          "where": "=(status,eq,approved)~and(publish_at,lte,exactDate,{{ $now.toISODate() }})"
         },
         "projectId": {
           "__rl": true,
@@ -133,46 +201,13 @@
       "typeVersion": 4
     },
     {
-      "id": "f6e2355d-cb63-591a-8da6-a26c832288be",
-      "name": "Reminders",
+      "id": "b14caf8d-05e8-5f28-a86b-e15217897831",
+      "name": "Due now",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\n// The NocoDB filter compares dates only; keep what is due within the hour.\nconst until = DateTime.now().setZone(TZ).plus({ hours: 1 });\nreturn rowsOf('Load due posts').filter((p) => parseDt(p.publish_at) <= until).map((p) => ({\n  json: {\n    post_id: p.Id,\n    publish_at: p.publish_at,\n    text: `⏰ Post #${p.Id}, due ${parseDt(p.publish_at).toFormat('HH:mm dd/MM')}. Copy it to the page:\\n\\n${p.draft}`,\n  },\n}));"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\n// The NocoDB filter compares dates only; publish what is due by now.\nconst now = DateTime.now().setZone(TZ);\nreturn rowsOf('Load approved posts')\n  .filter((p) => parseDt(p.publish_at) <= now && (p.draft || '').trim())\n  .map((p) => ({ json: { Id: p.Id, title: p.title, message: p.draft, check_report: p.check_report || '' } }));"
       },
       "position": [
         440,
-        0
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "9dd147bf-fa11-5630-91ea-35051ebbc98b",
-      "name": "Send reminders",
-      "parameters": {
-        "options": {
-          "waitForSubWorkflow": true
-        },
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "SRT1dYKEzsyQyQBR"
-        }
-      },
-      "position": [
-        660,
-        0
-      ],
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2
-    },
-    {
-      "id": "689cb985-215b-5a60-a513-e879984b30c6",
-      "name": "Sent posts",
-      "parameters": {
-        "jsCode": "return $('Reminders').all().map((i) => ({ json: { Id: i.json.post_id, published_at: i.json.publish_at } }));"
-      },
-      "position": [
-        880,
         0
       ],
       "type": "n8n-nodes-base.code",
@@ -185,8 +220,8 @@
           "name": "Nocodb bot"
         }
       },
-      "id": "ca1dc636-3694-5a34-8d0d-9a4bc86d7b0b",
-      "name": "Mark published",
+      "id": "ec90dfd7-bad0-5c83-aabf-0049a272ce7b",
+      "name": "Mark publishing",
       "parameters": {
         "authentication": "nocoDbApiToken",
         "dataToSend": "mapWithFields",
@@ -197,8 +232,7 @@
           "matchingColumns": [],
           "schema": [],
           "value": {
-            "published_at": "={{ $json.published_at }}",
-            "status": "published"
+            "status": "publishing"
           }
         },
         "id": "={{ $json.Id }}",
@@ -216,11 +250,144 @@
         }
       },
       "position": [
-        1100,
+        660,
         0
       ],
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 4
+    },
+    {
+      "id": "a070d566-2a0e-5510-9cee-f3c1dbff5b8a",
+      "name": "Messages",
+      "parameters": {
+        "jsCode": "return $('Due now').all();"
+      },
+      "position": [
+        880,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "a49442f4-a4fb-5308-8638-6c5c8a25f9ca",
+      "name": "Publish",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "jsonBody": "={{ JSON.stringify({ message: $json.message }) }}",
+        "method": "POST",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://graph.facebook.com/me/feed"
+      },
+      "position": [
+        1100,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "1d362c41-ba9b-55d9-84bf-f8172bff88c1",
+      "name": "Outcome",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst due = $('Due now').all();\nconst now = DateTime.now().setZone(TZ).toISO({ suppressMilliseconds: true });\nreturn $input.all().map((item, i) => {\n  const post = due[i].json;\n  const r = item.json || {};\n  if (r.id) {\n    const [pageId, postId] = String(r.id).split('_');\n    return { json: { Id: post.Id, ok: true, status: 'published', fb_post_id: r.id, published_at: now, final_text: post.message, check_report: post.check_report, link: `https://www.facebook.com/${pageId}/posts/${postId}`, title: post.title } };\n  }\n  const reason = (r.error && (r.error.message || JSON.stringify(r.error))) || 'no post id returned';\n  return { json: { Id: post.Id, ok: false, status: 'publish_failed', fb_post_id: null, published_at: null, final_text: null, check_report: `Facebook refused it: ${reason}`, title: post.title } };\n});"
+      },
+      "position": [
+        1320,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "03616b34-bc75-5018-966e-998ec7ce2aa1",
+      "name": "Save outcome",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "check_report": "={{ $json.check_report }}",
+            "fb_post_id": "={{ $json.fb_post_id }}",
+            "final_text": "={{ $json.final_text }}",
+            "published_at": "={{ $json.published_at }}",
+            "status": "={{ $json.status }}"
+          }
+        },
+        "id": "={{ $json.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        1540,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "57cb472d-108f-5298-8d3b-5267b76b392b",
+      "name": "Notices",
+      "parameters": {
+        "jsCode": "return $('Outcome').all().map((i) => ({\n  json: {\n    text: i.json.ok\n      ? `📣 Published post #${i.json.Id}: ${i.json.title}\\n${i.json.link}`\n      : `⚠️ Post #${i.json.Id} \"${i.json.title}\" was not published. ${i.json.check_report}`,\n  },\n}));"
+      },
+      "position": [
+        1760,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "abb73bf6-f578-59e4-880d-4690b91feb4e",
+      "name": "Tell manager",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SRT1dYKEzsyQyQBR"
+        }
+      },
+      "position": [
+        1980,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
     }
   ],
   "pinData": null,
