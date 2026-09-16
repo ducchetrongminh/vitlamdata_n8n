@@ -179,6 +179,23 @@ api() { local p=$1; shift; curl -sS -H "X-N8N-API-KEY: $N8N_API_KEY" -H 'Content
 - `POST /executions/{id}/retry` starts a new execution (`mode: retry`, `retryOf`).
   `POST /executions/{id}/stop` on a finished execution returns 500.
 
+## Nodes
+
+Verified on this instance while building `Idea shaping` and `Finalize content`.
+
+- `n8n-nodes-base.formTrigger` has no typeVersion 2.2 here. A workflow using it is accepted and
+  activates, `triggerCount` is 1, but no route is registered and `$N8N_URL/form/<path>` answers
+  404 with n8n's "Problem loading form" page. Use 2.1.
+- A form is submitted as `multipart/form-data` with the field names `field-0`, `field-1`, ... in
+  the order the fields are defined. Labels are not accepted: posting by label yields `null` for
+  every field. Page 1 answers with `{"formWaitingUrl": ...}`; the next page and the ending are
+  posted to that URL. The ending renders client-side, so fetching the URL without a browser shows
+  the empty form shell.
+- `n8n-nodes-base.nocoDb` (typeVersion 4) returns a row as `{id, id_fields: {Id}, fields: {...}}`.
+  Read values from `$json.fields`, not from `$json`.
+- Its `update` operation needs the row id in the top-level `id` parameter. `matchingColumns` is
+  not enough: activating fails with `Missing or invalid required parameters: id`.
+
 ## Monitoring
 
 Recent failures, then the failing node and message of one:
