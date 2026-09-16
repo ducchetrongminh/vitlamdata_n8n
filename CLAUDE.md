@@ -117,6 +117,10 @@ from these files.
   `TZ: Asia/Ho_Chi_Minh` (`vitlamdata_infras`), and NocoDB writes UTC times without an offset,
   which Postgres reads as +07. Workflows write their own timestamps from `$now`. A data API
   bulk `DELETE` of 40 records answered 422; batches of 10 work.
+- Filters with `exactDate` compare the date only, whatever time the value carries:
+  `(created_at,lt,exactDate,2026-09-16T21:21:41+07:00)` matches nothing created that day. Filter
+  by day in NocoDB and by time in a Code node. Checkbox filters are `(field,checked)` and
+  `(field,notchecked)`.
 
 ## Loop
 
@@ -207,6 +211,16 @@ Verified on this instance while building `Idea shaping` and `Finalize content`.
   outputs the parsed JSON object as the item, not `{text}`. With the default text format it
   outputs `{text}`. Braces in its system message are escaped; the prompt text is passed as a
   variable, so JSON in either is safe.
+- `@n8n/n8n-nodes-langchain.agent` 3.1 with `lmChatDeepSeek` `deepseek-reasoner` (thinking mode)
+  calls tools and keeps `memoryBufferWindow` history across executions: n8n patches
+  `@langchain/openai` to send DeepSeek's `reasoning_content` back, which the API requires once
+  tools are involved. It makes parallel tool calls.
+- `@n8n/n8n-nodes-langchain.toolWorkflow` 2.2 takes its tool name from the node name. Arguments come
+  from `$fromAI('key', 'description', 'string'|'number'|'boolean')` in `workflowInputs.value`, and
+  `workflowInputs.schema` must list every key; the sub-workflow trigger can accept all data. Other
+  values there may be plain expressions such as `$('Task').first().json.mode`, which the model
+  cannot set. Keep quotes and braces out of `$fromAI` descriptions and put formats in the tool
+  description.
 - Branches from one node run top to bottom by canvas position (`executionOrder: v1`), and an error
   in one stops the rest: put database writes above Lark or other outbound calls.
 

@@ -1,35 +1,34 @@
 {
-  "description": "Real moments you send the Lark bot. Planning and writing pull from here so stories stay true.",
+  "description": "Real moments from the manager. Stories are told only from here and the brand docs.",
   "display_field": "summary",
   "fields": [
     {
-      "id": "cp4hgfpifnt7dfj",
+      "id": "csxq5xt6hmvpw5s",
       "title": "Id",
       "type": "ID"
     },
     {
-      "description": "First line of the story.",
-      "id": "cgkvfmlipcbbfde",
+      "id": "c875wl4xxgd8lii",
       "title": "summary",
       "type": "SingleLineText"
     },
     {
-      "id": "c16r5zj5zehxzxl",
+      "id": "cxc29sg0zl6nh8a",
       "title": "text",
       "type": "LongText"
     },
     {
-      "id": "c084g6yt81jzb9f",
+      "id": "cldjjvjl0xiykti",
       "options": {
         "choices": [
           {
             "color": "#cfdffe",
-            "id": "sfbbjg26pxxxwf7",
+            "id": "s8qalno71j8exsx",
             "title": "lark"
           },
           {
             "color": "#d0f1fd",
-            "id": "sa1kqqfiic60ob3",
+            "id": "sr2xtb3ox472pxv",
             "title": "manual"
           }
         ]
@@ -38,17 +37,17 @@
       "type": "SingleSelect"
     },
     {
-      "description": "Ids of pieces planned from this story, comma-separated.",
-      "id": "cr4ekc1qk4egc0s",
+      "description": "Post ids that used it.",
+      "id": "cxykmb759gy2u0u",
       "title": "used_in",
       "type": "SingleLineText"
     },
     {
-      "id": "croxo53q0knj1rx",
+      "id": "cx08ymev9epwxui",
       "title": "created_at",
       "type": "DateTime"
     }
   ],
-  "id": "mrixvhkbw2zn63n",
-  "title": "story_bank"
+  "id": "m10sv4qudn9bby2",
+  "title": "stories"
 }

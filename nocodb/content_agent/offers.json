@@ -1,0 +1,204 @@
+{
+  "description": "Offers the agent proposes (at most two per month) and the manager approves or rejects in Lark.",
+  "display_field": "title",
+  "fields": [
+    {
+      "id": "c1g42a727uyxnl0",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "ctwr5ytqkc80ynx",
+      "title": "title",
+      "type": "SingleLineText"
+    },
+    {
+      "description": "YYYY-MM of launch_date.",
+      "id": "cbntkje70zl8yku",
+      "title": "month",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cbm42r67j3yzj3q",
+      "title": "product",
+      "type": "SingleLineText"
+    },
+    {
+      "description": "free_extra stands in for free shipping: a bonus at no cost.",
+      "id": "ckffpm9i10a6va1",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s5dlfzbek3svqgi",
+            "title": "percent_off"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "sbfmapt3cj30m74",
+            "title": "amount_off"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "suq5hphr0es8bm4",
+            "title": "free_extra"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "sef8pf44qzgo8ud",
+            "title": "buy_one_get_one"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "siluef6eex2i7xu",
+            "title": "bundle"
+          }
+        ]
+      },
+      "title": "offer_type",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "The deal in one line.",
+      "id": "c0mszs7d2qc4fmt",
+      "title": "offer",
+      "type": "SingleLineText"
+    },
+    {
+      "description": "limited_capacity stands in for excess stock.",
+      "id": "c8a41l1kg10boi7",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s1gtwcufjm8swc3",
+            "title": "calendar_date"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "spqdoc4i1rbm9yn",
+            "title": "milestone"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "spvfqwcv79f29e5",
+            "title": "limited_capacity"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "s7ofe6jcq83yc2q",
+            "title": "playful"
+          }
+        ]
+      },
+      "title": "reason_type",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "cwyuhaaq6kz7ydu",
+      "title": "reason",
+      "type": "LongText"
+    },
+    {
+      "id": "c1bvtut39ocj3p9",
+      "title": "launch_date",
+      "type": "Date"
+    },
+    {
+      "id": "c0oaih9qapexhlo",
+      "title": "reminder_date",
+      "type": "Date"
+    },
+    {
+      "id": "cacjs6h7llzcj09",
+      "title": "ends_on",
+      "type": "Date"
+    },
+    {
+      "id": "ch5gro5j964ld7n",
+      "title": "landing_url",
+      "type": "URL"
+    },
+    {
+      "description": "One line each: what the audience must understand before this offer is clearly the best solution.",
+      "id": "cbh7y8i305pdgoi",
+      "title": "must_know",
+      "type": "LongText"
+    },
+    {
+      "description": "One line each: what the audience must feel before it lands.",
+      "id": "cjx0qhkjy35w6wf",
+      "title": "must_feel",
+      "type": "LongText"
+    },
+    {
+      "id": "cmynl0akqvv8gor",
+      "title": "rationale",
+      "type": "LongText"
+    },
+    {
+      "id": "cj98vin80o1lm3z",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "sngwl5qc41fpqic",
+            "title": "proposed"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "skcfst6txfz0tt5",
+            "title": "approved"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "s1paufrz5wkag5g",
+            "title": "rejected"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "sagmul0xkuillrz",
+            "title": "done"
+          }
+        ]
+      },
+      "title": "status",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "Random string the Lark buttons must carry.",
+      "id": "chmqkws4yxjk0he",
+      "title": "approval_token",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "ce558wu7561433p",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "sales_count",
+      "type": "Number"
+    },
+    {
+      "description": "VND.",
+      "id": "cz0pyvwt0sqi2d6",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "revenue",
+      "type": "Number"
+    },
+    {
+      "id": "cx30lozqw6tl423",
+      "title": "result_notes",
+      "type": "LongText"
+    },
+    {
+      "id": "cr6edll8gpa3yxb",
+      "title": "created_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mfuqrdnbqhb0r81",
+  "title": "offers"
+}

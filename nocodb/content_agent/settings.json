@@ -1,29 +1,28 @@
 {
-  "description": "Key/value settings the Content strategy workflows read on every run. One row per key.",
+  "description": "Key/value settings the Content agent workflows read on every run.",
   "display_field": "key",
   "fields": [
     {
-      "id": "cdonp6toq729wqa",
+      "id": "ci1b16vgnpzweui",
       "title": "Id",
       "type": "ID"
     },
     {
-      "id": "cidaxevqyi87doy",
+      "id": "czmp1tum977tyds",
       "title": "key",
       "type": "SingleLineText"
     },
     {
-      "id": "ccfol7vnjs9tanw",
+      "id": "ce2mriqr73o1sae",
       "title": "value",
       "type": "LongText"
     },
     {
-      "description": "What the key does and who writes it.",
-      "id": "cctgp7e60hccyfv",
+      "id": "cq55tzgezbag7ab",
       "title": "description",
       "type": "LongText"
     }
   ],
-  "id": "mv7h46mjq28a42m",
+  "id": "meuoueztm2hoq1t",
   "title": "settings"
 }

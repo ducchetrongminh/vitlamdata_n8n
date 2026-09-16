@@ -1,0 +1,952 @@
+{
+  "active": true,
+  "connections": {
+    "Acknowledge": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Route",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Agent input": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Agent task": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Tell agent",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Card?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load row",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Get Lark token",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Chat task": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ask agent",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Classify": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Acknowledge",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Decide": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Valid click?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Fetch message": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Read message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Fetch parent": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Agent input",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "First contact?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Link manager",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Reply to a message?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Get Lark token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Fetch message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Lark event": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Classify",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Link manager": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Reply to a message?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load row": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Decide",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Card?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Log decision": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Agent task",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Log message": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Chat task",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Read message": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "First contact?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Reply to a message?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Fetch parent",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Agent input",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Route": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load settings",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Load settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save decision": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log decision",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Valid click?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save decision",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Confirm",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Confirm",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Webhook of the Lark content bot at /webhook/content-agent (event and card callback URL). Answers Lark's URL check and acknowledges at once. Button clicks: accepted only from the linked manager with the row's current token; records the decision as an event and tells the agent. Messages: re-read from the Lark API, the first sender is linked as manager, others are ignored; every message is saved as an event and handed to the agent.",
+  "id": "FUKgI67LbICIFMJT",
+  "isArchived": false,
+  "name": "Content agent: lark",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "45d24350-9271-5415-bc04-8ac0497799dd",
+      "name": "Lark event",
+      "parameters": {
+        "httpMethod": "POST",
+        "options": {},
+        "path": "content-agent",
+        "responseMode": "responseNode"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "webhookId": "3c7e9a12-5b4d-4f8e-9a6c-2d1e0f3b4a57"
+    },
+    {
+      "id": "681f01c7-f06c-5854-a554-91d07195d6f7",
+      "name": "Classify",
+      "parameters": {
+        "jsCode": "// route: 0 card button, 1 message, 2 ignore\nconst body = $json.body || {};\nif (body.encrypt) return [{ json: { route: 2, response: {} } }];\nif (body.type === 'url_verification') return [{ json: { route: 2, response: { challenge: body.challenge } } }];\nconst header = body.header || {};\nconst event = body.event || {};\nif (header.event_type === 'card.action.trigger') {\n  const value = (event.action && event.action.value) || {};\n  return [{\n    json: {\n      route: 0,\n      response: { toast: { type: 'info', content: 'Noted' } },\n      action: value.a,\n      id: Number(value.id) || 0,\n      token: value.t,\n      operator: (event.operator && event.operator.open_id) || '',\n      message_id: (event.context && event.context.open_message_id) || '',\n    },\n  }];\n}\nif (header.event_type === 'im.message.receive_v1') {\n  const m = event.message || {};\n  if (m.chat_type !== 'p2p') return [{ json: { route: 2, response: {} } }];\n  return [{ json: { route: 1, response: {}, message_id: m.message_id } }];\n}\nreturn [{ json: { route: 2, response: {} } }];"
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "7329c280-78af-5f53-afb9-1bb034c3f490",
+      "name": "Acknowledge",
+      "parameters": {
+        "options": {},
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json.response) }}"
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "5c3ea8ab-e3bc-5ee2-9fe4-27433ff5bec3",
+      "name": "Route",
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 3,
+        "output": "={{ $json.route }}"
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "ead52e2b-f47a-5152-8644-f46b877b6fd0",
+      "name": "Load settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "meuoueztm2hoq1t"
+        }
+      },
+      "position": [
+        880,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "928632d6-e0b0-5374-82ab-3075025f2b90",
+      "name": "Card?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "1abed3c8-ac00-56f9-90fa-3f995a66a00a",
+              "leftValue": "={{ $('Classify').first().json.route === 0 }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1100,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "77ce28b7-3dc5-5796-9d79-8e4d2fde81e9",
+      "name": "Load row",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ $('Classify').first().json.id }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ String($('Classify').first().json.action || '').startsWith('offer') ? 'mfuqrdnbqhb0r81' : 'mu013k4ij3s0jii' }}"
+        }
+      },
+      "position": [
+        1320,
+        -400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "63c4af47-1379-5e93-8814-d68b75467859",
+      "name": "Decide",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst c = $('Classify').first().json;\nconst settings = settingsOf('Load settings');\nif (!settings.lark_open_id || c.operator !== settings.lark_open_id) return [];\nconst row = rowsOf('Load row')[0];\nconst isOffer = String(c.action || '').startsWith('offer');\nconst approve = String(c.action || '').endsWith('approve');\nconst open = isOffer ? ['proposed'] : ['awaiting_approval'];\nconst base = { reply_to: c.message_id };\nif (!row || !c.token || row.approval_token !== c.token) {\n  return [{ json: { ...base, valid: false, text: 'That card is out of date.' } }];\n}\nif (!open.includes(row.status)) {\n  return [{ json: { ...base, valid: false, text: `${isOffer ? 'Offer' : 'Post'} #${row.Id} is already ${row.status}.` } }];\n}\nconst label = isOffer ? `offer #${row.Id} \"${row.title}\" (${row.offer}, launch ${row.launch_date})` : `post #${row.Id} \"${row.title}\"`;\nlet agent = '';\nif (isOffer && approve) agent = `Your manager approved ${label}. Plan the posts leading to it now, working backward from what the audience must know and feel.`;\nif (isOffer && !approve) agent = `Your manager rejected ${label}. If you do not know why, ask in one short message. Then propose a different offer for that month.`;\nif (!isOffer && !approve) agent = `Your manager rejected ${label}, planned for ${row.publish_at}. If you do not know why, ask in one short message; then plan something better for that day.`;\nreturn [{\n  json: {\n    ...base,\n    valid: true,\n    table: isOffer ? 'offers' : 'posts',\n    row_id: row.Id,\n    status: approve ? 'approved' : 'rejected',\n    event: { type: approve ? 'approved' : 'rejected', post_id: isOffer ? null : row.Id, offer_id: isOffer ? row.Id : null, text: `Manager ${approve ? 'approved' : 'rejected'} ${label}` },\n    agent,\n    text: approve ? `✅ Approved ${isOffer ? 'offer' : 'post'} #${row.Id}.` : `Rejected ${isOffer ? 'offer' : 'post'} #${row.Id}.`,\n  },\n}];"
+      },
+      "position": [
+        1540,
+        -400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "c6a8651e-3f0b-54ef-8daf-e93e89490f3c",
+      "name": "Valid click?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "493cc912-f0df-5184-86da-3fbc1c607024",
+              "leftValue": "={{ $json.valid }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1760,
+        -400
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "b70ed9b5-dff4-5fca-af0f-c1e7cada794c",
+      "name": "Save decision",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "status": "={{ $('Decide').first().json.status }}"
+          }
+        },
+        "id": "={{ $('Decide').first().json.row_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Decide').first().json.table === 'offers' ? 'mfuqrdnbqhb0r81' : 'mu013k4ij3s0jii' }}"
+        }
+      },
+      "position": [
+        1980,
+        -600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "23f674d7-c00e-5dc8-bf7d-37ee4970994e",
+      "name": "Log decision",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "offer_id": "={{ $('Decide').first().json.event.offer_id }}",
+            "post_id": "={{ $('Decide').first().json.event.post_id }}",
+            "text": "={{ $('Decide').first().json.event.text }}",
+            "type": "={{ $('Decide').first().json.event.type }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        2200,
+        -600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "a2fea20c-06e7-5629-be1f-1ac77e25bba4",
+      "name": "Agent task",
+      "parameters": {
+        "jsCode": "const d = $('Decide').first().json;\nreturn d.agent ? [{ json: { mode: 'event', text: d.agent } }] : [];"
+      },
+      "position": [
+        2420,
+        -600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "5c41f42f-63a5-54f7-9dbb-3e985f7af616",
+      "name": "Tell agent",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "rfEEzkFE1lDOKyoQ"
+        }
+      },
+      "position": [
+        2640,
+        -600
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "7a8bb8d9-5bf8-5957-8242-8ad63c088d1c",
+      "name": "Confirm",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SRT1dYKEzsyQyQBR"
+        }
+      },
+      "position": [
+        1980,
+        -200
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "c74b2504-7702-5404-a7d7-acda824b9ea5",
+      "name": "Get Lark token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        1320,
+        400
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "eceaf1a5-bf86-5f1c-8545-726a2d0bfa31",
+      "name": "Fetch message",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.tenant_access_token }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $('Classify').first().json.message_id }}"
+      },
+      "position": [
+        1540,
+        400
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "7014975d-9b97-515a-a934-a87007f5e0c3",
+      "name": "Read message",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst settings = settingsOf('Load settings');\nconst r = $json;\nif (r.code !== 0) throw new Error(`Lark get message failed: ${r.code} ${r.msg}`);\nconst m = ((r.data && r.data.items) || [])[0];\nif (!m || !m.sender || m.sender.sender_type !== 'user') return [];\nif (settings.lark_open_id && m.sender.id !== settings.lark_open_id) return [];\n\nconst textOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => el.text || el.href || '').join(''))].filter(Boolean).join('\\n');\n    }\n  } catch (e) {}\n  return '';\n};\nconst text = textOf(m).replace(/@_user_\\d+/g, '').trim();\nif (!text) return [];\nconst settingsRow = $('Load settings').all().map((i) => i.json).find((j) => j.fields && j.fields.key === 'lark_open_id');\nreturn [{\n  json: {\n    text,\n    message_id: m.message_id,\n    parent_id: m.parent_id || '',\n    open_id: m.sender.id,\n    link: !settings.lark_open_id,\n    settings_row_id: settingsRow ? settingsRow.id : null,\n    auth: $('Get Lark token').first().json.tenant_access_token,\n  },\n}];"
+      },
+      "position": [
+        1760,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "fb4f93b9-05be-5613-ade6-eeb2a1e06d10",
+      "name": "First contact?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "708f99e7-0fc6-5a87-9eb6-1f98eda8d33b",
+              "leftValue": "={{ $json.link }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1980,
+        400
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "245371e9-e105-5d9f-889c-e180ecfd0ab3",
+      "name": "Link manager",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "value": "={{ $('Read message').first().json.open_id }}"
+          }
+        },
+        "id": "={{ $('Read message').first().json.settings_row_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "meuoueztm2hoq1t"
+        }
+      },
+      "position": [
+        2200,
+        200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "779f6355-5ddf-53b2-afa8-7bd34356c55d",
+      "name": "Reply to a message?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "515c35f1-ae90-56cf-bfb7-cad36a77d009",
+              "leftValue": "={{ !!$('Read message').first().json.parent_id }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        2420,
+        400
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "678bef5f-5a0f-5297-93ab-0a98a91b6de3",
+      "name": "Fetch parent",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Read message').first().json.auth }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $('Read message').first().json.parent_id }}"
+      },
+      "position": [
+        2640,
+        200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "15f4dbdd-50b2-5c6c-bf4c-9382abe2a3ef",
+      "name": "Agent input",
+      "parameters": {
+        "jsCode": "const m = $('Read message').first().json;\nlet replyTo = '';\nlet postId = null;\nlet offerId = null;\nif ($('Fetch parent').isExecuted) {\n  const p = (($('Fetch parent').first().json.data || {}).items || [])[0];\n  if (p) {\n    const raw = (p.body && p.body.content) || '';\n    let plain = raw;\n    try {\n      const c = JSON.parse(raw);\n      plain = c.text || JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ');\n    } catch (e) {}\n    replyTo = plain.slice(0, 1500);\n    const post = raw.match(/[Pp]ost #(\\d+)/);\n    const offer = raw.match(/[Oo]ffer #(\\d+)/);\n    postId = post ? Number(post[1]) : null;\n    offerId = offer ? Number(offer[1]) : null;\n  }\n}\nconst lines = [];\nif (m.link) lines.push('(This is the first message from your manager: introduce yourself in two lines and, if goals or brand docs are missing, ask for them.)');\nif (replyTo) lines.push(`They replied to this message of yours: <<<\n${replyTo}\n>>>`);\nlines.push(`Your manager wrote: <<<\n${m.text}\n>>>`);\nreturn [{\n  json: {\n    mode: 'chat',\n    text: lines.join('\\n'),\n    reply_to: m.message_id,\n    open_id: m.open_id,\n    event: {\n      type: postId && replyTo ? 'change_request' : 'manager_note',\n      post_id: postId,\n      offer_id: offerId,\n      text: replyTo ? `${m.text}\\n(in reply to: ${replyTo.slice(0, 300)})` : m.text,\n    },\n  },\n}];"
+      },
+      "position": [
+        2860,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "4aedd26f-3814-5f11-bd6e-002ad9e315a0",
+      "name": "Log message",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "offer_id": "={{ $json.event.offer_id }}",
+            "post_id": "={{ $json.event.post_id }}",
+            "text": "={{ $json.event.text }}",
+            "type": "={{ $json.event.type }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        3080,
+        400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "e7ca4001-5f41-53c5-9173-f3f9b5f034e4",
+      "name": "Chat task",
+      "parameters": {
+        "jsCode": "const a = $('Agent input').first().json;\nreturn [{ json: { mode: a.mode, text: a.text, reply_to: a.reply_to, open_id: a.open_id } }];"
+      },
+      "position": [
+        3300,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "66283811-3af2-5ecd-bf43-04576f8655b6",
+      "name": "Ask agent",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "rfEEzkFE1lDOKyoQ"
+        }
+      },
+      "position": [
+        3520,
+        400
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "R9RDKGHveGXK2jcu",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

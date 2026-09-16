@@ -24,14 +24,14 @@
       ]
     }
   },
-  "description": "Error workflow of the Strategy workflows: sends the failed workflow, node and message to Lark.",
-  "id": "VykjVIzsFCNavyQp",
+  "description": "Error workflow of the Content agent workflows: sends the failed workflow, node and message to Lark.",
+  "id": "R9RDKGHveGXK2jcu",
   "isArchived": false,
-  "name": "Strategy: errors",
+  "name": "Content agent: errors",
   "nodeGroups": [],
   "nodes": [
     {
-      "id": "58bb1cc7-3d22-5a39-b034-68c8b8a18ed4",
+      "id": "8b058bcf-a22a-5c7b-bf18-910f481a9604",
       "name": "On workflow error",
       "parameters": {},
       "position": [
@@ -42,10 +42,10 @@
       "typeVersion": 1
     },
     {
-      "id": "32043b57-d1f3-591c-89fd-c5dec477a4c6",
+      "id": "733c3c17-f946-5cb6-8900-692cfc1342ed",
       "name": "Format error",
       "parameters": {
-        "jsCode": "const e = $json.execution || {};\nconst wf = $json.workflow || {};\nconst message = (e.error && e.error.message) || 'unknown error';\nreturn [{\n  json: {\n    text: `⚠️ ${wf.name || 'A workflow'} failed at \"${e.lastNodeExecuted || '?'}\":\\n${message}\\n${e.url || ''}`.trim(),\n    purpose: 'error',\n  },\n}];"
+        "jsCode": "const e = $json.execution || {};\nconst wf = $json.workflow || {};\nconst message = (e.error && e.error.message) || 'unknown error';\nreturn [{ json: { text: `⚠️ ${wf.name || 'A workflow'} failed at \"${e.lastNodeExecuted || '?'}\":\\n${message}\\n${e.url || ''}`.trim() } }];"
       },
       "position": [
         220,
@@ -55,7 +55,7 @@
       "typeVersion": 2
     },
     {
-      "id": "9850c4e7-c02d-5467-a98c-40d77654e44b",
+      "id": "77ef5bdf-94ce-51ae-b720-9144a43d1cbb",
       "name": "Send to Lark",
       "parameters": {
         "options": {
@@ -64,7 +64,7 @@
         "workflowId": {
           "__rl": true,
           "mode": "id",
-          "value": "b7JEQEXu4C6TiOa5"
+          "value": "SRT1dYKEzsyQyQBR"
         }
       },
       "position": [

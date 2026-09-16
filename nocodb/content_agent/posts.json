@@ -1,0 +1,262 @@
+{
+  "description": "The content calendar: one post per day, from plan to published, with what each post tests and how it performed.",
+  "display_field": "title",
+  "fields": [
+    {
+      "id": "chy90l76lv345iw",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "c71yap0zpq4dznv",
+      "title": "title",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cgxo92ckk80c63u",
+      "title": "publish_at",
+      "type": "DateTime"
+    },
+    {
+      "description": "offer_launch and offer_reminder are the only sales posts.",
+      "id": "ce8uvmgallhbc8m",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "sism6laoev0f79e",
+            "title": "education"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s5h2h0p7padtphf",
+            "title": "story"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "sl8f3z82nj6ylh1",
+            "title": "offer_launch"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "sfznq98re2dgw3y",
+            "title": "offer_reminder"
+          }
+        ]
+      },
+      "title": "kind",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "The offer this post leads toward.",
+      "id": "cd0bq4qsrksm12b",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "offer_id",
+      "type": "Number"
+    },
+    {
+      "id": "cr0elzo4a7kmp34",
+      "title": "brief",
+      "type": "LongText"
+    },
+    {
+      "id": "cvozbkvn00n6d69",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "sgytxula6019lzw",
+            "title": "question"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s8ut7sysao452b3",
+            "title": "contrarian"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "s3eodtsir326b7c",
+            "title": "story"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "smf8i96q1kxa5sk",
+            "title": "number"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "sc6gyy24a7tj1v2",
+            "title": "how_to"
+          },
+          {
+            "color": "#fee2d5",
+            "id": "sf0dp9d35eaqhxx",
+            "title": "mistake"
+          },
+          {
+            "color": "#ffeab6",
+            "id": "sqrjc6agocfhinm",
+            "title": "confession"
+          },
+          {
+            "color": "#d1f7c4",
+            "id": "ssbmavozs8u2c8w",
+            "title": "observation"
+          },
+          {
+            "color": "#ede2fe",
+            "id": "shl58nfo8gzbkgy",
+            "title": "other"
+          }
+        ]
+      },
+      "title": "hook_type",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "c86gl03tebiimk4",
+      "title": "angle",
+      "type": "SingleLineText"
+    },
+    {
+      "description": "What the agent expects this post to show, and why. Judged in the weekly review.",
+      "id": "cljwtklqq5nv34d",
+      "title": "hypothesis",
+      "type": "LongText"
+    },
+    {
+      "id": "c38qkqll31lijdv",
+      "title": "draft",
+      "type": "LongText"
+    },
+    {
+      "description": "Result of the last pre-publish check.",
+      "id": "cv5ylxtcjeqd0pj",
+      "title": "check_report",
+      "type": "LongText"
+    },
+    {
+      "description": "Drafts submitted.",
+      "id": "c3b9unbb7fdsvax",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "revisions",
+      "type": "Number"
+    },
+    {
+      "id": "chc7y7e592t3cbz",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "snpv7d7lx3hgdi2",
+            "title": "planned"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s5ejxi4qpuf6w9u",
+            "title": "awaiting_approval"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "symwb2wsugnyj95",
+            "title": "approved"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "srywxbme55yubyb",
+            "title": "published"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "sqtlpsscj7wzur2",
+            "title": "rejected"
+          },
+          {
+            "color": "#fee2d5",
+            "id": "sz95mz9u6fk7fq1",
+            "title": "cancelled"
+          }
+        ]
+      },
+      "title": "status",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "c2848hkqci9ukgr",
+      "title": "approval_token",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cxh9rm635nsmgnq",
+      "title": "fb_post_id",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "c9attn6tadanvvc",
+      "title": "published_at",
+      "type": "DateTime"
+    },
+    {
+      "description": "The text as published, when it differs from the draft.",
+      "id": "cuer0vklaqvm7q9",
+      "title": "final_text",
+      "type": "LongText"
+    },
+    {
+      "id": "ctt6rgp2qsl2ovt",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "reach",
+      "type": "Number"
+    },
+    {
+      "id": "crw23cir2n6eh8s",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "reactions",
+      "type": "Number"
+    },
+    {
+      "id": "c5enkktydpmsxbi",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "comments",
+      "type": "Number"
+    },
+    {
+      "id": "ci2hwlelc84ijlz",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "shares",
+      "type": "Number"
+    },
+    {
+      "id": "c5qm614ole5uuy7",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "clicks",
+      "type": "Number"
+    },
+    {
+      "id": "c0z6c8qtxyg4obc",
+      "title": "metrics_at",
+      "type": "DateTime"
+    },
+    {
+      "id": "cggyf04f2aci3xz",
+      "title": "created_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mu013k4ij3s0jii",
+  "title": "posts"
+}

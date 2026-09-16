@@ -63,78 +63,85 @@ Workflow `Content ideation MCP` serves an MCP server at
 Settings > Connectors > Add custom connector; it signs in with your n8n account (OAuth). Then, in
 Claude in Chrome on a Facebook post: "save this post".
 
-## Content strategy agent
+## Content agent
 
-Runs `docs/Content Strategy.md` on the Vịt Làm Data page: two offers a month, education and
-stories planned backward from each offer, a pre-publish check on every post, and a monthly retro
-whose rules feed the next month. You work with it in Lark; everything it knows and decides lives
-in NocoDB `content_strategy`. Models: DeepSeek (`deepseek-reasoner` plans, `deepseek-chat` writes
-and checks).
+An AI employee that runs `docs/Content Strategy.md` for the Vịt Làm Data page and gets better at it
+from what happens to its work. You are its manager and talk to it in Lark.
 
-**The month**
+**What it is.** One AI Agent node (workflow `Content agent`, DeepSeek in thinking mode). Its
+instructions are rebuilt on every run from:
 
-1. On the 20th, `Strategy: propose offers` sends a card with next month's two offers: product,
-   simple deal, the reason (a date, milestone, open seats or a playful one), launch, reminder and
-   end dates, and what the audience must know and feel first. Approve or reject each; reply to
-   the card to steer a new proposal.
-2. When the month has two approved offers, `Strategy: plan month` fills every free day up to each
-   offer's reminder: education posts (a problem and a sequence of steps) and stories (intent,
-   obstacle, resolution) that set up that offer, plus the launch and reminder. Sales posts appear
-   on those two days only. You get the plan in Lark.
-3. A week before a story that needs a real detail, the agent asks you in Lark. Reply to the
-   question.
-4. Three days before each post, `Strategy: write piece` drafts it, checks it (relevant, closer,
-   connected, the kind's structure, no selling outside sales posts, every concrete claim quoted
-   from your docs or replies), and rewrites until it passes, at most three drafts. The card
-   shows the post and the check. Approve, reject, or reply with changes to get a rewrite.
-5. An hour before an approved post is due, the bot sends you the text to post on the page.
-6. After an offer ends, the bot asks how it sold. On the 1st, `Strategy: monthly retro` reviews
-   last month and writes the rules next month follows. Reply to the retro to add a rule.
+- the strategy (fixed),
+- your goals (`content_agent.goals`, set by you),
+- its playbook: the lessons it has learned (`content_agent.playbook`), your directives first,
+- its last work log entries,
+- your brand docs from Lark.
 
-Anything else you send the bot is saved to `story_bank`, and stories are planned from it.
-Commands: `/offers [YYYY-MM]`, `/plan YYYY-MM`, `/status`, `/draft <piece id>`,
-`/retro [YYYY-MM]`, `/help`.
+It sees and changes things only through its tools (`Content agent: tools`): `calendar`,
+`propose_offer`, `plan_posts`, `update_post`, `submit_draft`, `send_message`, `save_story`,
+`find_stories`, `reference_posts`, `performance`, `update_playbook`, `save_goal`, `record`. The
+strategy's hard rules are enforced inside the tools, so the agent cannot break them: at most two
+offers a month with a reason, one post a day, sales posts only on an approved offer's launch and
+reminder days, every other post leads to the next offer, and every draft passes the pre-publish
+check (relevant, closer, connected, structure, and each concrete claim traced to a real fact)
+before it reaches you. Nothing is published without your approval.
 
-`content_strategy.settings` holds `post_time` (20:00), `draft_lead_days` (3),
-`material_lead_days` (7) and the rest; edit them in NocoDB.
+**When it works.**
 
-**Set up Lark (once)**
+- You write to it in Lark: it acts and answers.
+- Something happens (you approve or reject an offer or a post): it does what follows, like
+  planning an approved offer's posts.
+- Daily shift, 08:00: it proposes next month's offers from the 15th, keeps the calendar planned
+  up to the last approved offer, asks you for real story details a week ahead, and drafts the
+  posts due within three days.
+- Weekly review, Monday 08:30: its 1:1 with you (below).
+
+**How it improves.** Every signal is saved in `content_agent.events`: your approvals and
+rejections, everything you write to it (a reply to a draft card is a change request), failed
+checks, offer results, and, once Facebook is connected, post metrics and audience comments. Every
+planned post names its hook, angle and hypothesis, and about 30% of posts test one thing on
+purpose. In the weekly review the agent reads the unreviewed signals and the numbers
+(`performance`: goal progress, scores by kind, hook and weekday, approval rate), judges its
+hypotheses, and adds, revises or retires playbook lessons, each with its evidence and a
+confidence level. Then it sends you a report: goal progress, what worked, what changed in its
+playbook and why, what it tests next, what it needs from you. The report always lists the
+playbook changes. It also learns during work: a refused plan or a failed check becomes a lesson.
+Your preferences become manager directives, which outrank its own lessons and which only you can
+change. Reply to anything to correct it.
+
+**Set up Lark (once).**
 
 1. At https://open.larksuite.com/app create a custom app (e.g. "Content agent") and enable its
    Bot feature.
 2. Permissions & Scopes, add: `im:message`, `im:message:send_as_bot`,
    `im:message.p2p_msg:readonly`, `docx:document:readonly`, `wiki:wiki:readonly`.
-3. Events & Callbacks: request URL `https://n8n.vitlamdata.com/webhook/lark-content-strategy`
-   (Lark checks it and n8n answers), no Encrypt Key, and add the event `im.message.receive_v1`
-   (message received). Set the same URL as the card callback URL (card action `card.action.trigger`,
-   or "Message card request URL" under the Bot feature in older consoles).
+3. Events & Callbacks: request URL `https://n8n.vitlamdata.com/webhook/content-agent`, no Encrypt
+   Key, event `im.message.receive_v1`. Set the same URL as the card callback URL (card action
+   `card.action.trigger`, or "Message card request URL" under the Bot feature in older consoles).
 4. Create a version and release it; approve it in the Lark admin console if asked.
-5. Copy App ID and App Secret from Credentials & Basic Info into `.credentials.env` as
-   `LARK_APP_ID` and `LARK_APP_SECRET`, then run
-   `scripts/push-credentials.sh credentials/httpCustomAuth_5SpNmcRFSfZL899c.json`.
-6. In Lark, open a chat with the bot and send "hi". The first sender is linked; the bot ignores
-   everyone else. To re-link, clear `lark_open_id` in settings.
-7. Add the app to each brand doc (the doc's `...` menu, then More, then add a document app, or
-   share the doc with the app), and put the doc links, one per line, in `brand_doc_urls`. The agent
-   reads them before every proposal, plan, draft and retro, so keep in them: each product (name,
-   price, the problem it solves, who it is for, landing link), the mission, values, what you stand
-   against, the audience, milestones and real results. Facts missing there are facts the agent
-   will not use.
-8. Send `/offers` to start without waiting for the 20th.
+5. Copy App ID and App Secret into `.credentials.env` as `LARK_APP_ID` and `LARK_APP_SECRET`, then
+   run `scripts/push-credentials.sh credentials/httpCustomAuth_5SpNmcRFSfZL899c.json`.
+6. Add the app to each brand doc (the doc's `...` menu, then More, then add a document app, or
+   share the doc with the app) and put the doc links, one per line, in `brand_doc_urls` in
+   `content_agent.settings`. Keep in them: products (name, price, the problem each solves, who it
+   is for, landing link), mission, values, what you stand against, audience, milestones and real
+   results. The agent uses no fact that is not there or in your messages.
+7. Message the bot in Lark. The first sender becomes its manager, and it ignores everyone else
+   (clear `lark_open_id` to re-link). It introduces itself and asks for your goals.
 
-**Publishing to Facebook (not connected yet)**
+**Publishing to Facebook (not connected yet).** Approved posts are sent to you in Lark an hour
+before they are due, to post by hand. Automatic publishing, post metrics and audience comments
+need a Page access token that does not expire:
 
-Approved posts are sent to you to post by hand. To publish automatically, get a Page access
-token that does not expire, then ask Claude to wire it in:
-
-1. At https://developers.facebook.com create an app (type Business) and add yourself as admin.
-2. In Graph API Explorer, pick the app, request a User token with `pages_show_list`,
-   `pages_read_engagement` and `pages_manage_posts`, and pick the Vịt Làm Data page when asked.
-3. Exchange it for a long-lived user token:
+1. At https://developers.facebook.com create an app (type Business).
+2. In Graph API Explorer, pick the app and get a User token with `pages_show_list`,
+   `pages_read_engagement`, `pages_manage_posts` and `pages_read_user_content`, choosing the
+   page.
+3. Exchange it for a long-lived token:
    `GET /oauth/access_token?grant_type=fb_exchange_token&client_id=<app id>&client_secret=<app secret>&fb_exchange_token=<token>`.
-4. Call `GET /me/accounts` with the long-lived token; the page's `access_token` there is the Page
-   token. Check it in the Access Token Debugger: it should say it never expires.
+4. `GET /me/accounts` with the long-lived token returns the page's `access_token`. Check it in the
+   Access Token Debugger: it should never expire.
 5. Switch the app to Live mode (it needs a privacy policy URL); posts made by an app in
    development mode can be hidden from the public.
-6. Put the token in `.credentials.env` as `FACEBOOK_PAGE_TOKEN` and the page id in
-   `facebook_page_id` in settings.
+6. Put the token in `.credentials.env` as `FACEBOOK_PAGE_TOKEN`, the page id in `facebook_page_id`,
+   and ask Claude to connect publishing and metrics.

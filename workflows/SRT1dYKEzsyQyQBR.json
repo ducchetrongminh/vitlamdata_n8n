@@ -1,0 +1,290 @@
+{
+  "active": true,
+  "connections": {
+    "Anything to deliver?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Get Lark token",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Not delivered",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Build messages": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Anything to deliver?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Get Lark token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Requests",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Build messages",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Requests": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Send",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Send": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Delivered",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load settings",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Sub-workflow: sends one Lark message per input item ({text} or {card} JSON 2.0, optional reply_to) as the Lark content bot to the manager's open_id in content_agent.settings. Before the manager has linked the bot, items without reply_to are not delivered. Returns {message_id, delivered, note} per input item.",
+  "id": "SRT1dYKEzsyQyQBR",
+  "isArchived": false,
+  "name": "Content agent: lark send",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "7d04a416-1780-565f-831e-d7a211bfba61",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "2f026f21-7801-5657-9a63-4a36e3729476",
+      "name": "Load settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "meuoueztm2hoq1t"
+        }
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "9883d93a-455f-590b-b25f-3fd0e0271c59",
+      "name": "Build messages",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n\nconst settings = settingsOf('Load settings');\nconst messages = $('When called').all().map((item, index) => {\n  const m = item.json || {};\n  const text = (m.text || '').toString();\n  if (!m.card && !text.trim()) return { index, note: 'empty message' };\n  if (!m.reply_to && !settings.lark_open_id) return { index, note: 'not delivered: the manager has not linked the Lark bot yet' };\n  const msg_type = m.card ? 'interactive' : 'text';\n  const content = JSON.stringify(m.card ? m.card : { text: text.slice(0, 20000) });\n  return {\n    index,\n    deliver: true,\n    url: m.reply_to\n      ? `https://open.larksuite.com/open-apis/im/v1/messages/${m.reply_to}/reply`\n      : 'https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type=open_id',\n    body: m.reply_to ? { msg_type, content } : { receive_id: settings.lark_open_id, msg_type, content },\n  };\n});\nreturn [{ json: { messages, any: messages.some((m) => m.deliver) } }];"
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "35c80a62-8fbd-55b4-bc7d-372420d254a5",
+      "name": "Anything to deliver?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c3dc9f54-d085-5acd-be60-6e1a82bef7ff",
+              "leftValue": "={{ $json.any }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "9d8bb927-cb81-514e-ab5b-9365270c3048",
+      "name": "Get Lark token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        880,
+        -200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "2d54cc89-29ca-5881-8363-57963feb459a",
+      "name": "Requests",
+      "parameters": {
+        "jsCode": "const token = $json.tenant_access_token;\nif (!token) throw new Error('No Lark tenant token: ' + JSON.stringify($json).slice(0, 300));\nreturn $('Build messages').first().json.messages.filter((m) => m.deliver).map((m) => ({ json: { ...m, token } }));"
+      },
+      "position": [
+        1100,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "1e85b46f-20f3-5324-b135-7fb6c02b0243",
+      "name": "Send",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.token }}"
+            }
+          ]
+        },
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "sendHeaders": true,
+        "specifyBody": "json",
+        "url": "={{ $json.url }}"
+      },
+      "position": [
+        1320,
+        -200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "8ddc437b-a77e-51e3-a18d-a2717240d0f1",
+      "name": "Delivered",
+      "parameters": {
+        "jsCode": "// Lark answers HTTP 200 with a non-zero code on some errors.\nconst requests = $('Requests').all();\nconst sent = {};\n$input.all().forEach((item, i) => {\n  const r = item.json || {};\n  if (r.code !== 0) throw new Error(`Lark send failed: ${r.code} ${r.msg}`);\n  sent[requests[i].json.index] = r.data.message_id;\n});\nreturn $('Build messages').first().json.messages.map((m) => ({\n  json: { message_id: sent[m.index] || null, delivered: Boolean(sent[m.index]), note: m.note || '' },\n}));"
+      },
+      "position": [
+        1540,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "8c79827c-4dea-58c0-a295-dca36966b354",
+      "name": "Not delivered",
+      "parameters": {
+        "jsCode": "return $('Build messages').first().json.messages.map((m) => ({ json: { message_id: null, delivered: false, note: m.note || '' } }));"
+      },
+      "position": [
+        880,
+        200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
