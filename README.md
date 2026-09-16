@@ -99,9 +99,11 @@ before it reaches you. Nothing is published without your approval.
 **How it improves.** Every signal is saved in `content_agent.events`: your approvals and
 rejections, everything you write to it (a reply to a draft card is a change request), failed
 checks, offer results, and, once Facebook is connected, post metrics and audience comments. Every
-planned post names its hook, angle and hypothesis, and about 30% of posts test one thing on
-purpose. In the weekly review the agent reads the unreviewed signals and the numbers
-(`performance`: goal progress, scores by kind, hook and weekday, approval rate), judges its
+planned post names its time, hook, angle and hypothesis, and about 30% of posts test one thing
+on purpose. The agent chooses each post's time inside `post_window` in `content_agent.settings`
+(07:00-22:00; change it there), spreads posts across time slots until it has a timing lesson, and
+the weekly numbers compare results by time slot and weekday. In the weekly review the agent reads the unreviewed signals and the numbers
+(`performance`: goal progress, scores by kind, hook, time slot and weekday, approval rate), judges its
 hypotheses, and adds, revises or retires playbook lessons, each with its evidence and a
 confidence level. Then it sends you a report: goal progress, what worked, what changed in its
 playbook and why, what it tests next, what it needs from you. The report always lists the

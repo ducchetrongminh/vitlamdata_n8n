@@ -227,6 +227,22 @@ Verified on this instance while building `Idea shaping` and `Finalize content`.
 - Branches from one node run top to bottom by canvas position (`executionOrder: v1`), and an error
   in one stops the rest: put database writes above Lark or other outbound calls.
 
+## Lark Open API
+
+Verified with the Lark content bot (custom app, credential `Lark content bot`).
+
+- `httpCustomAuth` with `{"body": {"app_id", "app_secret"}}` on `POST
+  auth/v3/tenant_access_token/internal` returns `tenant_access_token` (2 hours). Wrong values answer
+  HTTP 200 with `code 10003 invalid param`, so check `code`, not the HTTP status.
+- Event subscription verification posts `{"challenge", "token", "type": "url_verification"}` and
+  expects `{"challenge"}` back.
+- `GET im/v1/messages/<id>` returns `items[0]` with `sender.id` (the open_id), `sender.sender_type`,
+  `msg_type`, `parent_id` and `body.content` as a JSON string.
+- A wiki link resolves with `GET wiki/v2/spaces/get_node?token=` to `node.obj_token`, and `GET
+  docx/v1/documents/<obj_token>/raw_content` returns the text once the app is added to the doc.
+- An execution retried with `POST /executions/<id>/retry` reuses the stored output of the nodes
+  before the failed one, so a stale token is reused. Replay the webhook body instead.
+
 ## Facebook Graph API
 
 Verified with the page token of Vịt làm Data (credential `Facebook page`, app use case "Manage
