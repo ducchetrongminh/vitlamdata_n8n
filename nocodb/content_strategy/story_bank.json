@@ -1,0 +1,54 @@
+{
+  "description": "Real moments you send the Lark bot. Planning and writing pull from here so stories stay true.",
+  "display_field": "summary",
+  "fields": [
+    {
+      "id": "cp4hgfpifnt7dfj",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "description": "First line of the story.",
+      "id": "cgkvfmlipcbbfde",
+      "title": "summary",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "c16r5zj5zehxzxl",
+      "title": "text",
+      "type": "LongText"
+    },
+    {
+      "id": "c084g6yt81jzb9f",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "sfbbjg26pxxxwf7",
+            "title": "lark"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "sa1kqqfiic60ob3",
+            "title": "manual"
+          }
+        ]
+      },
+      "title": "source",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "Ids of pieces planned from this story, comma-separated.",
+      "id": "cr4ekc1qk4egc0s",
+      "title": "used_in",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "croxo53q0knj1rx",
+      "title": "created_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mrixvhkbw2zn63n",
+  "title": "story_bank"
+}

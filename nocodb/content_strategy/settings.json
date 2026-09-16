@@ -1,0 +1,29 @@
+{
+  "description": "Key/value settings the Content strategy workflows read on every run. One row per key.",
+  "display_field": "key",
+  "fields": [
+    {
+      "id": "cdonp6toq729wqa",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "cidaxevqyi87doy",
+      "title": "key",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "ccfol7vnjs9tanw",
+      "title": "value",
+      "type": "LongText"
+    },
+    {
+      "description": "What the key does and who writes it.",
+      "id": "cctgp7e60hccyfv",
+      "title": "description",
+      "type": "LongText"
+    }
+  ],
+  "id": "mv7h46mjq28a42m",
+  "title": "settings"
+}
