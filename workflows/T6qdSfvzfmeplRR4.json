@@ -198,7 +198,7 @@
           "conditions": [
             {
               "id": "token",
-              "leftValue": "={{ $json.approval_token }}",
+              "leftValue": "={{ ($json.fields || {}).approval_token }}",
               "operator": {
                 "operation": "equals",
                 "type": "string"
@@ -207,7 +207,7 @@
             },
             {
               "id": "status",
-              "leftValue": "={{ $json.status }}",
+              "leftValue": "={{ ($json.fields || {}).status }}",
               "operator": {
                 "operation": "equals",
                 "type": "string"
@@ -259,7 +259,7 @@
       "id": "f267d5ed-1378-4a31-9283-8c92d5e617a5",
       "name": "Approved pick",
       "parameters": {
-        "jsCode": "// The link carries the structure you chose; fall back to the judge's pick.\nconst query = $('Approval link clicked').first().json.query || {};\nconst row = $input.first().json;\n\nconst asked = Number(query.structure);\nconst chosen = [1, 2, 3].includes(asked) ? asked : Number(row.chosen_structure) || 1;\n\nreturn [\n  {\n    json: {\n      Id: row.Id,\n      title: row.title,\n      draft: row.draft,\n      platform: row.platform,\n      goal: row.goal,\n      clarifying_qa: row.clarifying_qa,\n      evaluation: row.evaluation,\n      chosen_structure: chosen,\n      structure_text: row['structure_' + chosen] || '',\n      finalized_by: 'approved',\n    },\n  },\n];"
+        "jsCode": "// The link carries the structure you chose; fall back to the judge's pick.\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst query = $('Approval link clicked').first().json.query || {};\nconst item = $input.first().json;\nconst row = item.fields || {};\n\nconst asked = Number(query.structure);\nconst chosen = [1, 2, 3].includes(asked) ? asked : Number(row.chosen_structure) || 1;\n\nreturn [\n  {\n    json: {\n      Id: item.id,\n      title: row.title,\n      draft: row.draft,\n      platform: row.platform,\n      goal: row.goal,\n      clarifying_qa: row.clarifying_qa,\n      evaluation: row.evaluation,\n      chosen_structure: chosen,\n      structure_text: row['structure_' + chosen] || '',\n      finalized_by: 'approved',\n    },\n  },\n];"
       },
       "position": [
         60,
@@ -326,7 +326,7 @@
       "id": "eb1812f2-b57f-48d3-9edb-a4d0a26aefcc",
       "name": "Timed out pick",
       "parameters": {
-        "jsCode": "// No approval within a day: write from the structure the judge picked.\nreturn $input.all().map((item) => {\n  const row = item.json;\n  const chosen = [1, 2, 3].includes(Number(row.chosen_structure)) ? Number(row.chosen_structure) : 1;\n  return {\n    json: {\n      Id: row.Id,\n      title: row.title,\n      draft: row.draft,\n      platform: row.platform,\n      goal: row.goal,\n      clarifying_qa: row.clarifying_qa,\n      evaluation: row.evaluation,\n      chosen_structure: chosen,\n      structure_text: row['structure_' + chosen] || '',\n      finalized_by: 'auto',\n    },\n  };\n});"
+        "jsCode": "// No approval within a day: write from the structure the judge picked.\n// The NocoDB node nests a row as { id, id_fields, fields }.\nreturn $input.all().map((item) => {\n  const row = item.json.fields || {};\n  const chosen = [1, 2, 3].includes(Number(row.chosen_structure)) ? Number(row.chosen_structure) : 1;\n  return {\n    json: {\n      Id: item.json.id,\n      title: row.title,\n      draft: row.draft,\n      platform: row.platform,\n      goal: row.goal,\n      clarifying_qa: row.clarifying_qa,\n      evaluation: row.evaluation,\n      chosen_structure: chosen,\n      structure_text: row['structure_' + chosen] || '',\n      finalized_by: 'auto',\n    },\n  };\n});"
       },
       "position": [
         -160,
