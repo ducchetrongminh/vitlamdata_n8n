@@ -212,7 +212,7 @@
         0
       ],
       "type": "n8n-nodes-base.formTrigger",
-      "typeVersion": 2.2,
+      "typeVersion": 2.1,
       "webhookId": "b1d3c5a7-9e21-4f68-8c05-7a4d2e6b9013"
     },
     {
