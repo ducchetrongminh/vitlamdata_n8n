@@ -1,51 +1,51 @@
 {
-  "description": "Facebook posts captured as references for content ideation. Append-only: a post saved twice has two rows.",
+  "description": "Facebook posts saved as inspiration: screenshots you send the Lark bot, read by Content agent: capture. The agent plans and writes with them. A post saved twice has two rows.",
   "display_field": "hook",
   "fields": [
     {
-      "id": "c32f5eehynt80le",
+      "id": "c8urptlj1yyb1f1",
       "title": "Id",
       "type": "ID"
     },
     {
       "description": "Post permalink.",
-      "id": "c35mjw73uge9w9e",
+      "id": "cfsh4kfrjccoi3x",
       "title": "post_url",
       "type": "URL"
     },
     {
       "description": "First line of the post.",
-      "id": "curm4t1gq74k257",
+      "id": "cnljiozf77konh3",
       "title": "hook",
       "type": "SingleLineText"
     },
     {
-      "id": "cgxm0xmjvgbn9sd",
+      "id": "c07nb15p006wdt8",
       "title": "author_name",
       "type": "SingleLineText"
     },
     {
-      "id": "c349y9ckk3vc59y",
+      "id": "cogqtb8s2pl5uk5",
       "title": "author_url",
       "type": "URL"
     },
     {
-      "id": "csmpo11hw42ihld",
+      "id": "ctfmgi2zmru9wrc",
       "options": {
         "choices": [
           {
             "color": "#cfdffe",
-            "id": "snflnr66pcq6wee",
+            "id": "srsliem0h1mhr9o",
             "title": "page"
           },
           {
             "color": "#d0f1fd",
-            "id": "s09a3o8bm88ks90",
+            "id": "sgw4so09kzqba17",
             "title": "profile"
           },
           {
             "color": "#c2f5e8",
-            "id": "shh7znz0399473z",
+            "id": "sjovy69ia2ip6bx",
             "title": "group"
           }
         ]
@@ -54,47 +54,47 @@
       "type": "SingleSelect"
     },
     {
-      "id": "cdhoxn06xtq6iho",
+      "id": "ccn5fxyyughp2py",
       "title": "posted_at",
       "type": "DateTime"
     },
     {
-      "id": "c6ug1j73czzqrbi",
+      "id": "c3po1xq8g9umtkf",
       "options": {
         "choices": [
           {
             "color": "#cfdffe",
-            "id": "s62o1huwo1p99pk",
+            "id": "sgb56dr25k96lc8",
             "title": "text"
           },
           {
             "color": "#d0f1fd",
-            "id": "skqx0ibq5w5obek",
+            "id": "s6ylov5vvqlyjl3",
             "title": "image"
           },
           {
             "color": "#c2f5e8",
-            "id": "sn8shwtub4tmp9c",
+            "id": "sr045b6lwwk3nxl",
             "title": "carousel"
           },
           {
             "color": "#ffdaf6",
-            "id": "s8uciw95v36z27u",
+            "id": "s4z3w7pgzvjf3lf",
             "title": "video"
           },
           {
             "color": "#ffdce5",
-            "id": "sthtkm60nf6phvs",
+            "id": "s4j7tm7axdrvcoi",
             "title": "reel"
           },
           {
             "color": "#fee2d5",
-            "id": "sqqbybn6f9xhost",
+            "id": "sap81ayi88cswsm",
             "title": "link"
           },
           {
             "color": "#ffeab6",
-            "id": "s98duapklny3jn1",
+            "id": "s37m8c4i1mo1piz",
             "title": "live"
           }
         ]
@@ -104,12 +104,12 @@
     },
     {
       "description": "Full post text.",
-      "id": "c9fnth7xevmnyyn",
+      "id": "cragh5s0i4r478a",
       "title": "text",
       "type": "LongText"
     },
     {
-      "id": "cu1p21y8ruxmkez",
+      "id": "chq1s3x20thaemo",
       "options": {
         "separator": "none_period"
       },
@@ -117,7 +117,7 @@
       "type": "Number"
     },
     {
-      "id": "c1cfnedflkdywtw",
+      "id": "ckyez9kpj7jj3aq",
       "options": {
         "separator": "none_period"
       },
@@ -125,7 +125,7 @@
       "type": "Number"
     },
     {
-      "id": "ch51lxkf5y2con8",
+      "id": "cd57h74z7thgb3u",
       "options": {
         "separator": "none_period"
       },
@@ -134,29 +134,29 @@
     },
     {
       "description": "Markdown. Each comment: '(N reactions) Name' line, then the comment text. Replies as indented '- ' items in the same shape. A --- line separates top-level comments.",
-      "id": "cdztx0j97furyxl",
+      "id": "c75jik0aitnggto",
       "title": "comments",
       "type": "LongText"
     },
     {
       "description": "Why the post performs: hook, structure, angle, emotion.",
-      "id": "c5zrlekxh869bys",
+      "id": "cxiomcrioizycx1",
       "title": "why_it_works",
       "type": "LongText"
     },
     {
-      "description": "Your own notes. The capture workflow never writes this field.",
-      "id": "cmxyo2fokz7i8wv",
+      "description": "Your own notes: what you write with the screenshots you send the Lark bot, or add here. Claude in Chrome never writes this field.",
+      "id": "cmo0v95yfc3u96r",
       "title": "notes",
       "type": "LongText"
     },
     {
-      "description": "When the post was first captured.",
-      "id": "cass91wkjj5ftrk",
+      "description": "When the post was captured (Claude in Chrome or screenshots in Lark).",
+      "id": "c7t2s7li29ody9c",
       "title": "captured_at",
       "type": "DateTime"
     }
   ],
-  "id": "mlfvqztd76vculj",
-  "title": "facebook_posts"
+  "id": "m8nm1ke66u7fla0",
+  "title": "inspiring_facebook_posts"
 }

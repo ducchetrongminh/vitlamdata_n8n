@@ -1,0 +1,501 @@
+{
+  "active": true,
+  "connections": {
+    "Acknowledge": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Route",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Agent task": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Tell agent",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Classify": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Acknowledge",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Decide": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Valid click?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Lark event": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Classify",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load row": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Decide",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load row",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Log decision": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Agent task",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Route": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load settings",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Handle message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save decision": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log decision",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Valid click?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save decision",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Confirm",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Confirm",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Webhook of the Lark content bot at /webhook/content-agent (event and card callback URL). Answers Lark's URL check and acknowledges at once. Button clicks: accepted from the owner or from anyone in the team group, with the row's current token; records the decision as an event and tells the agent. Messages from direct chats and groups go to 'Content agent: lark message'.",
+  "id": "FUKgI67LbICIFMJT",
+  "isArchived": false,
+  "name": "Content agent: lark",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "45d24350-9271-5415-bc04-8ac0497799dd",
+      "name": "Lark event",
+      "parameters": {
+        "httpMethod": "POST",
+        "options": {},
+        "path": "content-agent",
+        "responseMode": "responseNode"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "webhookId": "3c7e9a12-5b4d-4f8e-9a6c-2d1e0f3b4a57"
+    },
+    {
+      "id": "681f01c7-f06c-5854-a554-91d07195d6f7",
+      "name": "Classify",
+      "parameters": {
+        "jsCode": "// route: 0 card button, 1 message, 2 ignore\nconst body = $json.body || {};\nif (body.encrypt) return [{ json: { route: 2, response: {} } }];\nif (body.type === 'url_verification') return [{ json: { route: 2, response: { challenge: body.challenge } } }];\nconst header = body.header || {};\nconst event = body.event || {};\nif (header.event_type === 'card.action.trigger') {\n  const value = (event.action && event.action.value) || {};\n  return [{\n    json: {\n      route: 0,\n      response: { toast: { type: 'info', content: 'Noted' } },\n      action: value.a,\n      id: Number(value.id) || 0,\n      token: value.t,\n      operator: (event.operator && event.operator.open_id) || '',\n      chat_id: (event.context && event.context.open_chat_id) || '',\n      message_id: (event.context && event.context.open_message_id) || '',\n    },\n  }];\n}\nif (header.event_type === 'im.message.receive_v1') {\n  const m = event.message || {};\n  if (!['p2p', 'group'].includes(m.chat_type)) return [{ json: { route: 2, response: {} } }];\n  return [{ json: { route: 1, response: {}, message_id: m.message_id, chat_type: m.chat_type } }];\n}\nreturn [{ json: { route: 2, response: {} } }];"
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "7329c280-78af-5f53-afb9-1bb034c3f490",
+      "name": "Acknowledge",
+      "parameters": {
+        "options": {},
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json.response) }}"
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "5c3ea8ab-e3bc-5ee2-9fe4-27433ff5bec3",
+      "name": "Route",
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 3,
+        "output": "={{ $json.route }}"
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "ead52e2b-f47a-5152-8644-f46b877b6fd0",
+      "name": "Load settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "meuoueztm2hoq1t"
+        }
+      },
+      "position": [
+        880,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "77ce28b7-3dc5-5796-9d79-8e4d2fde81e9",
+      "name": "Load row",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ $('Classify').first().json.id }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ String($('Classify').first().json.action || '').startsWith('offer') ? 'mfuqrdnbqhb0r81' : 'mu013k4ij3s0jii' }}"
+        }
+      },
+      "position": [
+        1320,
+        -400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "63c4af47-1379-5e93-8814-d68b75467859",
+      "name": "Decide",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst c = $('Classify').first().json;\nconst settings = settingsOf('Load settings');\n// The owner, or anyone in the team group (everyone there is equal).\nconst allowed = (settings.lark_open_id && c.operator === settings.lark_open_id) || (settings.lark_chat_id && c.chat_id === settings.lark_chat_id);\nif (!allowed) return [];\nconst row = rowsOf('Load row')[0];\nconst isOffer = String(c.action || '').startsWith('offer');\nconst approve = String(c.action || '').endsWith('approve');\nconst open = isOffer ? ['proposed'] : ['awaiting_approval'];\nconst base = { reply_to: c.message_id };\nif (!row || !c.token || row.approval_token !== c.token) {\n  return [{ json: { ...base, valid: false, text: 'That card is out of date.' } }];\n}\nif (!open.includes(row.status)) {\n  return [{ json: { ...base, valid: false, text: `${isOffer ? 'Offer' : 'Post'} #${row.Id} is already ${row.status}.` } }];\n}\nconst label = isOffer ? `offer #${row.Id} \"${row.title}\" (${row.offer}, launch ${row.launch_date})` : `post #${row.Id} \"${row.title}\"`;\nlet agent = '';\nif (isOffer && approve) agent = `The team approved ${label}. Plan the posts leading to it now, working backward from what the audience must know and feel.`;\nif (isOffer && !approve) agent = `The team rejected ${label}. If you do not know why, ask in one short message. Then propose a different offer for that month.`;\nif (!isOffer && !approve) agent = `The team rejected ${label}, planned for ${row.publish_at}. If you do not know why, ask in one short message; then plan something better for that day.`;\nreturn [{\n  json: {\n    ...base,\n    valid: true,\n    table: isOffer ? 'offers' : 'posts',\n    row_id: row.Id,\n    status: approve ? 'approved' : 'rejected',\n    event: { type: approve ? 'approved' : 'rejected', post_id: isOffer ? null : row.Id, offer_id: isOffer ? row.Id : null, text: `Manager ${approve ? 'approved' : 'rejected'} ${label}` },\n    agent,\n    text: approve ? `✅ Approved ${isOffer ? 'offer' : 'post'} #${row.Id}.` : `Rejected ${isOffer ? 'offer' : 'post'} #${row.Id}.`,\n  },\n}];"
+      },
+      "position": [
+        1540,
+        -400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "c6a8651e-3f0b-54ef-8daf-e93e89490f3c",
+      "name": "Valid click?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "493cc912-f0df-5184-86da-3fbc1c607024",
+              "leftValue": "={{ $json.valid }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1760,
+        -400
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "b70ed9b5-dff4-5fca-af0f-c1e7cada794c",
+      "name": "Save decision",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "status": "={{ $('Decide').first().json.status }}"
+          }
+        },
+        "id": "={{ $('Decide').first().json.row_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $('Decide').first().json.table === 'offers' ? 'mfuqrdnbqhb0r81' : 'mu013k4ij3s0jii' }}"
+        }
+      },
+      "position": [
+        1980,
+        -600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "23f674d7-c00e-5dc8-bf7d-37ee4970994e",
+      "name": "Log decision",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "offer_id": "={{ $('Decide').first().json.event.offer_id }}",
+            "post_id": "={{ $('Decide').first().json.event.post_id }}",
+            "text": "={{ $('Decide').first().json.event.text }}",
+            "type": "={{ $('Decide').first().json.event.type }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        2200,
+        -600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "a2fea20c-06e7-5629-be1f-1ac77e25bba4",
+      "name": "Agent task",
+      "parameters": {
+        "jsCode": "const d = $('Decide').first().json;\nreturn d.agent ? [{ json: { mode: 'event', text: d.agent } }] : [];"
+      },
+      "position": [
+        2420,
+        -600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "5c41f42f-63a5-54f7-9dbb-3e985f7af616",
+      "name": "Tell agent",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "rfEEzkFE1lDOKyoQ"
+        }
+      },
+      "position": [
+        2640,
+        -600
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "7a8bb8d9-5bf8-5957-8242-8ad63c088d1c",
+      "name": "Confirm",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SRT1dYKEzsyQyQBR"
+        }
+      },
+      "position": [
+        1980,
+        -200
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "f33bf7e9-2951-5975-b96b-78079f90cebc",
+      "name": "Handle message",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "Ebo2WLzbB0JvSkHB"
+        }
+      },
+      "position": [
+        880,
+        400
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "R9RDKGHveGXK2jcu",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

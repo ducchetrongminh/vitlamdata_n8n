@@ -1,0 +1,53 @@
+{
+  "description": "Real moments from the manager. Stories are told only from here and the brand docs.",
+  "display_field": "summary",
+  "fields": [
+    {
+      "id": "csxq5xt6hmvpw5s",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "c875wl4xxgd8lii",
+      "title": "summary",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cxc29sg0zl6nh8a",
+      "title": "text",
+      "type": "LongText"
+    },
+    {
+      "id": "cldjjvjl0xiykti",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s8qalno71j8exsx",
+            "title": "lark"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "sr2xtb3ox472pxv",
+            "title": "manual"
+          }
+        ]
+      },
+      "title": "source",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "Post ids that used it.",
+      "id": "cxykmb759gy2u0u",
+      "title": "used_in",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cx08ymev9epwxui",
+      "title": "created_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "m10sv4qudn9bby2",
+  "title": "stories"
+}

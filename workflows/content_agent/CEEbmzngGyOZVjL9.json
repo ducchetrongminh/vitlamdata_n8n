@@ -1,0 +1,566 @@
+{
+  "active": true,
+  "connections": {
+    "Doc ids": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Read doc",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Doc requests": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Resolve doc",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Get Lark token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Doc requests",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Has docs?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Get Lark token",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Assemble",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load goals": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load playbook",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load playbook": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load work log",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load references": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Read settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load goals",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load work log": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load references",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Read doc": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Assemble",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Read settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Has docs?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Resolve doc": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Doc ids",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load settings",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Sub-workflow: what the agent knows at the start of every run: settings, brand text (brand_brief plus the Lark docs in brand_doc_urls), active goals, active playbook lessons, its last work log entries, and hooks from content_agent.inspiring_facebook_posts.",
+  "id": "CEEbmzngGyOZVjL9",
+  "isArchived": false,
+  "name": "Content agent: context",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "ff5f4e6b-26e1-5afc-a849-5746ded1d1f7",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "2ca85bb7-a479-52a1-bc84-6a79a4be3418",
+      "name": "Load settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "meuoueztm2hoq1t"
+        }
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "7665514c-b7aa-50be-a76b-970598c72e8b",
+      "name": "Load goals",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "where": "(status,eq,active)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mrtgogrc0or8526"
+        }
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "b4af588e-3949-5755-9b84-59736cc5dca6",
+      "name": "Load playbook",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "asc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "created_at"
+                }
+              }
+            ]
+          },
+          "where": "(status,eq,active)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mdotibzi894tz0d"
+        }
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "3436db84-1845-5883-b2d5-e38382b9e75d",
+      "name": "Load work log",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 6,
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "desc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "created_at"
+                }
+              }
+            ]
+          },
+          "where": "(type,eq,agent_run)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        880,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "9df0330d-d413-5d03-ad4c-37dc1d4d5e6f",
+      "name": "Load references",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 6,
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "desc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "reaction_count"
+                }
+              }
+            ]
+          },
+          "where": "(hook,isnot,null)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m8nm1ke66u7fla0"
+        }
+      },
+      "position": [
+        1100,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "63b6deae-7992-52a2-b122-6f4df46547d6",
+      "name": "Read settings",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst settings = settingsOf('Load settings');\nconst docs = (settings.brand_doc_urls || '')\n  .split(/\\s+/)\n  .map((u) => u.trim())\n  .filter(Boolean)\n  .map((url) => {\n    const m = url.match(/\\/(wiki|docx|docs)\\/([A-Za-z0-9]+)/);\n    return m ? { url, kind: m[1] === 'wiki' ? 'wiki' : 'docx', token: m[2] } : { url, kind: 'unknown', token: '' };\n  });\nreturn [{ json: { settings, docs, has_docs: docs.some((d) => d.kind !== 'unknown') } }];"
+      },
+      "position": [
+        1320,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "c736fe40-012b-5c11-9cee-ba7768e48e3f",
+      "name": "Has docs?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "ec9bf885-8852-5b3f-aaa1-eef9fd8ba66d",
+              "leftValue": "={{ $json.has_docs }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1540,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "36b9d378-05f6-5b56-b7ef-c8eb67c98356",
+      "name": "Get Lark token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        1760,
+        -200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "212ed3a0-2485-5eb7-a233-b65b261f6265",
+      "name": "Doc requests",
+      "parameters": {
+        "jsCode": "const token = $json.tenant_access_token;\nif (!token) throw new Error('No Lark tenant token: ' + JSON.stringify($json).slice(0, 300));\nreturn $('Read settings').first().json.docs\n  .filter((d) => d.kind !== 'unknown')\n  .map((d) => ({\n    json: {\n      ...d,\n      auth: token,\n      resolve_url: d.kind === 'wiki'\n        ? `https://open.larksuite.com/open-apis/wiki/v2/spaces/get_node?token=${d.token}`\n        : `https://open.larksuite.com/open-apis/docx/v1/documents/${d.token}`,\n    },\n  }));"
+      },
+      "position": [
+        1980,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "ae6a2ed0-1288-5420-a3cc-14fc50a58b33",
+      "name": "Resolve doc",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.auth }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "={{ $json.resolve_url }}"
+      },
+      "position": [
+        2200,
+        -200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "fe831f69-29ee-55b9-9316-5b46ee6d8e05",
+      "name": "Doc ids",
+      "parameters": {
+        "jsCode": "// A wiki link points at a node; the document behind it is node.obj_token.\nconst requests = $('Doc requests').all();\nreturn $input.all().map((item, i) => {\n  const req = requests[i].json;\n  const r = item.json || {};\n  const data = r.data || {};\n  let docId = '';\n  let title = '';\n  let error = '';\n  if (r.code !== 0) {\n    error = (r.error && (r.error.message || JSON.stringify(r.error))) || r.msg || 'cannot open';\n  } else if (req.kind === 'wiki') {\n    const node = data.node || {};\n    title = node.title || '';\n    if (node.obj_type === 'docx') docId = node.obj_token;\n    else error = `wiki page is a ${node.obj_type}, only docs are read`;\n  } else {\n    docId = (data.document || {}).document_id || req.token;\n    title = (data.document || {}).title || '';\n  }\n  return {\n    json: {\n      url: req.url,\n      title,\n      error,\n      auth: req.auth,\n      raw_url: `https://open.larksuite.com/open-apis/docx/v1/documents/${docId || 'missing'}/raw_content`,\n    },\n  };\n});"
+      },
+      "position": [
+        2420,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "0023697c-d7ac-5a9e-be0d-257c49094f20",
+      "name": "Read doc",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.auth }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "={{ $json.raw_url }}"
+      },
+      "position": [
+        2640,
+        -200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "26370787-7985-5306-9157-176b775f8ddd",
+      "name": "Assemble",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst { settings, docs } = $('Read settings').first().json;\nconst warnings = docs.filter((d) => d.kind === 'unknown').map((d) => `Not a Lark doc or wiki link: ${d.url}`);\nconst parts = [];\nif (settings.brand_brief) parts.push(`## Brand brief\\n${settings.brand_brief}`);\nif ($('Read doc').isExecuted) {\n  const meta = $('Doc ids').all();\n  $('Read doc').all().forEach((item, i) => {\n    const m = meta[i].json;\n    const r = item.json || {};\n    if (m.error) warnings.push(`${m.url}: ${m.error}`);\n    else if (r.code !== 0) warnings.push(`${m.url}: ${(r.error && r.error.message) || r.msg || 'cannot read'}`);\n    else parts.push(`## ${m.title || m.url}\\n${(r.data && r.data.content) || ''}`);\n  });\n}\n\nconst goals = rowsOf('Load goals');\nconst playbook = rowsOf('Load playbook');\nconst rank = { manager: 0, self: 1 };\nconst conf = { high: 0, medium: 1, low: 2 };\nplaybook.sort((a, b) => (rank[a.source] ?? 1) - (rank[b.source] ?? 1) || (conf[a.confidence] ?? 2) - (conf[b.confidence] ?? 2));\nconst log = rowsOf('Load work log').reverse();\n\nreturn [{\n  json: {\n    settings,\n    linked: Boolean(settings.lark_chat_id || settings.lark_open_id),\n    brand: parts.join('\\n\\n').slice(0, 40000),\n    warnings,\n    goals_text: goals.map((g) => `#${g.Id} ${g.title} | metric ${g.metric} | target ${g.target ?? '?'} ${g.unit || ''} | due ${g.due_on || '-'}${g.notes ? ` | ${g.notes}` : ''}`).join('\\n'),\n    playbook_text: playbook.map((l) => `#${l.Id} [${l.source === 'manager' ? 'manager' : `self, ${l.confidence || 'low'}`}] [${l.category}] ${l.lesson}${l.source === 'manager' ? '' : ` (evidence: ${(l.evidence || '').slice(0, 200)})`}`).join('\\n'),\n    playbook_count: playbook.length,\n    work_log_text: log.map((e) => `${parseDt(e.created_at).toFormat('dd/MM HH:mm')}: ${(e.text || '').slice(0, 600)}`).join('\\n'),\n    references_text: rowsOf('Load references').map((r) => `- ${r.hook}`).join('\\n'),\n    page_name: settings.page_name || 'the brand',\n    language: settings.content_language || 'Vietnamese',\n    post_window: windowOf(settings.post_window),\n  },\n}];"
+      },
+      "position": [
+        2860,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "R9RDKGHveGXK2jcu",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

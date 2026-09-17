@@ -1,0 +1,28 @@
+{
+  "description": "Key/value settings the Content agent workflows read on every run.",
+  "display_field": "key",
+  "fields": [
+    {
+      "id": "ci1b16vgnpzweui",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "czmp1tum977tyds",
+      "title": "key",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "ce2mriqr73o1sae",
+      "title": "value",
+      "type": "LongText"
+    },
+    {
+      "id": "cq55tzgezbag7ab",
+      "title": "description",
+      "type": "LongText"
+    }
+  ],
+  "id": "meuoueztm2hoq1t",
+  "title": "settings"
+}

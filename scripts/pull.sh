@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Export workflows the API key can see to workflows/<id>.json.
+# Export workflows the API key can see to <id>.json files under workflows/ (any subfolder).
 # Usage: scripts/pull.sh [--force] [id...]
 #   no ids: pull every workflow and remove files of workflows gone from n8n
 #   --force: overwrite local edits that were not pushed

@@ -1,0 +1,83 @@
+{
+  "active": true,
+  "connections": {
+    "Format error": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Send to Lark",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "On workflow error": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Format error",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Error workflow of the Content agent workflows: sends the failed workflow, node and message to Lark.",
+  "id": "R9RDKGHveGXK2jcu",
+  "isArchived": false,
+  "name": "Content agent: errors",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "8b058bcf-a22a-5c7b-bf18-910f481a9604",
+      "name": "On workflow error",
+      "parameters": {},
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1
+    },
+    {
+      "id": "733c3c17-f946-5cb6-8900-692cfc1342ed",
+      "name": "Format error",
+      "parameters": {
+        "jsCode": "const e = $json.execution || {};\nconst wf = $json.workflow || {};\nconst message = (e.error && e.error.message) || 'unknown error';\nreturn [{ json: { text: `⚠️ ${wf.name || 'A workflow'} failed at \"${e.lastNodeExecuted || '?'}\":\\n${message}\\n${e.url || ''}`.trim() } }];"
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "77ef5bdf-94ce-51ae-b720-9144a43d1cbb",
+      "name": "Send to Lark",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SRT1dYKEzsyQyQBR"
+        }
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

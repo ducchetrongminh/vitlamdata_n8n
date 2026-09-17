@@ -1,0 +1,117 @@
+{
+  "description": "What the manager wants the page to achieve. The agent plans toward active goals and reports progress in the weekly review. Only the manager sets them, in Lark or here.",
+  "display_field": "title",
+  "fields": [
+    {
+      "id": "cr05uyx3zsn89bh",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "cexsucchposqd2q",
+      "title": "title",
+      "type": "SingleLineText"
+    },
+    {
+      "description": "What the performance tool measures the goal with.",
+      "id": "cn4eu9pdqfumwex",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "se9rn65qpr7t49k",
+            "title": "revenue"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "sqpeshra6t8tuu7",
+            "title": "sales"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "s2jjsr9uobmx2kz",
+            "title": "followers"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "s7ycddf35yydjfo",
+            "title": "engagement"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "s9dzjibouawpvvn",
+            "title": "reach"
+          },
+          {
+            "color": "#fee2d5",
+            "id": "svo4wwfsaqy1b54",
+            "title": "leads"
+          },
+          {
+            "color": "#ffeab6",
+            "id": "sqrzuge3wcpavc5",
+            "title": "other"
+          }
+        ]
+      },
+      "title": "metric",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "cuklq1mw9a6hle2",
+      "options": {
+        "precision": 2,
+        "separator": "none_period"
+      },
+      "title": "target",
+      "type": "Decimal"
+    },
+    {
+      "description": "e.g. VND per month, followers, sales per offer.",
+      "id": "c5e08yiy4k9w82l",
+      "title": "unit",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cly1692k25inwyp",
+      "title": "due_on",
+      "type": "Date"
+    },
+    {
+      "id": "ciqbz0qqhdcww3e",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s69vl8ervm19pun",
+            "title": "active"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s04ira71rhg9rw9",
+            "title": "achieved"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "s3p2mts9edtii3j",
+            "title": "dropped"
+          }
+        ]
+      },
+      "title": "status",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "c4vnp85h9pf41bv",
+      "title": "notes",
+      "type": "LongText"
+    },
+    {
+      "id": "cc3u36c72z3cbj1",
+      "title": "created_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mrtgogrc0or8526",
+  "title": "goals"
+}

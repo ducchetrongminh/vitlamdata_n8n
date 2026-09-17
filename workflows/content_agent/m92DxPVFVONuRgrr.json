@@ -1,0 +1,748 @@
+{
+  "active": true,
+  "connections": {
+    "Download picture": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload picture",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Downloads": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Download picture",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Due now": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Mark publishing",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Each picture post": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save outcome",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Notice",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Picture list",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Every 5 minutes": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load approved posts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Lark token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Downloads",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load approved posts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Due now",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Mark publishing": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Posts to publish",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Notice": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Tell manager",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Picture list": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Lark token",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Picture outcome": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Each picture post",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Picture post body": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Publish with pictures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Posts to publish": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "With pictures?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Publish text": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Text outcome",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Publish with pictures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Picture outcome",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Text outcome": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save outcome",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Notice",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Upload picture": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Picture post body",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load approved posts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "With pictures?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Each picture post",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Publish text",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Every 5 minutes, or when called: publishes each approved post whose time has come to the Facebook page. A post is marked publishing before any call, so a failed save can never post it twice. Posts with pictures the manager sent in Lark: each picture is downloaded from Lark, uploaded to Facebook unpublished and attached to the post; if none uploads, the post goes out as text. Saves the Facebook id and format and sends the link to Lark; a refused post becomes publish_failed with Facebook's reason in check_report.",
+  "id": "m92DxPVFVONuRgrr",
+  "isArchived": false,
+  "name": "Content agent: publisher",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "082197ae-04ea-5200-ad95-d6de57327bb3",
+      "name": "Every 5 minutes",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "expression": "*/5 * * * *",
+              "field": "cronExpression"
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        -200
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "4ce04058-f826-5680-b554-65d13ab9069f",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        200
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "5cd2192b-c447-51b6-9dd3-15e8f75e8b95",
+      "name": "Load approved posts",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "asc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "publish_at"
+                }
+              }
+            ]
+          },
+          "where": "=(status,eq,approved)~and(publish_at,lte,exactDate,{{ $now.toISODate() }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "b14caf8d-05e8-5f28-a86b-e15217897831",
+      "name": "Due now",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\n// The NocoDB filter compares dates only; publish what is due by now.\nconst now = DateTime.now().setZone(TZ);\nreturn rowsOf('Load approved posts')\n  .filter((p) => parseDt(p.publish_at) <= now && (p.draft || '').trim())\n  .map((p) => ({\n    json: {\n      Id: p.Id,\n      title: p.title,\n      message: p.draft,\n      check_report: p.check_report || '',\n      pictures: (p.images || '').split('\\n').map((l) => l.trim().split(/\\s+/)).filter((x) => x.length === 2).map(([message_id, key]) => ({ message_id, key })),\n    },\n  }));"
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "ec90dfd7-bad0-5c83-aabf-0049a272ce7b",
+      "name": "Mark publishing",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "status": "publishing"
+          }
+        },
+        "id": "={{ $json.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "0465267c-7f5e-5d1d-8674-7ad0e9385045",
+      "name": "Posts to publish",
+      "parameters": {
+        "jsCode": "return $('Due now').all();"
+      },
+      "position": [
+        880,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "6877ff05-5000-5f30-88d8-890eff9109e1",
+      "name": "With pictures?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "5e39cf72-8f60-5f76-84c5-baf2993bb7ce",
+              "leftValue": "={{ $json.pictures.length > 0 }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1100,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "6d1b39f1-bc5b-5e88-8520-3a3ecfaaa7cf",
+      "name": "Publish text",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "jsonBody": "={{ JSON.stringify({ message: $json.message }) }}",
+        "method": "POST",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://graph.facebook.com/me/feed"
+      },
+      "position": [
+        1320,
+        400
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "2b7f9113-7fed-504a-baa5-3fb5bfd03fa3",
+      "name": "Text outcome",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst outcome = (post, r, photos, note) => {\n  const stamp = DateTime.now().setZone(TZ).toISO({ suppressMilliseconds: true });\n  if (r.id) {\n    const [pageId, postId] = String(r.id).split('_');\n    return { Id: post.Id, ok: true, status: 'published', fb_post_id: r.id, published_at: stamp, final_text: post.message, check_report: post.check_report, format: photos > 1 ? 'photos' : photos === 1 ? 'photo' : 'text', note, link: `https://www.facebook.com/${pageId}/posts/${postId}`, title: post.title };\n  }\n  const reason = (r.error && (r.error.message || JSON.stringify(r.error))) || 'no post id returned';\n  return { Id: post.Id, ok: false, status: 'publish_failed', fb_post_id: null, published_at: null, final_text: null, format: null, check_report: `Facebook refused it: ${reason}${note ? ` (${note})` : ''}`, note, title: post.title };\n};\n\nconst posts = $('With pictures?').all(1).map((i) => i.json);\nreturn $input.all().map((item, i) => ({ json: outcome(posts[i], item.json || {}, 0, '') }));"
+      },
+      "position": [
+        1540,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "76479bb5-243d-57b7-99e0-44bb2de196fb",
+      "name": "Each picture post",
+      "parameters": {
+        "options": {}
+      },
+      "position": [
+        1320,
+        -200
+      ],
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3
+    },
+    {
+      "id": "bfd7cb25-feb7-5fb0-adbc-4fed895bcf63",
+      "name": "Picture list",
+      "parameters": {
+        "jsCode": "const post = $json;\nreturn post.pictures.slice(0, 10).map((p) => ({ json: { ...p, post_id: post.Id } }));"
+      },
+      "position": [
+        1540,
+        -600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "d798be01-e41e-5d81-8e42-f7d7dca24ab2",
+      "name": "Lark token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        1760,
+        -600
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "794104d3-05a9-5e9a-bb5c-7b970292d509",
+      "name": "Downloads",
+      "parameters": {
+        "jsCode": "const token = $json.tenant_access_token;\nif (!token) throw new Error('No Lark tenant token: ' + JSON.stringify($json).slice(0, 300));\nreturn $('Picture list').all().map((i) => ({ json: { ...i.json, auth: token } }));"
+      },
+      "position": [
+        1980,
+        -600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "ffbf257e-9483-5a46-8cfe-5dc73ff13dd5",
+      "name": "Download picture",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.auth }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {
+          "response": {
+            "response": {
+              "outputPropertyName": "data",
+              "responseFormat": "file"
+            }
+          }
+        },
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $json.message_id }}/resources/{{ $json.key }}?type=image"
+      },
+      "position": [
+        2200,
+        -600
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "d2f1d446-fa4b-521a-baad-b1ba1b9d833f",
+      "name": "Upload picture",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "inputDataFieldName": "data",
+              "name": "source",
+              "parameterType": "formBinaryData"
+            },
+            {
+              "name": "published",
+              "value": "false"
+            }
+          ]
+        },
+        "contentType": "multipart-form-data",
+        "method": "POST",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "sendBody": true,
+        "url": "https://graph.facebook.com/me/photos"
+      },
+      "position": [
+        2420,
+        -600
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "bacce318-04ed-5ba9-acdb-edb0558df756",
+      "name": "Picture post body",
+      "parameters": {
+        "jsCode": "// Posts go out even when pictures fail: the text is written to stand alone.\nconst post = $('Each picture post').first().json;\nconst uploads = $input.all().map((i) => i.json || {});\nconst ids = uploads.filter((u) => u.id).map((u) => u.id);\nconst errors = uploads.filter((u) => !u.id).map((u) => (u.error && (u.error.message || JSON.stringify(u.error))) || 'upload failed');\nconst body = ids.length ? { message: post.message, attached_media: ids.map((id) => ({ media_fbid: id })) } : { message: post.message };\nreturn [{ json: { body, photos: ids.length, note: errors.length ? `${errors.length} of ${uploads.length} picture(s) failed: ${[...new Set(errors)].join('; ')}` : '' } }];"
+      },
+      "position": [
+        2640,
+        -600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "6bf04ce3-c33f-57c5-b5a7-a1c347bd4565",
+      "name": "Publish with pictures",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "method": "POST",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://graph.facebook.com/me/feed"
+      },
+      "position": [
+        2860,
+        -600
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "d81122c6-fb4a-5583-8cdf-1f96c4e5a440",
+      "name": "Picture outcome",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst outcome = (post, r, photos, note) => {\n  const stamp = DateTime.now().setZone(TZ).toISO({ suppressMilliseconds: true });\n  if (r.id) {\n    const [pageId, postId] = String(r.id).split('_');\n    return { Id: post.Id, ok: true, status: 'published', fb_post_id: r.id, published_at: stamp, final_text: post.message, check_report: post.check_report, format: photos > 1 ? 'photos' : photos === 1 ? 'photo' : 'text', note, link: `https://www.facebook.com/${pageId}/posts/${postId}`, title: post.title };\n  }\n  const reason = (r.error && (r.error.message || JSON.stringify(r.error))) || 'no post id returned';\n  return { Id: post.Id, ok: false, status: 'publish_failed', fb_post_id: null, published_at: null, final_text: null, format: null, check_report: `Facebook refused it: ${reason}${note ? ` (${note})` : ''}`, note, title: post.title };\n};\n\nconst b = $('Picture post body').first().json;\nreturn [{ json: outcome($('Each picture post').first().json, $json || {}, b.photos, b.note) }];"
+      },
+      "position": [
+        3080,
+        -600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "03616b34-bc75-5018-966e-998ec7ce2aa1",
+      "name": "Save outcome",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "check_report": "={{ $json.check_report }}",
+            "fb_post_id": "={{ $json.fb_post_id }}",
+            "final_text": "={{ $json.final_text }}",
+            "format": "={{ $json.format }}",
+            "published_at": "={{ $json.published_at }}",
+            "status": "={{ $json.status }}"
+          }
+        },
+        "id": "={{ $json.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        3520,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "cf61e8ad-55ab-5794-bbf5-e9d44c5ab517",
+      "name": "Notice",
+      "parameters": {
+        "jsCode": "return $input.all().map((i) => ({\n  json: {\n    text: i.json.ok\n      ? `📣 Published post #${i.json.Id}${i.json.format === 'text' ? '' : ` with ${i.json.format === 'photo' ? '1 picture' : 'pictures'}`}: ${i.json.title}\\n${i.json.link}${i.json.note ? `\\n⚠️ ${i.json.note}` : ''}`\n      : `⚠️ Post #${i.json.Id} \"${i.json.title}\" was not published. ${i.json.check_report}`,\n  },\n}));"
+      },
+      "position": [
+        3520,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "abb73bf6-f578-59e4-880d-4690b91feb4e",
+      "name": "Tell manager",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SRT1dYKEzsyQyQBR"
+        }
+      },
+      "position": [
+        3740,
+        400
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "R9RDKGHveGXK2jcu",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

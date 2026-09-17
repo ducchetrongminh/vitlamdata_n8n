@@ -1,0 +1,151 @@
+{
+  "description": "What the agent has learned about doing this job well. Every active lesson is in its instructions. Manager directives outrank its own lessons and only the manager changes them.",
+  "display_field": "lesson",
+  "fields": [
+    {
+      "id": "cxikecha5if6ez4",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "description": "One sentence, imperative.",
+      "id": "c0j5gwlfqs46o3e",
+      "title": "lesson",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cffkvqjqzdepfug",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s9cueijh3dlvqjd",
+            "title": "voice"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "sbbsytl9d12iqhp",
+            "title": "hooks"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "srnx9d80jxogf5z",
+            "title": "formats"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "s7ymiumz3kyar88",
+            "title": "topics"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "sn0i7lt3baehg27",
+            "title": "timing"
+          },
+          {
+            "color": "#fee2d5",
+            "id": "s411ughjqpzq3li",
+            "title": "offers"
+          },
+          {
+            "color": "#ffeab6",
+            "id": "s3ks7qd248tshv7",
+            "title": "planning"
+          },
+          {
+            "color": "#d1f7c4",
+            "id": "smwexxivty6406t",
+            "title": "process"
+          }
+        ]
+      },
+      "title": "category",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "c52we0yitn2dei8",
+      "title": "evidence",
+      "type": "LongText"
+    },
+    {
+      "id": "cdil63rywff3xlo",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "skh1ll63gqdficc",
+            "title": "low"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "sy9ghhb9s89ls18",
+            "title": "medium"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "sdy37so5kwgpk3a",
+            "title": "high"
+          }
+        ]
+      },
+      "title": "confidence",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "manager: a directive from the manager. self: learned from data.",
+      "id": "czqzskxllyzinoo",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s6ugxlm3lnodxxj",
+            "title": "manager"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "svto5g51y24005w",
+            "title": "self"
+          }
+        ]
+      },
+      "title": "source",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "c84p6l8b30jwkgh",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s2s00ka560lz183",
+            "title": "active"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s7ghs81kge04n18",
+            "title": "retired"
+          }
+        ]
+      },
+      "title": "status",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "c7veiax9ozmyvwt",
+      "title": "retired_reason",
+      "type": "LongText"
+    },
+    {
+      "id": "cdbasj7p4j03w4s",
+      "title": "created_at",
+      "type": "DateTime"
+    },
+    {
+      "id": "c2k4jo1kv76vmvl",
+      "title": "updated_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mdotibzi894tz0d",
+  "title": "playbook"
+}

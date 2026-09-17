@@ -27,7 +27,9 @@ session is needed after `.env` changes. Reading `.env` with the Read tool is den
 
 - Never print, echo or log `N8N_API_KEY`, and never write it anywhere but `.env`. To check it
   loaded: `[ -n "$N8N_API_KEY" ] && echo set`.
-- `workflows/*.json` is the source of truth. Change a workflow by editing its file and pushing.
+- `workflows/**/<id>.json` is the source of truth. Change a workflow by editing its file and pushing.
+  Files may sit in subfolders to group workflows (`workflows/content_agent/`); the id in the file
+  name finds them.
   After a UI edit, pull and commit.
 - Ask before deleting a workflow, deactivating an active workflow, or overwriting a workflow
   that changed in n8n since the last pull.
@@ -45,18 +47,19 @@ session is needed after `.env` changes. Reading `.env` with the Read tool is den
 
 Need `bash`, `python3` (standard library only) and `git`.
 
-- `scripts/pull.sh [--force] [id...]` writes each workflow to `workflows/<id>.json`: sorted keys,
+- `scripts/pull.sh [--force] [id...]` writes each workflow to its file, keeping the folder it is in
+  (a workflow new to the repo goes to `workflows/<id>.json`): sorted keys,
   2-space indent, only the fields `id name description active isArchived nodes connections
   settings pinData nodeGroups tags` (tags as names). Everything else changes without a real edit
   or is runtime state (`staticData` is written by trigger nodes). With no ids it pulls every
   workflow and deletes files whose workflow is gone. It refuses to overwrite a file edited
   locally but not pushed; `--force` overwrites.
 - `scripts/push.sh [--force] <file>` creates the workflow when the file has no `id` (then renames
-  the file to `workflows/<id>.json`) and updates it otherwise. It sends `name nodes connections
+  the file to `<id>.json` in the same folder) and updates it otherwise. It sends `name nodes connections
   settings pinData nodeGroups`, then `description` and tags if they differ. It never changes
   `active` or `isArchived`. Before an update it refuses if the live workflow differs from the last
   pulled or pushed version; `--force` overwrites, and needs the user's go-ahead. Afterwards it
-  rewrites the file from the live result. Given the path of a deleted `workflows/<id>.json`, it
+  rewrites the file from the live result. Given the path of a deleted `workflows/**/<id>.json`, it
   deactivates and deletes that workflow in n8n, refusing if it changed since the last pull; ask
   before running it.
 - `.n8n-state/<id>.json` (gitignored) holds that last known live version. Without it, push
@@ -75,7 +78,7 @@ changes the file.
   `GET /credentials/schema/<type>`.
 - `.credentials.env.example` (committed) lists every `${VAR}` the credential files use, with
   empty values. Add a variable to it whenever a credential file gains one.
-- `scripts/pull-credentials.sh` writes a file for every credential that `workflows/*.json`
+- `scripts/pull-credentials.sh` writes a file for every credential that `workflows/**/*.json`
   references and that has no file yet, including credentials other users created in the UI. It
   puts a placeholder in each plain string field (not enums, numbers, booleans or
   `allowedDomains`). Delete the placeholders a credential does not use. Existing files are
@@ -115,13 +118,19 @@ from these files.
   DateTime values with an offset (`2026-09-15T08:30:00+07:00`) store correctly. NocoDB's own
   `CreatedAt`/`UpdatedAt` read 7 hours behind real UTC: the app Postgres runs with
   `TZ: Asia/Ho_Chi_Minh` (`vitlamdata_infras`), and NocoDB writes UTC times without an offset,
-  which Postgres reads as +07. Workflows write their own timestamps from `$now`.
+  which Postgres reads as +07. Workflows write their own timestamps from `$now`. A data API
+  bulk `DELETE` of 40 records answered 422; batches of 10 work.
+- Filters with `exactDate` compare the date only, whatever time the value carries:
+  `(created_at,lt,exactDate,2026-09-16T21:21:41+07:00)` matches nothing created that day. Filter
+  by day in NocoDB and by time in a Code node. Checkbox filters are `(field,checked)` and
+  `(field,notchecked)`.
 
 ## Loop
 
 1. `scripts/pull.sh`, commit anything that changed in the UI.
-2. Edit `workflows/<id>.json`, or write a new file without `id`.
-3. `scripts/push.sh workflows/<file>.json`. If it refuses, pull the id, redo the edit on top,
+2. Edit the workflow's `<id>.json` under `workflows/`, or write a new file without `id` in the folder
+   it belongs to.
+3. `scripts/push.sh workflows/<folder>/<file>.json`. If it refuses, pull the id, redo the edit on top,
    push again. Pushing an active workflow changes production immediately.
 4. Activate if needed (`POST /workflows/{id}/activate`), then `scripts/pull.sh <id>` so the file
    records `active`.
@@ -181,7 +190,7 @@ api() { local p=$1; shift; curl -sS -H "X-N8N-API-KEY: $N8N_API_KEY" -H 'Content
 
 ## Nodes
 
-Verified on this instance while building `Idea shaping` and `Finalize content`.
+Verified on this instance.
 
 - `n8n-nodes-base.formTrigger` has no typeVersion 2.2 here. A workflow using it is accepted and
   activates, `triggerCount` is 1, but no route is registered and `$N8N_URL/form/<path>` answers
@@ -195,6 +204,97 @@ Verified on this instance while building `Idea shaping` and `Finalize content`.
   Read values from `$json.fields`, not from `$json`.
 - Its `update` operation needs the row id in the top-level `id` parameter. `matchingColumns` is
   not enough: activating fails with `Missing or invalid required parameters: id`.
+- It returns DateTime values in UTC as `2026-09-17 13:00:00+00:00` (space, not `T`).
+- A node runs once per input item. A search after a node that outputs several items runs that many
+  times unless the node has `executeOnce: true`.
+- Activating a workflow with an Execute Workflow node fails while the sub-workflow it calls is
+  inactive: `Cannot publish workflow: Node "X" references workflow <id> ("Y") which is not
+  published`. Activate sub-workflows first; a sub-workflow with only an Execute Workflow Trigger
+  activates fine.
+- `@n8n/n8n-nodes-langchain.chainLlm` with a DeepSeek model set to `responseFormat: json_object`
+  outputs the parsed JSON object as the item, not `{text}`. With the default text format it
+  outputs `{text}`. Braces in its system message are escaped; the prompt text is passed as a
+  variable, so JSON in either is safe.
+- `@n8n/n8n-nodes-langchain.agent` 3.1 with `lmChatDeepSeek` in thinking mode (`deepseek-flash`, `deepseek-v4-pro`)
+  calls tools and keeps `memoryBufferWindow` history across executions: n8n patches
+  `@langchain/openai` to send DeepSeek's `reasoning_content` back, which the API requires once
+  tools are involved. It makes parallel tool calls.
+- `@n8n/n8n-nodes-langchain.toolWorkflow` 2.2 takes its tool name from the node name. Arguments come
+  from `$fromAI('key', 'description', 'string'|'number'|'boolean')` in `workflowInputs.value`, and
+  `workflowInputs.schema` must list every key; the sub-workflow trigger can accept all data. Other
+  values there may be plain expressions such as `$('Task').first().json.mode`, which the model
+  cannot set. Keep quotes and braces out of `$fromAI` descriptions and put formats in the tool
+  description.
+- An HTTP Request node with `authentication: predefinedCredentialType` and `nodeCredentialType:
+  facebookGraphApi` adds the credential's token as the `access_token` query parameter.
+
+- Branches from one node run top to bottom by canvas position (`executionOrder: v1`), and an error
+  in one stops the rest: put database writes above Lark or other outbound calls.
+
+## DeepSeek
+
+Checked 2026-09-17 with the `DeepSeek bot` key.
+
+- `GET https://api.deepseek.com/models` lists `deepseek-flash` (V4.1 Flash) and `deepseek-v4-pro`. The
+  old names still answer: `deepseek-chat` is served by `deepseek-flash` without thinking,
+  `deepseek-reasoner` by `deepseek-flash` with thinking. DeepSeek announced their discontinuation for
+  2026-07-24, so no workflow uses them. Both current models think by default; `temperature` is
+  accepted and ignored, and JSON mode and tool calls work. The agent uses `deepseek-v4-pro` in shifts,
+  reviews and events and `deepseek-flash` in chats (a `model` expression on `$('Task')` mode); the
+  pre-publish check, screenshots and short analysis use `deepseek-flash`. Those scheduled runs sit
+  in off-peak hours (01:30-03:00 Vietnam time).
+- `deepseek-v4-pro` has no vision. Per 1M tokens it costs about 4 to 7 times `deepseek-flash` (see
+  https://api-docs.deepseek.com/quick_start/pricing); both are half price off-peak, outside 01:00-04:00
+  and 06:00-10:00 UTC on weekdays.
+- `deepseek-flash` reads images (`image_url` with a base64 data URL), also in JSON mode. In n8n a
+  `chainLlm` message `{type: HumanMessagePromptTemplate, messageType: imageBinary,
+  binaryImageDataKey}` sends one binary image per item.
+
+## Lark Open API
+
+Verified with the Lark content bot (custom app, credential `Lark content bot`).
+
+- `httpCustomAuth` with `{"body": {"app_id", "app_secret"}}` on `POST
+  auth/v3/tenant_access_token/internal` returns `tenant_access_token` (2 hours). Wrong values answer
+  HTTP 200 with `code 10003 invalid param`, so check `code`, not the HTTP status.
+- Event subscription verification posts `{"challenge", "token", "type": "url_verification"}` and
+  expects `{"challenge"}` back.
+- `GET im/v1/messages/<id>` returns `items[0]` with `sender.id` (the open_id), `sender.sender_type`,
+  `msg_type`, `parent_id` and `body.content` as a JSON string.
+- A wiki link resolves with `GET wiki/v2/spaces/get_node?token=` to `node.obj_token`, and `GET
+  docx/v1/documents/<obj_token>/raw_content` returns the text once the app is added to the doc.
+- A picture sent to the bot arrives as `msg_type: image` with content `{"image_key"}`, or as `img`
+  elements inside a `post` message. `GET im/v1/messages/<message id>/resources/<image key>?type=image`
+  returns the file with the scopes above; a key that is not in the message answers `234003 File not
+  in msg`.
+- `GET bot/v3/info` returns the bot's own `open_id`; a message that @mentions the bot lists it in
+  `mentions[].id` (the text holds `@_user_N` keys). `GET im/v1/messages/<id>` also returns
+  `chat_id`, `root_id`, `parent_id` and `thread_id`.
+- `POST im/v1/messages/<id>/reply` with `reply_in_thread: true` replies in a thread; a reply to a
+  message already in a thread stays in it. `GET im/v1/messages?container_id_type=thread&container_id=<thread_id>`
+  lists a thread's messages (in groups it needs the read-all-group-messages permission).
+- `GET im/v1/chats/<chat_id>/members` (member names) needs `im:chat.members:read` or `im:chat:readonly`.
+- An execution retried with `POST /executions/<id>/retry` reuses the stored output of the nodes
+  before the failed one, so a stale token is reused. Replay the webhook body instead.
+
+## Facebook Graph API
+
+Verified with the page token of Vịt làm Data (credential `Facebook page`, app use case "Manage
+everything on your Page").
+
+- With a page token, `me` is the page: `POST me/feed` publishes, `GET me?fields=followers_count`.
+- `POST me/feed` with `published=false` creates an unpublished post (`is_published: false`) that
+  `DELETE /<post id>` removes: a way to test publishing without posting publicly.
+- Post insights `post_impressions` and `post_impressions_unique` answer `(#100) The value must be a
+  valid insights metric`. `post_total_media_view_unique`, `post_media_view`, `post_clicks` and
+  `post_reactions_by_type_total` work.
+- A post with photos: upload each with `POST me/photos` (multipart `source`, `published=false`),
+  then `POST me/feed` with JSON `{"message", "attached_media": [{"media_fbid": <photo id>}]}`.
+  Deleting the post deletes its photos. In n8n the upload is an HTTP Request node with
+  `contentType: multipart-form-data` and a `formBinaryData` body parameter named `source`.
+- `GET /<post id>/comments` returns the text but no `from` for commenters: that needs the Business
+  Asset User Profile Access feature.
+- `debug_token` on the page token shows `expires_at: 0` but a `data_access_expires_at` 90 days out.
 
 ## Monitoring
 

@@ -1,0 +1,132 @@
+{
+  "description": "Every signal the agent learns from: approvals, rejections, the manager's notes and change requests, failed checks, post metrics, audience comments, offer results, followers, playbook changes and the agent's own work log. The weekly review reads the unreviewed ones.",
+  "display_field": "type",
+  "fields": [
+    {
+      "id": "cnzcr12woi1ziz6",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "c17mx33uxbhoc18",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s0r7rhi6l67ygg4",
+            "title": "approved"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s6zowfcheg2ow57",
+            "title": "rejected"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "smbyfuo9t796id8",
+            "title": "change_request"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "s0wncpk1q3rebli",
+            "title": "manager_note"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "szlsmsdo6w4orow",
+            "title": "check_failed"
+          },
+          {
+            "color": "#fee2d5",
+            "id": "slfe347p4fxq2yb",
+            "title": "metrics"
+          },
+          {
+            "color": "#ffeab6",
+            "id": "sfp6o9ahx67gb9a",
+            "title": "audience_comment"
+          },
+          {
+            "color": "#d1f7c4",
+            "id": "sf6eo1dlgavspye",
+            "title": "offer_result"
+          },
+          {
+            "color": "#ede2fe",
+            "id": "szzv5xehb2uywpt",
+            "title": "followers"
+          },
+          {
+            "color": "#eeeeee",
+            "id": "ss6wcn5upbf2hrg",
+            "title": "edit_diff"
+          },
+          {
+            "color": "#cfdffe",
+            "id": "sx8q16lg95cu0ud",
+            "title": "lesson_change"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "ss87e49e4oyphw5",
+            "title": "agent_run"
+          }
+        ]
+      },
+      "title": "type",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "cm1geo881j8hz7g",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "post_id",
+      "type": "Number"
+    },
+    {
+      "id": "c4fd9ehep9dethf",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "offer_id",
+      "type": "Number"
+    },
+    {
+      "id": "chblp7290ne1v47",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "lesson_id",
+      "type": "Number"
+    },
+    {
+      "id": "cv5o8juccd9chrg",
+      "title": "text",
+      "type": "LongText"
+    },
+    {
+      "id": "c2ty7m3s9utbk5t",
+      "options": {
+        "precision": 2,
+        "separator": "none_period"
+      },
+      "title": "value",
+      "type": "Decimal"
+    },
+    {
+      "default_value": "false",
+      "description": "Set after a weekly review has read it.",
+      "id": "cqklw1ds1oioagp",
+      "title": "reviewed",
+      "type": "Checkbox"
+    },
+    {
+      "id": "c7nr015c7l72wyy",
+      "title": "created_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mshxx3am3y82dr8",
+  "title": "events"
+}
