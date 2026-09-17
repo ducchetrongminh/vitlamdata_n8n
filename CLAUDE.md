@@ -186,7 +186,7 @@ api() { local p=$1; shift; curl -sS -H "X-N8N-API-KEY: $N8N_API_KEY" -H 'Content
 
 ## Nodes
 
-Verified on this instance while building `Idea shaping` and `Finalize content`.
+Verified on this instance.
 
 - `n8n-nodes-base.formTrigger` has no typeVersion 2.2 here. A workflow using it is accepted and
   activates, `triggerCount` is 1, but no route is registered and `$N8N_URL/form/<path>` answers
@@ -211,7 +211,7 @@ Verified on this instance while building `Idea shaping` and `Finalize content`.
   outputs the parsed JSON object as the item, not `{text}`. With the default text format it
   outputs `{text}`. Braces in its system message are escaped; the prompt text is passed as a
   variable, so JSON in either is safe.
-- `@n8n/n8n-nodes-langchain.agent` 3.1 with `lmChatDeepSeek` `deepseek-reasoner` (thinking mode)
+- `@n8n/n8n-nodes-langchain.agent` 3.1 with `lmChatDeepSeek` in thinking mode (`deepseek-flash`)
   calls tools and keeps `memoryBufferWindow` history across executions: n8n patches
   `@langchain/openai` to send DeepSeek's `reasoning_content` back, which the API requires once
   tools are involved. It makes parallel tool calls.
@@ -234,7 +234,8 @@ Checked 2026-09-17 with the `DeepSeek bot` key.
 - `GET https://api.deepseek.com/models` lists `deepseek-flash` (V4.1 Flash) and `deepseek-v4-pro`. The
   old names still answer: `deepseek-chat` is served by `deepseek-flash` without thinking,
   `deepseek-reasoner` by `deepseek-flash` with thinking. DeepSeek announced their discontinuation for
-  2026-07-24, so new nodes use `deepseek-flash` (thinking on by default).
+  2026-07-24, so every workflow uses `deepseek-flash`. Thinking is on by default; `temperature` is
+  accepted and ignored, and JSON mode and tool calls work with it.
 - `deepseek-flash` reads images (`image_url` with a base64 data URL), also in JSON mode. In n8n a
   `chainLlm` message `{type: HumanMessagePromptTemplate, messageType: imageBinary,
   binaryImageDataKey}` sends one binary image per item.

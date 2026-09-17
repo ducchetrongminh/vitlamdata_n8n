@@ -472,7 +472,7 @@
       "id": "099615e6-1b47-53d3-8c00-9e9831e44e63",
       "name": "DeepSeek thinking",
       "parameters": {
-        "model": "deepseek-reasoner",
+        "model": "deepseek-flash",
         "options": {
           "maxRetries": 3,
           "timeout": 600000

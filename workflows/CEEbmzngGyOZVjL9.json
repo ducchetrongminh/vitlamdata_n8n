@@ -152,7 +152,7 @@
       ]
     }
   },
-  "description": "Sub-workflow: what the agent knows at the start of every run: settings, brand text (brand_brief plus the Lark docs in brand_doc_urls), active goals, active playbook lessons, its last work log entries, and hooks from the saved reference posts.",
+  "description": "Sub-workflow: what the agent knows at the start of every run: settings, brand text (brand_brief plus the Lark docs in brand_doc_urls), active goals, active playbook lessons, its last work log entries, and hooks from content_agent.inspiring_facebook_posts.",
   "id": "CEEbmzngGyOZVjL9",
   "isArchived": false,
   "name": "Content agent: context",
@@ -375,14 +375,14 @@
         "projectId": {
           "__rl": true,
           "mode": "id",
-          "value": "pgco4wrfalgnpja"
+          "value": "povrpvxg4mvxbba"
         },
         "resource": "row",
         "returnAll": false,
         "table": {
           "__rl": true,
           "mode": "id",
-          "value": "mlfvqztd76vculj"
+          "value": "m8nm1ke66u7fla0"
         }
       },
       "position": [

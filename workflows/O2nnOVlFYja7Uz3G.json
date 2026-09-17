@@ -163,7 +163,7 @@
       ]
     }
   },
-  "description": "Sub-workflow called by 'Content agent: lark' when the manager sends screenshots that are not a reply to a draft card: one message is one post. Reads each screenshot with DeepSeek (deepseek-flash, vision), merges what they show (author, text, counts, comments, time, link, format), writes why the post works, saves it to content_ideation.facebook_posts with the manager's text as notes, records it for the agent and replies in Lark.",
+  "description": "Sub-workflow called by 'Content agent: lark' when the manager sends screenshots that are not a reply to a draft card: one message is one post. Reads each screenshot with DeepSeek (deepseek-flash, vision), merges what they show (author, text, counts, comments, time, link, format), writes why the post works, saves it to content_agent.inspiring_facebook_posts with the manager's text as notes, records it for the agent and replies in Lark.",
   "id": "O2nnOVlFYja7Uz3G",
   "isArchived": false,
   "name": "Content agent: capture",
@@ -436,13 +436,13 @@
         "projectId": {
           "__rl": true,
           "mode": "id",
-          "value": "pgco4wrfalgnpja"
+          "value": "povrpvxg4mvxbba"
         },
         "resource": "row",
         "table": {
           "__rl": true,
           "mode": "id",
-          "value": "mlfvqztd76vculj"
+          "value": "m8nm1ke66u7fla0"
         }
       },
       "position": [

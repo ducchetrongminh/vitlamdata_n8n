@@ -55,14 +55,6 @@ scripts/nocodb-pull.sh          # refresh the files after edits in the NocoDB UI
 Add a field by appending it without `id`. Rename by changing `title` (the `id` stays). Removing a
 field from the file deletes its data, so push refuses unless given `--delete`.
 
-## Content ideation MCP
-
-Workflow `Content ideation MCP` serves an MCP server at
-`https://n8n.vitlamdata.com/mcp/content-ideation` with two tools, `save_facebook_post` and
-`find_facebook_posts`, backed by NocoDB `content_ideation.facebook_posts`. Add it in claude.ai under
-Settings > Connectors > Add custom connector; it signs in with your n8n account (OAuth). Then, in
-Claude in Chrome on a Facebook post: "save this post".
-
 ## Content agent
 
 An AI employee that runs `docs/Content Strategy.md` for the Vịt Làm Data page and gets better at it
@@ -120,7 +112,7 @@ review compares results by format.
 
 **Saving posts you like.** Send the bot screenshots of a post (the post, and its comments if you
 want them) in one message, with the link and any note as text. Workflow `Content agent: capture`
-reads them with DeepSeek's vision model, saves the post to `content_ideation.facebook_posts`
+reads them with DeepSeek's vision model, saves the post to `content_agent.inspiring_facebook_posts`
 (author, text, counts, visible comments, the time worked out from "5 giờ", format, why it works,
 your text as notes) and replies with what it saved. The agent plans with these posts. A picture
 sent as a reply to a draft card is not captured: it goes out with that post.
