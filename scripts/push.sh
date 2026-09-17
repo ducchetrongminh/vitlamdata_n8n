@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Create (file has no id) or update (file has an id) a workflow in n8n, then rewrite the
-# file from the live result. A deleted workflows/<id>.json deletes that workflow in n8n.
+# file from the live result. A deleted <id>.json under workflows/ deletes that workflow in n8n.
 # Usage: scripts/push.sh [--force] <file>
 #   --force: overwrite (or delete) even if the workflow changed in n8n since the last pull
 set -euo pipefail

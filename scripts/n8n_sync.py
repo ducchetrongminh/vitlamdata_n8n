@@ -1,4 +1,4 @@
-"""Sync n8n workflows between the instance and workflows/*.json.
+"""Sync n8n workflows between the instance and workflows/**/<id>.json.
 
 Called by scripts/pull.sh and scripts/push.sh. Reads N8N_URL and N8N_API_KEY from the
 environment and never prints the key.
@@ -20,7 +20,7 @@ WORKFLOWS = ROOT / "workflows"
 # workflow against it to detect UI edits made since. Gitignored: it is per-checkout.
 STATE = ROOT / ".n8n-state"
 
-# Fields kept in workflows/<id>.json. Everything else the API returns is read-only or
+# Fields kept in a workflow file. Everything else the API returns is read-only or
 # changes without a real edit (timestamps, version ids and counters, activeVersion,
 # triggerCount, shared, meta, staticData which trigger nodes write at runtime).
 KEEP = ("id", "name", "description", "active", "isArchived", "nodes", "connections",
@@ -90,9 +90,23 @@ def fetch(wid):
     return normalize(api("GET", f"/workflows/{wid}"))
 
 
-def save(workflow):
+def workflow_files():
+    """Every workflow file, in workflows/ or any folder below it."""
+    return sorted(WORKFLOWS.rglob("*.json"))
+
+
+def locate(wid):
+    """The file of a workflow wherever it sits under workflows/, else workflows/<id>.json."""
+    found = [p for p in workflow_files() if p.stem == wid]
+    if len(found) > 1:
+        sys.exit(f"{wid} has more than one file: "
+                 + ", ".join(p.relative_to(ROOT).as_posix() for p in found))
+    return found[0] if found else WORKFLOWS / f"{wid}.json"
+
+
+def save(workflow, path=None):
     """Write a normalized live workflow to its file and to the state snapshot."""
-    write(WORKFLOWS / f"{workflow['id']}.json", workflow)
+    write(path or locate(workflow["id"]), workflow)
     write(STATE / f"{workflow['id']}.json", workflow)
 
 
@@ -108,11 +122,9 @@ def unpushed(path):
 
 
 def cmd_pull(args):
-    rel = WORKFLOWS.relative_to(ROOT).as_posix()
     ids = args.ids or [w["id"] for w in paginate("/workflows")]
     # Files without an id are drafts not yet pushed; pull never touches them.
-    pulled = {p: json.loads(p.read_text(encoding="utf-8")).get("id")
-              for p in sorted(WORKFLOWS.glob("*.json"))}
+    pulled = {p: json.loads(p.read_text(encoding="utf-8")).get("id") for p in workflow_files()}
     targets = [p for p, wid in pulled.items() if wid and (not args.ids or wid in ids)]
     edited = [p.relative_to(ROOT).as_posix() for p in targets if unpushed(p)]
     if edited and not args.force:
@@ -120,12 +132,13 @@ def cmd_pull(args):
                  + "\nPush or discard them, or rerun with --force.")
 
     for wid in ids:
-        path = WORKFLOWS / f"{wid}.json"
+        # A file keeps its folder; a workflow new to the repo lands in workflows/.
+        path = locate(wid)
         before = path.read_text(encoding="utf-8") if path.exists() else None
         workflow = fetch(wid)
-        save(workflow)
+        save(workflow, path)
         status = "new" if before is None else ("changed" if before != dumps(workflow) else "same")
-        print(f"{status:8} {rel}/{wid}.json  {workflow['name']}")
+        print(f"{status:8} {path.relative_to(ROOT).as_posix()}  {workflow['name']}")
 
     if not args.ids:
         # A full pull mirrors the instance: drop files for workflows that no longer exist.
@@ -140,9 +153,12 @@ def last_known(wid):
     state = STATE / f"{wid}.json"
     if state.exists():
         return json.loads(state.read_text(encoding="utf-8"))
-    head = git("show", f"HEAD:{WORKFLOWS.relative_to(ROOT).as_posix()}/{wid}.json")
-    if head.returncode == 0:
-        return normalize_file(json.loads(head.stdout))
+    tree = git("ls-tree", "-r", "--name-only", "HEAD", WORKFLOWS.relative_to(ROOT).as_posix())
+    committed = [f for f in tree.stdout.splitlines() if f.endswith(f"/{wid}.json")]
+    if committed:
+        head = git("show", f"HEAD:{committed[0]}")
+        if head.returncode == 0:
+            return normalize_file(json.loads(head.stdout))
     return None
 
 
@@ -167,7 +183,7 @@ def sync_tags(wid, names):
 def delete(src, args):
     """The file of a pulled workflow was deleted: delete the workflow in n8n too."""
     wid = src.stem
-    base = last_known(wid) if src.parent == WORKFLOWS.resolve() else None
+    base = last_known(wid) if WORKFLOWS.resolve() in src.parents else None
     if base is None:
         sys.exit(f"{args.file} does not exist and is not a pulled workflow")
     try:
@@ -242,11 +258,13 @@ def cmd_push(args):
         sync_tags(wid, local["tags"])
 
     final = fetch(wid)
-    save(final)
-    dest = WORKFLOWS / f"{wid}.json"
-    if src != dest.resolve() and src.parent == WORKFLOWS.resolve():
+    # A new workflow's file is renamed to <id>.json in the folder it was written in.
+    inside = WORKFLOWS.resolve() in src.parents
+    dest = src.parent / f"{wid}.json" if inside else locate(wid)
+    save(final, dest)
+    if inside and src != dest.resolve():
         src.unlink()
-        print(f"moved {args.file} to {dest.relative_to(ROOT).as_posix()}")
+        print(f"moved {args.file} to {dest.resolve().relative_to(ROOT).as_posix()}")
     for field in ("active", "isArchived"):
         if local[field] is not None and local[field] != final[field]:
             print(f"note: file had {field}={json.dumps(local[field])}, live is "
@@ -258,7 +276,7 @@ def main():
         stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(prog="n8n_sync")
     sub = parser.add_subparsers(dest="command", required=True)
-    pull = sub.add_parser("pull", help="export workflows to workflows/<id>.json")
+    pull = sub.add_parser("pull", help="export workflows to workflows/**/<id>.json")
     pull.add_argument("ids", nargs="*", help="only these workflow ids (no removals)")
     pull.add_argument("--force", action="store_true", help="overwrite local edits that were not pushed")
     push = sub.add_parser("push", help="create or update a workflow from a file")

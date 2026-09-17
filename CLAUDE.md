@@ -27,7 +27,9 @@ session is needed after `.env` changes. Reading `.env` with the Read tool is den
 
 - Never print, echo or log `N8N_API_KEY`, and never write it anywhere but `.env`. To check it
   loaded: `[ -n "$N8N_API_KEY" ] && echo set`.
-- `workflows/*.json` is the source of truth. Change a workflow by editing its file and pushing.
+- `workflows/**/<id>.json` is the source of truth. Change a workflow by editing its file and pushing.
+  Files may sit in subfolders to group workflows (`workflows/content_agent/`); the id in the file
+  name finds them.
   After a UI edit, pull and commit.
 - Ask before deleting a workflow, deactivating an active workflow, or overwriting a workflow
   that changed in n8n since the last pull.
@@ -45,18 +47,19 @@ session is needed after `.env` changes. Reading `.env` with the Read tool is den
 
 Need `bash`, `python3` (standard library only) and `git`.
 
-- `scripts/pull.sh [--force] [id...]` writes each workflow to `workflows/<id>.json`: sorted keys,
+- `scripts/pull.sh [--force] [id...]` writes each workflow to its file, keeping the folder it is in
+  (a workflow new to the repo goes to `workflows/<id>.json`): sorted keys,
   2-space indent, only the fields `id name description active isArchived nodes connections
   settings pinData nodeGroups tags` (tags as names). Everything else changes without a real edit
   or is runtime state (`staticData` is written by trigger nodes). With no ids it pulls every
   workflow and deletes files whose workflow is gone. It refuses to overwrite a file edited
   locally but not pushed; `--force` overwrites.
 - `scripts/push.sh [--force] <file>` creates the workflow when the file has no `id` (then renames
-  the file to `workflows/<id>.json`) and updates it otherwise. It sends `name nodes connections
+  the file to `<id>.json` in the same folder) and updates it otherwise. It sends `name nodes connections
   settings pinData nodeGroups`, then `description` and tags if they differ. It never changes
   `active` or `isArchived`. Before an update it refuses if the live workflow differs from the last
   pulled or pushed version; `--force` overwrites, and needs the user's go-ahead. Afterwards it
-  rewrites the file from the live result. Given the path of a deleted `workflows/<id>.json`, it
+  rewrites the file from the live result. Given the path of a deleted `workflows/**/<id>.json`, it
   deactivates and deletes that workflow in n8n, refusing if it changed since the last pull; ask
   before running it.
 - `.n8n-state/<id>.json` (gitignored) holds that last known live version. Without it, push
@@ -75,7 +78,7 @@ changes the file.
   `GET /credentials/schema/<type>`.
 - `.credentials.env.example` (committed) lists every `${VAR}` the credential files use, with
   empty values. Add a variable to it whenever a credential file gains one.
-- `scripts/pull-credentials.sh` writes a file for every credential that `workflows/*.json`
+- `scripts/pull-credentials.sh` writes a file for every credential that `workflows/**/*.json`
   references and that has no file yet, including credentials other users created in the UI. It
   puts a placeholder in each plain string field (not enums, numbers, booleans or
   `allowedDomains`). Delete the placeholders a credential does not use. Existing files are
@@ -125,8 +128,9 @@ from these files.
 ## Loop
 
 1. `scripts/pull.sh`, commit anything that changed in the UI.
-2. Edit `workflows/<id>.json`, or write a new file without `id`.
-3. `scripts/push.sh workflows/<file>.json`. If it refuses, pull the id, redo the edit on top,
+2. Edit the workflow's `<id>.json` under `workflows/`, or write a new file without `id` in the folder
+   it belongs to.
+3. `scripts/push.sh workflows/<folder>/<file>.json`. If it refuses, pull the id, redo the edit on top,
    push again. Pushing an active workflow changes production immediately.
 4. Activate if needed (`POST /workflows/{id}/activate`), then `scripts/pull.sh <id>` so the file
    records `active`.

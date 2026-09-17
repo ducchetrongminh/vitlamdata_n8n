@@ -16,15 +16,18 @@ Scripts need `bash`, `python3` and `git`.
 ## Usage
 
 ```bash
-scripts/pull.sh                # export every workflow to workflows/<id>.json
+scripts/pull.sh                # export every workflow to its <id>.json under workflows/
 scripts/pull.sh <id>...        # refresh only these
-scripts/push.sh workflows/<id>.json   # update; refuses if it changed in n8n since last pull
-scripts/push.sh workflows/new.json    # no "id" in the file: create, rename to <id>.json
-scripts/push.sh workflows/<id>.json   # file deleted: delete the workflow in n8n
+scripts/push.sh workflows/content_agent/<id>.json   # update; refuses if it changed in n8n since last pull
+scripts/push.sh workflows/content_agent/new.json    # no "id" in the file: create, rename to <id>.json
+scripts/push.sh workflows/content_agent/<id>.json   # file deleted: delete the workflow in n8n
 ```
 
 Both take `--force`: pull overwrites local edits not pushed yet, push overwrites changes made in
 n8n. Commit `workflows/` after every pull or push that changed something.
+
+Workflow files can be grouped in subfolders of `workflows/`; pull keeps each file where it is and
+puts a workflow new to the repo in `workflows/`, from where you move it.
 
 ## Credentials
 

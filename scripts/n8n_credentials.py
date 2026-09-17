@@ -1,5 +1,5 @@
 """Push n8n credentials from credentials/*.json, and create those files from the credential
-references in workflows/*.json.
+references in workflows/**/*.json.
 
 Called by scripts/pull-credentials.sh and scripts/push-credentials.sh. Secret values come from
 .credentials.env and secrets/ (both gitignored) and are never printed.
@@ -146,7 +146,7 @@ def var_name(credential_name, field):
 
 def cmd_pull(args):
     refs = {}
-    for path in sorted(WORKFLOWS.glob("*.json")):
+    for path in sorted(WORKFLOWS.rglob("*.json")):
         for node in json.loads(path.read_text(encoding="utf-8")).get("nodes") or []:
             for ctype, ref in (node.get("credentials") or {}).items():
                 if isinstance(ref, dict) and ref.get("id"):
@@ -177,7 +177,7 @@ def cmd_pull(args):
         required = ", ".join(schema.get("required") or []) or "none"
         print(f"new      {rel(path)}  {name} ({ctype}, required: {required})")
     if not refs:
-        print("no credential references in workflows/*.json")
+        print("no credential references in workflows/**/*.json")
     if failed:
         sys.exit(1)
 
