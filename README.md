@@ -122,12 +122,27 @@ reads them with DeepSeek's vision model, saves the post to `content_agent.inspir
 your text as notes) and replies with what it saved. The agent plans with these posts. A picture
 sent as a reply to a draft card is not captured: it goes out with that post.
 
+**Talking to it in Lark.** In a direct chat (the owner) or in the team group:
+
+- Commands run without the AI deciding anything, so they are quick and exact: `/help`, `/status`
+  (the next 14 days), `/story <what happened>`, `/inspiring` with screenshots. `/rule <rule>` and
+  `/goal <goal>` go to the agent on `deepseek-flash`; `/offers [YYYY-MM]`, `/plan [notes]`,
+  `/draft <post id> [notes]` and `/review` go to it as focused tasks on V4-Pro.
+- Anything else is a chat on `deepseek-flash`. In the group, @mention the bot or use a /command;
+  inside a thread the bot started (a card, a question, one of its answers) no @mention is needed.
+- The bot always answers in a thread and reads that thread's history, so each topic is its own
+  conversation. Discuss a draft in its card's thread; send photos there to attach them to the post.
+- Screenshots sent to the bot in a direct chat are saved as inspiration; in the group, send them
+  with `/inspiring`.
+
 **Set up Lark (once).**
 
 1. At https://open.larksuite.com/app create a custom app (e.g. "Content agent") and enable its
    Bot feature.
 2. Permissions & Scopes, add: `im:message`, `im:message:send_as_bot`,
-   `im:message.p2p_msg:readonly`, `docx:document:readonly`, `wiki:wiki:readonly`.
+   `im:message.p2p_msg:readonly`, `im:message.group_at_msg:readonly`, `im:message.group_msg` (read
+   group messages, needed for /commands without an @mention and for thread history),
+   `im:chat.members:read` (names of who is talking), `docx:document:readonly`, `wiki:wiki:readonly`.
 3. Events & Callbacks: request URL `https://n8n.vitlamdata.com/webhook/content-agent`, no Encrypt
    Key, event `im.message.receive_v1`. Set the same URL as the card callback URL (card action
    `card.action.trigger`, or "Message card request URL" under the Bot feature in older consoles).
@@ -139,8 +154,10 @@ sent as a reply to a draft card is not captured: it goes out with that post.
    `content_agent.settings`. Keep in them: products (name, price, the problem each solves, who it
    is for, landing link), mission, values, what you stand against, audience, milestones and real
    results. The agent uses no fact that is not there or in your messages.
-7. Message the bot in Lark. The first sender becomes its manager, and it ignores everyone else
+7. Message the bot in Lark. The first sender becomes its owner, and it ignores other direct messages
    (clear `lark_open_id` to re-link). It introduces itself and asks for your goals.
+8. For a team: add the bot to a Lark group and send `/link` there as the owner. From then on the
+   agent's messages, cards and reports go to that group, and everyone in it is equal.
 
 **Publishing to Facebook.** An approved post is published to the page by `Content agent:
 publisher` within five minutes of its time, and you get the link in Lark; if Facebook refuses it,

@@ -267,6 +267,13 @@ Verified with the Lark content bot (custom app, credential `Lark content bot`).
   elements inside a `post` message. `GET im/v1/messages/<message id>/resources/<image key>?type=image`
   returns the file with the scopes above; a key that is not in the message answers `234003 File not
   in msg`.
+- `GET bot/v3/info` returns the bot's own `open_id`; a message that @mentions the bot lists it in
+  `mentions[].id` (the text holds `@_user_N` keys). `GET im/v1/messages/<id>` also returns
+  `chat_id`, `root_id`, `parent_id` and `thread_id`.
+- `POST im/v1/messages/<id>/reply` with `reply_in_thread: true` replies in a thread; a reply to a
+  message already in a thread stays in it. `GET im/v1/messages?container_id_type=thread&container_id=<thread_id>`
+  lists a thread's messages (in groups it needs the read-all-group-messages permission).
+- `GET im/v1/chats/<chat_id>/members` (member names) needs `im:chat.members:read` or `im:chat:readonly`.
 - An execution retried with `POST /executions/<id>/retry` reuses the stored output of the nodes
   before the failed one, so a stale token is reused. Replay the webhook body instead.
 
