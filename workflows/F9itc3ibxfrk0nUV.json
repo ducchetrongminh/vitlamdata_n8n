@@ -2100,7 +2100,7 @@
       "id": "8edd6a6d-27ae-5a0c-8445-10ec9eaa5ebd",
       "name": "DeepSeek judge",
       "parameters": {
-        "model": "deepseek-flash",
+        "model": "deepseek-v4-pro",
         "options": {
           "responseFormat": "json_object"
         }

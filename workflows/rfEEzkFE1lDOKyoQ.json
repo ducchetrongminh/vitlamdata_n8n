@@ -339,7 +339,7 @@
       ]
     }
   },
-  "description": "The AI content strategist of the page. Instructions = the strategy, the manager's goals, its playbook of learned lessons and its recent work log; it acts only through 'Content agent: tools'. Runs when the manager writes in Lark (answer sent back), when something happens (an approval or rejection), in a daily shift at 08:00 (plans, drafts, asks) and in a weekly review on Monday 08:30 (reads every signal, updates its playbook, reports to the manager). Every run is saved to content_agent.events as its work log.",
+  "description": "The AI content strategist of the page (DeepSeek V4-Pro, thinking). Instructions = the strategy, the manager's goals, its playbook of learned lessons and its recent work log; it acts only through 'Content agent: tools'. Runs when the manager writes in Lark (answer sent back), when something happens (an approval or rejection), in a daily shift at 08:00 (plans, drafts, asks) and in a weekly review on Monday 08:30 (reads every signal, updates its playbook, reports to the manager). Every run is saved to content_agent.events as its work log.",
   "id": "rfEEzkFE1lDOKyoQ",
   "isArchived": false,
   "name": "Content agent",
@@ -472,7 +472,7 @@
       "id": "099615e6-1b47-53d3-8c00-9e9831e44e63",
       "name": "DeepSeek thinking",
       "parameters": {
-        "model": "deepseek-flash",
+        "model": "deepseek-v4-pro",
         "options": {
           "maxRetries": 3,
           "timeout": 600000

@@ -60,7 +60,8 @@ field from the file deletes its data, so push refuses unless given `--delete`.
 An AI employee that runs `docs/Content Strategy.md` for the Vịt Làm Data page and gets better at it
 from what happens to its work. You are its manager and talk to it in Lark.
 
-**What it is.** One AI Agent node (workflow `Content agent`, DeepSeek in thinking mode). Its
+**What it is.** One AI Agent node (workflow `Content agent`, DeepSeek V4-Pro in thinking mode;
+the pre-publish check uses V4-Pro too, screenshots are read with `deepseek-flash`). Its
 instructions are rebuilt on every run from:
 
 - the strategy (fixed),
