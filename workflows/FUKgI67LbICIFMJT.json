@@ -50,6 +50,17 @@
         ]
       ]
     },
+    "Capture input": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Capture reference",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Card?": {
       "main": [
         [
@@ -136,6 +147,24 @@
           {
             "index": 0,
             "node": "Reply to a message?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "For a post?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Picture post",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Capture input",
             "type": "main"
           }
         ]
@@ -268,7 +297,7 @@
         [
           {
             "index": 0,
-            "node": "Picture post",
+            "node": "For a post?",
             "type": "main"
           }
         ]
@@ -367,7 +396,7 @@
       ]
     }
   },
-  "description": "Webhook of the Lark content bot at /webhook/content-agent (event and card callback URL). Answers Lark's URL check and acknowledges at once. Button clicks: accepted only from the linked manager with the row's current token; records the decision as an event and tells the agent. Messages: re-read from the Lark API, the first sender is linked as manager, others are ignored; every message is saved as an event and handed to the agent.",
+  "description": "Webhook of the Lark content bot at /webhook/content-agent (event and card callback URL). Pictures replied to a draft card attach to that post; other screenshots go to 'Content agent: capture' as a reference post. Answers Lark's URL check and acknowledges at once. Button clicks: accepted only from the linked manager with the row's current token; records the decision as an event and tells the agent. Messages: re-read from the Lark API, the first sender is linked as manager, others are ignored; every message is saved as an event and handed to the agent.",
   "id": "FUKgI67LbICIFMJT",
   "isArchived": false,
   "name": "Content agent: lark",
@@ -982,6 +1011,74 @@
       "typeVersion": 2.2
     },
     {
+      "id": "576eda45-a237-56e3-b157-9a28a38a31ca",
+      "name": "For a post?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "fafaec0e-1dba-55d1-b8f6-cdfd11a55d38",
+              "leftValue": "={{ !!$('Agent input').first().json.post_id }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        3190,
+        -200
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "aa49778d-ff61-59ce-8c2a-c79f66c9177f",
+      "name": "Capture input",
+      "parameters": {
+        "jsCode": "const m = $('Read message').first().json;\nreturn [{ json: { images: m.images, message_id: m.message_id, text: m.text, reply_to: m.message_id } }];"
+      },
+      "position": [
+        3300,
+        100
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "bfd65726-e90a-50df-aa22-e541d427b347",
+      "name": "Capture reference",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "O2nnOVlFYja7Uz3G"
+        }
+      },
+      "position": [
+        3520,
+        100
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
       "alwaysOutputData": true,
       "credentials": {
         "nocoDbApiToken": {
@@ -1184,7 +1281,7 @@
           "conditions": [
             {
               "id": "d9e6059d-cd8a-557d-aa55-d45f55df9d08",
-              "leftValue": "={{ $('Agent input').first().json.has_text }}",
+              "leftValue": "={{ $('Agent input').first().json.has_text && !($('Agent input').first().json.images.length && !$('Agent input').first().json.post_id) }}",
               "operator": {
                 "operation": "true",
                 "singleValue": true,

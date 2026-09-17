@@ -145,13 +145,13 @@
       "type": "LongText"
     },
     {
-      "description": "Your own notes. The capture workflow never writes this field.",
+      "description": "Your own notes: what you write with the screenshots you send the Lark bot, or add here. Claude in Chrome never writes this field.",
       "id": "cmxyo2fokz7i8wv",
       "title": "notes",
       "type": "LongText"
     },
     {
-      "description": "When the post was first captured.",
+      "description": "When the post was captured (Claude in Chrome or screenshots in Lark).",
       "id": "cass91wkjj5ftrk",
       "title": "captured_at",
       "type": "DateTime"

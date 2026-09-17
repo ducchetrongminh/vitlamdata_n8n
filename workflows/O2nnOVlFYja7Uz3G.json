@@ -1,0 +1,552 @@
+{
+  "active": true,
+  "connections": {
+    "DeepSeek analysis": {
+      "ai_languageModel": [
+        [
+          {
+            "index": 0,
+            "node": "Why it works",
+            "type": "ai_languageModel"
+          }
+        ]
+      ]
+    },
+    "DeepSeek vision": {
+      "ai_languageModel": [
+        [
+          {
+            "index": 0,
+            "node": "Read screenshot",
+            "type": "ai_languageModel"
+          }
+        ]
+      ]
+    },
+    "Download screenshot": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Read screenshot",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Lark token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Screenshots",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Readable?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Read screenshot": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Merge",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Readable?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Why it works",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Unreadable reply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save reference": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Tell agent",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Saved reply": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Reply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Screenshots": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Download screenshot",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Tell agent": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Saved reply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Unreadable reply": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Reply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Lark token",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Why it works": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save reference",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": "Sub-workflow called by 'Content agent: lark' when the manager sends screenshots that are not a reply to a draft card: one message is one post. Reads each screenshot with DeepSeek (deepseek-flash, vision), merges what they show (author, text, counts, comments, time, link, format), writes why the post works, saves it to content_ideation.facebook_posts with the manager's text as notes, records it for the agent and replies in Lark.",
+  "id": "O2nnOVlFYja7Uz3G",
+  "isArchived": false,
+  "name": "Content agent: capture",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "0a936959-0770-5f35-ae55-a39ad4c96fe0",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "6c3ddee5-8741-5126-96a5-9baab6adf4c3",
+      "name": "Lark token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        220,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "2c436370-3cd0-5290-ba88-341e0079cf95",
+      "name": "Screenshots",
+      "parameters": {
+        "jsCode": "const input = $('When called').first().json;\nconst token = $json.tenant_access_token;\nif (!token) throw new Error('No Lark tenant token: ' + JSON.stringify($json).slice(0, 300));\nreturn (input.images || []).slice(0, 10).map((key, i) => ({\n  json: { key, message_id: input.message_id, auth: token, index: i + 1, total: Math.min((input.images || []).length, 10) },\n}));"
+      },
+      "position": [
+        440,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "bf1d79e6-f23d-51a3-a2da-e4dc325a6166",
+      "name": "Download screenshot",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.auth }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {
+          "response": {
+            "response": {
+              "outputPropertyName": "data",
+              "responseFormat": "file"
+            }
+          }
+        },
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $json.message_id }}/resources/{{ $json.key }}?type=image"
+      },
+      "position": [
+        660,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "credentials": {
+        "deepSeekApi": {
+          "id": "0kIQ7WLWq3QZFpAf",
+          "name": "DeepSeek bot"
+        }
+      },
+      "id": "a20d31d5-4a17-58e7-a31a-76aa9147116e",
+      "name": "DeepSeek vision",
+      "parameters": {
+        "model": "deepseek-flash",
+        "options": {
+          "maxRetries": 3,
+          "responseFormat": "json_object",
+          "timeout": 300000
+        }
+      },
+      "position": [
+        880,
+        200
+      ],
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1
+    },
+    {
+      "id": "2260f17c-27ad-539d-88f4-230365c72a78",
+      "name": "Read screenshot",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You read one screenshot of a social media post, usually Facebook and usually in Vietnamese, and write down what is visible. Never invent anything that is not in the image.\n\nAnswer with JSON only, in this shape:\n{\"is_post\": true, \"author_name\": \"\", \"source_type\": \"page|profile|group or empty\", \"posted_ago\": \"\", \"posted_at\": \"\", \"text\": \"\", \"cut_off\": false, \"reaction_count\": null, \"comment_count\": null, \"share_count\": null, \"format\": \"text|image|carousel|video|reel|link|live\", \"image_description\": \"\", \"link\": \"\", \"comments\": [{\"name\": \"\", \"reactions\": 0, \"text\": \"\", \"replies\": [{\"name\": \"\", \"reactions\": 0, \"text\": \"\"}]}]}\n\n- is_post: false when the image shows no post and no comments.\n- posted_ago: the time label exactly as shown, e.g. \"5 giờ\", \"Hôm qua lúc 20:15\", \"15 tháng 9 lúc 09:30\".\n- posted_at: that time as ISO 8601 with +07:00, worked out from posted_ago and the current time given to you; empty when there is no time label.\n- text: the post text exactly as shown, keeping line breaks. cut_off: true when it ends in \"Xem thêm\" or \"See more\".\n- Counts: numbers as shown, converted: \"1,2K\" or \"1,2 N\" is 1200, \"3 Tr\" is 3000000. null when not shown. The number beside the reactions icons is reaction_count.\n- format: image when the post carries one picture, carousel for several, video, reel, link for a link preview, text otherwise.\n- image_description: one or two sentences on what the post's own picture or video shows, including any text written on it.\n- link: a post URL if one is visible, else empty.\n- comments: every visible comment with the commenter's name, its reaction count (0 when none is shown) and text, replies nested. A screenshot of comments only still fills comments."
+            },
+            {
+              "binaryImageDataKey": "data",
+              "imageDetail": "high",
+              "messageType": "imageBinary",
+              "type": "HumanMessagePromptTemplate"
+            }
+          ]
+        },
+        "promptType": "define",
+        "text": "=Current time: {{ $now.setZone('Asia/Ho_Chi_Minh').toFormat(\"cccc dd/MM/yyyy HH:mm\") }} (Asia/Ho_Chi_Minh). This is screenshot {{ $('Screenshots').item.json.index }} of {{ $('Screenshots').item.json.total }} of the same post. Return the json."
+      },
+      "position": [
+        880,
+        0
+      ],
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7
+    },
+    {
+      "id": "65e08db8-2465-51f1-bd12-eebd1a08c1ad",
+      "name": "Merge",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst input = $('When called').first().json;\nconst now = DateTime.now().setZone(TZ);\n// In JSON mode the chain node returns the parsed object; its own \"text\" key is the post text.\nconst parse = (j) => {\n  if (!j || j.error) return null;\n  if (j.is_post !== undefined || j.comments !== undefined || j.author_name !== undefined) return j;\n  try { return JSON.parse(String(j.text || '').replace(/```(?:json)?/gi, '')); } catch (e) { return null; }\n};\nconst reads = $input.all().map((i) => parse(i.json)).filter(Boolean);\nconst s = (v) => (v ?? '').toString().trim();\nconst first = (k) => reads.map((r) => s(r[k])).find(Boolean) || '';\nconst maxOf = (k) => { const xs = reads.filter((r) => r[k] !== null && r[k] !== undefined && r[k] !== '').map((r) => Number(r[k])).filter((v) => Number.isFinite(v) && v >= 0); return xs.length ? Math.max(...xs) : null; };\nconst text = reads.map((r) => s(r.text)).sort((a, b) => b.length - a.length)[0] || '';\n\nlet postedAt = null;\nfor (const r of reads) {\n  const d = DateTime.fromISO(s(r.posted_at), { setZone: true });\n  if (d.isValid && d <= now.plus({ minutes: 5 })) { postedAt = d.toISO({ suppressMilliseconds: true }); break; }\n}\nconst urls = `${input.text || ''} ${reads.map((r) => s(r.link)).join(' ')}`.match(/https?:\\/\\/(?:www\\.|m\\.|web\\.)?(?:facebook\\.com|fb\\.com|fb\\.watch)\\/\\S+/i);\nconst formats = reads.map((r) => s(r.format)).filter((f) => ['image', 'carousel', 'video', 'reel', 'link', 'live'].includes(f));\nconst types = ['page', 'profile', 'group'];\n\nconst seen = new Set();\nconst comments = [];\nfor (const r of reads) {\n  for (const c of Array.isArray(r.comments) ? r.comments : []) {\n    const k = `${s(c.name)}|${s(c.text)}`;\n    if (!s(c.text) || seen.has(k)) continue;\n    seen.add(k);\n    comments.push(c);\n  }\n}\nconst n = (x) => Number(x) || 0;\nconst commentsText = comments.map((c) => [\n  `(${n(c.reactions)} reactions) ${s(c.name)}`,\n  s(c.text),\n  ...(Array.isArray(c.replies) ? c.replies : []).filter((r) => s(r.text)).map((r) => `  - (${n(r.reactions)} reactions) ${s(r.name)}\\n    ${s(r.text).replace(/\\n/g, '\\n    ')}`),\n].join('\\n')).join('\\n---\\n');\n\nconst note = s((input.text || '').replace(/https?:\\/\\/\\S+/g, ''));\nconst images = reads.map((r) => s(r.image_description)).filter(Boolean);\nconst readable = Boolean(text || comments.length);\nconst row = {\n  post_url: urls ? urls[0].replace(/[)>\\].,]+$/, '') : null,\n  hook: text.split('\\n').map((l) => l.trim()).find(Boolean) || null,\n  author_name: first('author_name') || null,\n  source_type: types.includes(first('source_type')) ? first('source_type') : null,\n  posted_at: postedAt,\n  format: formats[0] || (text ? 'text' : null),\n  text: [text, reads.some((r) => r.cut_off) ? '(cut off at \"Xem thêm\" in the screenshot)' : '', images.length ? `[Picture: ${[...new Set(images)].join(' ')}]` : ''].filter(Boolean).join('\\n\\n') || null,\n  reaction_count: maxOf('reaction_count'),\n  comment_count: maxOf('comment_count'),\n  share_count: maxOf('share_count'),\n  comments: commentsText || null,\n  notes: note || null,\n  captured_at: now.toISO({ suppressMilliseconds: true }),\n};\nreturn [{ json: { readable, failed: $input.all().length - reads.length, row, reply_to: input.reply_to } }];"
+      },
+      "position": [
+        1100,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "63781716-bc1e-5e3d-9482-326fc23c0ba8",
+      "name": "Readable?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "c5061dad-ab06-5dba-92e3-13efe087c25d",
+              "leftValue": "={{ $json.readable }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1320,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "deepSeekApi": {
+          "id": "0kIQ7WLWq3QZFpAf",
+          "name": "DeepSeek bot"
+        }
+      },
+      "id": "676ac0d7-1fb4-58fd-9fbc-4b3594fd9fb5",
+      "name": "DeepSeek analysis",
+      "parameters": {
+        "model": "deepseek-flash",
+        "options": {
+          "maxRetries": 3,
+          "timeout": 300000
+        }
+      },
+      "position": [
+        1540,
+        0
+      ],
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1
+    },
+    {
+      "id": "a32983c4-2f40-5ebf-9021-330fd6771fe7",
+      "name": "Why it works",
+      "parameters": {
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You explain why a saved social media post works, for the content library of a Vietnamese page that teaches SQL, reporting and data work. Write 3 to 6 sentences in English: the hook, the structure, the angle, the emotion it plays on, and what the counts and comments show about how the audience responded. Mention the post's picture when it matters. Plain text, no lists."
+            }
+          ]
+        },
+        "promptType": "define",
+        "text": "={{ (() => { const r = $json.row; return ['Author: ' + (r.author_name || '?') + ' (' + (r.source_type || '?') + '), format ' + (r.format || '?'),'Counts: ' + (r.reaction_count ?? '?') + ' reactions, ' + (r.comment_count ?? '?') + ' comments, ' + (r.share_count ?? '?') + ' shares','', 'Post:', r.text || '(not visible)', '', 'Visible comments:', r.comments || '(none)'].join('\\n'); })() }}"
+      },
+      "position": [
+        1540,
+        -200
+      ],
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "f9c37ba3-e136-511d-8abd-3e9a1e413e3f",
+      "name": "Save reference",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "author_name": "={{ $('Merge').first().json.row.author_name }}",
+            "captured_at": "={{ $('Merge').first().json.row.captured_at }}",
+            "comment_count": "={{ $('Merge').first().json.row.comment_count }}",
+            "comments": "={{ $('Merge').first().json.row.comments }}",
+            "format": "={{ $('Merge').first().json.row.format }}",
+            "hook": "={{ $('Merge').first().json.row.hook }}",
+            "notes": "={{ $('Merge').first().json.row.notes }}",
+            "post_url": "={{ $('Merge').first().json.row.post_url }}",
+            "posted_at": "={{ $('Merge').first().json.row.posted_at }}",
+            "reaction_count": "={{ $('Merge').first().json.row.reaction_count }}",
+            "share_count": "={{ $('Merge').first().json.row.share_count }}",
+            "source_type": "={{ $('Merge').first().json.row.source_type }}",
+            "text": "={{ $('Merge').first().json.row.text }}",
+            "why_it_works": "={{ String($json.text || '').trim() }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "pgco4wrfalgnpja"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mlfvqztd76vculj"
+        }
+      },
+      "position": [
+        1760,
+        -200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "4c552d2a-3b4b-540e-804a-813a7f19a746",
+      "name": "Tell agent",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "text": "={{ 'Manager saved reference post #' + $json.id + ' by ' + ($('Merge').first().json.row.author_name || '?') + ' (' + ($('Merge').first().json.row.reaction_count ?? '?') + ' reactions): ' + ($('Merge').first().json.row.hook || '') }}",
+            "type": "manager_note"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        1980,
+        -200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "da74917d-ee87-57a0-9adb-a94e8f88c813",
+      "name": "Saved reply",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst m = $('Merge').first().json;\nconst r = m.row;\nconst id = $('Save reference').first().json.id;\nconst when = r.posted_at ? `posted ~${parseDt(r.posted_at).toFormat('dd/MM HH:mm')}` : 'no post time visible';\nconst counts = `${r.reaction_count ?? '?'} reactions, ${r.comment_count ?? '?'} comments, ${r.share_count ?? '?'} shares`;\nreturn [{\n  json: {\n    reply_to: m.reply_to,\n    text: `📌 Saved reference #${id}: ${r.author_name || 'unknown author'}\\n${(r.hook || '').slice(0, 150)}\\n${counts} · ${when}${r.comments ? ` · ${r.comments.split('\\n---\\n').length} comments read` : ''}${r.post_url ? '' : '\\nNo link found: send the link with the screenshot next time to keep one.'}${m.failed ? `\\n⚠️ ${m.failed} screenshot(s) could not be read.` : ''}`,\n  },\n}];"
+      },
+      "position": [
+        2200,
+        -200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "a43690f6-7a62-5871-8fe3-b09be7ed1d53",
+      "name": "Unreadable reply",
+      "parameters": {
+        "jsCode": "return [{ json: { reply_to: $json.reply_to, text: \"I couldn't read a post or comments in that picture. To attach a picture to a planned post instead, reply to its draft card with it.\" } }];"
+      },
+      "position": [
+        1540,
+        200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "f765a272-afc4-58a1-9057-183bef8aeb6d",
+      "name": "Reply",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": true
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "SRT1dYKEzsyQyQBR"
+        }
+      },
+      "position": [
+        2420,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "errorWorkflow": "R9RDKGHveGXK2jcu",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

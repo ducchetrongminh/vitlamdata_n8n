@@ -227,6 +227,18 @@ Verified on this instance while building `Idea shaping` and `Finalize content`.
 - Branches from one node run top to bottom by canvas position (`executionOrder: v1`), and an error
   in one stops the rest: put database writes above Lark or other outbound calls.
 
+## DeepSeek
+
+Checked 2026-09-17 with the `DeepSeek bot` key.
+
+- `GET https://api.deepseek.com/models` lists `deepseek-flash` (V4.1 Flash) and `deepseek-v4-pro`. The
+  old names still answer: `deepseek-chat` is served by `deepseek-flash` without thinking,
+  `deepseek-reasoner` by `deepseek-flash` with thinking. DeepSeek announced their discontinuation for
+  2026-07-24, so new nodes use `deepseek-flash` (thinking on by default).
+- `deepseek-flash` reads images (`image_url` with a base64 data URL), also in JSON mode. In n8n a
+  `chainLlm` message `{type: HumanMessagePromptTemplate, messageType: imageBinary,
+  binaryImageDataKey}` sends one binary image per item.
+
 ## Lark Open API
 
 Verified with the Lark content bot (custom app, credential `Lark content bot`).

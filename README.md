@@ -118,6 +118,13 @@ time, before or after approving. Without a picture the post goes out as text, so
 every text to stand on its own. Each post records its format (text, photo, photos), and the weekly
 review compares results by format.
 
+**Saving posts you like.** Send the bot screenshots of a post (the post, and its comments if you
+want them) in one message, with the link and any note as text. Workflow `Content agent: capture`
+reads them with DeepSeek's vision model, saves the post to `content_ideation.facebook_posts`
+(author, text, counts, visible comments, the time worked out from "5 giờ", format, why it works,
+your text as notes) and replies with what it saved. The agent plans with these posts. A picture
+sent as a reply to a draft card is not captured: it goes out with that post.
+
 **Set up Lark (once).**
 
 1. At https://open.larksuite.com/app create a custom app (e.g. "Content agent") and enable its
