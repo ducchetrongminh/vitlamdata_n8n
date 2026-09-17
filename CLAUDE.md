@@ -235,8 +235,10 @@ Checked 2026-09-17 with the `DeepSeek bot` key.
   old names still answer: `deepseek-chat` is served by `deepseek-flash` without thinking,
   `deepseek-reasoner` by `deepseek-flash` with thinking. DeepSeek announced their discontinuation for
   2026-07-24, so no workflow uses them. Both current models think by default; `temperature` is
-  accepted and ignored, and JSON mode and tool calls work. The agent and the pre-publish check use
-  `deepseek-v4-pro`; screenshots and short analysis use `deepseek-flash`.
+  accepted and ignored, and JSON mode and tool calls work. The agent uses `deepseek-v4-pro` in shifts,
+  reviews and events and `deepseek-flash` in chats (a `model` expression on `$('Task')` mode); the
+  pre-publish check, screenshots and short analysis use `deepseek-flash`. Those scheduled runs sit
+  in off-peak hours (01:30-03:00 Vietnam time).
 - `deepseek-v4-pro` has no vision. Per 1M tokens it costs about 4 to 7 times `deepseek-flash` (see
   https://api-docs.deepseek.com/quick_start/pricing); both are half price off-peak, outside 01:00-04:00
   and 06:00-10:00 UTC on weekdays.

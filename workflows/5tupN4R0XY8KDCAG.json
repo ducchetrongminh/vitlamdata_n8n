@@ -63,7 +63,7 @@
         ]
       ]
     },
-    "Every morning": {
+    "Every night": {
       "main": [
         [
           {
@@ -168,20 +168,20 @@
       ]
     }
   },
-  "description": "Daily at 07:00 before the agent's shift, or when called: for posts published in the last 8 days, reads unique viewers (post_total_media_view_unique), clicks, reactions, comments and shares into content_agent.posts, and records signals in content_agent.events: metrics at one day and at seven days, each new audience comment of the last 24 hours, edits made to a post on Facebook, and the page's follower count.",
+  "description": "Daily at 01:30, before the agent's 02:00 shift, or when called: for posts published in the last 8 days, reads unique viewers (post_total_media_view_unique), clicks, reactions, comments and shares into content_agent.posts, and records signals in content_agent.events: metrics at one day and at seven days, each new audience comment of the last 24 hours, edits made to a post on Facebook, and the page's follower count.",
   "id": "5tupN4R0XY8KDCAG",
   "isArchived": false,
   "name": "Content agent: facebook signals",
   "nodeGroups": [],
   "nodes": [
     {
-      "id": "f065bc7d-0a21-55c7-949c-dd9981c1959d",
-      "name": "Every morning",
+      "id": "348a94d0-046a-52cf-8f8b-ee7da3b37d48",
+      "name": "Every night",
       "parameters": {
         "rule": {
           "interval": [
             {
-              "expression": "0 7 * * *",
+              "expression": "30 1 * * *",
               "field": "cronExpression"
             }
           ]

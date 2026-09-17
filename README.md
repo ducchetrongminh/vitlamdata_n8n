@@ -60,8 +60,9 @@ field from the file deletes its data, so push refuses unless given `--delete`.
 An AI employee that runs `docs/Content Strategy.md` for the Vịt Làm Data page and gets better at it
 from what happens to its work. You are its manager and talk to it in Lark.
 
-**What it is.** One AI Agent node (workflow `Content agent`, DeepSeek V4-Pro in thinking mode;
-the pre-publish check uses V4-Pro too, screenshots are read with `deepseek-flash`). Its
+**What it is.** One AI Agent node (workflow `Content agent`, DeepSeek in thinking mode: V4-Pro for
+shifts, reviews and what follows an approval, `deepseek-flash` for chats; the pre-publish check and
+screenshot reading use `deepseek-flash`). Its
 instructions are rebuilt on every run from:
 
 - the strategy (fixed),
@@ -84,10 +85,10 @@ before it reaches you. Nothing is published without your approval.
 - You write to it in Lark: it acts and answers.
 - Something happens (you approve or reject an offer or a post): it does what follows, like
   planning an approved offer's posts.
-- Daily shift, 08:00: it proposes next month's offers from the 15th, keeps the calendar planned
+- Daily shift, 02:00: it proposes next month's offers from the 15th, keeps the calendar planned
   up to the last approved offer, asks you for real story details a week ahead, and drafts the
   posts due within three days.
-- Weekly review, Monday 08:30: its 1:1 with you (below).
+- Weekly review, Monday 03:00: its 1:1 with you (below).
 
 **How it improves.** Every signal is saved in `content_agent.events`: your approvals and
 rejections, everything you write to it (a reply to a draft card is a change request), failed
@@ -140,7 +141,7 @@ sent as a reply to a draft card is not captured: it goes out with that post.
 
 **Publishing to Facebook.** An approved post is published to the page by `Content agent:
 publisher` within five minutes of its time, and you get the link in Lark; if Facebook refuses it,
-the post becomes `publish_failed` with the reason and you are told. Every morning at 07:00
+the post becomes `publish_failed` with the reason and you are told. Every night at 01:30
 `Content agent: facebook signals` reads, for posts of the last 8 days, unique viewers, clicks,
 reactions, comments and shares, and saves signals for the agent: metrics after one day and seven
 days, new audience comments, edits you made on Facebook, and the follower count.
