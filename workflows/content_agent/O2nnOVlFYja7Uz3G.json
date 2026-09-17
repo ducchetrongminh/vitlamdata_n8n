@@ -213,7 +213,7 @@
       "id": "2c436370-3cd0-5290-ba88-341e0079cf95",
       "name": "Screenshots",
       "parameters": {
-        "jsCode": "const input = $('When called').first().json;\nconst token = $json.tenant_access_token;\nif (!token) throw new Error('No Lark tenant token: ' + JSON.stringify($json).slice(0, 300));\nreturn (input.images || []).slice(0, 10).map((key, i) => ({\n  json: { key, message_id: input.message_id, auth: token, index: i + 1, total: Math.min((input.images || []).length, 10) },\n}));"
+        "jsCode": "const input = $('When called').first().json;\nconst token = $json.tenant_access_token;\nif (!token) throw new Error('No Lark tenant token: ' + JSON.stringify($json).slice(0, 300));\n// An image is a key of input.message_id, or \"<message id> <key>\" when it sits in another message.\nreturn (input.images || []).slice(0, 10).map((image, i) => {\n  const [key, messageId] = image.split(' ').reverse();\n  return { json: { key, message_id: messageId || input.message_id, auth: token, index: i + 1, total: Math.min((input.images || []).length, 10) } };\n});"
       },
       "position": [
         440,
