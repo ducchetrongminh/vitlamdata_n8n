@@ -2382,7 +2382,7 @@
       "id": "a6eb3a35-6aa8-5c83-8a6d-1f09e652f063",
       "name": "Message input",
       "parameters": {
-        "jsCode": "const i = $('When called').first().json;\nreturn [{ json: { text: String(i.text || ''), reply_to: String(i.reply_to || '') } }];"
+        "jsCode": "// In a conversation the final answer is already sent as the reply; a message here would duplicate it.\nconst i = $('When called').first().json;\nconst refused = i.mode === 'chat';\nreturn [{ json: { text: refused ? '' : String(i.text || ''), reply_to: String(i.reply_to || ''), refused } }];"
       },
       "position": [
         440,
@@ -2415,7 +2415,7 @@
       "id": "f2b59df1-9202-541a-be16-d991dbf2cb4e",
       "name": "Message result",
       "parameters": {
-        "jsCode": "return [{ json: { result: $json.delivered ? 'Sent.' : `Not sent: ${$json.note}.` } }];"
+        "jsCode": "if ($('Message input').first().json.refused) {\n  return [{ json: { result: 'Not sent: you are talking with your manager, and your final answer is sent to them as your reply. Put what you wanted to say in your final answer.' } }];\n}\nreturn [{ json: { result: $json.delivered ? 'Sent.' : `Not sent: ${$json.note}.` } }];"
       },
       "position": [
         880,
