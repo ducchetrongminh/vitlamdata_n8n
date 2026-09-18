@@ -76,8 +76,9 @@ instructions are rebuilt on every run from:
 - your brand docs from Lark.
 
 It sees and changes things only through its tools (`Content agent: tools`): `calendar`,
-`propose_offer`, `plan_posts`, `update_post`, `submit_draft`, `send_message`, `save_story`,
-`find_stories`, `reference_posts`, `performance`, `update_playbook`, `save_goal`, `record`. The
+`propose_offer`, `plan_posts`, `update_post`, `submit_draft`, `send_message`, `upsert_story`,
+`find_stories`, `reference_posts`, `performance`, `upsert_playbook`, `upsert_goal`, `record`. A tool
+named `upsert_…` adds a record, or corrects the one whose id it is given. The
 strategy's hard rules are enforced inside the tools, so the agent cannot break them: at most two
 offers a month with a reason, one post a day, sales posts only on an approved offer's launch and
 reminder days, every other post leads to the next offer, and every draft passes the pre-publish

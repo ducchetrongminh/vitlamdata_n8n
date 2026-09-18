@@ -66,7 +66,11 @@ everything else.
 arguments through `$fromAI`, and n8n adds `mode`, which the model cannot change. The model chooses
 which tools to call and in what order. The tools enforce the strategy's rules and some mode rules:
 - `send_message` does nothing in chat and commands.
-- `save_goal` and manager directives are only accepted in chat and commands.
+- `upsert_goal` and manager directives are only accepted in chat and commands.
+
+The agent has 13 tools. `upsert_story`, `upsert_goal` and `upsert_playbook` insert without `id`
+and update with `id`. `Content agent: tools` also serves `upsert_inspiration`, `attach_picture`,
+`hand_off` and `read_link`, which no agent has yet (S5 gives them to the front agent).
 
 **Group messages.** In the linked group, the router takes only messages that concern the bot
 (D11): they @mention it, reply to one of its messages (in a thread or quoted in the main chat),
@@ -187,7 +191,9 @@ exactly". Otherwise the agent may pick one that fits, or handle the case its own
 ### Tools
 
 The rules stay inside the tools, as today. A tool that saves a record is named `upsert_<thing>`:
-without `id` it inserts a row, and with `id` it updates that row (D12).
+without `id` it inserts a row, and with `id` it updates that row (D12). Since S2, every tool below
+exists in `Content agent: tools`. The Front and Pro columns show which agent gets which tool once
+S4 and S5 are built.
 
 | Tool | Front | Pro | Status |
 |---|---|---|---|
@@ -308,24 +314,23 @@ completely before switching the gate to it.
 
 | Step | What | Status |
 |---|---|---|
-| S0 | Test T1 below and record the result here and in `CLAUDE.md` | todo |
+| S0 | Test T1 below and record the result here and in `CLAUDE.md` | done: T1 passed |
 | S1 | Thread fix (D9, D11): setting `lark_app_id`. The router takes replies to the bot and messages in threads where it has posted, and labels its messages as the agent's in the history. The agent answers `NO_REPLY` to thread messages meant for others. | live; the offline replay of execution 703 passes; A3, A9, A10 still to test in Lark |
-| S2 | Tools in `Content agent: tools`, each checking its input: new `upsert_inspiration`, `attach_picture`, `hand_off`, `read_link`; renames `save_story` → `upsert_story` (adds `id`), `save_goal` → `upsert_goal`, `update_playbook` → `upsert_playbook` | todo |
+| S2 | Tools in `Content agent: tools`, each checking its input: new `upsert_inspiration`, `attach_picture`, `hand_off`, `read_link`; renames `save_story` → `upsert_story` (adds `id`), `save_goal` → `upsert_goal`, `update_playbook` → `upsert_playbook` | live. Each tool was called through a test webhook: 21 refusal paths; `upsert_story` and `upsert_inspiration` created then corrected (a partial correction keeps the other fields); `attach_picture` appended to post #49 without duplicates; `read_link` read a brand doc and remembered a link. Test rows were deleted and changed values restored. `hand_off`'s happy path starts a real pro run, so A5 tests it. |
 | S3 | Guidelines (D14): add `kind` and `title` to `playbook` and make `lesson` LongText; `context` loads the guidelines first, in full; the review procedure judges guidelines against the goals and the report lists guideline changes. Move the full style guide from the message of run 1042 into a guideline and retire lessons #19 to #22. | todo |
-| S4 | Pro agent: the Task node takes `procedure` + `brief`; the command templates and checklists become the named procedures in its instructions | todo |
+| S4 | Pro agent: the Task node takes `procedure` + `brief` (`hand_off` already sends both, plus `command`/`args` for today's Task; a handed-off review ignores the brief until then); the command templates and checklists become the named procedures in its instructions | todo |
 | S5 | Front agent: rewrite `lark message` as gate + flash agent (front tools, front procedures, pictures as binary), then remove the router branches and the calls to capture | todo |
 | S6 | Delete `Content agent: capture` after A1 passes (D10). Update the README (commands, pictures, models) and move section 3 into section 2. | todo |
 | S7 | Run acceptance tests A1 to A15 in Lark | todo |
 
 ### Tests to run first
 
-- **T1.** Does an AI Agent node (3.1) with `lmChatDeepSeek` `deepseek-flash` in thinking mode,
-  with at least one tool attached, read binary pictures on its input item? Check the agent's
-  option for passing binary images through. Use two pictures with known text and ask for both.
-  - If it works, build as designed.
-  - If it does not: the gate reads each picture with a `chainLlm` `imageBinary` message
-    (verified, used by capture today) and passes the text to flash. Rereading a picture then
-    means reading it again with the user's instruction in the prompt.
+- **T1 (passed 2026-09-18).** An AI Agent node (3.1) with `lmChatDeepSeek` `deepseek-flash` and a
+  calculator tool received one input item carrying two PNG pictures as binary (`picture_1`,
+  `picture_2`, with `passthroughBinaryImages: true`). Asked to read both and add their numbers
+  with the tool, it answered "MANGO 17, RIVER 25, 42" after calling the calculator with
+  "17 + 25". So pictures reach the model and tools still work in the same run: build as
+  designed.
 
 ### Acceptance tests
 

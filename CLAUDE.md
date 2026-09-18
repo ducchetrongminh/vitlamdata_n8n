@@ -221,6 +221,9 @@ Verified on this instance.
   calls tools and keeps `memoryBufferWindow` history across executions: n8n patches
   `@langchain/openai` to send DeepSeek's `reasoning_content` back, which the API requires once
   tools are involved. It makes parallel tool calls.
+- The same agent with `deepseek-flash` reads every image binary property of its input item
+  (`options.passthroughBinaryImages: true`; two PNGs as `picture_1`, `picture_2`) and still calls
+  tools in that run.
 - `@n8n/n8n-nodes-langchain.toolWorkflow` 2.2 takes its tool name from the node name. Arguments come
   from `$fromAI('key', 'description', 'string'|'number'|'boolean')` in `workflowInputs.value`, and
   `workflowInputs.schema` must list every key; the sub-workflow trigger can accept all data. Other
