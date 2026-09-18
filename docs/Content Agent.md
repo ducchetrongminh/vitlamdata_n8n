@@ -12,8 +12,8 @@ How the content agent is built and why. Written for two readers:
 What the agent does for the business (strategy, commands, Lark and Facebook setup) is in
 `README.md` and `docs/Content Strategy.md`. This document covers how it is put together.
 
-Status: section 2 describes the live system as of 2026-09-18. Left to do: delete the capture
-workflow (S6) and run the acceptance tests in Lark (S7).
+Status: section 2 describes the live system as of 2026-09-18. Left to do: run the acceptance
+tests in Lark (S7).
 
 ## 1. What we want
 
@@ -50,7 +50,6 @@ Schedules: daily shift 02:00, weekly review Mon 03:00 ─► STRATEGIST
 | Content agent: publisher | `m92DxPVFVONuRgrr` | every 5 min | Publishes approved posts to Facebook |
 | Content agent: facebook signals | `5tupN4R0XY8KDCAG` | nightly 01:30 | Post metrics, comments, followers → events |
 | Content agent: errors | `R9RDKGHveGXK2jcu` | error trigger | Failed runs → Lark |
-| Content agent: capture | `O2nnOVlFYja7Uz3G` | called | No longer called; deleted in S6 |
 
 ### Gate (code, in `Content agent: lark message`)
 
@@ -224,9 +223,9 @@ NocoDB base `content_agent` (`povrpvxg4mvxbba`) has these tables: `settings`, `g
 - **D9. The bot is identified by the setting `lark_app_id` (`cli_…`).** A message is the
   bot's when its `sender_type` is `app` and its `sender.id` equals `lark_app_id`. Mentions still
   use `lark_bot_open_id`.
-- **D10. The capture workflow is deleted once `upsert_inspiration` passes A1.** Both do the same
-  job, saving a post you like from screenshots. With the new design, flash reads the screenshots
-  and writes "why it works" in the same turn, and `upsert_inspiration` stores the result.
+- **D10. Saving a post you like has no workflow of its own.** The front desk reads the
+  screenshots and writes "why it works" in the same turn, and `upsert_inspiration` stores the
+  result. A fixed reading chain would take that judgment, and a second look, away from the agent.
 - **D11. The bot is notified the way a person would be.** Lark has no "this concerns the bot"
   flag: in the group, the bot receives every message (`im:message.group_msg`). The gate works it
   out from fields Lark gives:
@@ -272,7 +271,7 @@ commit. Pushing an active workflow changes production immediately; check
 | S3 | Guidelines (D14): add `kind` and `title` to `playbook` and make `lesson` LongText; `context` loads the guidelines first, in full; the review procedure judges guidelines against the goals and the report lists guideline changes. Move the full style guide from the message of run 1042 into a guideline and retire lessons #19 to #22. | live. The style guide is guideline #32 (5,559 characters) and #19 to #22 are retired. Tested through the test webhook: 8 refusal paths, and a test guideline was added, revised, restored, restored again (which undoes the restore) and retired, then deleted. The report and `performance` show the one-line summary without the old text. The Instructions code run on the live context puts the whole guide under "# Guidelines". A14 waits for a weekly review. |
 | S4 | Strategist: its Task names the procedure (hand-offs send `procedure` and `brief`); its instructions come from `Content agent: context`, with the procedures in them | live. The Task code was run for a shift, a scheduled review, a hand-off plan, a hand-off review, an event and an old chat input. The strategist's instructions built by the new code, compared with the old ones on the same live data, only gain the procedures and one line about the front desk. |
 | S5 | Front desk: `lark message` becomes the gate plus the flash agent with 13 tools; the old router branches and the calls to capture are gone | live. The gate replayed 10 recorded messages (703, 714, 718, 752, 757, 762, 1024, 1028, 1037, 1042) as expected. A test workflow ran the front desk with real pictures from Lark: see H1 to H7 below. |
-| S6 | Delete `Content agent: capture` once A1 passes in Lark (D10) | todo |
+| S6 | Delete `Content agent: capture` (D10) and the temporary test workflows | done: both deleted from n8n; the capture file is gone from the repo |
 | S7 | Run acceptance tests A1 to A15 in Lark | todo |
 
 ### Tests run
