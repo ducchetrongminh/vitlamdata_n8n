@@ -71,7 +71,8 @@ instructions are rebuilt on every run from:
 
 - the strategy (fixed),
 - your goals (`content_agent.goals`, set by you),
-- its playbook: the lessons it has learned (`content_agent.playbook`), your directives first,
+- its playbook (`content_agent.playbook`): long guidelines such as the style guide, in full, then
+  short lessons, your directives first,
 - its last work log entries,
 - your brand docs from Lark.
 
@@ -108,7 +109,10 @@ confidence level. Then it sends you a report: goal progress, what worked, what c
 playbook and why, what it tests next, what it needs from you. The report always lists the
 playbook changes. It also learns during work: a refused plan or a failed check becomes a lesson.
 Your preferences become manager directives, which outrank its own lessons and which only you can
-change. Reply to anything to correct it.
+change. A long guide you send it (style, post structure) becomes a guideline: the weekly review
+may revise it where the results against your goals support a change, each revision is in the
+report, and "khôi phục bản trước" restores the text before the last revision. Reply to anything
+to correct it.
 
 **Pictures.** The agent decides per post whether a real picture would help (a screenshot, a result,
 a class moment) and asks for it on the draft card. Reply to that card with the photo or photos

@@ -233,6 +233,10 @@ Verified on this instance.
 - An HTTP Request node with `authentication: predefinedCredentialType` and `nodeCredentialType:
   facebookGraphApi` adds the credential's token as the `access_token` query parameter.
 
+- A running execution keeps the version of its workflow it started with, but a sub-workflow it
+  calls runs the version live at that moment. An agent run lasts up to ~10 minutes: when renaming
+  a tool or anything else a caller sends, keep accepting the old value until the caller's running
+  executions (`GET /executions?status=running`) are done.
 - Branches from one node run top to bottom by canvas position (`executionOrder: v1`), and an error
   in one stops the rest: put database writes above Lark or other outbound calls.
 

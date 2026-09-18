@@ -1,5 +1,5 @@
 {
-  "description": "What the agent has learned about doing this job well. Every active lesson is in its instructions. Manager directives outrank its own lessons and only the manager changes them.",
+  "description": "What the agent works by and improves: short lessons and long guidelines. Every active entry is in its instructions. Only the manager changes lessons with source manager; the weekly review may revise guidelines with evidence.",
   "display_field": "lesson",
   "fields": [
     {
@@ -8,10 +8,10 @@
       "type": "ID"
     },
     {
-      "description": "One sentence, imperative.",
+      "description": "A lesson: one imperative sentence of at most 250 characters. A guideline: its full text.",
       "id": "c0j5gwlfqs46o3e",
       "title": "lesson",
-      "type": "SingleLineText"
+      "type": "LongText"
     },
     {
       "id": "cffkvqjqzdepfug",
@@ -144,6 +144,32 @@
       "id": "c2k4jo1kv76vmvl",
       "title": "updated_at",
       "type": "DateTime"
+    },
+    {
+      "description": "lesson: one short rule. guideline: a long document, loaded in full.",
+      "id": "cd09j1qjxsives0",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "shp8d2ndfu9jwo5",
+            "title": "lesson"
+          },
+          {
+            "color": "#ffeab6",
+            "id": "sfhe8m7z0ddxjdo",
+            "title": "guideline"
+          }
+        ]
+      },
+      "title": "kind",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "The guideline's name. Empty for lessons.",
+      "id": "cvscdz8ceq8hotg",
+      "title": "title",
+      "type": "SingleLineText"
     }
   ],
   "id": "mdotibzi894tz0d",

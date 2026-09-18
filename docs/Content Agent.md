@@ -82,6 +82,40 @@ NocoDB base `content_agent` (`povrpvxg4mvxbba`) has these tables: `settings`, `g
 `events`, `offers`, `posts`, `stories`, `inspiring_facebook_posts`. Their files are in
 `nocodb/content_agent/`.
 
+### Playbook
+
+The playbook (`content_agent.playbook`) is what the agent works by and improves. It holds two
+kinds of entry, and the agent's instructions include every active one on every run, guidelines
+first.
+
+- **Lessons** are short rules, each a single claim of at most 250 characters, with at most 25
+  active at once. There are two sources:
+  - what the agent learned from results, with its evidence and a confidence level ("story posts
+    at 20:00 beat 12:00");
+  - your one-line directives, from `/rule`. Only you change these.
+
+  The caps keep each lesson one claim that data can confirm or refute, so the weekly review can
+  keep or retire it on its own, and keep the instructions short.
+- **Guidelines** are long documents with a title and a full text: the style guide, brand voice,
+  post structure. There is no cap per guideline; all active guidelines together are capped at
+  30,000 characters so the instructions stay bounded. A guideline can be added or changed:
+  - by you in chat: you paste the text, or ask for a change;
+  - by the agent in the weekly review. It judges the guideline against the goals and results
+    (what worked, what did not), then revises the parts the evidence supports.
+
+  Each revision:
+  - needs evidence and a one-line summary of the change;
+  - keeps the previous full text in its `lesson_change` event. "khôi phục bản trước" restores
+    the text from before the last revision, and asking again undoes the restore. Older versions
+    stay in the events.
+  - is listed in the review report.
+
+Fields: `kind` (`lesson` or `guideline`), `title`, and `lesson`, a LongText field that holds a
+lesson or the full text of a guideline. The agent's instructions include the guidelines under
+"# Guidelines", then the lessons. `upsert_playbook` with `status: previous` restores a
+guideline. Brand docs (`brand_doc_urls`) stay for facts you keep in Lark: products, prices,
+mission. The agent reads them but does not change them.
+
 ### Problems (audit 2026-09-18, n8n execution ids in brackets)
 
 - **P1. The agent cannot see pictures.** Its instructions say so, and code decides what happens
@@ -90,10 +124,9 @@ NocoDB base `content_agent` (`povrpvxg4mvxbba`) has these tables: `settings`, `g
 - **P3. Procedures are tied to commands.** "lên plan tháng 10 đi" as plain text gets no planning
   checklist and runs on flash. Run 1043 rewrote 4 drafts on flash.
 - **P4. Tools are missing** for what you asked: reading a picture, saving inspiration from chat,
-  correcting a saved reference post ("Mình không có công cụ sửa lại chữ trong bank", 763), reading
-  a pasted link, and keeping long guidelines. The playbook takes one sentence of at most 250
-  characters per lesson, so your 8-section style guide ended up as 4 sentences after 4 refused
-  attempts (1043).
+  correcting a saved reference post ("Mình không có công cụ sửa lại chữ trong bank", 763) and
+  reading a pasted link. The tools exist since S2 (`upsert_inspiration`, `read_link`); the front
+  agent gets them in S5.
 - **P5. No acknowledgment during long runs.** A chat can run for minutes in silence (603: 4m20s).
 - **P6. Your note to the screenshot reader is not passed on.** "/inspiring nhớ đọc kĩ hình…" is
   saved in the `notes` column and never reaches the prompt of the model reading the picture
@@ -208,38 +241,6 @@ S4 and S5 are built.
 | hand_off | yes | no | new: starts `Content agent` without waiting (mode `command`, `procedure`, `brief`, `reply_to`) and returns "started" |
 | read_link | yes | no | new: reads a Lark doc or wiki link with the requests `context` uses. With `remember`, it adds the link to `brand_doc_urls` (D13). |
 
-### Playbook
-
-The playbook (`content_agent.playbook`) is what the agent works by and improves. It holds two
-kinds of entry, and the agent's instructions include every active one on every run, guidelines
-first.
-
-- **Lessons** are short rules, each a single claim of at most 250 characters, with at most 25
-  active at once. There are two sources:
-  - what the agent learned from results, with its evidence and a confidence level ("story posts
-    at 20:00 beat 12:00");
-  - your one-line directives, from `/rule`. Only you change these.
-
-  The caps keep each lesson one claim that data can confirm or refute, so the weekly review can
-  keep or retire it on its own, and keep the instructions short.
-- **Guidelines** are long documents with a title and a full text: the style guide, brand voice,
-  post structure. There is no cap per guideline; all active guidelines together are capped at
-  30,000 characters so the instructions stay bounded. A guideline can be added or changed:
-  - by you in chat: you paste the text, or ask for a change;
-  - by the agent in the weekly review. It judges the guideline against the goals and results
-    (what worked, what did not), then revises the parts the evidence supports.
-
-  Each revision:
-  - needs evidence and a one-line summary of the change;
-  - keeps the previous full text in the `lesson_change` event, so any version can be restored
-    ("khôi phục bản trước");
-  - is listed in the review report.
-
-Schema change: `playbook` gets `kind` (`lesson` or `guideline`) and `title`, and `lesson` becomes
-a LongText field, which holds the full text of a guideline. Brand docs (`brand_doc_urls`) stay
-for facts you keep in Lark: products, prices, mission. The agent reads them but does not change
-them.
-
 ### Models
 
 | Work | Model |
@@ -317,7 +318,7 @@ completely before switching the gate to it.
 | S0 | Test T1 below and record the result here and in `CLAUDE.md` | done: T1 passed |
 | S1 | Thread fix (D9, D11): setting `lark_app_id`. The router takes replies to the bot and messages in threads where it has posted, and labels its messages as the agent's in the history. The agent answers `NO_REPLY` to thread messages meant for others. | live; the offline replay of execution 703 passes; A3, A9, A10 still to test in Lark |
 | S2 | Tools in `Content agent: tools`, each checking its input: new `upsert_inspiration`, `attach_picture`, `hand_off`, `read_link`; renames `save_story` → `upsert_story` (adds `id`), `save_goal` → `upsert_goal`, `update_playbook` → `upsert_playbook` | live. Each tool was called through a test webhook: 21 refusal paths; `upsert_story` and `upsert_inspiration` created then corrected (a partial correction keeps the other fields); `attach_picture` appended to post #49 without duplicates; `read_link` read a brand doc and remembered a link. Test rows were deleted and changed values restored. `hand_off`'s happy path starts a real pro run, so A5 tests it. |
-| S3 | Guidelines (D14): add `kind` and `title` to `playbook` and make `lesson` LongText; `context` loads the guidelines first, in full; the review procedure judges guidelines against the goals and the report lists guideline changes. Move the full style guide from the message of run 1042 into a guideline and retire lessons #19 to #22. | todo |
+| S3 | Guidelines (D14): add `kind` and `title` to `playbook` and make `lesson` LongText; `context` loads the guidelines first, in full; the review procedure judges guidelines against the goals and the report lists guideline changes. Move the full style guide from the message of run 1042 into a guideline and retire lessons #19 to #22. | live. The style guide is guideline #32 (5,559 characters) and #19 to #22 are retired. Tested through the test webhook: 8 refusal paths, and a test guideline was added, revised, restored, restored again (which undoes the restore) and retired, then deleted. The report and `performance` show the one-line summary without the old text. The Instructions code run on the live context puts the whole guide under "# Guidelines". A14 waits for a weekly review. |
 | S4 | Pro agent: the Task node takes `procedure` + `brief` (`hand_off` already sends both, plus `command`/`args` for today's Task; a handed-off review ignores the brief until then); the command templates and checklists become the named procedures in its instructions | todo |
 | S5 | Front agent: rewrite `lark message` as gate + flash agent (front tools, front procedures, pictures as binary), then remove the router branches and the calls to capture | todo |
 | S6 | Delete `Content agent: capture` after A1 passes (D10). Update the README (commands, pictures, models) and move section 3 into section 2. | todo |
@@ -355,7 +356,7 @@ completely before switching the gate to it.
   added to `brand_doc_urls`, and the next run's instructions contain the doc.
 - **A12.** "sửa lại bài mẫu #N: chữ X là Y": that row in `inspiring_facebook_posts` is corrected
   and no new row is created.
-- **A13.** The style guide appears in full in the agent's instructions as a guideline, and
+- **A13 (passed, S3).** The style guide appears in full in the agent's instructions as a guideline, and
   lessons #19 to #22 are retired.
 - **A14.** A weekly review with evidence revises a guideline:
   - the report lists the change with its summary;
