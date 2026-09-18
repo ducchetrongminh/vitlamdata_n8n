@@ -19,6 +19,17 @@
         ]
       ]
     },
+    "Attach pictures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Pictures ok?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Calendar offers": {
       "main": [
         [
@@ -74,12 +85,34 @@
         ]
       ]
     },
+    "Check inspiration": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Inspiration ok?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Check lesson": {
       "main": [
         [
           {
             "index": 0,
             "node": "Lesson ok?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Check link": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Link ok?",
             "type": "main"
           }
         ]
@@ -118,6 +151,17 @@
         ]
       ]
     },
+    "Check story": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Story ok?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Check update": {
       "main": [
         [
@@ -146,6 +190,17 @@
           {
             "index": 0,
             "node": "Goal result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Create inspiration": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log inspiration",
             "type": "main"
           }
         ]
@@ -319,6 +374,64 @@
         ]
       ]
     },
+    "Hand-off input": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Hand-off ok?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Hand-off ok?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Start pro agent",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Hand-off result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Inspiration ok?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "New inspiration?",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Inspiration result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Inspiration row": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Check inspiration",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Judge input": {
       "main": [
         [
@@ -336,6 +449,17 @@
           {
             "index": 0,
             "node": "Log lesson change",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Lesson history": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Check lesson",
             "type": "main"
           }
         ]
@@ -359,6 +483,68 @@
         ]
       ]
     },
+    "Link doc id": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Read link doc",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Link ok?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Link token",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Link result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Link read": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Remember link?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Link settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Check link",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Link token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Resolve link",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Log failed check": {
       "main": [
         [
@@ -370,12 +556,34 @@
         ]
       ]
     },
+    "Log inspiration": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Inspiration result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Log lesson change": {
       "main": [
         [
           {
             "index": 0,
             "node": "Lesson result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Log pictures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Pictures result",
             "type": "main"
           }
         ]
@@ -410,6 +618,24 @@
         ]
       ]
     },
+    "New inspiration?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Create inspiration",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Save inspiration",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "New lesson?": {
       "main": [
         [
@@ -423,6 +649,24 @@
           {
             "index": 0,
             "node": "Save lesson",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "New story?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Create story",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Save story",
             "type": "main"
           }
         ]
@@ -552,6 +796,35 @@
         ]
       ]
     },
+    "Picture post": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Attach pictures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Pictures ok?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save pictures",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Pictures result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Plan offers": {
       "main": [
         [
@@ -590,7 +863,7 @@
         [
           {
             "index": 0,
-            "node": "Check lesson",
+            "node": "Lesson history",
             "type": "main"
           }
         ]
@@ -602,6 +875,17 @@
           {
             "index": 0,
             "node": "Create posts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Read link doc": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Link read",
             "type": "main"
           }
         ]
@@ -647,6 +931,46 @@
         ]
       ]
     },
+    "Remember link?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save doc links",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Link result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Resolve link": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Link doc id",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save doc links": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Link result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Save failed draft": {
       "main": [
         [
@@ -664,6 +988,17 @@
           {
             "index": 0,
             "node": "Goal result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save inspiration": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Inspiration result",
             "type": "main"
           }
         ]
@@ -691,12 +1026,34 @@
         ]
       ]
     },
+    "Save pictures": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log pictures",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Save post": {
       "main": [
         [
           {
             "index": 0,
             "node": "Update result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save story": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Story result",
             "type": "main"
           }
         ]
@@ -764,12 +1121,52 @@
         ]
       ]
     },
+    "Start pro agent": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Hand-off result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Stories": {
       "main": [
         [
           {
             "index": 0,
             "node": "Stories result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Story ok?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "New story?",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Story result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Story row": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Check story",
             "type": "main"
           }
         ]
@@ -822,7 +1219,7 @@
         [
           {
             "index": 0,
-            "node": "Create story",
+            "node": "Story row",
             "type": "main"
           }
         ],
@@ -865,6 +1262,34 @@
           {
             "index": 0,
             "node": "Record offer",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Inspiration row",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Picture post",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Hand-off input",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Link settings",
             "type": "main"
           }
         ]
@@ -968,8 +1393,8 @@
       "name": "Tool",
       "parameters": {
         "mode": "expression",
-        "numberOutputs": 13,
-        "output": "={{ ['calendar', 'propose_offer', 'plan_posts', 'update_post', 'submit_draft', 'send_message', 'save_story', 'find_stories', 'reference_posts', 'performance', 'update_playbook', 'save_goal', 'record'].indexOf($json.tool) }}"
+        "numberOutputs": 17,
+        "output": "={{ ({\"calendar\": 0, \"propose_offer\": 1, \"plan_posts\": 2, \"update_post\": 3, \"submit_draft\": 4, \"send_message\": 5, \"upsert_story\": 6, \"find_stories\": 7, \"reference_posts\": 8, \"performance\": 9, \"upsert_playbook\": 10, \"upsert_goal\": 11, \"record\": 12, \"upsert_inspiration\": 13, \"attach_picture\": 14, \"hand_off\": 15, \"read_link\": 16})[$json.tool] ?? -1 }}"
       },
       "position": [
         220,
@@ -2444,8 +2869,8 @@
           "value": {
             "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
             "source": "lark",
-            "summary": "={{ String($('When called').first().json.text || '').split('\\n')[0].slice(0, 120) }}",
-            "text": "={{ $('When called').first().json.text }}"
+            "summary": "={{ $json.row.summary }}",
+            "text": "={{ $json.row.text }}"
           }
         },
         "operation": "create",
@@ -2462,8 +2887,8 @@
         }
       },
       "position": [
-        440,
-        -600
+        1320,
+        -800
       ],
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 4
@@ -2472,10 +2897,10 @@
       "id": "4eb9606a-b45c-5f6d-aaf4-1cbcea451d78",
       "name": "Story result",
       "parameters": {
-        "jsCode": "return [{ json: { result: `Saved story #${$json.id}.` } }];"
+        "jsCode": "const c = $('Check story').first().json;\nif (!c.ok) return [{ json: { result: c.result } }];\nreturn [{ json: { result: c.id ? `Corrected story #${c.id}.` : `Saved story #${$('Create story').first().json.id}.` } }];"
       },
       "position": [
-        660,
+        1540,
         -600
       ],
       "type": "n8n-nodes-base.code",
@@ -2598,7 +3023,7 @@
       "id": "bf43d567-9099-5b5e-82d4-df9ffae929db",
       "name": "References result",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst rows = rowsOf('References');\nreturn [{ json: { result: rows.length ? rows.map((r) => `${r.author_name} (${r.reaction_count ?? '?'} reactions, ${r.share_count ?? '?'} shares)\\nHook: ${r.hook}\\nWhy it works: ${(r.why_it_works || '').slice(0, 500)}`).join('\\n\\n') : 'No saved posts match.' } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst rows = rowsOf('References');\nreturn [{ json: { result: rows.length ? rows.map((r) => `#${r.Id} ${r.author_name} (${r.reaction_count ?? '?'} reactions, ${r.share_count ?? '?'} shares)\\nHook: ${r.hook}\\nWhy it works: ${(r.why_it_works || '').slice(0, 500)}`).join('\\n\\n') : 'No saved posts match.' } }];"
       },
       "position": [
         660,
@@ -2847,7 +3272,7 @@
       "id": "dc0c1cba-c985-5cbe-b7ef-49940f075378",
       "name": "Performance result",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst r = $('Performance range').first().json;\nconst from = parseDt(r.from);\nconst now = DateTime.now().setZone(TZ);\nconst posts = rowsOf('Perf posts').filter((p) => ['published', 'approved', 'awaiting_approval', 'rejected', 'publish_failed'].includes(p.status));\nconst events = rowsOf('Perf events');\nconst offers = rowsOf('Perf offers');\nconst goals = rowsOf('Perf goals');\nconst unreviewed = rowsOf('Perf unreviewed');\nconst num = (x) => Number(x) || 0;\nconst eng = (p) => num(p.reactions) + 2 * num(p.comments) + 3 * num(p.shares);\nconst measured = (p) => p.status === 'published' && p.metrics_at;\nconst inWindow = (p) => parseDt(p.publish_at) >= from;\nconst median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : 0; };\nconst baseline = median(posts.filter((p) => measured(p) && !inWindow(p)).map(eng)) || median(posts.filter(measured).map(eng));\nconst score = (p) => (measured(p) && baseline ? eng(p) / baseline : null);\nconst fmt = (x) => (x === null || x === undefined ? '-' : Number(x).toFixed(2));\nconst win = posts.filter(inWindow);\nconst lines = [`Performance, last ${r.days} days (to ${now.toFormat('dd/MM')}). Scores compare posts with each other, so compare slots, hooks and kinds only when each has several posts.`];\n\nlines.push('', 'Goals:');\nconst monthStart = now.startOf('month').toISODate();\nconst followers = events.filter((e) => e.type === 'followers').map((e) => num(e.value));\nfor (const g of goals) {\n  let progress = 'not measurable from data yet; ask your manager';\n  if (g.metric === 'revenue') progress = `${offers.filter((o) => (o.ends_on || '') >= monthStart).reduce((n, o) => n + num(o.revenue), 0).toLocaleString('en-US')} reported this month`;\n  if (g.metric === 'sales') progress = `${offers.filter((o) => (o.ends_on || '') >= monthStart).reduce((n, o) => n + num(o.sales_count), 0)} sales reported this month`;\n  if (g.metric === 'followers' && followers.length) progress = `${followers[followers.length - 1]} now, ${followers[followers.length - 1] - followers[0]} in the window`;\n  if (g.metric === 'engagement' && win.some(measured)) progress = `average ${fmt(win.filter(measured).reduce((n, p) => n + eng(p), 0) / win.filter(measured).length)} per post`;\n  if (g.metric === 'reach' && win.some(measured)) progress = `${win.filter(measured).reduce((n, p) => n + num(p.reach), 0)} total reach`;\n  lines.push(`#${g.Id} ${g.title} (target ${g.target ?? '?'} ${g.unit || ''}, due ${g.due_on || '-'}): ${progress}`);\n}\nif (!goals.length) lines.push('(no active goals)');\n\nlines.push('', `Posts in the window (engagement = reactions + 2 x comments + 3 x shares; score = engagement / median of earlier posts${baseline ? `, median ${fmt(baseline)}` : ''}):`);\nif (!posts.some(measured)) lines.push('No post metrics yet: they are read every night for posts published in the last 8 days. Until then judge from approvals and your manager\\'s feedback.');\nfor (const p of win) {\n  lines.push(`#${p.Id} ${parseDt(p.publish_at).toFormat('dd/MM ccc HH:mm')} ${p.kind} [${p.status}] ${p.format || (p.image_brief ? 'picture wanted' : 'text')} hook ${p.hook_type || '-'} | ${p.title} | drafts ${p.revisions || 0}${measured(p) ? ` | unique viewers ${p.reach ?? '-'}, clicks ${p.clicks ?? '-'}, reactions ${p.reactions ?? '-'}, comments ${p.comments ?? '-'}, shares ${p.shares ?? '-'}, score ${fmt(score(p))}` : ''} | tested: ${p.hypothesis || '-'}`);\n}\nif (!win.length) lines.push('(none)');\n\nconst groups = (key) => {\n  const g = {};\n  win.filter(measured).forEach((p) => { const k = typeof key === 'function' ? key(p) : p[key] || '-'; (g[k] = g[k] || []).push(score(p)); });\n  return Object.entries(g).map(([k, xs]) => `${k}: ${xs.length} posts, avg score ${fmt(xs.reduce((a, b) => a + b, 0) / xs.length)}`).join('; ');\n};\nif (win.some(measured)) {\n  lines.push('', `By kind: ${groups('kind')}`, `By hook: ${groups('hook_type')}`, `By time slot: ${groups((p) => slotOf(parseDt(p.publish_at)))}`, `By format: ${groups((p) => p.format || 'text')}`, `By weekday: ${groups((p) => parseDt(p.publish_at).toFormat('ccc'))}`);\n}\n\nconst byType = (t) => events.filter((e) => e.type === t);\nconst decided = [...byType('approved'), ...byType('rejected')].filter((e) => e.post_id);\nconst approvedFirst = byType('approved').filter((e) => {\n  const p = posts.find((x) => x.Id === e.post_id);\n  return p && Number(p.revisions) === 1 && !byType('change_request').some((c) => c.post_id === e.post_id);\n});\nlines.push('', `Approvals: ${byType('approved').filter((e) => e.post_id).length} posts approved (${approvedFirst.length} on the first draft without change requests), ${byType('rejected').filter((e) => e.post_id).length} rejected, ${byType('change_request').length} change requests, ${byType('check_failed').length} failed checks.`);\nconst quote = (list, n) => list.slice(-n).map((e) => `- ${parseDt(e.created_at).toFormat('dd/MM')}${e.post_id ? ` post #${e.post_id}` : ''}${e.offer_id ? ` offer #${e.offer_id}` : ''}: ${(e.text || '').replace(/\\n+/g, ' ').slice(0, 400)}`);\nif (byType('rejected').length) lines.push('Rejections:', ...quote(byType('rejected'), 10));\nif (byType('change_request').length) lines.push('Change requests:', ...quote(byType('change_request'), 15));\nif (byType('manager_note').length) lines.push('What your manager said:', ...quote(byType('manager_note'), 20));\nif (byType('audience_comment').length) lines.push('Audience comments:', ...quote(byType('audience_comment'), 15));\nif (byType('lesson_change').length) lines.push('Playbook changes:', ...quote(byType('lesson_change'), 10));\n\nconst done = offers.filter((o) => o.ends_on && parseDt(o.ends_on) >= from.minus({ days: 30 }) && o.status !== 'rejected');\nif (done.length) {\n  lines.push('', 'Offers:');\n  done.forEach((o) => lines.push(`#${o.Id} ${o.title} (${o.offer_type}, reason ${o.reason_type}) ${o.launch_date} to ${o.ends_on} [${o.status}]: ${o.sales_count ?? 'no'} sales, ${o.revenue ?? 'no'} revenue reported${o.result_notes ? ` | ${o.result_notes.replace(/\\n+/g, ' ').slice(0, 300)}` : ''}`));\n}\nconst counts = {};\nunreviewed.forEach((e) => { counts[e.type] = (counts[e.type] || 0) + 1; });\nlines.push('', `Signals not reviewed yet: ${Object.entries(counts).map(([k, n]) => `${n} ${k}`).join(', ') || 'none'}.`);\nreturn [{ json: { result: lines.join('\\n') } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst r = $('Performance range').first().json;\nconst from = parseDt(r.from);\nconst now = DateTime.now().setZone(TZ);\nconst posts = rowsOf('Perf posts').filter((p) => ['published', 'approved', 'awaiting_approval', 'rejected', 'publish_failed'].includes(p.status));\nconst events = rowsOf('Perf events');\nconst offers = rowsOf('Perf offers');\nconst goals = rowsOf('Perf goals');\nconst unreviewed = rowsOf('Perf unreviewed');\nconst num = (x) => Number(x) || 0;\nconst eng = (p) => num(p.reactions) + 2 * num(p.comments) + 3 * num(p.shares);\nconst measured = (p) => p.status === 'published' && p.metrics_at;\nconst inWindow = (p) => parseDt(p.publish_at) >= from;\nconst median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : 0; };\nconst baseline = median(posts.filter((p) => measured(p) && !inWindow(p)).map(eng)) || median(posts.filter(measured).map(eng));\nconst score = (p) => (measured(p) && baseline ? eng(p) / baseline : null);\nconst fmt = (x) => (x === null || x === undefined ? '-' : Number(x).toFixed(2));\nconst win = posts.filter(inWindow);\nconst lines = [`Performance, last ${r.days} days (to ${now.toFormat('dd/MM')}). Scores compare posts with each other, so compare slots, hooks and kinds only when each has several posts.`];\n\nlines.push('', 'Goals:');\nconst monthStart = now.startOf('month').toISODate();\nconst followers = events.filter((e) => e.type === 'followers').map((e) => num(e.value));\nfor (const g of goals) {\n  let progress = 'not measurable from data yet; ask your manager';\n  if (g.metric === 'revenue') progress = `${offers.filter((o) => (o.ends_on || '') >= monthStart).reduce((n, o) => n + num(o.revenue), 0).toLocaleString('en-US')} reported this month`;\n  if (g.metric === 'sales') progress = `${offers.filter((o) => (o.ends_on || '') >= monthStart).reduce((n, o) => n + num(o.sales_count), 0)} sales reported this month`;\n  if (g.metric === 'followers' && followers.length) progress = `${followers[followers.length - 1]} now, ${followers[followers.length - 1] - followers[0]} in the window`;\n  if (g.metric === 'engagement' && win.some(measured)) progress = `average ${fmt(win.filter(measured).reduce((n, p) => n + eng(p), 0) / win.filter(measured).length)} per post`;\n  if (g.metric === 'reach' && win.some(measured)) progress = `${win.filter(measured).reduce((n, p) => n + num(p.reach), 0)} total reach`;\n  lines.push(`#${g.Id} ${g.title} (target ${g.target ?? '?'} ${g.unit || ''}, due ${g.due_on || '-'}): ${progress}`);\n}\nif (!goals.length) lines.push('(no active goals)');\n\nlines.push('', `Posts in the window (engagement = reactions + 2 x comments + 3 x shares; score = engagement / median of earlier posts${baseline ? `, median ${fmt(baseline)}` : ''}):`);\nif (!posts.some(measured)) lines.push('No post metrics yet: they are read every night for posts published in the last 8 days. Until then judge from approvals and your manager\\'s feedback.');\nfor (const p of win) {\n  lines.push(`#${p.Id} ${parseDt(p.publish_at).toFormat('dd/MM ccc HH:mm')} ${p.kind} [${p.status}] ${p.format || (p.image_brief ? 'picture wanted' : 'text')} hook ${p.hook_type || '-'} | ${p.title} | drafts ${p.revisions || 0}${measured(p) ? ` | unique viewers ${p.reach ?? '-'}, clicks ${p.clicks ?? '-'}, reactions ${p.reactions ?? '-'}, comments ${p.comments ?? '-'}, shares ${p.shares ?? '-'}, score ${fmt(score(p))}` : ''} | tested: ${p.hypothesis || '-'}`);\n}\nif (!win.length) lines.push('(none)');\n\nconst groups = (key) => {\n  const g = {};\n  win.filter(measured).forEach((p) => { const k = typeof key === 'function' ? key(p) : p[key] || '-'; (g[k] = g[k] || []).push(score(p)); });\n  return Object.entries(g).map(([k, xs]) => `${k}: ${xs.length} posts, avg score ${fmt(xs.reduce((a, b) => a + b, 0) / xs.length)}`).join('; ');\n};\nif (win.some(measured)) {\n  lines.push('', `By kind: ${groups('kind')}`, `By hook: ${groups('hook_type')}`, `By time slot: ${groups((p) => slotOf(parseDt(p.publish_at)))}`, `By format: ${groups((p) => p.format || 'text')}`, `By weekday: ${groups((p) => parseDt(p.publish_at).toFormat('ccc'))}`);\n}\n\nconst byType = (t) => events.filter((e) => e.type === t);\nconst decided = [...byType('approved'), ...byType('rejected')].filter((e) => e.post_id);\nconst approvedFirst = byType('approved').filter((e) => {\n  const p = posts.find((x) => x.Id === e.post_id);\n  return p && Number(p.revisions) === 1 && !byType('change_request').some((c) => c.post_id === e.post_id);\n});\nlines.push('', `Approvals: ${byType('approved').filter((e) => e.post_id).length} posts approved (${approvedFirst.length} on the first draft without change requests), ${byType('rejected').filter((e) => e.post_id).length} rejected, ${byType('change_request').length} change requests, ${byType('check_failed').length} failed checks.`);\nconst quote = (list, n) => list.slice(-n).map((e) => `- ${parseDt(e.created_at).toFormat('dd/MM')}${e.post_id ? ` post #${e.post_id}` : ''}${e.offer_id ? ` offer #${e.offer_id}` : ''}: ${(e.text || '').split('\\n\\nPrevious text:')[0].replace(/\\n+/g, ' ').slice(0, 400)}`);\nif (byType('rejected').length) lines.push('Rejections:', ...quote(byType('rejected'), 10));\nif (byType('change_request').length) lines.push('Change requests:', ...quote(byType('change_request'), 15));\nif (byType('manager_note').length) lines.push('What your manager said:', ...quote(byType('manager_note'), 20));\nif (byType('audience_comment').length) lines.push('Audience comments:', ...quote(byType('audience_comment'), 15));\nif (byType('lesson_change').length) lines.push('Playbook changes:', ...quote(byType('lesson_change'), 10));\n\nconst done = offers.filter((o) => o.ends_on && parseDt(o.ends_on) >= from.minus({ days: 30 }) && o.status !== 'rejected');\nif (done.length) {\n  lines.push('', 'Offers:');\n  done.forEach((o) => lines.push(`#${o.Id} ${o.title} (${o.offer_type}, reason ${o.reason_type}) ${o.launch_date} to ${o.ends_on} [${o.status}]: ${o.sales_count ?? 'no'} sales, ${o.revenue ?? 'no'} revenue reported${o.result_notes ? ` | ${o.result_notes.replace(/\\n+/g, ' ').slice(0, 300)}` : ''}`));\n}\nconst counts = {};\nunreviewed.forEach((e) => { counts[e.type] = (counts[e.type] || 0) + 1; });\nlines.push('', `Signals not reviewed yet: ${Object.entries(counts).map(([k, n]) => `${n} ${k}`).join(', ') || 'none'}.`);\nreturn [{ json: { result: lines.join('\\n') } }];"
       },
       "position": [
         1760,
@@ -2908,7 +3333,7 @@
       "id": "a79b2e57-f2a8-5ffe-8be1-5886e53a1bef",
       "name": "Check lesson",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst i = $('When called').first().json;\nconst rows = rowsOf('Playbook');\nconst s = (v) => (v ?? '').toString().trim();\nconst refuse = (m) => [{ json: { ok: false, result: `Playbook not changed: ${m}` } }];\nconst action = s(i.action);\nconst now = DateTime.now().setZone(TZ).toISO({ suppressMilliseconds: true });\nconst chat = ['chat', 'command'].includes(i.mode);\nconst CATS = ['voice', 'hooks', 'formats', 'topics', 'timing', 'offers', 'planning', 'process'];\nconst CONF = ['low', 'medium', 'high'];\nif (action === 'add') {\n  const source = s(i.source) === 'manager' ? 'manager' : 'self';\n  if (source === 'manager' && !chat) return refuse('manager directives are recorded only while talking with your manager');\n  if (!s(i.lesson)) return refuse('lesson is empty');\n  if (s(i.lesson).length > 250) return refuse('keep a lesson to one sentence under 250 characters');\n  if (!CATS.includes(s(i.category))) return refuse(`category must be one of ${CATS.join(', ')}`);\n  if (!s(i.evidence)) return refuse('evidence is required: the data or the manager\\'s words behind it');\n  if (source === 'self' && !CONF.includes(s(i.confidence))) return refuse(`confidence must be ${CONF.join(', ')}`);\n  if (rows.filter((r) => r.status === 'active').length >= 25) return refuse('25 active lessons already: retire or merge one first');\n  return [{ json: { ok: true, action, row: { lesson: s(i.lesson), category: s(i.category), evidence: s(i.evidence), confidence: source === 'manager' ? 'high' : s(i.confidence), source, status: 'active', retired_reason: '', created_at: now, updated_at: now } } }];\n}\nif (action === 'revise' || action === 'retire') {\n  const r = rows.find((x) => x.Id === Number(i.lesson_id));\n  if (!r) return refuse(`lesson #${i.lesson_id} does not exist`);\n  if (r.source === 'manager' && !chat) return refuse(`lesson #${r.Id} is your manager's directive; only they change it`);\n  if (r.status !== 'active') return refuse(`lesson #${r.Id} is already retired`);\n  if (!s(i.evidence)) return refuse('evidence is required: why it changes');\n  const next = { ...r };\n  if (action === 'retire') { next.status = 'retired'; next.retired_reason = s(i.evidence); }\n  else {\n    if (i.lesson !== undefined && s(i.lesson)) next.lesson = s(i.lesson).slice(0, 250);\n    if (CATS.includes(s(i.category))) next.category = s(i.category);\n    if (CONF.includes(s(i.confidence)) && r.source !== 'manager') next.confidence = s(i.confidence);\n    next.evidence = [r.evidence, `${now.slice(0, 10)}: ${s(i.evidence)}`].filter(Boolean).join('\\n');\n  }\n  next.updated_at = now;\n  return [{ json: { ok: true, action, id: r.Id, before: r.lesson, row: next } }];\n}\nreturn refuse('action must be add, revise or retire');"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\n\nconst i = $('When called').first().json;\nconst rows = rowsOf('Playbook');\nconst s = (v) => (v ?? '').toString().trim();\nconst refuse = (m) => [{ json: { ok: false, result: `Playbook not changed: ${m}` } }];\nconst now = DateTime.now().setZone(TZ).toISO({ suppressMilliseconds: true });\nconst chat = ['chat', 'command'].includes(i.mode);\nconst CATS = ['voice', 'hooks', 'formats', 'topics', 'timing', 'offers', 'planning', 'process'];\nconst CONF = ['low', 'medium', 'high'];\n// A guideline revision keeps the text it replaces after this mark in its lesson_change event.\nconst MARK = '\\n\\nPrevious text:\\n';\nconst GUIDE_TOTAL = 30000;\n// Upsert: no id adds an entry; with id it revises it, retires it (status retired) or restores a\n// guideline's text from before its last revision (status previous).\nconst id = Number(i.id) || 0;\nconst status = s(i.status) || 'active';\nif (!['active', 'retired', 'previous'].includes(status)) return refuse('status must be active, retired or previous');\nconst r = id ? rows.find((x) => x.Id === id) : null;\nif (id && !r) return refuse(`entry #${id} does not exist`);\nconst kind = r ? r.kind || 'lesson' : s(i.kind) || 'lesson';\nif (!['lesson', 'guideline'].includes(kind)) return refuse('kind must be lesson or guideline');\nif (kind === 'guideline' && !chat && i.mode !== 'review') return refuse('guidelines change only while the team talks with you or in the weekly review');\nconst action = !id ? 'add' : status === 'retired' ? 'retire' : status === 'previous' ? 'restore' : 'revise';\nif (action === 'add' && status !== 'active') return refuse('give the id of the entry to retire or restore');\nconst text = s(i.lesson);\nconst otherGuides = rows.filter((x) => x.status === 'active' && x.kind === 'guideline' && x.Id !== id);\nconst fits = (t) => otherGuides.reduce((n, x) => n + (x.lesson || '').length, 0) + t.length <= GUIDE_TOTAL;\nconst tooLong = `active guidelines hold ${GUIDE_TOTAL} characters at most in total: shorten or retire one first`;\n\nif (action === 'add') {\n  const source = s(i.source) === 'manager' ? 'manager' : 'self';\n  if (source === 'manager' && !chat) return refuse('manager entries are recorded only while talking with your manager');\n  if (!text) return refuse(kind === 'guideline' ? 'the guideline text is empty' : 'lesson is empty');\n  if (!CATS.includes(s(i.category))) return refuse(`category must be one of ${CATS.join(', ')}`);\n  if (!s(i.evidence)) return refuse('evidence is required: the data or the manager\\'s words behind it');\n  if (source === 'self' && !CONF.includes(s(i.confidence))) return refuse(`confidence must be ${CONF.join(', ')}`);\n  if (kind === 'lesson') {\n    if (text.length > 250) return refuse('keep a lesson to one sentence under 250 characters; a long text is a guideline (kind guideline, with a title)');\n    if (rows.filter((x) => x.status === 'active' && (x.kind || 'lesson') === 'lesson').length >= 25) return refuse('25 active lessons already: retire or merge one first');\n  } else {\n    if (!s(i.title)) return refuse('a guideline needs a title');\n    if (!fits(text)) return refuse(tooLong);\n  }\n  return [{ json: { ok: true, action, kind, row: { kind, title: kind === 'guideline' ? s(i.title) : '', lesson: text, category: s(i.category), evidence: s(i.evidence), confidence: source === 'manager' ? 'high' : s(i.confidence), source, status: 'active', retired_reason: '', created_at: now, updated_at: now } } }];\n}\nif (kind === 'lesson' && r.source === 'manager' && !chat) return refuse(`lesson #${r.Id} is your manager's directive; only they change it`);\nif (r.status !== 'active') return refuse(`#${r.Id} is already retired`);\nif (!s(i.evidence)) return refuse('evidence is required: why it changes');\nconst next = { ...r, kind, title: r.title || '' };\nif (action === 'retire') {\n  next.status = 'retired';\n  next.retired_reason = s(i.evidence);\n} else if (action === 'restore') {\n  if (kind !== 'guideline') return refuse('only a guideline can be restored');\n  const last = rowsOf('Lesson history').find((e) => String(e.text || '').includes(MARK));\n  if (!last) return refuse(`guideline #${r.Id} has no earlier version`);\n  next.lesson = String(last.text).split(MARK).slice(1).join(MARK);\n  if (!fits(next.lesson)) return refuse(tooLong);\n} else {\n  if (kind === 'guideline') {\n    if (!s(i.change)) return refuse('say in one line what changes and why (change)');\n    if (text) {\n      if (text.length < (r.lesson || '').length / 2) return refuse('a revision replaces the whole guideline: send its full text with your change (this one is less than half as long as now), or retire it');\n      if (!fits(text)) return refuse(tooLong);\n      next.lesson = text;\n    }\n    if (s(i.title)) next.title = s(i.title);\n  } else if (text) {\n    next.lesson = text.slice(0, 250);\n  }\n  if (CATS.includes(s(i.category))) next.category = s(i.category);\n  if (CONF.includes(s(i.confidence)) && r.source !== 'manager') next.confidence = s(i.confidence);\n}\nif (action !== 'retire') next.evidence = [r.evidence, `${now.slice(0, 10)}: ${s(i.evidence)}`].filter(Boolean).join('\\n');\nnext.updated_at = now;\nreturn [{ json: { ok: true, action, kind, id: r.Id, before: r.lesson, change: s(i.change), row: next } }];"
       },
       "position": [
         660,
@@ -3010,10 +3435,12 @@
             "confidence": "={{ $json.row.confidence }}",
             "created_at": "={{ $json.row.created_at }}",
             "evidence": "={{ $json.row.evidence }}",
+            "kind": "={{ $json.row.kind }}",
             "lesson": "={{ $json.row.lesson }}",
             "retired_reason": "={{ $json.row.retired_reason }}",
             "source": "={{ $json.row.source }}",
             "status": "={{ $json.row.status }}",
+            "title": "={{ $json.row.title }}",
             "updated_at": "={{ $json.row.updated_at }}"
           }
         },
@@ -3059,10 +3486,12 @@
             "category": "={{ $json.row.category }}",
             "confidence": "={{ $json.row.confidence }}",
             "evidence": "={{ $json.row.evidence }}",
+            "kind": "={{ $json.row.kind }}",
             "lesson": "={{ $json.row.lesson }}",
             "retired_reason": "={{ $json.row.retired_reason }}",
             "source": "={{ $json.row.source }}",
             "status": "={{ $json.row.status }}",
+            "title": "={{ $json.row.title }}",
             "updated_at": "={{ $json.row.updated_at }}"
           }
         },
@@ -3091,7 +3520,7 @@
       "id": "fff1cb16-6bbd-525f-b8da-71c4644566a0",
       "name": "Lesson event",
       "parameters": {
-        "jsCode": "const c = $('Check lesson').first().json;\nconst id = c.action === 'add' ? $('Create lesson').first().json.id : c.id;\nconst text = c.action === 'add' ? `Added #${id} [${c.row.source}, ${c.row.category}, ${c.row.confidence}]: ${c.row.lesson} | evidence: ${c.row.evidence}`\n  : c.action === 'retire' ? `Retired #${id}: ${c.row.lesson} | why: ${c.row.retired_reason}`\n  : `Revised #${id}: \"${c.before}\" -> \"${c.row.lesson}\" | evidence: ${c.row.evidence.split('\\n').pop()}`;\nreturn [{ json: { id, text } }];"
+        "jsCode": "const c = $('Check lesson').first().json;\nconst id = c.action === 'add' ? $('Create lesson').first().json.id : c.id;\nconst MARK = '\\n\\nPrevious text:\\n';\nconst r = c.row;\nlet text;\nif (c.kind === 'guideline') {\n  const name = `guideline #${id} \"${r.title}\"`;\n  text = c.action === 'add' ? `Added ${name} [${r.source}, ${r.category}], ${r.lesson.length} characters | evidence: ${r.evidence}`\n    : c.action === 'retire' ? `Retired ${name} | why: ${r.retired_reason}`\n    : c.action === 'restore' ? `Restored ${name} to its text before the last revision | why: ${r.evidence.split('\\n').pop()}${MARK}${c.before}`\n    : `Revised ${name}: ${c.change} | evidence: ${r.evidence.split('\\n').pop()}${c.before !== r.lesson ? MARK + c.before : ''}`;\n} else {\n  text = c.action === 'add' ? `Added #${id} [${r.source}, ${r.category}, ${r.confidence}]: ${r.lesson} | evidence: ${r.evidence}`\n    : c.action === 'retire' ? `Retired #${id}: ${r.lesson} | why: ${r.retired_reason}`\n    : `Revised #${id}: \"${c.before}\" -> \"${r.lesson}\" | evidence: ${r.evidence.split('\\n').pop()}`;\n}\nreturn [{ json: { id, text } }];"
       },
       "position": [
         1540,
@@ -3149,7 +3578,7 @@
       "id": "1bfb5b34-9cdc-59ff-a5f6-1de24bc22cd2",
       "name": "Lesson result",
       "parameters": {
-        "jsCode": "const c = $('Check lesson').first().json;\nreturn [{ json: { result: c.ok ? `${$('Lesson event').first().json.text}. Mention it in your next report to your manager.` : c.result } }];"
+        "jsCode": "const c = $('Check lesson').first().json;\nreturn [{ json: { result: c.ok ? `${$('Lesson event').first().json.text.split('\\n\\nPrevious text:\\n')[0]}. Mention it in your next report to your manager.` : c.result } }];"
       },
       "position": [
         1980,
@@ -3162,7 +3591,7 @@
       "id": "48946bc6-d3d5-5b72-80fc-140b7c2e9590",
       "name": "Check goal",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst i = $('When called').first().json;\nconst s = (v) => (v ?? '').toString().trim();\nconst refuse = (m) => [{ json: { ok: false, result: `Goal not saved: ${m}` } }];\nif (!['chat', 'command'].includes(i.mode)) return refuse('goals are set by the team; save one only while they are telling you');\nconst METRICS = ['revenue', 'sales', 'followers', 'engagement', 'reach', 'leads', 'other'];\nconst STATUS = ['active', 'achieved', 'dropped'];\nconst row = { title: s(i.title), metric: s(i.metric), target: s(i.target) === '' ? null : Number(s(i.target).replace(/[,\\s]/g, '')), unit: s(i.unit), due_on: s(i.due_on), status: s(i.status) || 'active', notes: s(i.notes) };\nif (!row.title) return refuse('title is empty');\nif (!METRICS.includes(row.metric)) return refuse(`metric must be one of ${METRICS.join(', ')}`);\nif (row.target !== null && !Number.isFinite(row.target)) return refuse('target must be a number');\nif (row.due_on && !parseDate(row.due_on).isValid) return refuse('due_on must be YYYY-MM-DD');\nif (!STATUS.includes(row.status)) return refuse(`status must be ${STATUS.join(', ')}`);\nif (!row.due_on) row.due_on = null;\nconst id = Number(i.goal_id) || 0;\nreturn [{ json: { ok: true, id, row: { ...row, created_at: DateTime.now().setZone(TZ).toISO({ suppressMilliseconds: true }) } } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst i = $('When called').first().json;\nconst s = (v) => (v ?? '').toString().trim();\nconst refuse = (m) => [{ json: { ok: false, result: `Goal not saved: ${m}` } }];\nif (!['chat', 'command'].includes(i.mode)) return refuse('goals are set by the team; save one only while they are telling you');\nconst METRICS = ['revenue', 'sales', 'followers', 'engagement', 'reach', 'leads', 'other'];\nconst STATUS = ['active', 'achieved', 'dropped'];\nconst row = { title: s(i.title), metric: s(i.metric), target: s(i.target) === '' ? null : Number(s(i.target).replace(/[,\\s]/g, '')), unit: s(i.unit), due_on: s(i.due_on), status: s(i.status) || 'active', notes: s(i.notes) };\nif (!row.title) return refuse('title is empty');\nif (!METRICS.includes(row.metric)) return refuse(`metric must be one of ${METRICS.join(', ')}`);\nif (row.target !== null && !Number.isFinite(row.target)) return refuse('target must be a number');\nif (row.due_on && !parseDate(row.due_on).isValid) return refuse('due_on must be YYYY-MM-DD');\nif (!STATUS.includes(row.status)) return refuse(`status must be ${STATUS.join(', ')}`);\nif (!row.due_on) row.due_on = null;\nconst id = Number(i.id) || 0;\nreturn [{ json: { ok: true, id, row: { ...row, created_at: DateTime.now().setZone(TZ).toISO({ suppressMilliseconds: true }) } } }];"
       },
       "position": [
         440,
@@ -3578,6 +4007,1059 @@
       ],
       "type": "n8n-nodes-base.code",
       "typeVersion": 2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "35799a7c-eff4-495b-bae1-e0eeee29627d",
+      "name": "Story row",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ Number($json.id) || 0 }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m10sv4qudn9bby2"
+        }
+      },
+      "position": [
+        440,
+        -600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "b0bbf464-95e6-4e89-aad2-156717046e06",
+      "name": "Check story",
+      "parameters": {
+        "jsCode": "const rowOf = (name) => $(name).all().map((x) => x.json).find((j) => j.id !== undefined && j.id !== null);\nconst i = $('When called').first().json;\nconst s = (v) => (v ?? '').toString().trim();\nconst refuse = (m) => [{ json: { ok: false, result: `Story not saved: ${m}` } }];\n// Upsert: no id adds a story; with id it corrects that story.\nconst id = Number(i.id) || 0;\nconst text = s(i.text);\nif (!text) return refuse('text is empty');\nif (id && !rowOf('Story row')) return refuse(`story #${id} does not exist`);\nreturn [{ json: { ok: true, id, row: { text, summary: text.split('\\n')[0].slice(0, 120) } } }];"
+      },
+      "position": [
+        660,
+        -600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "ee1af82b-4f6e-4a8a-8b39-d85ab3de37fa",
+      "name": "Story ok?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "9512ba5b-a4b3-4f3f-aada-60922d799156",
+              "leftValue": "={{ $json.ok }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        880,
+        -600
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "d5dceaae-ee0a-46b1-a4bd-a1a21bf7ee68",
+      "name": "New story?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "e718439b-20d6-4d4d-960d-b953b21a82ec",
+              "leftValue": "={{ !$json.id }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1100,
+        -700
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "42c511da-e440-40e4-84ba-de9e6e0603d8",
+      "name": "Save story",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "summary": "={{ $json.row.summary }}",
+            "text": "={{ $json.row.text }}"
+          }
+        },
+        "id": "={{ $json.id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m10sv4qudn9bby2"
+        }
+      },
+      "position": [
+        1320,
+        -600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "a0591226-bb5e-46d1-933f-dcaf188ea25c",
+      "name": "Inspiration row",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ Number($json.id) || 0 }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m8nm1ke66u7fla0"
+        }
+      },
+      "position": [
+        440,
+        3600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "00acc8fd-1200-4add-aa71-c0ed0ba81811",
+      "name": "Check inspiration",
+      "parameters": {
+        "jsCode": "const rowOf = (name) => $(name).all().map((x) => x.json).find((j) => j.id !== undefined && j.id !== null);\nconst TZ = 'Asia/Ho_Chi_Minh';\nconst i = $('When called').first().json;\nconst s = (v) => (v ?? '').toString().trim();\nconst refuse = (m) => [{ json: { ok: false, result: `Post not saved: ${m}` } }];\n// Upsert: no id saves a new post; with id it corrects that saved post, changing only the fields given.\nconst id = Number(i.id) || 0;\nconst TEXT = ['post_url', 'author_name', 'author_url', 'hook', 'text', 'comments', 'why_it_works', 'notes'];\nconst COUNTS = ['reaction_count', 'comment_count', 'share_count'];\nconst KEYS = [...TEXT, ...COUNTS, 'source_type', 'format', 'posted_at'];\n// The fields come one by one, where an empty one is left as it is, or as a JSON object in post.\nlet post;\nif (String(i.post ?? '').trim()) {\n  try { post = typeof i.post === 'string' ? JSON.parse(i.post) : i.post; } catch (e) { return refuse('post is not valid JSON'); }\n  if (!post || typeof post !== 'object' || Array.isArray(post)) return refuse('post must be a JSON object');\n} else {\n  post = Object.fromEntries(KEYS.filter((k) => String(i[k] ?? '').trim()).map((k) => [k, i[k]]));\n}\nconst found = rowOf('Inspiration row');\nif (id && !found) return refuse(`saved post #${id} does not exist`);\nconst SOURCES = ['page', 'profile', 'group'];\nconst FORMATS = ['text', 'image', 'carousel', 'video', 'reel', 'link', 'live'];\nconst unknown = Object.keys(post).filter((k) => !KEYS.includes(k));\nif (unknown.length) return refuse(`unknown fields ${unknown.join(', ')}; the fields are ${KEYS.join(', ')}`);\nconst row = {};\nfor (const k of TEXT) if (k in post) row[k] = s(Array.isArray(post[k]) ? post[k].join('\\n') : post[k]) || null;\nfor (const k of COUNTS) {\n  if (!(k in post)) continue;\n  if (post[k] === null || post[k] === '') { row[k] = null; continue; }\n  const n = Number(post[k]);\n  if (!Number.isInteger(n) || n < 0) return refuse(`${k} must be a whole number, 0 or more`);\n  row[k] = n;\n}\nif ('source_type' in post) { const v = s(post.source_type); if (v && !SOURCES.includes(v)) return refuse(`source_type must be ${SOURCES.join(', ')}`); row.source_type = v || null; }\nif ('format' in post) { const v = s(post.format); if (v && !FORMATS.includes(v)) return refuse(`format must be ${FORMATS.join(', ')}`); row.format = v || null; }\nconst isoOf = (v) => DateTime.fromISO(s(v).replace(' ', 'T'), { setZone: true });\nif ('posted_at' in post) {\n  const d = isoOf(post.posted_at);\n  if (s(post.posted_at) && (!d.isValid || d > DateTime.now().plus({ minutes: 5 }))) return refuse('posted_at must be a past time in ISO 8601 with its offset, like 2026-09-15T08:30:00+07:00');\n  row.posted_at = s(post.posted_at) ? d.toISO({ suppressMilliseconds: true }) : null;\n}\nif (row.post_url && !/^https?:\\/\\//.test(row.post_url)) return refuse('post_url must be a link');\nif ('text' in row && !('hook' in row)) row.hook = s(row.text).split('\\n').map((l) => l.trim()).find(Boolean) || null;\n// The NocoDB node writes every mapped field, so an update sends the saved values of the fields not given.\nconst before = found ? found.fields || {} : {};\nconst full = Object.fromEntries(KEYS.map((k) => [k, k in row ? row[k] : (before[k] ?? null)]));\nif (full.posted_at && !('posted_at' in row)) full.posted_at = isoOf(full.posted_at).toISO({ suppressMilliseconds: true });\nif (!s(full.text) && !s(full.comments)) return refuse('text or comments is required');\nfull.captured_at = id ? before.captured_at ?? null : DateTime.now().setZone(TZ).toISO({ suppressMilliseconds: true });\nif (full.captured_at && id) full.captured_at = isoOf(full.captured_at).toISO({ suppressMilliseconds: true });\nreturn [{ json: { ok: true, id, full, changed: Object.keys(row) } }];"
+      },
+      "position": [
+        660,
+        3600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "702d391f-506a-4a03-9f05-a4cae250fe08",
+      "name": "Inspiration ok?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "65e5fb66-7a36-4e0f-95fc-7d832e4a4703",
+              "leftValue": "={{ $json.ok }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        880,
+        3600
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "4439364d-f9b6-450b-9a79-8e11e7215a79",
+      "name": "New inspiration?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d28482be-f19f-4a14-8f86-3f8f5619f57b",
+              "leftValue": "={{ !$json.id }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1100,
+        3500
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "1b4aa8a4-9b46-4d22-9ee6-8cfedceadc82",
+      "name": "Create inspiration",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "author_name": "={{ $json.full.author_name }}",
+            "author_url": "={{ $json.full.author_url }}",
+            "captured_at": "={{ $json.full.captured_at }}",
+            "comment_count": "={{ $json.full.comment_count }}",
+            "comments": "={{ $json.full.comments }}",
+            "format": "={{ $json.full.format }}",
+            "hook": "={{ $json.full.hook }}",
+            "notes": "={{ $json.full.notes }}",
+            "post_url": "={{ $json.full.post_url }}",
+            "posted_at": "={{ $json.full.posted_at }}",
+            "reaction_count": "={{ $json.full.reaction_count }}",
+            "share_count": "={{ $json.full.share_count }}",
+            "source_type": "={{ $json.full.source_type }}",
+            "text": "={{ $json.full.text }}",
+            "why_it_works": "={{ $json.full.why_it_works }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m8nm1ke66u7fla0"
+        }
+      },
+      "position": [
+        1320,
+        3400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "d8f0b48c-c745-4a9e-8d1e-502d5c2ddb85",
+      "name": "Log inspiration",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "text": "={{ 'Manager saved reference post #' + $json.id + ' by ' + ($('Check inspiration').first().json.full.author_name || '?') + ' (' + ($('Check inspiration').first().json.full.reaction_count ?? '?') + ' reactions): ' + ($('Check inspiration').first().json.full.hook || '') }}",
+            "type": "manager_note"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        1540,
+        3400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "2b94e7dd-c104-4913-91a7-93827fe03ff8",
+      "name": "Save inspiration",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "author_name": "={{ $json.full.author_name }}",
+            "author_url": "={{ $json.full.author_url }}",
+            "captured_at": "={{ $json.full.captured_at }}",
+            "comment_count": "={{ $json.full.comment_count }}",
+            "comments": "={{ $json.full.comments }}",
+            "format": "={{ $json.full.format }}",
+            "hook": "={{ $json.full.hook }}",
+            "notes": "={{ $json.full.notes }}",
+            "post_url": "={{ $json.full.post_url }}",
+            "posted_at": "={{ $json.full.posted_at }}",
+            "reaction_count": "={{ $json.full.reaction_count }}",
+            "share_count": "={{ $json.full.share_count }}",
+            "source_type": "={{ $json.full.source_type }}",
+            "text": "={{ $json.full.text }}",
+            "why_it_works": "={{ $json.full.why_it_works }}"
+          }
+        },
+        "id": "={{ $json.id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m8nm1ke66u7fla0"
+        }
+      },
+      "position": [
+        1320,
+        3600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "89810abe-c295-43ea-a961-cdca7c97a18a",
+      "name": "Inspiration result",
+      "parameters": {
+        "jsCode": "const c = $('Check inspiration').first().json;\nif (!c.ok) return [{ json: { result: c.result } }];\nif (c.id) return [{ json: { result: `Corrected saved post #${c.id}: ${c.changed.join(', ')}.` } }];\nreturn [{ json: { result: `Saved post #${$('Create inspiration').first().json.id} by ${c.full.author_name || '?'}. Tell them what you saved.` } }];"
+      },
+      "position": [
+        1760,
+        3600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "57d95da8-3857-4360-b327-3f25e444bd5c",
+      "name": "Picture post",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ Number($json.post_id) || 0 }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        440,
+        4200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "71e59a1f-3c71-4bcb-abbb-4bbf019c1665",
+      "name": "Attach pictures",
+      "parameters": {
+        "jsCode": "const rowOf = (name) => $(name).all().map((x) => x.json).find((j) => j.id !== undefined && j.id !== null);\nconst i = $('When called').first().json;\nconst refuse = (m) => [{ json: { ok: false, result: `Pictures not added: ${m}` } }];\n// A picture reference is \"<message id> <key>\", the form the publisher downloads from Lark.\nconst refs = [...new Set(String(i.pictures || '').split(/[\\n,;]+/).map((r) => r.trim().replace(/\\s+/g, ' ')).filter(Boolean))];\nif (!refs.length) return refuse('no picture references given');\nconst bad = refs.filter((r) => !/^om_\\S+ \\S+$/.test(r));\nif (bad.length) return refuse(`a reference is the message id, a space, then the picture key; not valid: ${bad.join(' | ')}`);\nconst j = rowOf('Picture post');\nif (!j) return refuse(`post #${Number(i.post_id) || 0} does not exist`);\nconst p = { Id: j.id, ...(j.fields || {}) };\nif (!['planned', 'awaiting_approval', 'approved', 'publish_failed'].includes(p.status)) return refuse(`post #${p.Id} is ${p.status}`);\nconst lines = (p.images || '').split('\\n').map((l) => l.trim()).filter(Boolean);\nconst added = refs.filter((r) => !lines.includes(r));\nlines.push(...added);\nconst kept = lines.slice(-10);\nreturn [{\n  json: {\n    ok: true,\n    Id: p.Id,\n    images: kept.join('\\n'),\n    event: `${added.length} picture(s) added to post #${p.Id} \"${p.title}\"`,\n    result: `Post #${p.Id} \"${p.title}\" now has ${kept.length} picture${kept.length === 1 ? '' : 's'}; they go out with it.${lines.length > 10 ? ' Facebook takes 10 at most, so only the last 10 are kept.' : ''}`,\n  },\n}];"
+      },
+      "position": [
+        660,
+        4200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "13e7cacc-01c3-4a5e-af3c-64a7e651a178",
+      "name": "Pictures ok?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "8d1375d8-22f3-4d30-903a-fc49a3c40269",
+              "leftValue": "={{ $json.ok }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        880,
+        4200
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "028a309a-fee6-4784-8b77-4511f7a0ffc3",
+      "name": "Save pictures",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "images": "={{ $json.images }}"
+          }
+        },
+        "id": "={{ $json.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        1100,
+        4100
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "3718c82c-bb19-4be5-b9f9-92c3f7486b8a",
+      "name": "Log pictures",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "post_id": "={{ $('Attach pictures').first().json.Id }}",
+            "text": "={{ $('Attach pictures').first().json.event }}",
+            "type": "manager_note"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        1320,
+        4100
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "c0e25546-7a42-4e8e-ba4a-c5d9b149c9cc",
+      "name": "Pictures result",
+      "parameters": {
+        "jsCode": "return [{ json: { result: $('Attach pictures').first().json.result } }];"
+      },
+      "position": [
+        1540,
+        4200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "6609b633-c413-47fe-9461-f20b5104a3e7",
+      "name": "Hand-off input",
+      "parameters": {
+        "jsCode": "const i = $('When called').first().json;\nconst s = (v) => (v ?? '').toString().trim();\nconst PROCEDURES = ['offers', 'plan', 'draft', 'review'];\nconst procedure = s(i.procedure).toLowerCase();\nconst brief = s(i.brief);\nconst refuse = (m) => [{ json: { ok: false, result: `Not handed off: ${m}` } }];\nif (!PROCEDURES.includes(procedure)) return refuse(`procedure must be one of ${PROCEDURES.join(', ')}`);\nif (!brief) return refuse('the brief is empty: write what they asked, what the thread says and what any pictures show');\nif (procedure === 'draft' && !/^#?\\d+/.test(brief)) return refuse('a draft brief starts with the post id');\n// The input of Content agent: its Task node reads mode, command, args, text and reply_to.\nreturn [{\n  json: {\n    ok: true,\n    mode: procedure === 'review' ? 'review' : 'command',\n    command: procedure === 'review' ? '' : procedure,\n    args: brief.replace(/^#/, ''),\n    text: '',\n    procedure,\n    brief,\n    reply_to: s(i.reply_to),\n  },\n}];"
+      },
+      "position": [
+        440,
+        4600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "d441d04e-74ac-47b2-8dc4-a4a75c4c4128",
+      "name": "Hand-off ok?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "3510fecc-4f43-4587-ad80-1a8ec20bc8fe",
+              "leftValue": "={{ $json.ok }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        660,
+        4600
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "3d61925b-d31c-4f26-9942-49e181c57ab0",
+      "name": "Start pro agent",
+      "parameters": {
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "rfEEzkFE1lDOKyoQ"
+        }
+      },
+      "position": [
+        880,
+        4500
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "7ecf8b15-f0d6-4a7c-93a5-a15892fdb365",
+      "name": "Hand-off result",
+      "parameters": {
+        "jsCode": "const h = $('Hand-off input').first().json;\nreturn [{ json: { result: h.ok ? `Handed off: the ${h.procedure} work has started and its result will be posted in this thread. Tell them briefly that you are on it.` : h.result } }];"
+      },
+      "position": [
+        1100,
+        4600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "61c3edbb-5340-402f-b6d5-b98fc1156aca",
+      "name": "Link settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "where": "(key,eq,brand_doc_urls)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "meuoueztm2hoq1t"
+        }
+      },
+      "position": [
+        440,
+        5000
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "962c6655-4cb8-429f-944d-c2c2a92b1acc",
+      "name": "Check link",
+      "parameters": {
+        "jsCode": "const i = $('When called').first().json;\nconst url = String(i.url || '').trim();\nconst m = url.match(/\\/(wiki|docx|docs)\\/([A-Za-z0-9]+)/);\nif (!/^https?:\\/\\//.test(url) || !m) return [{ json: { ok: false, result: 'Cannot read this kind of link: read_link reads Lark docs and wiki pages.' } }];\nconst row = $('Link settings').all().map((x) => x.json).find((j) => j.fields && j.fields.key === 'brand_doc_urls');\nreturn [{\n  json: {\n    ok: true,\n    url,\n    kind: m[1] === 'wiki' ? 'wiki' : 'docx',\n    token: m[2],\n    remember: i.remember === true || i.remember === 'true',\n    settings_id: row ? row.id : null,\n    urls: row ? String(row.fields.value || '').split(/\\s+/).filter(Boolean) : [],\n  },\n}];"
+      },
+      "position": [
+        660,
+        5000
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "40eaf6af-00b0-4b29-b498-8d96739c0815",
+      "name": "Link ok?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "29779ff2-f182-4490-82c7-e11363561d3b",
+              "leftValue": "={{ $json.ok }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        880,
+        5000
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "4cc6c13d-f1d8-4f2a-a1e7-e474d0a2c21f",
+      "name": "Link token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        1100,
+        4900
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "73d123f9-194c-46de-84f7-6b2060f0cf6d",
+      "name": "Resolve link",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Link token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "={{ $('Check link').first().json.kind === 'wiki' ? 'https://open.larksuite.com/open-apis/wiki/v2/spaces/get_node?token=' + $('Check link').first().json.token : 'https://open.larksuite.com/open-apis/docx/v1/documents/' + $('Check link').first().json.token }}"
+      },
+      "position": [
+        1320,
+        4900
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "31c2b6e2-4343-4f87-847d-8f8da7c9017f",
+      "name": "Link doc id",
+      "parameters": {
+        "jsCode": "// A wiki link points at a node; the document behind it is node.obj_token.\nconst c = $('Check link').first().json;\nconst r = $json || {};\nconst data = r.data || {};\nlet docId = '';\nlet title = '';\nlet error = '';\nif (r.code !== 0) {\n  error = (r.error && (r.error.message || JSON.stringify(r.error))) || r.msg || 'cannot open';\n} else if (c.kind === 'wiki') {\n  const node = data.node || {};\n  title = node.title || '';\n  if (node.obj_type === 'docx') docId = node.obj_token;\n  else error = `the wiki page is a ${node.obj_type}; only docs are read`;\n} else {\n  docId = (data.document || {}).document_id || c.token;\n  title = (data.document || {}).title || '';\n}\nreturn [{ json: { title, error, raw_url: `https://open.larksuite.com/open-apis/docx/v1/documents/${docId || 'missing'}/raw_content` } }];"
+      },
+      "position": [
+        1540,
+        4900
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "bac52f86-844f-4906-b2a3-b847a98dede2",
+      "name": "Read link doc",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Link token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "={{ $json.raw_url }}"
+      },
+      "position": [
+        1760,
+        4900
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "0e246cb4-fc4e-4446-8332-2c2ce4f52fb9",
+      "name": "Link read",
+      "parameters": {
+        "jsCode": "const c = $('Check link').first().json;\nconst d = $('Link doc id').first().json;\nconst r = $json || {};\nconst error = d.error || (r.code !== 0 ? (r.error && r.error.message) || r.msg || 'cannot read' : '');\nif (error) return [{ json: { remember_now: false, result: `Could not read ${c.url}: ${error}. If the app has no access, ask them to add the Lark app to the doc (its ... menu, then More, then add a document app).` } }];\nconst text = String((r.data && r.data.content) || '');\nconst known = c.urls.includes(c.url);\nconst rememberNow = c.remember && !known && c.settings_id !== null;\nconst note = !c.remember ? ''\n  : known ? '\\n\\n(Already one of the brand docs you read on every run.)'\n  : rememberNow ? '\\n\\n(Remembered: from your next run this doc is one of your brand docs.)'\n  : '\\n\\n(Not remembered: the brand_doc_urls setting is missing.)';\nreturn [{\n  json: {\n    remember_now: rememberNow,\n    settings_id: c.settings_id,\n    urls: [...c.urls, c.url].join('\\n'),\n    result: `${d.title || c.url}\\n\\n${text.length > 30000 ? `${text.slice(0, 30000)}\\n[cut at 30000 characters]` : text}${note}`,\n  },\n}];"
+      },
+      "position": [
+        1980,
+        4900
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "af0ac699-9339-4927-aaf4-61cfdd3c959b",
+      "name": "Remember link?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "b39511db-9c33-44c2-a7ad-5ae2b4e68337",
+              "leftValue": "={{ $json.remember_now }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        2200,
+        4900
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "71cba65f-ce9c-438a-8928-d3a1a9fc7f07",
+      "name": "Save doc links",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "value": "={{ $json.urls }}"
+          }
+        },
+        "id": "={{ $json.settings_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "meuoueztm2hoq1t"
+        }
+      },
+      "position": [
+        2420,
+        4800
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "0d8afc23-64a4-4a64-8b7a-6560bf88ee59",
+      "name": "Link result",
+      "parameters": {
+        "jsCode": "const c = $('Check link').first().json;\nreturn [{ json: { result: c.ok ? $('Link read').first().json.result : c.result } }];"
+      },
+      "position": [
+        2640,
+        5000
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "1ca9cdb4-5a7a-4b7c-9af1-a92b1988f3d7",
+      "name": "Lesson history",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 10,
+        "operation": "search",
+        "options": {
+          "sort": {
+            "property": [
+              {
+                "direction": "desc",
+                "field": {
+                  "__rl": true,
+                  "mode": "id",
+                  "value": "created_at"
+                }
+              }
+            ]
+          },
+          "where": "=(lesson_id,eq,{{ Number($('When called').first().json.id) || 0 }})~and(type,eq,lesson_change)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        550,
+        1800
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
     }
   ],
   "pinData": {},

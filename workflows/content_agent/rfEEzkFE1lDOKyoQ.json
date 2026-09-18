@@ -261,28 +261,6 @@
         ]
       ]
     },
-    "save_goal": {
-      "ai_tool": [
-        [
-          {
-            "index": 0,
-            "node": "Agent",
-            "type": "ai_tool"
-          }
-        ]
-      ]
-    },
-    "save_story": {
-      "ai_tool": [
-        [
-          {
-            "index": 0,
-            "node": "Agent",
-            "type": "ai_tool"
-          }
-        ]
-      ]
-    },
     "send_message": {
       "ai_tool": [
         [
@@ -305,7 +283,7 @@
         ]
       ]
     },
-    "update_playbook": {
+    "update_post": {
       "ai_tool": [
         [
           {
@@ -316,7 +294,29 @@
         ]
       ]
     },
-    "update_post": {
+    "upsert_goal": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "upsert_playbook": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "upsert_story": {
       "ai_tool": [
         [
           {
@@ -391,7 +391,7 @@
       "id": "778ac351-81c2-51a1-879d-4fe948bc969c",
       "name": "Task",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\nconst TASKS = {\"chat\": null, \"command\": null, \"event\": null, \"shift\": \"Daily shift. Work through this list with your tools. Your final answer is your work log entry: 2 to 4 lines on what you did and why. It is not sent to your manager.\\n1. If there are no active goals or no brand docs, send your manager one short message asking for what is missing, and stop.\\n2. Offers: from the 15th, next month must have two offers proposed or approved; propose what is missing. For an offer that ended without a result, ask your manager how it sold (once; check your work log).\\n3. Calendar: every day from tomorrow through the reminder of the last approved offer (at most 30 days ahead) has a post. Plan the free days.\\n4. Material: posts in the next 7 days that need a real detail you do not have: ask your manager, all in one message.\\n5. Drafts: posts publishing within the next 3 days that are still planned: write and submit each one.\\n6. Drafts waiting for approval for more than a day, and posts in the next 2 days that want a picture and have none yet: one short reminder listing them.\", \"review\": \"Weekly review: your 1:1 with your manager.\\n1. Call performance for 7 days and for 30 days. Read every signal: approvals, rejections, change requests, what your manager said, failed checks, metrics, audience comments, offer results.\\n2. Judge each hypothesis you tested: confirmed, refuted, or not enough data yet.\\n3. Look at timing and format too: which time slots, weekdays and formats (text or picture) did better for which kinds of post, and with how many posts behind each number.\\n4. Update your playbook with update_playbook: add a lesson only with evidence (at least two data points, or your manager's words); revise a lesson when new data sharpens it; retire a lesson the data contradicts. Confidence follows the amount of evidence. Merge lessons that overlap. Never touch your manager's directives.\\n5. Choose one or two things to test next week (a hook, an angle, a time slot) and set them on the planned posts with update_post.\\n6. Your final answer is the report sent to your manager: progress on each goal, what worked, what did not, what you changed in your playbook and why, what you will test next, and what you need from them. At most 15 lines, plain text.\"};\nconst COMMANDS = {\"rule\": \"The team gave you a rule to follow from now on: <<<{args}>>>\\nSave it with update_playbook as a directive (action add, source manager) in the right category. If it contradicts an active lesson, retire or revise that lesson in the same turn. Your final answer, sent as the reply, says in one or two lines what you saved.\", \"goal\": \"The team set or changed a goal: <<<{args}>>>\\nSave it with save_goal, updating the existing goal when this changes one. Ask back only if what to measure or the target is unclear. Your final answer, sent as the reply, confirms it in one or two lines.\", \"offers\": \"The team asked for offers {args}. Check the calendar and propose what is missing with propose_offer (two per month, next month when no month is given), following the strategy and your playbook. Your final answer, sent as the reply, lists what you proposed and why, briefly.\", \"plan\": \"The team asked you to plan now. Extra notes from them: <<<{args}>>>\\nMake sure every day from tomorrow through the reminder of the last approved offer (at most 30 days ahead) has a post, planning free days with plan_posts. Your final answer, sent as the reply, summarises the plan briefly.\", \"draft\": \"The team asked for a draft now: <<<{args}>>> (the post id comes first, then any notes).\\nWrite that post and submit it with submit_draft; fix and resubmit until it passes. Your final answer, sent as the reply, says how it went.\"};\n\nconst now = DateTime.now().setZone(TZ);\nlet input = {};\nlet mode = 'shift';\nif ($('When called').isExecuted) {\n  input = $('When called').first().json || {};\n  mode = ['chat', 'command', 'event', 'shift', 'review'].includes(input.mode) ? input.mode : 'chat';\n} else if ($('Weekly review').isExecuted) {\n  mode = 'review';\n}\nlet task = TASKS[mode];\nif (mode === 'chat') task = `${input.text}\\n\\nHandle it with your tools, then answer. Your final answer is sent as your reply in this thread.`;\nif (mode === 'command') task = `${input.text}\\n\\n${(COMMANDS[input.command] || '{args}').replace('{args}', input.args || '')}`;\nif (mode === 'review' && input.reply_to) task = `${TASKS.review}\\n\\n(The team asked for this review now with /review; the report goes to their thread.)`;\nif (mode === 'event') task = `Something happened: ${input.text}\\n\\nDo the work that follows from it with your tools. Your final answer is your work log entry (1 to 3 lines), not sent to your manager.`;\nreturn [{\n  json: {\n    mode,\n    task,\n    reply_to: input.reply_to || '',\n    started_at: now.toISO(),\n    // Flash answers chats and quick commands; V4-Pro plans, drafts and reviews.\n    model: mode === 'chat' || (mode === 'command' && ['rule', 'goal'].includes(input.command)) ? 'deepseek-flash' : 'deepseek-v4-pro',\n  },\n}];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The procedures are in the instructions (Content agent: context). The task names one and says where the final answer goes.\nconst REPORT = 'Your final answer is the report sent to the team: progress on each goal, what worked, what did not, what you changed in your playbook and why, what you will test next, and what you need from them. At most 15 lines, plain text.';\nconst now = DateTime.now().setZone(TZ);\nconst s = (v) => (v ?? '').toString().trim();\nlet input = {};\nlet mode = 'shift';\nif ($('When called').isExecuted) {\n  input = $('When called').first().json || {};\n  mode = ['command', 'event', 'shift', 'review'].includes(input.mode) ? input.mode : 'command';\n} else if ($('Weekly review').isExecuted) {\n  mode = 'review';\n}\n// hand_off sends procedure and brief; command and args are the older names.\nconst procedure = s(input.procedure || input.command) || (mode === 'review' ? 'review' : '');\nconst brief = s(input.brief) || [s(input.args), s(input.text)].filter(Boolean).join('\\n\\n');\nlet task;\nif (mode === 'shift') task = 'Run the shift procedure. Your final answer is your work log entry: 2 to 4 lines on what you did and why. It is not sent to the team.';\nelse if (mode === 'event') task = `Something happened: ${input.text}\\n\\nDo the work that follows from it with your tools. Your final answer is your work log entry (1 to 3 lines), not sent to the team.`;\nelse if (mode === 'review' && !input.reply_to) task = `Run the review procedure. ${REPORT}`;\nelse task = `The front desk handed you this work from the team: run the ${procedure || 'fitting'} procedure.\\n\\nBrief:\\n<<<\\n${brief}\\n>>>\\n\\n${procedure === 'review' ? REPORT : \"Your final answer is posted in the team's thread: what you did and why, briefly.\"}`;\nreturn [{ json: { mode, task, reply_to: s(input.reply_to), started_at: now.toISO() } }];"
       },
       "position": [
         220,
@@ -424,7 +424,7 @@
       "id": "80243b06-fbaa-5b93-92ee-da93604a292f",
       "name": "Instructions",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\nconst STRATEGY = \"The strategy (follow it exactly):\\n- All content is one of three types: sales, education or story. Education and story build trust between offers; offers turn that trust into revenue.\\n- Two offers per month. Each offer is one launch post plus one reminder post. There is no other sales content.\\n- Sales: keep the offer simple (percent off, amount off, a free extra, buy one get one, bundle and save). Always give a reason: a calendar date, limited capacity, a milestone, or a playful reason that fits the brand. People buy on emotion and justify with logic; the reason is the logic.\\n- Education makes the brand the authority the audience trusts. Topics come from the problems the products solve: for each problem, what must the customer understand before the product is clearly the best solution? Each answer is a piece. Every piece is a clear sequence of steps or points. Education published before an offer sets up that specific offer.\\n- Story: intent, obstacle, resolution. \\\"We set out to give you [benefit]. But [problem] got in the way. So we [sacrifice or decision], because giving you [benefit] matters that much to us.\\\" The brand mission is the series and each post is an episode. Stories come from the mission, brand values, product values and what the brand stands against. The strongest stories test those values while solving the problem the product addresses. Stories are also built into sales and education posts.\\n- Pre-publish check, every post: Relevant (useful, interesting or important to the audience), Closer (brings people closer to the brand and product), Connected (leads toward a specific offer). A post failing any is reworked or cut.\";\nconst ROLE = \"You are the content strategist of {page}, a small Vietnamese business that sells through its Facebook page. You work like a member of staff: you own the page's content, you report to your manager (the owner) in Lark, and you get measurably better at the job every week.\";\nconst HOW = \"# How you work\\n- Tools are the only way you see or change anything. Look before you act (calendar, performance, find_stories); never assume what is planned.\\n- Offers: propose_offer. Two a month, a simple deal, a true reason. The reason must be a fact you were given (a date, a capacity, a milestone your manager or the brand docs state); never infer seats, slots or milestones. Your manager approves offers in Lark.\\n- Posts: plan_posts, for approved offers only. Work backward from each offer: what must the audience know and feel before it lands? Education and stories fill the days before the launch; sales posts go only on the launch and reminder days. One post a day.\\n- Every planned post names its time, hook_type, angle and hypothesis (what it tests and what you expect). Put about 70% of posts on what your playbook says works and about 30% on a deliberate test of one thing at a time, so results teach you something.\\n- Pictures: decide per post whether a real picture would clearly help, mostly proof (a screenshot, a result, a moment from class or work), and describe it in image_brief; leave it empty for a text post. Your manager replies to the draft card with the photo; you cannot see pictures, only whether they arrived. Write the text so it works without the picture: without one, the post goes out as text. Format (text or picture) is a test variable like the others.\\n- Timing is one of those things. You choose each post's time inside the posting window. With no timing lesson yet, spread posts across morning, noon and evening slots, keeping kind and hook comparable, until results show a pattern; then follow your timing lesson and keep testing one slot at a time. Weekdays and weekends may differ.\\n- Drafts: write the post yourself in {language}, then submit_draft. When the check fails, fix exactly what it says and submit again. Nothing is published without your manager's approval; an approved post goes to the Facebook page by itself at its time. A post in publish_failed shows Facebook's reason in the calendar: fix it and submit it again, and tell your manager.\\n- Truth: use only facts from the brand docs, the story bank and what your manager has told you. When a story needs a real detail you lack, ask your manager with send_message days before the post, never on the day.\\n- Your manager's messages are already saved as signals. Save what should last in its proper place in the same turn, because your chat memory is short: a story with save_story, a goal with save_goal, a preference or instruction as a playbook lesson with source manager, an offer's sales with record.\\n- You work with a team in a Lark group. Everyone in it is equal and speaks for the business: \\\"your manager\\\" in these instructions means whoever is talking to you. Messages show who wrote them; use their names. Conversations happen in threads, and you see the thread's history.\\n- When the team writes to you, your final answer is your reply in that thread: do not also call send_message. send_message is for reaching them outside a conversation, in shifts and after events.\\n- Talk to your manager like a capable colleague: short and specific, plain text without markdown, in the language they write to you (Vietnamese when unsure). Do not ask what you can find out with a tool. At most two messages a day unless they are talking with you.\";\n\nconst t = $('Task').first().json;\nconst c = $('Get context').first().json;\nconst now = DateTime.now().setZone(TZ);\nconst system = [\n  ROLE.replace('{page}', c.page_name),\n  '',\n  '# The strategy you execute (fixed rules)',\n  STRATEGY,\n  '',\n  '# Goals, set by your manager',\n  c.goals_text || 'None yet. Ask your manager for goals (what to achieve, measured how, by when) before planning, and save them with save_goal while they tell you.',\n  '',\n  `# Your playbook (${c.playbook_count} lessons; your manager's directives first, then what you learned, strongest first)`,\n  c.playbook_text || 'Empty: you have not learned anything yet. Your reviews fill it.',\n  '',\n  '# Your recent work log',\n  c.work_log_text || '(nothing yet)',\n  '',\n  HOW.replace('{language}', c.language),\n  '',\n  `# Facts: brand docs${c.warnings.length ? ` (warnings: ${c.warnings.join('; ')})` : ''}`,\n  c.brand || 'No brand docs yet: ask your manager to add their Lark doc links to content_agent.settings (brand_doc_urls) and to share the docs with the Lark app. Do not plan or write without them.',\n  '',\n  '# Hooks of saved posts your manager liked (rhythm only, never copy)',\n  c.references_text || '(none)',\n  '',\n  `# Now\\n${now.toFormat(\"cccc dd/MM/yyyy HH:mm\")} (Asia/Ho_Chi_Minh). Posts may go out between ${c.post_window.from} and ${c.post_window.to} at the time you choose for each, published automatically once approved. Post metrics, audience comments, edits made on Facebook and the follower count are collected every night at 01:30. Lark ${c.linked ? 'is linked' : 'is not linked yet: your messages cannot be delivered'}.`,\n].join('\\n');\nreturn [{ json: { system, task: t.task } }];"
+        "jsCode": "// The instructions are built in Content agent: context, shared with the front agent.\nreturn [{ json: { system: $('Get context').first().json.system, task: $('Task').first().json.task } }];"
       },
       "position": [
         660,
@@ -461,7 +461,7 @@
       "id": "099615e6-1b47-53d3-8c00-9e9831e44e63",
       "name": "DeepSeek thinking",
       "parameters": {
-        "model": "={{ $('Task').first().json.model }}",
+        "model": "deepseek-v4-pro",
         "options": {
           "maxRetries": 3,
           "timeout": 600000
@@ -897,9 +897,9 @@
     },
     {
       "id": "ed4800c9-3d43-5493-a9fe-753ade4cf116",
-      "name": "save_story",
+      "name": "upsert_story",
       "parameters": {
-        "description": "Save a real moment your manager told you, for future stories.",
+        "description": "Save a real moment your manager told you, for future stories. Without id it adds a story; with id it corrects that saved story.",
         "workflowId": {
           "__rl": true,
           "mode": "id",
@@ -940,12 +940,23 @@
               "removed": false,
               "required": false,
               "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "id",
+              "id": "id",
+              "removed": false,
+              "required": false,
+              "type": "string"
             }
           ],
           "value": {
+            "id": "={{ $fromAI('id', 'Story id to correct, or 0 for a new story', 'number') }}",
             "mode": "={{ $('Task').first().json.mode }}",
             "text": "={{ $fromAI('text', 'The story in full, in your manager’s words', 'string') }}",
-            "tool": "save_story"
+            "tool": "upsert_story"
           }
         }
       },
@@ -1141,9 +1152,9 @@
     },
     {
       "id": "ee91ddf5-8cbf-5697-a58e-6abdd2ee0f19",
-      "name": "update_playbook",
+      "name": "upsert_playbook",
       "parameters": {
-        "description": "Add, revise or retire a lesson in your playbook. Needs evidence. Lessons from your manager (source manager) are added only while talking with them.",
+        "description": "Your playbook: short lessons and long guidelines. Without id it adds an entry; with id it revises that entry, retires it (status retired), or restores a guideline's text from before its last revision (status previous). Needs evidence. A lesson is one sentence; a guideline is a long document with a title, and a revision sends its full new text with change. Entries from your manager (source manager) are added only while talking with them.",
         "workflowId": {
           "__rl": true,
           "mode": "id",
@@ -1171,26 +1182,6 @@
               "display": true,
               "displayName": "mode",
               "id": "mode",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "action",
-              "id": "action",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "lesson_id",
-              "id": "lesson_id",
               "removed": false,
               "required": false,
               "type": "string"
@@ -1244,18 +1235,71 @@
               "removed": false,
               "required": false,
               "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "id",
+              "id": "id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "status",
+              "id": "status",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "kind",
+              "id": "kind",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "title",
+              "id": "title",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "change",
+              "id": "change",
+              "removed": false,
+              "required": false,
+              "type": "string"
             }
           ],
           "value": {
-            "action": "={{ $fromAI('action', 'add, revise or retire', 'string') }}",
             "category": "={{ $fromAI('category', 'voice|hooks|formats|topics|timing|offers|planning|process', 'string') }}",
+            "change": "={{ $fromAI('change', 'For a guideline revision, one line on what changed and why; else empty', 'string') }}",
             "confidence": "={{ $fromAI('confidence', 'low|medium|high', 'string') }}",
             "evidence": "={{ $fromAI('evidence', 'The data or your manager’s words behind it', 'string') }}",
-            "lesson": "={{ $fromAI('lesson', 'One imperative sentence, for add or revise', 'string') }}",
-            "lesson_id": "={{ $fromAI('lesson_id', 'Lesson id for revise or retire, else 0', 'number') }}",
+            "id": "={{ $fromAI('id', 'Lesson id to revise or retire, or 0 to add a lesson', 'number') }}",
+            "kind": "={{ $fromAI('kind', 'lesson or guideline; only for a new entry', 'string') }}",
+            "lesson": "={{ $fromAI('lesson', 'A lesson as one imperative sentence, or the full text of a guideline', 'string') }}",
             "mode": "={{ $('Task').first().json.mode }}",
             "source": "={{ $fromAI('source', 'manager when your manager told you, else self', 'string') }}",
-            "tool": "update_playbook"
+            "status": "={{ $fromAI('status', 'active, retired to retire it, or previous to restore a guideline', 'string') }}",
+            "title": "={{ $fromAI('title', 'The guideline name, or empty for a lesson', 'string') }}",
+            "tool": "upsert_playbook"
           }
         }
       },
@@ -1268,9 +1312,9 @@
     },
     {
       "id": "c6d56427-a25c-5c53-aa1f-1d57189b55fb",
-      "name": "save_goal",
+      "name": "upsert_goal",
       "parameters": {
-        "description": "Save or update a goal your manager is giving you right now.",
+        "description": "Save a goal your manager is giving you right now. Without id it adds a goal; with id it updates that goal.",
         "workflowId": {
           "__rl": true,
           "mode": "id",
@@ -1298,16 +1342,6 @@
               "display": true,
               "displayName": "mode",
               "id": "mode",
-              "removed": false,
-              "required": false,
-              "type": "string"
-            },
-            {
-              "canBeUsedToMatch": true,
-              "defaultMatch": false,
-              "display": true,
-              "displayName": "goal_id",
-              "id": "goal_id",
               "removed": false,
               "required": false,
               "type": "string"
@@ -1381,18 +1415,28 @@
               "removed": false,
               "required": false,
               "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "id",
+              "id": "id",
+              "removed": false,
+              "required": false,
+              "type": "string"
             }
           ],
           "value": {
             "due_on": "={{ $fromAI('due_on', 'YYYY-MM-DD or empty', 'string') }}",
-            "goal_id": "={{ $fromAI('goal_id', 'Goal id to update, or 0 for a new goal', 'number') }}",
+            "id": "={{ $fromAI('id', 'Goal id to update, or 0 for a new goal', 'number') }}",
             "metric": "={{ $fromAI('metric', 'revenue|sales|followers|engagement|reach|leads|other', 'string') }}",
             "mode": "={{ $('Task').first().json.mode }}",
             "notes": "={{ $fromAI('notes', 'Anything else they said about it', 'string') }}",
             "status": "={{ $fromAI('status', 'active|achieved|dropped', 'string') }}",
             "target": "={{ $fromAI('target', 'Target number, or empty', 'string') }}",
             "title": "={{ $fromAI('title', 'The goal in one line', 'string') }}",
-            "tool": "save_goal",
+            "tool": "upsert_goal",
             "unit": "={{ $fromAI('unit', 'e.g. VND per month', 'string') }}"
           }
         }
@@ -1594,7 +1638,7 @@
       "id": "a60c73ff-249f-5e37-a1da-8cf878be5979",
       "name": "Reply",
       "parameters": {
-        "jsCode": "const out = String($('Agent').first().json.output || '').trim();\nreturn out ? [{ json: { text: out, reply_to: $('Task').first().json.reply_to } }] : [];"
+        "jsCode": "const out = String($('Agent').first().json.output || '').trim();\nreturn out && out !== 'NO_REPLY' ? [{ json: { text: out, reply_to: $('Task').first().json.reply_to } }] : [];"
       },
       "position": [
         1540,
@@ -1676,7 +1720,7 @@
       "id": "75f48843-2beb-56ab-8bcd-d487c6066137",
       "name": "Report",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\n// The report always lists the playbook changes, whatever the agent wrote.\n// The NocoDB filter compares dates only; keep the changes made during this run.\nconst started = parseDt($('Task').first().json.started_at);\nconst changes = rowsOf('Changes this review').filter((e) => parseDt(e.created_at) >= started).map((e) => `- ${e.text}`);\nconst out = String($('Agent').first().json.output || '').trim();\nreturn [{ json: { reply_to: $('Task').first().json.reply_to, text: `📋 Weekly review\\n\\n${out}${changes.length ? `\\n\\nPlaybook changes:\\n${changes.join('\\n')}` : '\\n\\nNo playbook changes this week.'}\\n\\nReply to correct me.` } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\n// The report always lists the playbook changes, whatever the agent wrote.\n// The NocoDB filter compares dates only; keep the changes made during this run.\nconst started = parseDt($('Task').first().json.started_at);\nconst changes = rowsOf('Changes this review').filter((e) => parseDt(e.created_at) >= started).map((e) => `- ${String(e.text || '').split('\\n\\nPrevious text:')[0]}`);\nconst out = String($('Agent').first().json.output || '').trim();\nreturn [{ json: { reply_to: $('Task').first().json.reply_to, text: `📋 Weekly review\\n\\n${out}${changes.length ? `\\n\\nPlaybook changes:\\n${changes.join('\\n')}` : '\\n\\nNo playbook changes this week.'}\\n\\nReply to correct me.` } }];"
       },
       "position": [
         1760,

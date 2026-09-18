@@ -42,6 +42,8 @@ session is needed after `.env` changes. Reading `.env` with the Read tool is den
   private-network HTTP targets.
 - Docs and comments state what is true now, plus a short reason when it isn't obvious. History
   goes in commit messages.
+- Before changing `workflows/content_agent/`, read `docs/Content Agent.md` (architecture, agreed
+  changes, open questions) and keep its status current.
 
 ## Scripts
 
@@ -219,6 +221,13 @@ Verified on this instance.
   calls tools and keeps `memoryBufferWindow` history across executions: n8n patches
   `@langchain/openai` to send DeepSeek's `reasoning_content` back, which the API requires once
   tools are involved. It makes parallel tool calls.
+- The same agent with `deepseek-flash` reads every image binary property of its input item
+  (`options.passthroughBinaryImages: true`; two PNGs as `picture_1`, `picture_2`) and still calls
+  tools in that run.
+- With `deepseek-flash`, a tool argument holding a long JSON document inside a string (about
+  3,000 tokens of Vietnamese text and comments) made the agent fail with `Model output doesn't fit
+  required format`. The same data as separate string arguments works: give a tool one `$fromAI`
+  per field instead of a JSON string.
 - `@n8n/n8n-nodes-langchain.toolWorkflow` 2.2 takes its tool name from the node name. Arguments come
   from `$fromAI('key', 'description', 'string'|'number'|'boolean')` in `workflowInputs.value`, and
   `workflowInputs.schema` must list every key; the sub-workflow trigger can accept all data. Other
@@ -228,6 +237,10 @@ Verified on this instance.
 - An HTTP Request node with `authentication: predefinedCredentialType` and `nodeCredentialType:
   facebookGraphApi` adds the credential's token as the `access_token` query parameter.
 
+- A running execution keeps the version of its workflow it started with, but a sub-workflow it
+  calls runs the version live at that moment. An agent run lasts up to ~10 minutes: when renaming
+  a tool or anything else a caller sends, keep accepting the old value until the caller's running
+  executions (`GET /executions?status=running`) are done.
 - Branches from one node run top to bottom by canvas position (`executionOrder: v1`), and an error
   in one stops the rest: put database writes above Lark or other outbound calls.
 
@@ -271,6 +284,8 @@ Verified with the Lark content bot (custom app, credential `Lark content bot`).
 - `GET bot/v3/info` returns the bot's own `open_id`; a message that @mentions the bot lists it in
   `mentions[].id` (the text holds `@_user_N` keys). `GET im/v1/messages/<id>` also returns
   `chat_id`, `root_id`, `parent_id` and `thread_id`.
+- Messages the bot sent come back (message or thread list) with `sender: {id: <app id cli_…>,
+  id_type: app_id, sender_type: app}`, not the bot's `open_id`.
 - `POST im/v1/messages/<id>/reply` with `reply_in_thread: true` replies in a thread; a reply to a
   message already in a thread stays in it. `GET im/v1/messages?container_id_type=thread&container_id=<thread_id>`
   lists a thread's messages (in groups it needs the read-all-group-messages permission).
