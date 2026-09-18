@@ -13,7 +13,7 @@ What the agent does for the business (strategy, commands, Lark and Facebook setu
 `README.md` and `docs/Content Strategy.md`. This document covers how it is put together.
 
 Status: section 2 describes the live system as of 2026-09-18. Left to do: run the acceptance
-tests in Lark (S7).
+tests in Lark (S7, and A16 for the team's final version, S8).
 
 ## 1. What we want
 
@@ -84,7 +84,7 @@ pictures of the message and its thread (D2, D8).
 
 - It handles on its own: questions, status, stories, saving and correcting posts the team likes,
   attaching pictures to posts, reading links, rules, guidelines, goals, small changes to a
-  planned post, results.
+  planned post, results, and a team member's own final version of a post (D15).
 - It hands off with `hand_off`: offers, planning, writing or rewriting drafts, analysis across
   performance data, the weekly review (D3). The brief carries what they asked, the thread
   context, ids, and what the pictures show, because the strategist cannot see them (D5). It then
@@ -122,13 +122,14 @@ way.
 | story | `/story` | front desk | upsert_story |
 | inspiring | `/inspiring` | front desk | reference_posts, upsert_inspiration |
 | attach pictures | (photo for a post) | front desk | calendar, attach_picture |
+| final | (bản chốt: a team member's final text of a post) | front desk | finalize_post |
 | rule | `/rule` | front desk | upsert_playbook (a directive) |
 | guideline | (a long guide sent in chat) | front desk | upsert_playbook (a guideline) |
 | goal | `/goal` | front desk | upsert_goal |
 | offers | `/offers` | strategist via hand_off | calendar, propose_offer |
 | plan | `/plan` | strategist via hand_off | calendar, plan_posts |
 | draft | `/draft` | strategist via hand_off | submit_draft |
-| review | `/review`, Mon 03:00 | strategist | performance, upsert_playbook (lessons and guidelines), update_post |
+| review | `/review`, Mon 03:00 | strategist | performance (with the team's versions against the drafts), upsert_playbook (lessons and guidelines), update_post |
 | shift | (02:00 daily) | strategist | all its tools |
 
 ### Tools
@@ -150,6 +151,7 @@ record is named `upsert_<thing>`: without `id` it inserts a row, and with `id` i
 | attach_picture | yes | no | picture references; the post must not be published yet; 10 at most |
 | hand_off | yes | no | starts the strategist without waiting; `reply_to` comes from the gate, not the model |
 | read_link | yes | no | Lark docs and wiki pages; `remember` adds the link to `brand_doc_urls` (D13) |
+| finalize_post | yes | no | the team's final version of a post, approved without the check (D15); an empty text drops it |
 
 ### Playbook
 
@@ -190,6 +192,27 @@ mission. The agent reads them but does not change them.
 NocoDB base `content_agent` (`povrpvxg4mvxbba`) has these tables: `settings`, `goals`, `playbook`,
 `events`, `offers`, `posts`, `stories`, `inspiring_facebook_posts`. Their files are in
 `nocodb/content_agent/`.
+
+### The team's final version (D15)
+
+A team member can give the final text of a post ("bản chốt"). The front desk calls `finalize_post`
+with it, and the post is approved at once. What the tool checks and does:
+
+- The text must match, character for character except for whitespace, a message a person wrote
+  in the conversation. The gate passes those messages (`written`, the current message and the
+  thread); the model cannot set them, so an edit by the model is refused.
+- It skips the pre-publish check. It writes `final_text`, sets `approved` and logs an `approved`
+  event. The old card's buttons then answer that the post is already approved.
+- It works while the post is `planned`, `awaiting_approval`, `approved` or `publish_failed`.
+- An empty text drops the final version: the post goes back to `awaiting_approval`, and its card
+  works again (or to `planned` without a draft).
+
+`draft` keeps the agent's version. The publisher sends `final_text` when it is set, otherwise
+`draft`, and keeps `final_text` when Facebook refuses the post. While a post has a final version,
+`update_post` refuses changes to title, brief, angle and hook, and `submit_draft` refuses a new
+draft. `performance` marks each post that went out in the team's text (their final version or an
+edit on Facebook), scores it "By text", and shows it next to the agent's draft. The review compares
+the two.
 
 ### Known limits
 
@@ -253,6 +276,14 @@ NocoDB base `content_agent` (`povrpvxg4mvxbba`) has these tables: `settings`, `g
   results. Lessons stay single claims so they can be judged one by one. Guidelines stay whole
   documents, so every revision is logged and can be restored.
 
+- **D15. The team's final version bypasses the check.** The team is the source of the facts
+  and the voice, so the check has nothing to hold its own text against: on post #51 it called the
+  owner's sentences unsupported claims, and the strategist rewrote the "bản chốt" through 5 drafts
+  (runs 1332, 1346). The tool accepts only text a person wrote in the conversation, so the agent
+  cannot approve its own writing this way (D12). There is no A/B test on Facebook: Meta's API tests
+  only reels and videos (`POST /{page}/ab_tests`), and Meta Business Suite tests other posts only
+  by hand. So the review compares the agent's draft with the team's version instead.
+
 ## 4. Open questions (owner answers here)
 
 None right now. Add a question here as `**Qn.** …` followed by an `Answer:` line.
@@ -273,6 +304,7 @@ commit. Pushing an active workflow changes production immediately; check
 | S5 | Front desk: `lark message` becomes the gate plus the flash agent with 13 tools; the old router branches and the calls to capture are gone | live. The gate replayed 10 recorded messages (703, 714, 718, 752, 757, 762, 1024, 1028, 1037, 1042) as expected. A test workflow ran the front desk with real pictures from Lark: see H1 to H7 below. |
 | S6 | Delete `Content agent: capture` (D10) and the temporary test workflows | done: both deleted from n8n; the capture file is gone from the repo |
 | S7 | Run acceptance tests A1 to A15 in Lark | todo |
+| S8 | The team's final version (D15): `finalize_post`, the publisher sends `final_text`, `update_post` and `submit_draft` respect it, `performance` shows it | live. Through a test webhook on a temporary post: 12 tool cases (an edited text refused, the verbatim text approved with an `approved` event, a brief change refused and a time change kept approved, finalizing again without a second approval, dropping, `submit_draft` refused, cancelled and unknown posts refused, no `written` refused) and `performance` showing both texts. The publisher's `Due now` and outcome code passed a local run. F1 to F4 below. The test post and its events were deleted. A16 is left. |
 
 ### Tests run
 
@@ -295,6 +327,15 @@ commit. Pushing an active workflow changes production immediately; check
   - H5, `/story …`: saved in the teller's words, ending with "(told by Đức Chế)".
   - H6, `/help`: the command list, in plain text.
   - H7, "3h chiều nha Minh" in a bot thread, answering a teammate: `NO_REPLY`.
+- **F1 to F4 (passed 2026-09-18).** The same kind of test workflow ran the front desk with
+  `calendar` and `finalize_post` on a temporary post.
+  - F1, the owner's real "bản chốt" of post #51 (run 1331, 877 characters): approved with the text
+    unchanged, in 9 to 23 s.
+  - F2, "chốt bản anh gửi ở trên nha, đăng y vậy" after the text in the thread: it copied the
+    earlier message exactly.
+  - F3, "chốt bản trên nhưng đổi chữ hihi thành hehe": nothing saved. It asked for the full text
+    with the change.
+  - F4, "thôi bỏ bản chốt đi em": the final version dropped, and the post is waiting for approval again.
 
 ### Acceptance tests
 
@@ -326,6 +367,9 @@ commit. Pushing an active workflow changes production immediately; check
   - the previous text is in the `lesson_change` event;
   - "khôi phục bản trước" restores it.
 - **A15.** "sửa story #N: …": that story is corrected and no new row is created.
+- **A16 (S8).** In post #51's thread, "bản chốt:" with the full text:
+  - #51 is approved with that text and the reply says when it goes out;
+  - on 26/09 at 20:00 exactly that text is published.
 - **Unchanged:** the daily shift, weekly review, card clicks, publisher and signals behave as
   before.
 

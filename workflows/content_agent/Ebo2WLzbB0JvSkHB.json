@@ -318,6 +318,17 @@
         ]
       ]
     },
+    "finalize_post": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
     "find_stories": {
       "ai_tool": [
         [
@@ -612,7 +623,7 @@
       "id": "e65ec2cd-9cb5-5e49-8cd9-35a17298e67c",
       "name": "Decide",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\n// Image keys in a Lark message: pictures, pictures in rich text, and image files.\nconst imagesOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'image' && c.image_key) return [c.image_key];\n    if (msg.msg_type === 'file' && c.file_key && /\\.(png|jpe?g|webp)$/i.test(c.file_name || '')) return [c.file_key];\n    if (msg.msg_type === 'post') return (Array.isArray(c.content) ? c.content : []).flat().filter((el) => el && el.tag === 'img' && el.image_key).map((el) => el.image_key);\n  } catch (e) {}\n  return [];\n};\n\n// Plain text of a Lark message of any type, for reading and for thread history.\nconst plainOf = (msg) => {\n  const raw = (msg && msg.body && msg.body.content) || '';\n  try {\n    const c = JSON.parse(raw || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => (el.tag === 'img' ? '[picture]' : el.text || el.href || '')).join(''))].filter(Boolean).join('\\n');\n    }\n    if (msg.msg_type === 'image' || (msg.msg_type === 'file' && imagesOf(msg).length)) return '[picture]';\n    return JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode|img_key|image_key)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ').trim();\n  } catch (e) {\n    return String(raw).slice(0, 2000);\n  }\n};\n\n// Gate: Read message let through only what concerns the bot. Here: the thread check, the history and\n// the pictures. What the message means is the front agent's call.\n// action: 0 link, 1 fixed reply, 2 nothing more.\nconst m = $('Read message').first().json;\nconst settings = settingsOf('Load settings');\nconst members = (($('Fetch members').first().json.data || {}).items || []);\nconst names = Object.fromEntries(members.map((x) => [x.member_id, x.name]));\nconst nameOf = (id) => (id === settings.lark_app_id ? 'You (the agent)' : names[id] || (id === settings.lark_open_id ? 'The owner' : 'A team member'));\n// Lark returns the bot's own messages with its app id as sender.id, not its open_id.\nconst fromBot = (x) => Boolean(x && x.sender && x.sender.sender_type === 'app' && x.sender.id === settings.lark_app_id);\n// found is the thread, or for a quoted reply the message it quotes.\nconst found = (($('Fetch thread').first().json.data || {}).items || []).filter((x) => x.message_id !== m.message_id);\nif (m.access === 'thread_check' && !found.some(fromBot)) return [{ json: { ...m, action: 2, agent: false } }];\nconst history = found.slice(-30).map((x) => `${nameOf(x.sender && x.sender.id)}: ${plainOf(x).slice(0, 1500)}`);\nconst rootText = found.map((x) => (x.body && x.body.content) || '').join('\\n');\nconst post = rootText.match(/[Pp]ost #(\\d+)/);\nconst offer = rootText.match(/[Oo]ffer #(\\d+)/);\nconst who = nameOf(m.sender);\n// Pictures of this message first, then those of the thread, newest first: 10 at most, each \"<message id> <key>\".\nconst pictures = [\n  ...m.images.map((k) => ({ ref: `${m.message_id} ${k}`, from: who, where: 'this message' })),\n  ...[...found].reverse().flatMap((x) => imagesOf(x).map((k) => ({ ref: `${x.message_id} ${k}`, from: nameOf(x.sender && x.sender.id), where: 'earlier in the thread' }))),\n].slice(0, 10);\nconst out = { ...m, history, pictures, post_id: post ? Number(post[1]) : null, offer_id: offer ? Number(offer[1]) : null, who, reply_to: m.message_id };\nif (m.access === 'reply') return [{ json: { ...out, action: 1, agent: false } }];\nif (m.access === 'link_group') return [{ json: { ...out, action: 0, agent: false } }];\nreturn [{ json: { ...out, action: m.access === 'link_owner' ? 0 : 2, agent: true } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\n// Image keys in a Lark message: pictures, pictures in rich text, and image files.\nconst imagesOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'image' && c.image_key) return [c.image_key];\n    if (msg.msg_type === 'file' && c.file_key && /\\.(png|jpe?g|webp)$/i.test(c.file_name || '')) return [c.file_key];\n    if (msg.msg_type === 'post') return (Array.isArray(c.content) ? c.content : []).flat().filter((el) => el && el.tag === 'img' && el.image_key).map((el) => el.image_key);\n  } catch (e) {}\n  return [];\n};\n\n// Plain text of a Lark message of any type, for reading and for thread history.\nconst plainOf = (msg) => {\n  const raw = (msg && msg.body && msg.body.content) || '';\n  try {\n    const c = JSON.parse(raw || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => (el.tag === 'img' ? '[picture]' : el.text || el.href || '')).join(''))].filter(Boolean).join('\\n');\n    }\n    if (msg.msg_type === 'image' || (msg.msg_type === 'file' && imagesOf(msg).length)) return '[picture]';\n    return JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode|img_key|image_key)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ').trim();\n  } catch (e) {\n    return String(raw).slice(0, 2000);\n  }\n};\n\n// Gate: Read message let through only what concerns the bot. Here: the thread check, the history and\n// the pictures. What the message means is the front agent's call.\n// action: 0 link, 1 fixed reply, 2 nothing more.\nconst m = $('Read message').first().json;\nconst settings = settingsOf('Load settings');\nconst members = (($('Fetch members').first().json.data || {}).items || []);\nconst names = Object.fromEntries(members.map((x) => [x.member_id, x.name]));\nconst nameOf = (id) => (id === settings.lark_app_id ? 'You (the agent)' : names[id] || (id === settings.lark_open_id ? 'The owner' : 'A team member'));\n// Lark returns the bot's own messages with its app id as sender.id, not its open_id.\nconst fromBot = (x) => Boolean(x && x.sender && x.sender.sender_type === 'app' && x.sender.id === settings.lark_app_id);\n// found is the thread, or for a quoted reply the message it quotes.\nconst found = (($('Fetch thread').first().json.data || {}).items || []).filter((x) => x.message_id !== m.message_id);\nif (m.access === 'thread_check' && !found.some(fromBot)) return [{ json: { ...m, action: 2, agent: false } }];\nconst history = found.slice(-30).map((x) => `${nameOf(x.sender && x.sender.id)}: ${plainOf(x).slice(0, 1500)}`);\nconst rootText = found.map((x) => (x.body && x.body.content) || '').join('\\n');\nconst post = rootText.match(/[Pp]ost #(\\d+)/);\nconst offer = rootText.match(/[Oo]ffer #(\\d+)/);\nconst who = nameOf(m.sender);\n// Pictures of this message first, then those of the thread, newest first: 10 at most, each \"<message id> <key>\".\nconst pictures = [\n  ...m.images.map((k) => ({ ref: `${m.message_id} ${k}`, from: who, where: 'this message' })),\n  ...[...found].reverse().flatMap((x) => imagesOf(x).map((k) => ({ ref: `${x.message_id} ${k}`, from: nameOf(x.sender && x.sender.id), where: 'earlier in the thread' }))),\n].slice(0, 10);\n// Full texts people wrote here: finalize_post accepts only a final version copied from one of them.\nconst written = [m.text, ...found.filter((x) => x.sender && x.sender.sender_type === 'user').map(plainOf)];\nconst out = { ...m, history, pictures, written, post_id: post ? Number(post[1]) : null, offer_id: offer ? Number(offer[1]) : null, who, reply_to: m.message_id };\nif (m.access === 'reply') return [{ json: { ...out, action: 1, agent: false } }];\nif (m.access === 'link_group') return [{ json: { ...out, action: 0, agent: false } }];\nreturn [{ json: { ...out, action: m.access === 'link_owner' ? 0 : 2, agent: true } }];"
       },
       "position": [
         1540,
@@ -2287,6 +2298,100 @@
       ],
       "type": "n8n-nodes-base.code",
       "typeVersion": 2
+    },
+    {
+      "id": "2b3858f8-404c-4894-9e2d-82224f0c0433",
+      "name": "finalize_post",
+      "parameters": {
+        "description": "Publish a team member's own final version of a post (bản chốt) exactly as they wrote it. It skips the pre-publish check and approves the post. text is their post copied character for character, without the words that introduce it; an empty text drops their final version and brings back the draft.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_id",
+              "id": "post_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "text",
+              "id": "text",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "written",
+              "id": "written",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "who",
+              "id": "who",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "mode": "chat",
+            "post_id": "={{ $fromAI('post_id', 'Post id', 'number') }}",
+            "text": "={{ $fromAI('text', 'Their final post text exactly as written, or empty to drop their final version', 'string') }}",
+            "tool": "finalize_post",
+            "who": "={{ $('Decide').first().json.who }}",
+            "written": "={{ JSON.stringify($('Decide').first().json.written) }}"
+          }
+        }
+      },
+      "position": [
+        5040,
+        1100
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
     }
   ],
   "pinData": null,

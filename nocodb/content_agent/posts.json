@@ -212,7 +212,7 @@
       "type": "DateTime"
     },
     {
-      "description": "The text as published, when it differs from the draft.",
+      "description": "The team's own final version, published instead of the draft without the pre-publish check. Once published: the text on Facebook, including edits made there.",
       "id": "cuer0vklaqvm7q9",
       "title": "final_text",
       "type": "LongText"

@@ -74,6 +74,17 @@
         ]
       ]
     },
+    "Check final": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Final ok?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Check goal": {
       "main": [
         [
@@ -356,6 +367,35 @@
         ]
       ]
     },
+    "Final ok?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save final",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Final result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Final post": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Check final",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Goal ok?": {
       "main": [
         [
@@ -551,6 +591,17 @@
           {
             "index": 0,
             "node": "Failed result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Log final": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Final result",
             "type": "main"
           }
         ]
@@ -982,6 +1033,17 @@
         ]
       ]
     },
+    "Save final": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log final",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Save goal": {
       "main": [
         [
@@ -1292,6 +1354,13 @@
             "node": "Link settings",
             "type": "main"
           }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Final post",
+            "type": "main"
+          }
         ]
       ]
     },
@@ -1393,8 +1462,8 @@
       "name": "Tool",
       "parameters": {
         "mode": "expression",
-        "numberOutputs": 17,
-        "output": "={{ ({\"calendar\": 0, \"propose_offer\": 1, \"plan_posts\": 2, \"update_post\": 3, \"submit_draft\": 4, \"send_message\": 5, \"upsert_story\": 6, \"find_stories\": 7, \"reference_posts\": 8, \"performance\": 9, \"upsert_playbook\": 10, \"upsert_goal\": 11, \"record\": 12, \"upsert_inspiration\": 13, \"attach_picture\": 14, \"hand_off\": 15, \"read_link\": 16})[$json.tool] ?? -1 }}"
+        "numberOutputs": 18,
+        "output": "={{ ({\"calendar\": 0, \"propose_offer\": 1, \"plan_posts\": 2, \"update_post\": 3, \"submit_draft\": 4, \"send_message\": 5, \"upsert_story\": 6, \"find_stories\": 7, \"reference_posts\": 8, \"performance\": 9, \"upsert_playbook\": 10, \"upsert_goal\": 11, \"record\": 12, \"upsert_inspiration\": 13, \"attach_picture\": 14, \"hand_off\": 15, \"read_link\": 16, \"finalize_post\": 17})[$json.tool] ?? -1 }}"
       },
       "position": [
         220,
@@ -2151,7 +2220,7 @@
       "id": "567129dd-9819-58cb-881c-742c5a26235c",
       "name": "Check update",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst SELLING = /(\\d+\\s?%|giảm giá|khuyến mãi|ưu đãi|mã giảm|voucher|đăng ký ngay|mua ngay|chốt đơn|flash sale)/i;\n// Briefs may say what a post avoids (\"không nhắc ưu đãi\"); only a discount figure or a call to buy counts there.\nconst SELLING_BRIEF = /(\\d+\\s?%|mã giảm|voucher|đăng ký ngay|mua ngay|chốt đơn|flash sale)/i;\n\nconst i = $('When called').first().json;\nconst p = rowsOf('Update target')[0];\nconst refuse = (msg) => [{ json: { ok: false, result: `Post not changed: ${msg}` } }];\nif (!p) return refuse(`post #${i.post_id} does not exist`);\nif (!['planned', 'awaiting_approval', 'approved', 'publish_failed'].includes(p.status)) return refuse(`post #${p.Id} is ${p.status}`);\nlet ch = {};\ntry { ch = typeof i.changes === 'object' ? i.changes : JSON.parse(String(i.changes || '{}')); } catch (e) { return refuse('changes must be a JSON object'); }\nconst s = (v) => (v ?? '').toString().trim();\nconst next = {\n  title: p.title, brief: p.brief, hook_type: p.hook_type, angle: p.angle, hypothesis: p.hypothesis, image_brief: p.image_brief || '',\n  publish_at: p.publish_at, status: p.status, approval_token: p.approval_token || '',\n};\nif (ch.cancel === true || ch.cancel === 'true') {\n  next.status = 'cancelled';\n  return [{ json: { ok: true, id: p.Id, next, result: `Post #${p.Id} cancelled; its day is free.` } }];\n}\nconst HOOKS = ['question', 'contrarian', 'story', 'number', 'how_to', 'mistake', 'confession', 'observation', 'other'];\nfor (const k of ['title', 'brief', 'angle', 'hypothesis', 'image_brief']) if (ch[k] !== undefined) next[k] = s(ch[k]);\nif (ch.hook_type !== undefined) {\n  if (!HOOKS.includes(s(ch.hook_type))) return refuse(`hook_type must be one of ${HOOKS.join(', ')}`);\n  next.hook_type = s(ch.hook_type);\n}\nif (['education', 'story'].includes(p.kind) && SELLING_BRIEF.test(`${next.title} ${next.brief}`)) return refuse('education and stories do not sell');\nconst current = parseDt(p.publish_at);\nlet date = current.toISODate();\nlet time = current.toFormat('HH:mm');\nif (ch.date !== undefined && s(ch.date) !== date) {\n  date = s(ch.date);\n  const d = parseDate(date);\n  if (!['education', 'story'].includes(p.kind)) return refuse('sales posts stay on their offer dates');\n  if (!d.isValid || d <= DateTime.now().setZone(TZ).startOf('day')) return refuse('date must be tomorrow or later');\n  if (rowsOf('Update taken').some((x) => x.Id !== p.Id && parseDt(x.publish_at).toISODate() === date)) return refuse(`${date} already has a post`);\n  const nextOffer = rowsOf('Update offers').find((o) => o.reminder_date >= date);\n  if (!nextOffer || nextOffer.Id !== p.offer_id) return refuse(`on ${date} the post would no longer lead to offer #${p.offer_id}`);\n}\nif (ch.time !== undefined) {\n  const win = windowOf(settingsOf('Update settings').post_window);\n  time = s(ch.time).padStart(5, '0');\n  if (!validTime(time)) return refuse('time must be HH:MM');\n  if (time < win.from || time > win.to) return refuse(`time must be between ${win.from} and ${win.to}`);\n}\nnext.publish_at = `${date}T${time}:00+07:00`;\nif (parseDt(next.publish_at).toISO() !== current.toISO() && parseDt(next.publish_at) < DateTime.now().setZone(TZ).plus({ minutes: 30 })) {\n  return refuse('the new time must be at least 30 minutes from now');\n}\n// A changed plan makes an existing draft stale: it goes back to planned and old buttons stop working.\nconst planChanged = ['title', 'brief', 'angle', 'hook_type'].some((k) => next[k] !== p[k]);\nif (planChanged && ['awaiting_approval', 'approved', 'publish_failed'].includes(p.status)) { next.status = 'planned'; next.approval_token = ''; }\nreturn [{ json: { ok: true, id: p.Id, next, result: `Post #${p.Id} updated${next.status !== p.status ? ` and set back to ${next.status}` : ''}.` } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst SELLING = /(\\d+\\s?%|giảm giá|khuyến mãi|ưu đãi|mã giảm|voucher|đăng ký ngay|mua ngay|chốt đơn|flash sale)/i;\n// Briefs may say what a post avoids (\"không nhắc ưu đãi\"); only a discount figure or a call to buy counts there.\nconst SELLING_BRIEF = /(\\d+\\s?%|mã giảm|voucher|đăng ký ngay|mua ngay|chốt đơn|flash sale)/i;\n\nconst i = $('When called').first().json;\nconst p = rowsOf('Update target')[0];\nconst refuse = (msg) => [{ json: { ok: false, result: `Post not changed: ${msg}` } }];\nif (!p) return refuse(`post #${i.post_id} does not exist`);\nif (!['planned', 'awaiting_approval', 'approved', 'publish_failed'].includes(p.status)) return refuse(`post #${p.Id} is ${p.status}`);\nlet ch = {};\ntry { ch = typeof i.changes === 'object' ? i.changes : JSON.parse(String(i.changes || '{}')); } catch (e) { return refuse('changes must be a JSON object'); }\nconst s = (v) => (v ?? '').toString().trim();\nif (s(p.final_text) && ['title', 'brief', 'angle', 'hook_type'].some((k) => ch[k] !== undefined && s(ch[k]) !== s(p[k]))) {\n  return refuse(`post #${p.Id} goes out in the team's own final version, so its title, brief, angle and hook stay; its date, time and picture can change, or it can be cancelled`);\n}\nconst next = {\n  title: p.title, brief: p.brief, hook_type: p.hook_type, angle: p.angle, hypothesis: p.hypothesis, image_brief: p.image_brief || '',\n  publish_at: p.publish_at, status: p.status, approval_token: p.approval_token || '',\n};\nif (ch.cancel === true || ch.cancel === 'true') {\n  next.status = 'cancelled';\n  return [{ json: { ok: true, id: p.Id, next, result: `Post #${p.Id} cancelled; its day is free.` } }];\n}\nconst HOOKS = ['question', 'contrarian', 'story', 'number', 'how_to', 'mistake', 'confession', 'observation', 'other'];\nfor (const k of ['title', 'brief', 'angle', 'hypothesis', 'image_brief']) if (ch[k] !== undefined) next[k] = s(ch[k]);\nif (ch.hook_type !== undefined) {\n  if (!HOOKS.includes(s(ch.hook_type))) return refuse(`hook_type must be one of ${HOOKS.join(', ')}`);\n  next.hook_type = s(ch.hook_type);\n}\nif (['education', 'story'].includes(p.kind) && SELLING_BRIEF.test(`${next.title} ${next.brief}`)) return refuse('education and stories do not sell');\nconst current = parseDt(p.publish_at);\nlet date = current.toISODate();\nlet time = current.toFormat('HH:mm');\nif (ch.date !== undefined && s(ch.date) !== date) {\n  date = s(ch.date);\n  const d = parseDate(date);\n  if (!['education', 'story'].includes(p.kind)) return refuse('sales posts stay on their offer dates');\n  if (!d.isValid || d <= DateTime.now().setZone(TZ).startOf('day')) return refuse('date must be tomorrow or later');\n  if (rowsOf('Update taken').some((x) => x.Id !== p.Id && parseDt(x.publish_at).toISODate() === date)) return refuse(`${date} already has a post`);\n  const nextOffer = rowsOf('Update offers').find((o) => o.reminder_date >= date);\n  if (!nextOffer || nextOffer.Id !== p.offer_id) return refuse(`on ${date} the post would no longer lead to offer #${p.offer_id}`);\n}\nif (ch.time !== undefined) {\n  const win = windowOf(settingsOf('Update settings').post_window);\n  time = s(ch.time).padStart(5, '0');\n  if (!validTime(time)) return refuse('time must be HH:MM');\n  if (time < win.from || time > win.to) return refuse(`time must be between ${win.from} and ${win.to}`);\n}\nnext.publish_at = `${date}T${time}:00+07:00`;\nif (parseDt(next.publish_at).toISO() !== current.toISO() && parseDt(next.publish_at) < DateTime.now().setZone(TZ).plus({ minutes: 30 })) {\n  return refuse('the new time must be at least 30 minutes from now');\n}\n// A changed plan makes an existing draft stale: it goes back to planned and old buttons stop working.\nconst planChanged = ['title', 'brief', 'angle', 'hook_type'].some((k) => next[k] !== p[k]);\nif (planChanged && ['awaiting_approval', 'approved', 'publish_failed'].includes(p.status)) { next.status = 'planned'; next.approval_token = ''; }\nreturn [{ json: { ok: true, id: p.Id, next, result: `Post #${p.Id} updated${next.status !== p.status ? ` and set back to ${next.status}` : ''}.` } }];"
       },
       "position": [
         1100,
@@ -2458,7 +2527,7 @@
       "id": "57a76a04-49de-5a4f-aae0-b663669e8ab8",
       "name": "Judge input",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst FRAMEWORK = {\n  education: 'Education: opens with the problem in the reader\\'s words and what it costs them, then a clear sequence of 3 to 7 concrete steps or points, then what changes. Teaches what the reader must understand before the offer; never pitches.',\n  story: 'Story: intent, obstacle, resolution (we set out to give you a benefit; a problem got in the way; so we made a sacrifice or decision, because the benefit matters that much). One episode of the brand mission, with a concrete moment and the value that was tested. No selling.',\n  offer_launch: 'Sales, launch: hook tied to the reason; a short story leading to the offer; the offer stated plainly (product, deal, end date); the reason given explicitly; who it is for; one clear call to action.',\n  offer_reminder: 'Sales, reminder: shorter than the launch; a new angle (proof, an answered objection, or the approaching end date); restates offer, reason and end date; one clear call to action.',\n};\n\nconst i = $('When called').first().json;\nconst p = rowsOf('Draft post')[0];\nif (!p) return [{ json: { blocked: `post #${i.post_id} does not exist` } }];\nif (!['planned', 'awaiting_approval', 'publish_failed'].includes(p.status)) return [{ json: { blocked: `post #${p.Id} is ${p.status}; only planned, awaiting_approval or publish_failed posts take a draft` } }];\nconst draft = String(i.draft || '').trim();\nif (draft.length < 200) return [{ json: { blocked: 'the draft is too short to be a post' } }];\nconst o = rowsOf('Draft offer')[0] || {};\nconst ctx = $('Draft context').first().json;\nconst facts = [\n  `Offer #${o.Id}: ${o.title} | ${o.product}: ${o.offer} | reason: ${o.reason} | launch ${o.launch_date}, reminder ${o.reminder_date}, ends ${o.ends_on} | link ${o.landing_url || '-'} | must know: ${o.must_know} | must feel: ${o.must_feel}`,\n  `What the manager has told the agent:\\n${rowsOf('Draft notes').map((e) => e.text).join('\\n') || '(nothing)'}`,\n  `Story bank:\\n${rowsOf('Draft stories').map((x) => x.text).join('\\n') || '(empty)'}`,\n  `Brand docs:\\n${ctx.brand || '(none)'}`,\n].join('\\n\\n');\nconst judge_text = [\n  facts,\n  '',\n  `Post #${p.Id}, kind ${p.kind}. ${FRAMEWORK[p.kind] || ''}`,\n  `Plan: ${p.title}\\nBrief: ${p.brief}\\nLanguage: ${ctx.language}`,\n  p.image_brief ? `A picture may go with the post (${p.image_brief}), but it may also go out without one: the text must work on its own and must not refer to the picture.` : '',\n  '', 'Draft:', '<<<', draft, '>>>', '',\n  'Check the draft:',\n  '1. relevant: useful, interesting or important to this audience?',\n  '2. closer: brings the reader closer to the brand and its product?',\n  `3. connected: clearly leads toward offer #${o.Id}? Education and story do it by setting up what the audience must know or feel, without selling.`,\n  '4. structure: follows its kind as described above?',\n  '5. violations: selling in an education or story post; a sales post missing the reason or end date; offer details that differ from the offer; a title line or notes around the post; wrong language.',\n  '6. claims: every concrete claim about the author, the brand, a product, a client, a student or an event (who did what, numbers, durations, quotes, scene details). For each, copy into source the exact sentence from the facts above that states it, character for character, or leave source empty. general is true only for know-how or a hypothetical addressed to the reader.',\n  '',\n  'Answer with JSON in exactly this shape:',\n  '{\"relevant\": {\"pass\": true, \"why\": \"\"}, \"closer\": {\"pass\": true, \"why\": \"\"}, \"connected\": {\"pass\": true, \"why\": \"\"}, \"structure\": {\"pass\": true, \"why\": \"\"}, \"violations\": [], \"claims\": [{\"claim\": \"\", \"source\": \"\", \"general\": false}], \"fix\": \"\"}',\n  'why: one sentence. fix: concrete rewrite instructions, empty when everything passes.',\n].join('\\n');\nreturn [{ json: { blocked: '', post: p, offer: o, draft, facts, judge_text, force: i.force === true || i.force === 'true' } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst FRAMEWORK = {\n  education: 'Education: opens with the problem in the reader\\'s words and what it costs them, then a clear sequence of 3 to 7 concrete steps or points, then what changes. Teaches what the reader must understand before the offer; never pitches.',\n  story: 'Story: intent, obstacle, resolution (we set out to give you a benefit; a problem got in the way; so we made a sacrifice or decision, because the benefit matters that much). One episode of the brand mission, with a concrete moment and the value that was tested. No selling.',\n  offer_launch: 'Sales, launch: hook tied to the reason; a short story leading to the offer; the offer stated plainly (product, deal, end date); the reason given explicitly; who it is for; one clear call to action.',\n  offer_reminder: 'Sales, reminder: shorter than the launch; a new angle (proof, an answered objection, or the approaching end date); restates offer, reason and end date; one clear call to action.',\n};\n\nconst i = $('When called').first().json;\nconst p = rowsOf('Draft post')[0];\nif (!p) return [{ json: { blocked: `post #${i.post_id} does not exist` } }];\nif (!['planned', 'awaiting_approval', 'publish_failed'].includes(p.status)) return [{ json: { blocked: `post #${p.Id} is ${p.status}; only planned, awaiting_approval or publish_failed posts take a draft` } }];\nif (String(p.final_text || '').trim()) return [{ json: { blocked: `post #${p.Id} goes out in the team's own final version, exactly as they wrote it, and takes no draft` } }];\nconst draft = String(i.draft || '').trim();\nif (draft.length < 200) return [{ json: { blocked: 'the draft is too short to be a post' } }];\nconst o = rowsOf('Draft offer')[0] || {};\nconst ctx = $('Draft context').first().json;\nconst facts = [\n  `Offer #${o.Id}: ${o.title} | ${o.product}: ${o.offer} | reason: ${o.reason} | launch ${o.launch_date}, reminder ${o.reminder_date}, ends ${o.ends_on} | link ${o.landing_url || '-'} | must know: ${o.must_know} | must feel: ${o.must_feel}`,\n  `What the manager has told the agent:\\n${rowsOf('Draft notes').map((e) => e.text).join('\\n') || '(nothing)'}`,\n  `Story bank:\\n${rowsOf('Draft stories').map((x) => x.text).join('\\n') || '(empty)'}`,\n  `Brand docs:\\n${ctx.brand || '(none)'}`,\n].join('\\n\\n');\nconst judge_text = [\n  facts,\n  '',\n  `Post #${p.Id}, kind ${p.kind}. ${FRAMEWORK[p.kind] || ''}`,\n  `Plan: ${p.title}\\nBrief: ${p.brief}\\nLanguage: ${ctx.language}`,\n  p.image_brief ? `A picture may go with the post (${p.image_brief}), but it may also go out without one: the text must work on its own and must not refer to the picture.` : '',\n  '', 'Draft:', '<<<', draft, '>>>', '',\n  'Check the draft:',\n  '1. relevant: useful, interesting or important to this audience?',\n  '2. closer: brings the reader closer to the brand and its product?',\n  `3. connected: clearly leads toward offer #${o.Id}? Education and story do it by setting up what the audience must know or feel, without selling.`,\n  '4. structure: follows its kind as described above?',\n  '5. violations: selling in an education or story post; a sales post missing the reason or end date; offer details that differ from the offer; a title line or notes around the post; wrong language.',\n  '6. claims: every concrete claim about the author, the brand, a product, a client, a student or an event (who did what, numbers, durations, quotes, scene details). For each, copy into source the exact sentence from the facts above that states it, character for character, or leave source empty. general is true only for know-how or a hypothetical addressed to the reader.',\n  '',\n  'Answer with JSON in exactly this shape:',\n  '{\"relevant\": {\"pass\": true, \"why\": \"\"}, \"closer\": {\"pass\": true, \"why\": \"\"}, \"connected\": {\"pass\": true, \"why\": \"\"}, \"structure\": {\"pass\": true, \"why\": \"\"}, \"violations\": [], \"claims\": [{\"claim\": \"\", \"source\": \"\", \"general\": false}], \"fix\": \"\"}',\n  'why: one sentence. fix: concrete rewrite instructions, empty when everything passes.',\n].join('\\n');\nreturn [{ json: { blocked: '', post: p, offer: o, draft, facts, judge_text, force: i.force === true || i.force === 'true' } }];"
       },
       "position": [
         1540,
@@ -3272,7 +3341,7 @@
       "id": "dc0c1cba-c985-5cbe-b7ef-49940f075378",
       "name": "Performance result",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst r = $('Performance range').first().json;\nconst from = parseDt(r.from);\nconst now = DateTime.now().setZone(TZ);\nconst posts = rowsOf('Perf posts').filter((p) => ['published', 'approved', 'awaiting_approval', 'rejected', 'publish_failed'].includes(p.status));\nconst events = rowsOf('Perf events');\nconst offers = rowsOf('Perf offers');\nconst goals = rowsOf('Perf goals');\nconst unreviewed = rowsOf('Perf unreviewed');\nconst num = (x) => Number(x) || 0;\nconst eng = (p) => num(p.reactions) + 2 * num(p.comments) + 3 * num(p.shares);\nconst measured = (p) => p.status === 'published' && p.metrics_at;\nconst inWindow = (p) => parseDt(p.publish_at) >= from;\nconst median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : 0; };\nconst baseline = median(posts.filter((p) => measured(p) && !inWindow(p)).map(eng)) || median(posts.filter(measured).map(eng));\nconst score = (p) => (measured(p) && baseline ? eng(p) / baseline : null);\nconst fmt = (x) => (x === null || x === undefined ? '-' : Number(x).toFixed(2));\nconst win = posts.filter(inWindow);\nconst lines = [`Performance, last ${r.days} days (to ${now.toFormat('dd/MM')}). Scores compare posts with each other, so compare slots, hooks and kinds only when each has several posts.`];\n\nlines.push('', 'Goals:');\nconst monthStart = now.startOf('month').toISODate();\nconst followers = events.filter((e) => e.type === 'followers').map((e) => num(e.value));\nfor (const g of goals) {\n  let progress = 'not measurable from data yet; ask your manager';\n  if (g.metric === 'revenue') progress = `${offers.filter((o) => (o.ends_on || '') >= monthStart).reduce((n, o) => n + num(o.revenue), 0).toLocaleString('en-US')} reported this month`;\n  if (g.metric === 'sales') progress = `${offers.filter((o) => (o.ends_on || '') >= monthStart).reduce((n, o) => n + num(o.sales_count), 0)} sales reported this month`;\n  if (g.metric === 'followers' && followers.length) progress = `${followers[followers.length - 1]} now, ${followers[followers.length - 1] - followers[0]} in the window`;\n  if (g.metric === 'engagement' && win.some(measured)) progress = `average ${fmt(win.filter(measured).reduce((n, p) => n + eng(p), 0) / win.filter(measured).length)} per post`;\n  if (g.metric === 'reach' && win.some(measured)) progress = `${win.filter(measured).reduce((n, p) => n + num(p.reach), 0)} total reach`;\n  lines.push(`#${g.Id} ${g.title} (target ${g.target ?? '?'} ${g.unit || ''}, due ${g.due_on || '-'}): ${progress}`);\n}\nif (!goals.length) lines.push('(no active goals)');\n\nlines.push('', `Posts in the window (engagement = reactions + 2 x comments + 3 x shares; score = engagement / median of earlier posts${baseline ? `, median ${fmt(baseline)}` : ''}):`);\nif (!posts.some(measured)) lines.push('No post metrics yet: they are read every night for posts published in the last 8 days. Until then judge from approvals and your manager\\'s feedback.');\nfor (const p of win) {\n  lines.push(`#${p.Id} ${parseDt(p.publish_at).toFormat('dd/MM ccc HH:mm')} ${p.kind} [${p.status}] ${p.format || (p.image_brief ? 'picture wanted' : 'text')} hook ${p.hook_type || '-'} | ${p.title} | drafts ${p.revisions || 0}${measured(p) ? ` | unique viewers ${p.reach ?? '-'}, clicks ${p.clicks ?? '-'}, reactions ${p.reactions ?? '-'}, comments ${p.comments ?? '-'}, shares ${p.shares ?? '-'}, score ${fmt(score(p))}` : ''} | tested: ${p.hypothesis || '-'}`);\n}\nif (!win.length) lines.push('(none)');\n\nconst groups = (key) => {\n  const g = {};\n  win.filter(measured).forEach((p) => { const k = typeof key === 'function' ? key(p) : p[key] || '-'; (g[k] = g[k] || []).push(score(p)); });\n  return Object.entries(g).map(([k, xs]) => `${k}: ${xs.length} posts, avg score ${fmt(xs.reduce((a, b) => a + b, 0) / xs.length)}`).join('; ');\n};\nif (win.some(measured)) {\n  lines.push('', `By kind: ${groups('kind')}`, `By hook: ${groups('hook_type')}`, `By time slot: ${groups((p) => slotOf(parseDt(p.publish_at)))}`, `By format: ${groups((p) => p.format || 'text')}`, `By weekday: ${groups((p) => parseDt(p.publish_at).toFormat('ccc'))}`);\n}\n\nconst byType = (t) => events.filter((e) => e.type === t);\nconst decided = [...byType('approved'), ...byType('rejected')].filter((e) => e.post_id);\nconst approvedFirst = byType('approved').filter((e) => {\n  const p = posts.find((x) => x.Id === e.post_id);\n  return p && Number(p.revisions) === 1 && !byType('change_request').some((c) => c.post_id === e.post_id);\n});\nlines.push('', `Approvals: ${byType('approved').filter((e) => e.post_id).length} posts approved (${approvedFirst.length} on the first draft without change requests), ${byType('rejected').filter((e) => e.post_id).length} rejected, ${byType('change_request').length} change requests, ${byType('check_failed').length} failed checks.`);\nconst quote = (list, n) => list.slice(-n).map((e) => `- ${parseDt(e.created_at).toFormat('dd/MM')}${e.post_id ? ` post #${e.post_id}` : ''}${e.offer_id ? ` offer #${e.offer_id}` : ''}: ${(e.text || '').split('\\n\\nPrevious text:')[0].replace(/\\n+/g, ' ').slice(0, 400)}`);\nif (byType('rejected').length) lines.push('Rejections:', ...quote(byType('rejected'), 10));\nif (byType('change_request').length) lines.push('Change requests:', ...quote(byType('change_request'), 15));\nif (byType('manager_note').length) lines.push('What your manager said:', ...quote(byType('manager_note'), 20));\nif (byType('audience_comment').length) lines.push('Audience comments:', ...quote(byType('audience_comment'), 15));\nif (byType('lesson_change').length) lines.push('Playbook changes:', ...quote(byType('lesson_change'), 10));\n\nconst done = offers.filter((o) => o.ends_on && parseDt(o.ends_on) >= from.minus({ days: 30 }) && o.status !== 'rejected');\nif (done.length) {\n  lines.push('', 'Offers:');\n  done.forEach((o) => lines.push(`#${o.Id} ${o.title} (${o.offer_type}, reason ${o.reason_type}) ${o.launch_date} to ${o.ends_on} [${o.status}]: ${o.sales_count ?? 'no'} sales, ${o.revenue ?? 'no'} revenue reported${o.result_notes ? ` | ${o.result_notes.replace(/\\n+/g, ' ').slice(0, 300)}` : ''}`));\n}\nconst counts = {};\nunreviewed.forEach((e) => { counts[e.type] = (counts[e.type] || 0) + 1; });\nlines.push('', `Signals not reviewed yet: ${Object.entries(counts).map(([k, n]) => `${n} ${k}`).join(', ') || 'none'}.`);\nreturn [{ json: { result: lines.join('\\n') } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst r = $('Performance range').first().json;\nconst from = parseDt(r.from);\nconst now = DateTime.now().setZone(TZ);\nconst posts = rowsOf('Perf posts').filter((p) => ['published', 'approved', 'awaiting_approval', 'rejected', 'publish_failed'].includes(p.status));\nconst events = rowsOf('Perf events');\nconst offers = rowsOf('Perf offers');\nconst goals = rowsOf('Perf goals');\nconst unreviewed = rowsOf('Perf unreviewed');\nconst num = (x) => Number(x) || 0;\nconst eng = (p) => num(p.reactions) + 2 * num(p.comments) + 3 * num(p.shares);\nconst measured = (p) => p.status === 'published' && p.metrics_at;\nconst inWindow = (p) => parseDt(p.publish_at) >= from;\nconst median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s.length ? (s.length % 2 ? s[(s.length - 1) / 2] : (s[s.length / 2 - 1] + s[s.length / 2]) / 2) : 0; };\nconst baseline = median(posts.filter((p) => measured(p) && !inWindow(p)).map(eng)) || median(posts.filter(measured).map(eng));\nconst score = (p) => (measured(p) && baseline ? eng(p) / baseline : null);\nconst squash = (t) => String(t || '').replace(/\\s+/g, ' ').trim();\n// final_text differs from the draft when the team gave its own final version or edited the post on Facebook.\nconst teamText = (p) => Boolean(squash(p.final_text)) && squash(p.final_text) !== squash(p.draft);\nconst fmt = (x) => (x === null || x === undefined ? '-' : Number(x).toFixed(2));\nconst win = posts.filter(inWindow);\nconst lines = [`Performance, last ${r.days} days (to ${now.toFormat('dd/MM')}). Scores compare posts with each other, so compare slots, hooks and kinds only when each has several posts.`];\n\nlines.push('', 'Goals:');\nconst monthStart = now.startOf('month').toISODate();\nconst followers = events.filter((e) => e.type === 'followers').map((e) => num(e.value));\nfor (const g of goals) {\n  let progress = 'not measurable from data yet; ask your manager';\n  if (g.metric === 'revenue') progress = `${offers.filter((o) => (o.ends_on || '') >= monthStart).reduce((n, o) => n + num(o.revenue), 0).toLocaleString('en-US')} reported this month`;\n  if (g.metric === 'sales') progress = `${offers.filter((o) => (o.ends_on || '') >= monthStart).reduce((n, o) => n + num(o.sales_count), 0)} sales reported this month`;\n  if (g.metric === 'followers' && followers.length) progress = `${followers[followers.length - 1]} now, ${followers[followers.length - 1] - followers[0]} in the window`;\n  if (g.metric === 'engagement' && win.some(measured)) progress = `average ${fmt(win.filter(measured).reduce((n, p) => n + eng(p), 0) / win.filter(measured).length)} per post`;\n  if (g.metric === 'reach' && win.some(measured)) progress = `${win.filter(measured).reduce((n, p) => n + num(p.reach), 0)} total reach`;\n  lines.push(`#${g.Id} ${g.title} (target ${g.target ?? '?'} ${g.unit || ''}, due ${g.due_on || '-'}): ${progress}`);\n}\nif (!goals.length) lines.push('(no active goals)');\n\nlines.push('', `Posts in the window (engagement = reactions + 2 x comments + 3 x shares; score = engagement / median of earlier posts${baseline ? `, median ${fmt(baseline)}` : ''}):`);\nif (!posts.some(measured)) lines.push('No post metrics yet: they are read every night for posts published in the last 8 days. Until then judge from approvals and your manager\\'s feedback.');\nfor (const p of win) {\n  lines.push(`#${p.Id} ${parseDt(p.publish_at).toFormat('dd/MM ccc HH:mm')} ${p.kind} [${p.status}] ${p.format || (p.image_brief ? 'picture wanted' : 'text')} hook ${p.hook_type || '-'} | ${p.title} | drafts ${p.revisions || 0}${measured(p) ? ` | unique viewers ${p.reach ?? '-'}, clicks ${p.clicks ?? '-'}, reactions ${p.reactions ?? '-'}, comments ${p.comments ?? '-'}, shares ${p.shares ?? '-'}, score ${fmt(score(p))}` : ''}${teamText(p) ? ' | text: the team\\'s own version' : ''} | tested: ${p.hypothesis || '-'}`);\n}\nif (!win.length) lines.push('(none)');\nconst rewritten = win.filter(teamText).slice(-5);\nif (rewritten.length) {\n  lines.push('', 'The team\\'s own version against your draft (their final version, or their edit on Facebook). What they changed shows how they want to sound:');\n  rewritten.forEach((p) => lines.push(`#${p.Id} ${p.title}\\nYour draft:\\n<<<\\n${String(p.draft || '(none)').slice(0, 3000)}\\n>>>\\nTheir version:\\n<<<\\n${String(p.final_text).slice(0, 3000)}\\n>>>`));\n}\n\nconst groups = (key) => {\n  const g = {};\n  win.filter(measured).forEach((p) => { const k = typeof key === 'function' ? key(p) : p[key] || '-'; (g[k] = g[k] || []).push(score(p)); });\n  return Object.entries(g).map(([k, xs]) => `${k}: ${xs.length} posts, avg score ${fmt(xs.reduce((a, b) => a + b, 0) / xs.length)}`).join('; ');\n};\nif (win.some(measured)) {\n  lines.push('', `By kind: ${groups('kind')}`, `By hook: ${groups('hook_type')}`, `By time slot: ${groups((p) => slotOf(parseDt(p.publish_at)))}`, `By format: ${groups((p) => p.format || 'text')}`, `By text: ${groups((p) => (teamText(p) ? 'the team\\'s own version' : 'your draft'))}`, `By weekday: ${groups((p) => parseDt(p.publish_at).toFormat('ccc'))}`);\n}\n\nconst byType = (t) => events.filter((e) => e.type === t);\nconst decided = [...byType('approved'), ...byType('rejected')].filter((e) => e.post_id);\nconst approvedFirst = byType('approved').filter((e) => {\n  const p = posts.find((x) => x.Id === e.post_id);\n  return p && Number(p.revisions) === 1 && !byType('change_request').some((c) => c.post_id === e.post_id);\n});\nlines.push('', `Approvals: ${byType('approved').filter((e) => e.post_id).length} posts approved (${approvedFirst.length} on the first draft without change requests), ${byType('rejected').filter((e) => e.post_id).length} rejected, ${byType('change_request').length} change requests, ${byType('check_failed').length} failed checks.`);\nconst quote = (list, n) => list.slice(-n).map((e) => `- ${parseDt(e.created_at).toFormat('dd/MM')}${e.post_id ? ` post #${e.post_id}` : ''}${e.offer_id ? ` offer #${e.offer_id}` : ''}: ${(e.text || '').split('\\n\\nPrevious text:')[0].replace(/\\n+/g, ' ').slice(0, 400)}`);\nif (byType('rejected').length) lines.push('Rejections:', ...quote(byType('rejected'), 10));\nif (byType('change_request').length) lines.push('Change requests:', ...quote(byType('change_request'), 15));\nif (byType('manager_note').length) lines.push('What your manager said:', ...quote(byType('manager_note'), 20));\nif (byType('audience_comment').length) lines.push('Audience comments:', ...quote(byType('audience_comment'), 15));\nif (byType('lesson_change').length) lines.push('Playbook changes:', ...quote(byType('lesson_change'), 10));\n\nconst done = offers.filter((o) => o.ends_on && parseDt(o.ends_on) >= from.minus({ days: 30 }) && o.status !== 'rejected');\nif (done.length) {\n  lines.push('', 'Offers:');\n  done.forEach((o) => lines.push(`#${o.Id} ${o.title} (${o.offer_type}, reason ${o.reason_type}) ${o.launch_date} to ${o.ends_on} [${o.status}]: ${o.sales_count ?? 'no'} sales, ${o.revenue ?? 'no'} revenue reported${o.result_notes ? ` | ${o.result_notes.replace(/\\n+/g, ' ').slice(0, 300)}` : ''}`));\n}\nconst counts = {};\nunreviewed.forEach((e) => { counts[e.type] = (counts[e.type] || 0) + 1; });\nlines.push('', `Signals not reviewed yet: ${Object.entries(counts).map(([k, n]) => `${n} ${k}`).join(', ') || 'none'}.`);\nreturn [{ json: { result: lines.join('\\n') } }];"
       },
       "position": [
         1760,
@@ -5060,6 +5129,194 @@
       ],
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "b43543eb-dc1e-4ea0-9355-454b4dbb8991",
+      "name": "Final post",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ Number($json.post_id) || 0 }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        440,
+        5400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "a6792f36-3a30-4394-abb7-e4caf18cc125",
+      "name": "Check final",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst rowOf = (name) => $(name).all().map((x) => x.json).find((j) => j.id !== undefined && j.id !== null);\nconst i = $('When called').first().json;\nconst refuse = (m) => [{ json: { ok: false, result: `Final version not saved: ${m}` } }];\nconst j = rowOf('Final post');\nif (!j) return refuse(`post #${Number(i.post_id) || 0} does not exist`);\nconst p = { Id: j.id, ...(j.fields || {}) };\nif (!['planned', 'awaiting_approval', 'approved', 'publish_failed'].includes(p.status)) return refuse(`post #${p.Id} is ${p.status}`);\nconst who = String(i.who || 'The team');\nconst text = String(i.text || '').trim();\nif (!text) {\n  if (!String(p.final_text || '').trim()) return refuse(`post #${p.Id} has no final version to drop`);\n  // Without the team's version the post needs approval of the agent's draft again; its card still carries the token.\n  const status = String(p.draft || '').trim() && p.approval_token ? 'awaiting_approval' : 'planned';\n  return [{ json: { ok: true, Id: p.Id, final_text: '', status, event_type: 'manager_note', event: `${who} dropped the team's final version of post #${p.Id} \"${p.title}\"; it is ${status} again.`, result: `Post #${p.Id} \"${p.title}\" no longer has the team's final version and is ${status} again${status === 'awaiting_approval' ? ': the buttons on its draft card work again' : ''}.` } }];\n}\n// The final version must be text a person wrote in this conversation, so an edit by the model cannot pass as theirs.\nconst norm = (t) => String(t || '').normalize('NFC').replace(/\\s+/g, ' ').trim();\nlet written = [];\ntry { written = JSON.parse(i.written || '[]'); } catch (e) {}\nif (!written.some((x) => norm(x).includes(norm(text)))) return refuse('the text must be copied exactly, without any change, from a message a team member wrote in this conversation; copy it again as they wrote it, or ask them to paste it');\nconst at = parseDt(p.publish_at);\nconst when = at <= DateTime.now().setZone(TZ) ? 'within 5 minutes, because its time has passed' : `at ${at.toFormat('HH:mm dd/MM')}`;\nconst pictures = String(p.images || '').split('\\n').filter((l) => l.trim()).length;\nreturn [{\n  json: {\n    ok: true,\n    Id: p.Id,\n    final_text: text,\n    status: 'approved',\n    event_type: p.status === 'approved' ? 'manager_note' : 'approved',\n    event: `${who} approved post #${p.Id} \"${p.title}\" with their own final version, which skips the pre-publish check.`,\n    result: `Post #${p.Id} \"${p.title}\" is approved with ${who}'s final version (${text.length} characters, starting \"${text.slice(0, 60)}\"). It goes out exactly as written ${when}${pictures ? `, with ${pictures} picture${pictures === 1 ? '' : 's'}` : ''}. The pre-publish check was skipped.`,\n  },\n}];"
+      },
+      "position": [
+        660,
+        5400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "8d3fade1-7e52-4168-a40a-d310c88df0d2",
+      "name": "Final ok?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d7ced180-172a-4b52-b168-08607a2e2a1c",
+              "leftValue": "={{ $json.ok }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        880,
+        5400
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "3adf1943-897a-4a08-8083-97e18fd27f55",
+      "name": "Save final",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "final_text": "={{ $json.final_text }}",
+            "status": "={{ $json.status }}"
+          }
+        },
+        "id": "={{ $json.Id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mu013k4ij3s0jii"
+        }
+      },
+      "position": [
+        1100,
+        5300
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "943c97ce-c949-43b2-a89a-315a7578aa7f",
+      "name": "Log final",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "post_id": "={{ $('Check final').first().json.Id }}",
+            "text": "={{ $('Check final').first().json.event }}",
+            "type": "={{ $('Check final').first().json.event_type }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        1320,
+        5300
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "61695436-6487-4536-a751-fdca659a6f55",
+      "name": "Final result",
+      "parameters": {
+        "jsCode": "return [{ json: { result: $('Check final').first().json.result } }];"
+      },
+      "position": [
+        1540,
+        5400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
     }
   ],
   "pinData": {},

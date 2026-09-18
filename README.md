@@ -134,6 +134,13 @@ before or after approving. Without a picture the post goes out as text, so every
 to stand on its own. Each post records its format (text, photo, photos), and the weekly review
 compares results by format.
 
+**Your final version.** To publish your own text instead of the agent's draft, write "bản chốt:"
+followed by the full post in the post's thread (or point at the message that has it: "chốt bản
+trên"). The front desk approves the post with that text, character for character, without the
+pre-publish check, and tells you when it goes out. Say "bỏ bản chốt" to go back to the agent's
+draft and its card. The agent's draft stays saved, and the weekly review compares it with your
+text to learn how you write.
+
 **Saving posts you like.** Send the bot screenshots of a post (the post, and its comments if you
 want them) with `/inspiring`, or just say you want it saved, with the link and any note. The front
 desk reads them, saves the post to `content_agent.inspiring_facebook_posts` (author, text, counts,
