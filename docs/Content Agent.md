@@ -13,6 +13,7 @@ What the agent does for the business (strategy, commands, Lark and Facebook setu
 `README.md` and `docs/Content Strategy.md`. This document covers how it is put together.
 
 Status: section 2 describes the live system as of 2026-09-18. Section 3 is agreed but not built.
+Section 5 holds what is still open.
 
 ## 1. What we want
 
@@ -114,9 +115,13 @@ The gate never decides what a message means. It does only what the model cannot 
 
 1. **Access.**
    - Direct messages: the first sender becomes the owner; other people are ignored.
-   - Groups: only the linked group counts, and in it only messages addressed to the bot. A
-     message is addressed to the bot when it @mentions it, starts with `/`, or is in a thread
-     where the bot has posted.
+   - Groups: only the linked group counts, and in it only messages that concern the bot, the
+     ones a person in its place would be notified of (D11):
+     - it @mentions the bot;
+     - it replies to a message of the bot, inside a thread or as a quoted reply in the main
+       chat;
+     - it is in a thread where the bot has posted;
+     - it starts with `/`.
    - `/link` stays in code, because it decides who may give the agent orders.
    - In a group that is not linked, a message addressed to the bot gets the fixed reply.
 2. **Input.**
@@ -137,8 +142,9 @@ The front agent lives in the same workflow as the gate, so the pictures stay bin
 execution. It gets the same context as the pro agent (`Content agent: context`), the front
 procedures, and the pictures.
 
-- Handles itself: questions, status, stories, inspiration, attaching pictures to posts, rules,
-  goals, small changes to a post's plan (`update_post`), results.
+- Handles itself: questions, status, stories, inspiration and corrections to saved inspiration,
+  attaching pictures to posts, reading links, rules, goals, small changes to a post's plan
+  (`update_post`), results.
 - Hands off: new or changed offers, planning, writing or rewriting drafts, analysis across
   performance data, the weekly review. It calls `hand_off` with a procedure name and a brief. The
   brief must describe what the pictures show, because the pro agent cannot see them. It then
@@ -184,13 +190,37 @@ The rules stay inside the tools, as today.
 |---|---|---|---|
 | calendar, find_stories, reference_posts, performance | yes | yes | exists |
 | save_story, update_playbook, save_goal, record, update_post | yes | yes | exists |
-| propose_offer, plan_posts, submit_draft | no (Q1) | yes | exists |
+| propose_offer, plan_posts, submit_draft | no | yes | exists |
 | send_message | no | yes | exists (shifts and events only) |
-| save_inspiration | yes | no | new: the agent writes the post's fields from the screenshots (author, text, counts, comments, format, link, why it works, notes); the tool validates and saves them, then logs a `manager_note` |
+| save_inspiration | yes | no | new: the agent writes the post's fields from the screenshots (author, text, counts, comments, format, link, why it works, notes). Without `id` the tool creates a row and logs a `manager_note`; with `id` it corrects that saved post (D12). |
 | attach_picture | yes | no | new: the logic of the current `Attach pictures` node (post status check, 10 pictures at most), taking picture references |
 | hand_off | yes | no | new: starts `Content agent` without waiting (mode `command`, `procedure`, `brief`, `reply_to`) and returns "started" |
-| edit_reference | ? | ? | proposed (Q6): correct a saved inspiration post |
-| read_link | ? | ? | proposed (Q6): read a Lark doc or wiki link pasted in chat, reusing the doc nodes in `context` |
+| read_link | yes | no | new: reads a Lark doc or wiki link with the requests `context` uses. With `remember`, it adds the link to `brand_doc_urls` (D13). |
+
+### Playbook and guidelines
+
+There are two stores, for two different jobs:
+
+- **Playbook** (`content_agent.playbook`) holds short rules, each a single claim. It has two
+  kinds of lesson:
+  - what the agent learned from results, with its evidence and a confidence level ("story posts
+    at 20:00 beat 12:00");
+  - your one-line directives, from `/rule`.
+
+  The weekly review confirms, revises or retires each lesson on its own. Every active lesson is
+  sent in the instructions of every run.
+- **Guidelines** are long documents you write and maintain: the style guide, brand voice,
+  products, mission. Today these are the brand docs: Lark docs listed in `settings.brand_doc_urls`
+  and read in full on every run. All the docs together are cut off at 40,000 characters.
+
+Why a lesson is capped at 250 characters and the playbook at 25 active lessons: the caps are
+choices made in `update_playbook`, not limits of the database.
+- A lesson must be one claim that data can confirm or refute, so that the review can keep or
+  retire it on its own. A two-page guide cannot be judged that way.
+- The caps also keep the instructions short, since every lesson is sent on every run.
+
+Today the style guide exists only as 4 compressed lessons (#19 to #22), which lost detail. Where
+it should live is Q3.
 
 ### Models
 
@@ -208,13 +238,15 @@ The rules stay inside the tools, as today.
 - **D2. Flash reads every message addressed to the bot, pictures included.** Flash has vision;
   v4-pro does not (see `CLAUDE.md`, DeepSeek).
 - **D3. Heavy work goes to pro.** Flash does not have `propose_offer`, `plan_posts` or
-  `submit_draft`, so the split is enforced by the tools rather than left to judgment (see Q1).
+  `submit_draft`, so the split is enforced by the tools rather than left to flash's judgment.
+  Reason: in run 1043, flash rewrote 4 drafts itself.
 - **D4. `hand_off` runs asynchronously.** Flash acknowledges at once and pro replies in the same
   thread when it is done. Reason: pro runs take minutes (P5).
 - **D5. No `look_at_picture` tool.** Pro works from flash's brief. Add a picture tool only if a
   handoff misses a picture detail in practice.
 - **D6. Procedures are knowledge.** They are named procedures in the instructions, not a separate
-  path through the workflow. Commands only force a procedure.
+  path through the workflow. Commands only force a procedure. They are written in the workflow
+  code and versioned in git with the tools they call; to change one, ask Claude.
 - **D7. The gate and the front agent share one workflow,** so pictures are never passed between
   workflows.
 - **D8. Every turn in a thread with pictures sends up to 10 pictures to flash.** This costs more
@@ -222,36 +254,46 @@ The rules stay inside the tools, as today.
 - **D9. The bot is identified by a new setting, `lark_app_id` (`cli_…`).** A message is the bot's
   when its `sender_type` is `app` and its `sender.id` equals `lark_app_id`. Mentions still use
   `lark_bot_open_id`.
-- **D10. The capture workflow goes away.** Flash reads screenshots itself and `save_inspiration`
-  stores the result. Deleting the workflow needs your go-ahead (Q5).
+- **D10. The capture workflow is deleted once `save_inspiration` passes A1.** Both do the same
+  job, saving a post you like from screenshots. With the new design, flash reads the screenshots
+  and writes "why it works" in the same turn, and `save_inspiration` stores the result.
+- **D11. The bot is notified the way a person would be.** Lark has no "this concerns the bot"
+  flag: in the group, the bot receives every message (`im:message.group_msg`). The gate works it
+  out from fields Lark gives:
+  - an @mention: `mentions[].id` equals `lark_bot_open_id`;
+  - a reply to the bot, in a thread or quoted in the main chat: the message's `parent_id` points
+    to a message whose sender is the bot (D9);
+  - a thread the bot is in: the bot appears among the thread's messages;
+  - a command: the text starts with `/`.
+
+  Flash may stay silent when the message is meant for someone else.
+- **D12. No general database tool.** The agent changes data only through tools that check the
+  rules; a raw database tool would let it, for example, mark its own post approved. None of the
+  existing tools writes `inspiring_facebook_posts`, so corrections go through `save_inspiration`:
+  without `id` it creates a row, with `id` it corrects that row. There is no separate
+  `edit_reference` tool.
+- **D13. `read_link` reads Lark docs and wiki pages the app has been added to.** For any other
+  link it says it cannot read that kind of link. With `remember`, it adds the link to
+  `brand_doc_urls`, so the doc is read on every later run. Reading public web pages can be added
+  if a real need comes up.
 
 ## 5. Open questions (owner answers here)
 
-**Q1.** Should flash be able to plan and write drafts itself? The default is no: that work always
-goes to pro. The alternative gives flash every tool and lets it judge, which is more flexible but
-means heavy work sometimes runs on flash, as in run 1043.
+**Q3.** Where should long guidelines like the style guide go? See "Playbook and guidelines" in
+section 3 for what each store is for.
+
+- **A (recommended).** The style guide becomes a Lark doc in `brand_doc_urls`.
+  - You edit it in Lark, and the agent reads the full text on every run.
+  - Sending the doc's link in chat with "làm theo cái này" adds it, through `read_link` with
+    `remember`.
+  - Lessons #19 to #22 are retired and point to the doc.
+  - It needs no new storage, and one document stays the single source.
+- **B.** The playbook gets a `guideline` kind: no length cap, loaded in full, saved when you
+  paste the text in chat.
+  - Changing it means pasting the whole text again.
+  - The weekly review never touches it.
+
 Answer:
-
-**Q2.** Where should the procedures live? The default is the workflow code: changing one means
-asking Claude, and changes go through git. The alternative is a Lark doc you edit yourself, which
-the agents read on each run.
-Answer:
-
-**Q3.** Where should long guidelines like the style guide go? The default is a Lark doc listed in
-`brand_doc_urls`. That works today without new code, and the agents read it in full. The
-alternative is a new store for guidelines.
-Answer: I though guidelines are in playbook? if not, then what is the purpose of playbook? btw, playbook can not save long text? why? what are the solutions if I want it to follow long guidelines?
-
-**Q4.** In a group thread where the bot has posted, should every message go to flash, which may
-stay silent (the default)? The alternative is to require an @mention whenever the bot did not
-start the thread.
-Answer: if the bot posted a message and someone reply inside the thread or reply outside (as a group message with reply reference), the message should go to flash (think of it like human will receive noti of a reply). is there any way to identify messages relating to a bot similar to a human out from lark? scenarios are: mention @, reply to its message
-
-**Q5.** Should `Content agent: capture` be deleted once `save_inspiration` works?
-Answer: they serve the same purpose, right? if yes then delete capture
-
-**Q6.** Should `edit_reference` and `read_link` be built now or later?
-Answer: read_link yes. edit_reference: why we need another tool/func? can't ai agent use existing tools to update?
 
 ## 6. Implementation plan
 
@@ -262,12 +304,12 @@ completely before switching the gate to it.
 | Step | What | Status |
 |---|---|---|
 | S0 | Test T1 below and record the result here and in `CLAUDE.md` | todo |
-| S1 | Thread fix: add `lark_app_id` to `settings` (the value is in the data of execution 703); in the router, a thread counts as the bot's when the bot has posted in it, and history labels the bot's messages `You`. Ships on its own. | todo |
-| S2 | Tools: `save_inspiration`, `attach_picture`, `hand_off` in `Content agent: tools`, each checking its input | todo |
+| S1 | Thread fix: add `lark_app_id` to `settings` (the value is in the data of execution 703). In the router, a message concerns the bot when it replies to a bot message or is in a thread where the bot has posted (D11), and history labels the bot's messages `You`. Ships on its own. | todo |
+| S2 | Tools: `save_inspiration` (creates, or corrects with `id`), `attach_picture`, `hand_off` and `read_link` in `Content agent: tools`, each checking its input | todo |
 | S3 | Pro agent: the Task node takes `procedure` + `brief`; the command templates and checklists become the named procedures in its instructions | todo |
 | S4 | Front agent: rewrite `lark message` as gate + flash agent (front tools, front procedures, pictures as binary), then remove the router branches and the calls to capture | todo |
-| S5 | Update the README (commands, pictures, models) and move section 3 into section 2; ask about deleting capture (Q5) | todo |
-| S6 | Run acceptance tests A1 to A9 in Lark | todo |
+| S5 | Delete `Content agent: capture` after A1 passes (D10). Update the README (commands, pictures, models) and move section 3 into section 2. | todo |
+| S6 | Run acceptance tests A1 to A12 in Lark | todo |
 
 ### Tests to run first
 
@@ -296,6 +338,12 @@ completely before switching the gate to it.
 - **A8.** A group message not addressed to the bot, or a message in a group that is not linked:
   no agent execution starts.
 - **A9.** The thread history that flash receives labels the bot's messages `You`.
+- **A10.** In the linked group, a quoted reply in the main chat to a bot message, without an
+  @mention: flash receives it.
+- **A11.** A Lark doc link sent with "làm theo cái này từ giờ": the agent reads it, the link is
+  added to `brand_doc_urls`, and the next run's instructions contain the doc.
+- **A12.** "sửa lại bài mẫu #N: chữ X là Y": that row in `inspiring_facebook_posts` is corrected
+  and no new row is created.
 - **Unchanged:** the daily shift, weekly review, card clicks, publisher and signals behave as
   before.
 
