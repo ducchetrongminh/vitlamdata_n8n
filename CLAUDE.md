@@ -266,7 +266,8 @@ Verified with the Lark content bot (custom app, credential `Lark content bot`).
 - A picture sent to the bot arrives as `msg_type: image` with content `{"image_key"}`, or as `img`
   elements inside a `post` message. `GET im/v1/messages/<message id>/resources/<image key>?type=image`
   returns the file with the scopes above; a key that is not in the message answers `234003 File not
-  in msg`.
+  in msg`. A picture sent as a file arrives as `msg_type: file` with `{"file_key", "file_name"}`;
+  the same URL with its `file_key` and `type=image` returns it with its real `Content-Type`.
 - `GET bot/v3/info` returns the bot's own `open_id`; a message that @mentions the bot lists it in
   `mentions[].id` (the text holds `@_user_N` keys). `GET im/v1/messages/<id>` also returns
   `chat_id`, `root_id`, `parent_id` and `thread_id`.
