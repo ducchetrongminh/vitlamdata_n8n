@@ -61,7 +61,8 @@ field from the file deletes its data, so push refuses unless given `--delete`.
 ## Content agent
 
 An AI employee that runs `docs/Content Strategy.md` for the Vịt Làm Data page and gets better at it
-from what happens to its work. You are its manager and talk to it in Lark.
+from what happens to its work. You are its manager and talk to it in Lark. How it is built and
+what is changing: `docs/Content Agent.md`.
 
 **What it is.** One AI Agent node (workflow `Content agent`, DeepSeek in thinking mode: V4-Pro for
 shifts, reviews and what follows an approval, `deepseek-flash` for chats; the pre-publish check and

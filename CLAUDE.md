@@ -42,6 +42,8 @@ session is needed after `.env` changes. Reading `.env` with the Read tool is den
   private-network HTTP targets.
 - Docs and comments state what is true now, plus a short reason when it isn't obvious. History
   goes in commit messages.
+- Before changing `workflows/content_agent/`, read `docs/Content Agent.md` (architecture, agreed
+  changes, open questions) and keep its status current.
 
 ## Scripts
 
