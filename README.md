@@ -129,8 +129,10 @@ sent as a reply to a draft card is not captured: it goes out with that post.
   (the next 14 days), `/story <what happened>`, `/inspiring` with screenshots. `/rule <rule>` and
   `/goal <goal>` go to the agent on `deepseek-flash`; `/offers [YYYY-MM]`, `/plan [notes]`,
   `/draft <post id> [notes]` and `/review` go to it as focused tasks on V4-Pro.
-- Anything else is a chat on `deepseek-flash`. In the group, @mention the bot or use a /command;
-  inside a thread the bot started (a card, a question, one of its answers) no @mention is needed.
+- Anything else is a chat on `deepseek-flash`. In the group, the bot reads what a person in its
+  place would be notified of: an @mention, a /command, a reply to one of its messages (in a thread
+  or quoted in the chat), and any message in a thread it has posted in. It stays silent when a
+  thread message is meant for someone else.
 - The bot always answers in a thread and reads that thread's history, so each topic is its own
   conversation. Discuss a draft in its card's thread; send photos there to attach them to the post.
 - Screenshots sent to the bot in a direct chat are saved as inspiration; in the group, send them

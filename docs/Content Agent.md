@@ -68,6 +68,12 @@ which tools to call and in what order. The tools enforce the strategy's rules an
 - `send_message` does nothing in chat and commands.
 - `save_goal` and manager directives are only accepted in chat and commands.
 
+**Group messages.** In the linked group, the router takes only messages that concern the bot
+(D11): they @mention it, reply to one of its messages (in a thread or quoted in the main chat),
+sit in a thread where it has posted, or start with `/`. The bot's own messages are recognised by
+the setting `lark_app_id`, and the thread history labels them as the agent's. When a thread
+message is meant for someone else, the agent answers `NO_REPLY` and nothing is sent.
+
 NocoDB base `content_agent` (`povrpvxg4mvxbba`) has these tables: `settings`, `goals`, `playbook`,
 `events`, `offers`, `posts`, `stories`, `inspiring_facebook_posts`. Their files are in
 `nocodb/content_agent/`.
@@ -77,11 +83,6 @@ NocoDB base `content_agent` (`povrpvxg4mvxbba`) has these tables: `settings`, `g
 - **P1. The agent cannot see pictures.** Its instructions say so, and code decides what happens
   to a picture based only on where it was sent. It told you it could not read a screenshot
   (695, 707), and it could not re-read one when you asked it to look again (763, 775, 785).
-- **P2. Replies in a bot thread without an @mention are dropped, and the agent does not recognise
-  its own earlier replies.** Lark returns the bot's own messages with `sender.id` = the app id
-  (`cli_…`, `sender_type: app`). The router compares that id to `lark_bot_open_id` (`ou_…`), so
-  it never matches. As a result, "AI đọc được file ảnh mà" was dropped (703), and the thread
-  history labels the agent's own replies "A team member" (707).
 - **P3. Procedures are tied to commands.** "lên plan tháng 10 đi" as plain text gets no planning
   checklist and runs on flash. Run 1043 rewrote 4 drafts on flash.
 - **P4. Tools are missing** for what you asked: reading a picture, saving inspiration from chat,
@@ -169,58 +170,69 @@ exactly". Otherwise the agent may pick one that fits, or handle the case its own
 |---|---|---|---|
 | help | `/help` | front | none |
 | status | `/status` | front | calendar |
-| story | `/story` | front | save_story |
-| inspiring | `/inspiring` | front | save_inspiration |
+| story | `/story` | front | upsert_story |
+| inspiring | `/inspiring` | front | upsert_inspiration |
 | attach pictures | (photo for a post) | front | attach_picture |
-| rule | `/rule` | front | update_playbook (directive) |
-| goal | `/goal` | front | save_goal |
+| rule | `/rule` | front | upsert_playbook (a directive) |
+| guideline | (a long guide sent in chat) | front | upsert_playbook (a guideline) |
+| goal | `/goal` | front | upsert_goal |
 | offers | `/offers` | pro via hand_off | calendar, propose_offer |
 | plan | `/plan` | pro via hand_off | calendar, plan_posts |
 | draft | `/draft` | pro via hand_off | submit_draft |
-| review | `/review` | pro via hand_off | performance, update_playbook, update_post |
+| review | `/review` | pro via hand_off | performance, upsert_playbook (lessons and guidelines), update_post |
 | shift | (02:00 daily) | pro | as today |
-| weekly review | (Mon 03:00) | pro | as today |
+| weekly review | (Mon 03:00) | pro | as the review procedure |
 | event | (card click) | pro | as today |
 
 ### Tools
 
-The rules stay inside the tools, as today.
+The rules stay inside the tools, as today. A tool that saves a record is named `upsert_<thing>`:
+without `id` it inserts a row, and with `id` it updates that row (D12).
 
 | Tool | Front | Pro | Status |
 |---|---|---|---|
-| calendar, find_stories, reference_posts, performance | yes | yes | exists |
-| save_story, update_playbook, save_goal, record, update_post | yes | yes | exists |
+| calendar, find_stories, reference_posts, performance, record, update_post | yes | yes | exists |
+| upsert_story | yes | yes | renamed from `save_story`; with `id` it corrects a saved story |
+| upsert_goal | yes | yes | renamed from `save_goal`, which already inserts or updates |
+| upsert_playbook | yes | yes | replaces `update_playbook`: lessons and guidelines; retiring is an update of `status` (see "Playbook") |
 | propose_offer, plan_posts, submit_draft | no | yes | exists |
 | send_message | no | yes | exists (shifts and events only) |
-| save_inspiration | yes | no | new: the agent writes the post's fields from the screenshots (author, text, counts, comments, format, link, why it works, notes). Without `id` the tool creates a row and logs a `manager_note`; with `id` it corrects that saved post (D12). |
+| upsert_inspiration | yes | no | new: the agent writes the post's fields from the screenshots (author, text, counts, comments, format, link, why it works, notes). Without `id` the tool creates a row and logs a `manager_note`; with `id` it corrects that saved post. |
 | attach_picture | yes | no | new: the logic of the current `Attach pictures` node (post status check, 10 pictures at most), taking picture references |
 | hand_off | yes | no | new: starts `Content agent` without waiting (mode `command`, `procedure`, `brief`, `reply_to`) and returns "started" |
 | read_link | yes | no | new: reads a Lark doc or wiki link with the requests `context` uses. With `remember`, it adds the link to `brand_doc_urls` (D13). |
 
-### Playbook and guidelines
+### Playbook
 
-There are two stores, for two different jobs:
+The playbook (`content_agent.playbook`) is what the agent works by and improves. It holds two
+kinds of entry, and the agent's instructions include every active one on every run, guidelines
+first.
 
-- **Playbook** (`content_agent.playbook`) holds short rules, each a single claim. It has two
-  kinds of lesson:
+- **Lessons** are short rules, each a single claim of at most 250 characters, with at most 25
+  active at once. There are two sources:
   - what the agent learned from results, with its evidence and a confidence level ("story posts
     at 20:00 beat 12:00");
-  - your one-line directives, from `/rule`.
+  - your one-line directives, from `/rule`. Only you change these.
 
-  The weekly review confirms, revises or retires each lesson on its own. Every active lesson is
-  sent in the instructions of every run.
-- **Guidelines** are long documents you write and maintain: the style guide, brand voice,
-  products, mission. Today these are the brand docs: Lark docs listed in `settings.brand_doc_urls`
-  and read in full on every run. All the docs together are cut off at 40,000 characters.
+  The caps keep each lesson one claim that data can confirm or refute, so the weekly review can
+  keep or retire it on its own, and keep the instructions short.
+- **Guidelines** are long documents with a title and a full text: the style guide, brand voice,
+  post structure. There is no cap per guideline; all active guidelines together are capped at
+  30,000 characters so the instructions stay bounded. A guideline can be added or changed:
+  - by you in chat: you paste the text, or ask for a change;
+  - by the agent in the weekly review. It judges the guideline against the goals and results
+    (what worked, what did not), then revises the parts the evidence supports.
 
-Why a lesson is capped at 250 characters and the playbook at 25 active lessons: the caps are
-choices made in `update_playbook`, not limits of the database.
-- A lesson must be one claim that data can confirm or refute, so that the review can keep or
-  retire it on its own. A two-page guide cannot be judged that way.
-- The caps also keep the instructions short, since every lesson is sent on every run.
+  Each revision:
+  - needs evidence and a one-line summary of the change;
+  - keeps the previous full text in the `lesson_change` event, so any version can be restored
+    ("khôi phục bản trước");
+  - is listed in the review report.
 
-Today the style guide exists only as 4 compressed lessons (#19 to #22), which lost detail. Where
-it should live is Q3.
+Schema change: `playbook` gets `kind` (`lesson` or `guideline`) and `title`, and `lesson` becomes
+a LongText field, which holds the full text of a guideline. Brand docs (`brand_doc_urls`) stay
+for facts you keep in Lark: products, prices, mission. The agent reads them but does not change
+them.
 
 ### Models
 
@@ -251,13 +263,13 @@ it should live is Q3.
   workflows.
 - **D8. Every turn in a thread with pictures sends up to 10 pictures to flash.** This costs more
   per turn, but it is what makes "đọc lại kỹ ảnh đó" work. Cap it lower if the cost shows.
-- **D9. The bot is identified by a new setting, `lark_app_id` (`cli_…`).** A message is the bot's
-  when its `sender_type` is `app` and its `sender.id` equals `lark_app_id`. Mentions still use
-  `lark_bot_open_id`.
-- **D10. The capture workflow is deleted once `save_inspiration` passes A1.** Both do the same
+- **D9. The bot is identified by the setting `lark_app_id` (`cli_…`, live).** A message is the
+  bot's when its `sender_type` is `app` and its `sender.id` equals `lark_app_id`. Mentions still
+  use `lark_bot_open_id`.
+- **D10. The capture workflow is deleted once `upsert_inspiration` passes A1.** Both do the same
   job, saving a post you like from screenshots. With the new design, flash reads the screenshots
-  and writes "why it works" in the same turn, and `save_inspiration` stores the result.
-- **D11. The bot is notified the way a person would be.** Lark has no "this concerns the bot"
+  and writes "why it works" in the same turn, and `upsert_inspiration` stores the result.
+- **D11. The bot is notified the way a person would be (live).** Lark has no "this concerns the bot"
   flag: in the group, the bot receives every message (`im:message.group_msg`). The gate works it
   out from fields Lark gives:
   - an @mention: `mentions[].id` equals `lark_bot_open_id`;
@@ -266,34 +278,27 @@ it should live is Q3.
   - a thread the bot is in: the bot appears among the thread's messages;
   - a command: the text starts with `/`.
 
-  Flash may stay silent when the message is meant for someone else.
-- **D12. No general database tool.** The agent changes data only through tools that check the
-  rules; a raw database tool would let it, for example, mark its own post approved. None of the
-  existing tools writes `inspiring_facebook_posts`, so corrections go through `save_inspiration`:
-  without `id` it creates a row, with `id` it corrects that row. There is no separate
-  `edit_reference` tool.
+  When the message is meant for someone else, the agent answers `NO_REPLY` and nothing is sent.
+- **D12. No general database tool; records are saved through `upsert_<thing>` tools.** The agent
+  changes data only through tools that check the rules; a raw database tool would let it, for
+  example, mark its own post approved.
+  - An upsert tool inserts without `id` and updates that row with `id`, so the agent can correct
+    what it saved without a separate edit tool.
+  - Tools whose creation carries the strategy's rules keep their names: `propose_offer`,
+    `plan_posts`, `submit_draft` and `update_post`.
+  - `record` appends to the signal log, which is never rewritten.
 - **D13. `read_link` reads Lark docs and wiki pages the app has been added to.** For any other
   link it says it cannot read that kind of link. With `remember`, it adds the link to
   `brand_doc_urls`, so the doc is read on every later run. Reading public web pages can be added
   if a real need comes up.
+- **D14. Guidelines live in the playbook and improve in the weekly review.** You want the style
+  guide to evolve with what works for the goals, and the review is where the agent judges
+  results. Lessons stay single claims so they can be judged one by one. Guidelines stay whole
+  documents, so every revision is logged and can be restored.
 
 ## 5. Open questions (owner answers here)
 
-**Q3.** Where should long guidelines like the style guide go? See "Playbook and guidelines" in
-section 3 for what each store is for.
-
-- **A (recommended).** The style guide becomes a Lark doc in `brand_doc_urls`.
-  - You edit it in Lark, and the agent reads the full text on every run.
-  - Sending the doc's link in chat with "làm theo cái này" adds it, through `read_link` with
-    `remember`.
-  - Lessons #19 to #22 are retired and point to the doc.
-  - It needs no new storage, and one document stays the single source.
-- **B.** The playbook gets a `guideline` kind: no length cap, loaded in full, saved when you
-  paste the text in chat.
-  - Changing it means pasting the whole text again.
-  - The weekly review never touches it.
-
-Answer:
+None right now. Add a question here as `**Qn.** …` followed by an `Answer:` line.
 
 ## 6. Implementation plan
 
@@ -304,12 +309,13 @@ completely before switching the gate to it.
 | Step | What | Status |
 |---|---|---|
 | S0 | Test T1 below and record the result here and in `CLAUDE.md` | todo |
-| S1 | Thread fix: add `lark_app_id` to `settings` (the value is in the data of execution 703). In the router, a message concerns the bot when it replies to a bot message or is in a thread where the bot has posted (D11), and history labels the bot's messages `You`. Ships on its own. | todo |
-| S2 | Tools: `save_inspiration` (creates, or corrects with `id`), `attach_picture`, `hand_off` and `read_link` in `Content agent: tools`, each checking its input | todo |
-| S3 | Pro agent: the Task node takes `procedure` + `brief`; the command templates and checklists become the named procedures in its instructions | todo |
-| S4 | Front agent: rewrite `lark message` as gate + flash agent (front tools, front procedures, pictures as binary), then remove the router branches and the calls to capture | todo |
-| S5 | Delete `Content agent: capture` after A1 passes (D10). Update the README (commands, pictures, models) and move section 3 into section 2. | todo |
-| S6 | Run acceptance tests A1 to A12 in Lark | todo |
+| S1 | Thread fix (D9, D11): setting `lark_app_id`. The router takes replies to the bot and messages in threads where it has posted, and labels its messages as the agent's in the history. The agent answers `NO_REPLY` to thread messages meant for others. | live; the offline replay of execution 703 passes; A3, A9, A10 still to test in Lark |
+| S2 | Tools in `Content agent: tools`, each checking its input: new `upsert_inspiration`, `attach_picture`, `hand_off`, `read_link`; renames `save_story` → `upsert_story` (adds `id`), `save_goal` → `upsert_goal`, `update_playbook` → `upsert_playbook` | todo |
+| S3 | Guidelines (D14): add `kind` and `title` to `playbook` and make `lesson` LongText; `context` loads the guidelines first, in full; the review procedure judges guidelines against the goals and the report lists guideline changes. Move the full style guide from the message of run 1042 into a guideline and retire lessons #19 to #22. | todo |
+| S4 | Pro agent: the Task node takes `procedure` + `brief`; the command templates and checklists become the named procedures in its instructions | todo |
+| S5 | Front agent: rewrite `lark message` as gate + flash agent (front tools, front procedures, pictures as binary), then remove the router branches and the calls to capture | todo |
+| S6 | Delete `Content agent: capture` after A1 passes (D10). Update the README (commands, pictures, models) and move section 3 into section 2. | todo |
+| S7 | Run acceptance tests A1 to A15 in Lark | todo |
 
 ### Tests to run first
 
@@ -327,8 +333,8 @@ completely before switching the gate to it.
   `inspiring_facebook_posts` with the text as shown, and the reply says what was saved.
 - **A2.** DM, photo + "ảnh cho bài tối mai", not a reply to a card: the photo is attached to
   tomorrow's post and the reply says so.
-- **A3.** A reply without @mention in a thread where the bot has answered: it answers (the case
-  of 703).
+- **A3 (S1).** A reply without @mention in a thread where the bot has answered: it answers (the
+  case of 703).
 - **A4.** In a thread with a screenshot, "đọc lại kỹ ảnh đó": it reads the picture again and
   answers from the picture, not from the saved text.
 - **A5.** "lên plan tháng 10 đi": flash acknowledges within a minute, pro plans with the plan
@@ -337,13 +343,20 @@ completely before switching the gate to it.
 - **A7.** `/story <text>`: the story is saved in the teller's words and the reply confirms it.
 - **A8.** A group message not addressed to the bot, or a message in a group that is not linked:
   no agent execution starts.
-- **A9.** The thread history that flash receives labels the bot's messages `You`.
-- **A10.** In the linked group, a quoted reply in the main chat to a bot message, without an
-  @mention: flash receives it.
+- **A9 (S1).** The thread history the agent receives labels the bot's messages as its own.
+- **A10 (S1).** In the linked group, a quoted reply in the main chat to a bot message, without an
+  @mention: the agent receives it.
 - **A11.** A Lark doc link sent with "làm theo cái này từ giờ": the agent reads it, the link is
   added to `brand_doc_urls`, and the next run's instructions contain the doc.
 - **A12.** "sửa lại bài mẫu #N: chữ X là Y": that row in `inspiring_facebook_posts` is corrected
   and no new row is created.
+- **A13.** The style guide appears in full in the agent's instructions as a guideline, and
+  lessons #19 to #22 are retired.
+- **A14.** A weekly review with evidence revises a guideline:
+  - the report lists the change with its summary;
+  - the previous text is in the `lesson_change` event;
+  - "khôi phục bản trước" restores it.
+- **A15.** "sửa story #N: …": that story is corrected and no new row is created.
 - **Unchanged:** the daily shift, weekly review, card clicks, publisher and signals behave as
   before.
 
