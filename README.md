@@ -64,23 +64,34 @@ An AI employee that runs `docs/Content Strategy.md` for the Vịt Làm Data page
 from what happens to its work. You are its manager and talk to it in Lark. How it is built and
 what is changing: `docs/Content Agent.md`.
 
-**What it is.** One AI Agent node (workflow `Content agent`, DeepSeek in thinking mode: V4-Pro for
-shifts, reviews and what follows an approval, `deepseek-flash` for chats; the pre-publish check and
-screenshot reading use `deepseek-flash`). Its
-instructions are rebuilt on every run from:
+**What it is.** Two AI agents on DeepSeek in thinking mode. They share one playbook, one calendar
+and one record of what you said:
+
+- **the front desk** (`deepseek-flash`, in workflow `Content agent: lark message`) reads every
+  Lark message meant for the bot, pictures included, does the quick work itself and hands the
+  heavy work to the strategist;
+- **the strategist** (`deepseek-v4-pro`, workflow `Content agent`) runs the daily shift, the weekly
+  review, what follows an approval, and the offers, plans, drafts and reviews the front desk
+  hands it.
+
+Their instructions are rebuilt on every run by `Content agent: context` from:
 
 - the strategy (fixed),
 - your goals (`content_agent.goals`, set by you),
-- its playbook (`content_agent.playbook`): long guidelines such as the style guide, in full, then
+- the playbook (`content_agent.playbook`): long guidelines such as the style guide, in full, then
   short lessons, your directives first,
-- its last work log entries,
-- your brand docs from Lark.
+- the last work log entries,
+- your brand docs from Lark,
+- their procedures: the steps of each recurring job, such as the daily shift or saving a post you
+  like. A command runs its procedure exactly; anything else they handle with judgment.
 
-It sees and changes things only through its tools (`Content agent: tools`): `calendar`,
-`propose_offer`, `plan_posts`, `update_post`, `submit_draft`, `send_message`, `upsert_story`,
-`find_stories`, `reference_posts`, `performance`, `upsert_playbook`, `upsert_goal`, `record`. A tool
-named `upsert_…` adds a record, or corrects the one whose id it is given. The
-strategy's hard rules are enforced inside the tools, so the agent cannot break them: at most two
+They see and change things only through tools (`Content agent: tools`). Both have `calendar`,
+`find_stories`, `reference_posts`, `performance`, `record`, `update_post`, `upsert_story`,
+`upsert_goal` and `upsert_playbook`. The front desk also has `upsert_inspiration`,
+`attach_picture`, `read_link` and `hand_off`; the strategist has `propose_offer`, `plan_posts`,
+`submit_draft` and `send_message`. A tool named `upsert_…` adds a record, or corrects the one whose
+id it is given. The pre-publish check inside `submit_draft` uses `deepseek-flash`. The
+strategy's hard rules are enforced inside the tools, so the agents cannot break them: at most two
 offers a month with a reason, one post a day, sales posts only on an approved offer's launch and
 reminder days, every other post leads to the next offer, and every draft passes the pre-publish
 check (relevant, closer, connected, structure, and each concrete claim traced to a real fact)
@@ -88,7 +99,8 @@ before it reaches you. Nothing is published without your approval.
 
 **When it works.**
 
-- You write to it in Lark: it acts and answers.
+- You write to it in Lark: the front desk acts and answers, and heavy work goes to the strategist,
+  whose result comes to the same thread a few minutes later.
 - Something happens (you approve or reject an offer or a post): it does what follows, like
   planning an approved offer's posts.
 - Daily shift, 02:00: it proposes next month's offers from the 15th, keeps the calendar planned
@@ -114,34 +126,32 @@ may revise it where the results against your goals support a change, each revisi
 report, and "khôi phục bản trước" restores the text before the last revision. Reply to anything
 to correct it.
 
-**Pictures.** The agent decides per post whether a real picture would help (a screenshot, a result,
-a class moment) and asks for it on the draft card. Reply to that card with the photo or photos
-(up to 10); the bot confirms, and they go out with the post. Send them any time before the post's
-time, before or after approving. Without a picture the post goes out as text, so the agent writes
-every text to stand on its own. Each post records its format (text, photo, photos), and the weekly
-review compares results by format.
+**Pictures.** The strategist decides per post whether a real picture would help (a screenshot, a
+result, a class moment) and asks for it on the draft card. Reply to that card with the photo or
+photos (up to 10), or send them anywhere and say which post they are for; the front desk attaches
+them and confirms, and they go out with the post. Send them any time before the post's time,
+before or after approving. Without a picture the post goes out as text, so every text is written
+to stand on its own. Each post records its format (text, photo, photos), and the weekly review
+compares results by format.
 
 **Saving posts you like.** Send the bot screenshots of a post (the post, and its comments if you
-want them) in one message, with the link and any note as text. Workflow `Content agent: capture`
-reads them with DeepSeek's vision model, saves the post to `content_agent.inspiring_facebook_posts`
-(author, text, counts, visible comments, the time worked out from "5 giờ", format, why it works,
-your text as notes) and replies with what it saved. The agent plans with these posts. A picture
-sent as a reply to a draft card is not captured: it goes out with that post.
+want them) with `/inspiring`, or just say you want it saved, with the link and any note. The front
+desk reads them, saves the post to `content_agent.inspiring_facebook_posts` (author, text, counts,
+visible comments, the time worked out from "5 giờ", format, why it works, your note) and replies
+with what it saved. Ask it to read a screenshot again or to fix a saved post at any time. The
+agents plan with these posts.
 
 **Talking to it in Lark.** In a direct chat (the owner) or in the team group:
 
-- Commands run without the AI deciding anything, so they are quick and exact: `/help`, `/status`
-  (the next 14 days), `/story <what happened>`, `/inspiring` with screenshots. `/rule <rule>` and
-  `/goal <goal>` go to the agent on `deepseek-flash`; `/offers [YYYY-MM]`, `/plan [notes]`,
-  `/draft <post id> [notes]` and `/review` go to it as focused tasks on V4-Pro.
-- Anything else is a chat on `deepseek-flash`. In the group, the bot reads what a person in its
-  place would be notified of: an @mention, a /command, a reply to one of its messages (in a thread
-  or quoted in the chat), and any message in a thread it has posted in. It stays silent when a
-  thread message is meant for someone else.
-- The bot always answers in a thread and reads that thread's history, so each topic is its own
-  conversation. Discuss a draft in its card's thread; send photos there to attach them to the post.
-- Screenshots sent to the bot in a direct chat are saved as inspiration; in the group, send them
-  with `/inspiring`.
+- Commands are shortcuts to procedures: `/help`, `/status` (the next 14 days), `/story <what
+  happened>`, `/inspiring` with screenshots, `/rule <rule>` and `/goal <goal>` run at the front
+  desk; `/offers [YYYY-MM]`, `/plan [notes]`, `/draft <post id> [notes]` and `/review` go to the
+  strategist. You can also just say what you want, in your own words.
+- In the group, the bot reads what a person in its place would be notified of: an @mention, a
+  /command, a reply to one of its messages (in a thread or quoted in the chat), and any message in
+  a thread it has posted in. It stays silent when a thread message is meant for someone else.
+- The bot always answers in a thread and sees that thread's history and pictures, so each topic
+  is its own conversation. Discuss a draft in its card's thread.
 
 **Set up Lark (once).**
 

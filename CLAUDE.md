@@ -224,6 +224,10 @@ Verified on this instance.
 - The same agent with `deepseek-flash` reads every image binary property of its input item
   (`options.passthroughBinaryImages: true`; two PNGs as `picture_1`, `picture_2`) and still calls
   tools in that run.
+- With `deepseek-flash`, a tool argument holding a long JSON document inside a string (about
+  3,000 tokens of Vietnamese text and comments) made the agent fail with `Model output doesn't fit
+  required format`. The same data as separate string arguments works: give a tool one `$fromAI`
+  per field instead of a JSON string.
 - `@n8n/n8n-nodes-langchain.toolWorkflow` 2.2 takes its tool name from the node name. Arguments come
   from `$fromAI('key', 'description', 'string'|'number'|'boolean')` in `workflowInputs.value`, and
   `workflowInputs.schema` must list every key; the sub-workflow trigger can accept all data. Other

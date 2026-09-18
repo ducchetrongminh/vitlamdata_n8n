@@ -17,27 +17,7 @@
             "type": "main"
           }
         ],
-        [
-          {
-            "index": 0,
-            "node": "Instant",
-            "type": "main"
-          }
-        ],
-        [
-          {
-            "index": 0,
-            "node": "Picture post",
-            "type": "main"
-          }
-        ],
-        [
-          {
-            "index": 0,
-            "node": "Capture from DM",
-            "type": "main"
-          }
-        ]
+        []
       ]
     },
     "Agent input": {
@@ -51,56 +31,30 @@
         ]
       ]
     },
-    "Agent task": {
+    "Any pictures?": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Ask agent",
+            "node": "Picture requests",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Front input",
             "type": "main"
           }
         ]
       ]
     },
-    "Attach pictures": {
+    "Context input": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Picture added?",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Calendar": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Status reply",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Capture from DM": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Capture DM",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Capture input": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Capture",
+            "node": "Get context",
             "type": "main"
           }
         ]
@@ -117,6 +71,28 @@
           {
             "index": 0,
             "node": "For the agent?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "DeepSeek flash": {
+      "ai_languageModel": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_languageModel"
+          }
+        ]
+      ]
+    },
+    "Download picture": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Front input",
             "type": "main"
           }
         ]
@@ -166,12 +142,56 @@
         ]
       ]
     },
+    "Front agent": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Log front run",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Front input": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Front reply": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Reply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Get Lark token": {
       "main": [
         [
           {
             "index": 0,
             "node": "Fetch message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Get context": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Any pictures?",
             "type": "main"
           }
         ]
@@ -188,60 +208,6 @@
         ]
       ]
     },
-    "Help": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Reply",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Inspiring usage": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Reply",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Instant": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Help",
-            "type": "main"
-          }
-        ],
-        [
-          {
-            "index": 0,
-            "node": "Status input",
-            "type": "main"
-          }
-        ],
-        [
-          {
-            "index": 0,
-            "node": "Story given?",
-            "type": "main"
-          }
-        ],
-        [
-          {
-            "index": 0,
-            "node": "Screenshots given?",
-            "type": "main"
-          }
-        ]
-      ]
-    },
     "Load settings": {
       "main": [
         [
@@ -253,46 +219,34 @@
         ]
       ]
     },
+    "Log front run": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Front reply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
     "Log message": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Agent task",
+            "node": "Context input",
             "type": "main"
           }
         ]
       ]
     },
-    "Picture added?": {
+    "Picture requests": {
       "main": [
         [
           {
             "index": 0,
-            "node": "Save pictures",
-            "type": "main"
-          },
-          {
-            "index": 0,
-            "node": "Reply",
-            "type": "main"
-          }
-        ],
-        [
-          {
-            "index": 0,
-            "node": "Reply",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Picture post": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Attach pictures",
+            "node": "Download picture",
             "type": "main"
           }
         ]
@@ -331,108 +285,6 @@
         ]
       ]
     },
-    "Save pictures": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Log pictures",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Save story": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Story reply",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Screenshots given?": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Capture input",
-            "type": "main"
-          }
-        ],
-        [
-          {
-            "index": 0,
-            "node": "Inspiring usage",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Status input": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Calendar",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Status reply": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Reply",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Story given?": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Save story",
-            "type": "main"
-          }
-        ],
-        [
-          {
-            "index": 0,
-            "node": "Story usage",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Story reply": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Reply",
-            "type": "main"
-          }
-        ]
-      ]
-    },
-    "Story usage": {
-      "main": [
-        [
-          {
-            "index": 0,
-            "node": "Reply",
-            "type": "main"
-          }
-        ]
-      ]
-    },
     "When called": {
       "main": [
         [
@@ -440,6 +292,149 @@
             "index": 0,
             "node": "Load settings",
             "type": "main"
+          }
+        ]
+      ]
+    },
+    "attach_picture": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "calendar": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "find_stories": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "hand_off": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "performance": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "read_link": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "record": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "reference_posts": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "update_post": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "upsert_goal": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "upsert_inspiration": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "upsert_playbook": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "upsert_story": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Front agent",
+            "type": "ai_tool"
           }
         ]
       ]
@@ -617,7 +612,7 @@
       "id": "e65ec2cd-9cb5-5e49-8cd9-35a17298e67c",
       "name": "Decide",
       "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\n// Image keys in a Lark message: pictures, pictures in rich text, and image files.\nconst imagesOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'image' && c.image_key) return [c.image_key];\n    if (msg.msg_type === 'file' && c.file_key && /\\.(png|jpe?g|webp)$/i.test(c.file_name || '')) return [c.file_key];\n    if (msg.msg_type === 'post') return (Array.isArray(c.content) ? c.content : []).flat().filter((el) => el && el.tag === 'img' && el.image_key).map((el) => el.image_key);\n  } catch (e) {}\n  return [];\n};\n\n// Plain text of a Lark message of any type, for reading and for thread history.\nconst plainOf = (msg) => {\n  const raw = (msg && msg.body && msg.body.content) || '';\n  try {\n    const c = JSON.parse(raw || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => (el.tag === 'img' ? '[picture]' : el.text || el.href || '')).join(''))].filter(Boolean).join('\\n');\n    }\n    if (msg.msg_type === 'image' || (msg.msg_type === 'file' && imagesOf(msg).length)) return '[picture]';\n    return JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode|img_key|image_key)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ').trim();\n  } catch (e) {\n    return String(raw).slice(0, 2000);\n  }\n};\n\n// action: 0 link, 1 reply only, 2 instant command, 3 attach pictures to a post, 4 capture inspiration, 5 nothing more\nconst m = $('Read message').first().json;\nconst settings = settingsOf('Load settings');\nconst members = (($('Fetch members').first().json.data || {}).items || []);\nconst names = Object.fromEntries(members.map((x) => [x.member_id, x.name]));\n// Lark returns the bot's own messages with its app id as sender.id, not its open_id.\nconst fromBot = (x) => Boolean(x && x.sender && x.sender.sender_type === 'app' && x.sender.id === settings.lark_app_id);\nconst nameOf = (id) => (id === settings.lark_app_id ? 'You (the agent)' : names[id] || (id === settings.lark_open_id ? 'The owner' : 'A team member'));\nconst found = (($('Fetch thread').first().json.data || {}).items || []).filter((x) => x.message_id !== m.message_id);\nconst history = found.slice(-30).map((x) => `${nameOf(x.sender && x.sender.id)}: ${plainOf(x).slice(0, 1500)}`);\nconst rootText = found.map((x) => (x.body && x.body.content) || '').join('\\n');\nconst post = rootText.match(/[Pp]ost #(\\d+)/);\nconst offer = rootText.match(/[Oo]ffer #(\\d+)/);\nconst postId = post ? Number(post[1]) : null;\nconst offerId = offer ? Number(offer[1]) : null;\nconst who = nameOf(m.sender);\nconst out = { ...m, history, post_id: postId, offer_id: offerId, who, reply_to: m.message_id, thread_key: m.root_id || m.message_id };\n\nconst INSTANT = ['help', 'status', 'story', 'inspiring'];\nconst AGENT = ['rule', 'goal', 'offers', 'plan', 'draft', 'review'];\nlet action = 5;\nlet agent = false;\nlet reply = '';\n// found is the thread, or for a quoted reply the message it quotes.\nif (m.access === 'thread_check' && !found.some(fromBot)) {\n  return [{ json: { ...out, action: 5, agent: false, reply: '' } }];\n}\nif (m.access === 'reply') { action = 1; reply = m.reply; }\nelse if (m.access === 'link_owner') { action = 0; agent = true; }\nelse if (m.access === 'link_group') { action = 0; }\nelse if (m.is_command && INSTANT.includes(m.command)) {\n  action = 2;\n  // \"<message id> <key>\": /inspiring without pictures takes those of the message it replies to and the sender's earlier ones in the thread.\n  if (m.command === 'inspiring' && !m.images.length) out.images = found.filter((x) => x.message_id === m.parent_id || (x.sender && x.sender.id === m.sender)).flatMap((x) => imagesOf(x).map((k) => `${x.message_id} ${k}`));\n}\nelse if (m.is_command && AGENT.includes(m.command)) { agent = true; }\nelse if (m.is_command) { action = 1; reply = `I don't know /${m.command}.\\n\\n${\"Commands (in the group, write them as they are or after @mentioning me):\\n/story <what happened>: save a real moment for future stories\\n/inspiring with screenshots of a post, or as a reply to them: save it as inspiration\\n/status: the next 14 days\\n/rule <rule>: a rule I always follow from now on\\n/goal <goal>: set or change a goal\\n/offers [YYYY-MM]: propose offers (default next month)\\n/plan [notes]: plan every free day up to the last approved offer\\n/draft <post id> [notes]: write that post now\\n/review: run the weekly review now\\n/link: (in a group, by the owner) make this group the team chat\\nAnything else: @mention me and talk. In threads I started (cards, questions, my answers) no @mention is needed. Reply to a draft card in its thread to change it, or with photos to add pictures to that post.\"}`; }\nelse if (m.images.length && postId) { action = 3; agent = Boolean(m.text); }\nelse if (m.images.length && !m.group) { action = 4; }\nelse if (m.images.length) { action = 1; reply = 'To save a post as inspiration, reply to its screenshots with /inspiring. To add pictures to a planned post, reply to its draft card with them.'; }\nelse { agent = true; }\nreturn [{ json: { ...out, action, agent, reply } }];"
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\n// Image keys in a Lark message: pictures, pictures in rich text, and image files.\nconst imagesOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'image' && c.image_key) return [c.image_key];\n    if (msg.msg_type === 'file' && c.file_key && /\\.(png|jpe?g|webp)$/i.test(c.file_name || '')) return [c.file_key];\n    if (msg.msg_type === 'post') return (Array.isArray(c.content) ? c.content : []).flat().filter((el) => el && el.tag === 'img' && el.image_key).map((el) => el.image_key);\n  } catch (e) {}\n  return [];\n};\n\n// Plain text of a Lark message of any type, for reading and for thread history.\nconst plainOf = (msg) => {\n  const raw = (msg && msg.body && msg.body.content) || '';\n  try {\n    const c = JSON.parse(raw || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => (el.tag === 'img' ? '[picture]' : el.text || el.href || '')).join(''))].filter(Boolean).join('\\n');\n    }\n    if (msg.msg_type === 'image' || (msg.msg_type === 'file' && imagesOf(msg).length)) return '[picture]';\n    return JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode|img_key|image_key)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ').trim();\n  } catch (e) {\n    return String(raw).slice(0, 2000);\n  }\n};\n\n// Gate: Read message let through only what concerns the bot. Here: the thread check, the history and\n// the pictures. What the message means is the front agent's call.\n// action: 0 link, 1 fixed reply, 2 nothing more.\nconst m = $('Read message').first().json;\nconst settings = settingsOf('Load settings');\nconst members = (($('Fetch members').first().json.data || {}).items || []);\nconst names = Object.fromEntries(members.map((x) => [x.member_id, x.name]));\nconst nameOf = (id) => (id === settings.lark_app_id ? 'You (the agent)' : names[id] || (id === settings.lark_open_id ? 'The owner' : 'A team member'));\n// Lark returns the bot's own messages with its app id as sender.id, not its open_id.\nconst fromBot = (x) => Boolean(x && x.sender && x.sender.sender_type === 'app' && x.sender.id === settings.lark_app_id);\n// found is the thread, or for a quoted reply the message it quotes.\nconst found = (($('Fetch thread').first().json.data || {}).items || []).filter((x) => x.message_id !== m.message_id);\nif (m.access === 'thread_check' && !found.some(fromBot)) return [{ json: { ...m, action: 2, agent: false } }];\nconst history = found.slice(-30).map((x) => `${nameOf(x.sender && x.sender.id)}: ${plainOf(x).slice(0, 1500)}`);\nconst rootText = found.map((x) => (x.body && x.body.content) || '').join('\\n');\nconst post = rootText.match(/[Pp]ost #(\\d+)/);\nconst offer = rootText.match(/[Oo]ffer #(\\d+)/);\nconst who = nameOf(m.sender);\n// Pictures of this message first, then those of the thread, newest first: 10 at most, each \"<message id> <key>\".\nconst pictures = [\n  ...m.images.map((k) => ({ ref: `${m.message_id} ${k}`, from: who, where: 'this message' })),\n  ...[...found].reverse().flatMap((x) => imagesOf(x).map((k) => ({ ref: `${x.message_id} ${k}`, from: nameOf(x.sender && x.sender.id), where: 'earlier in the thread' }))),\n].slice(0, 10);\nconst out = { ...m, history, pictures, post_id: post ? Number(post[1]) : null, offer_id: offer ? Number(offer[1]) : null, who, reply_to: m.message_id };\nif (m.access === 'reply') return [{ json: { ...out, action: 1, agent: false } }];\nif (m.access === 'link_group') return [{ json: { ...out, action: 0, agent: false } }];\nreturn [{ json: { ...out, action: m.access === 'link_owner' ? 0 : 2, agent: true } }];"
       },
       "position": [
         1540,
@@ -631,7 +626,7 @@
       "name": "Action",
       "parameters": {
         "mode": "expression",
-        "numberOutputs": 6,
+        "numberOutputs": 3,
         "output": "={{ $json.action }}"
       },
       "position": [
@@ -688,7 +683,7 @@
       "id": "42e71fff-4fba-5987-b7a9-da61ab095734",
       "name": "Group linked",
       "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nif (d.access !== 'link_group') return [];\nreturn [{ json: { reply_to: d.reply_to, text: `This group is now my team chat. Everyone here is equal: @mention me or use /commands, approve cards, set goals and rules. My daily questions, draft cards, publish notices and weekly reports come here from now on.\\n\\n${\"Commands (in the group, write them as they are or after @mentioning me):\\n/story <what happened>: save a real moment for future stories\\n/inspiring + screenshots of a post: save it as inspiration\\n/status: the next 14 days\\n/rule <rule>: a rule I always follow from now on\\n/goal <goal>: set or change a goal\\n/offers [YYYY-MM]: propose offers (default next month)\\n/plan [notes]: plan every free day up to the last approved offer\\n/draft <post id> [notes]: write that post now\\n/review: run the weekly review now\\n/link: (in a group, by the owner) make this group the team chat\\nAnything else: @mention me and talk. In threads I started (cards, questions, my answers) no @mention is needed. Reply to a draft card in its thread to change it, or with photos to add pictures to that post.\"}` } }];"
+        "jsCode": "const d = $('Decide').first().json;\nif (d.access !== 'link_group') return [];\nreturn [{ json: { reply_to: d.reply_to, text: 'This group is now my team chat, and everyone here is equal. @mention me, reply to one of my messages or write in my threads; send pictures the same way. /help shows what I can do. My questions, draft cards, publish notices and weekly reports come here from now on.' } }];"
       },
       "position": [
         2200,
@@ -709,474 +704,6 @@
       ],
       "type": "n8n-nodes-base.code",
       "typeVersion": 2
-    },
-    {
-      "id": "42f32348-9d7a-58fc-9979-d09994f55cc1",
-      "name": "Instant",
-      "parameters": {
-        "mode": "expression",
-        "numberOutputs": 4,
-        "output": "={{ ['help', 'status', 'story', 'inspiring'].indexOf($json.command) }}"
-      },
-      "position": [
-        1980,
-        -500
-      ],
-      "type": "n8n-nodes-base.switch",
-      "typeVersion": 3.2
-    },
-    {
-      "id": "a26a89de-55de-5ca5-8dcc-cc5f79e9140b",
-      "name": "Help",
-      "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nreturn [{ json: { reply_to: d.reply_to, text: \"Commands (in the group, write them as they are or after @mentioning me):\\n/story <what happened>: save a real moment for future stories\\n/inspiring with screenshots of a post, or as a reply to them: save it as inspiration\\n/status: the next 14 days\\n/rule <rule>: a rule I always follow from now on\\n/goal <goal>: set or change a goal\\n/offers [YYYY-MM]: propose offers (default next month)\\n/plan [notes]: plan every free day up to the last approved offer\\n/draft <post id> [notes]: write that post now\\n/review: run the weekly review now\\n/link: (in a group, by the owner) make this group the team chat\\nAnything else: @mention me and talk. In threads I started (cards, questions, my answers) no @mention is needed. Reply to a draft card in its thread to change it, or with photos to add pictures to that post.\" } }];"
-      },
-      "position": [
-        2200,
-        -700
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "9cde5b99-9563-5b70-a224-e9c6f4476251",
-      "name": "Status input",
-      "parameters": {
-        "jsCode": "return [{ json: { tool: 'calendar', mode: 'command', from: '', to: '' } }];"
-      },
-      "position": [
-        2200,
-        -560
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "8ebaf06a-9328-5006-8166-f32853ddbd74",
-      "name": "Calendar",
-      "parameters": {
-        "options": {
-          "waitForSubWorkflow": true
-        },
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "F9itc3ibxfrk0nUV"
-        }
-      },
-      "position": [
-        2420,
-        -560
-      ],
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2
-    },
-    {
-      "id": "8049c228-664f-5713-9423-7e6bbf48c2f6",
-      "name": "Status reply",
-      "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nconst text = String($json.result || 'Could not read the calendar.');\nreturn [{ json: { reply_to: d.reply_to, text: text.length > 8000 ? `${text.slice(0, 8000)}\\n…` : text } }];"
-      },
-      "position": [
-        2640,
-        -560
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "e53beefb-0d69-5713-8173-abf73771ea48",
-      "name": "Story given?",
-      "parameters": {
-        "conditions": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "id": "32326b9a-8cc1-5b14-9bc0-26f35a58f481",
-              "leftValue": "={{ !!$json.args }}",
-              "operator": {
-                "operation": "true",
-                "singleValue": true,
-                "type": "boolean"
-              },
-              "rightValue": ""
-            }
-          ],
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          }
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "position": [
-        2200,
-        -420
-      ],
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2
-    },
-    {
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "yivJ4Lyu7IrsQ45q",
-          "name": "Nocodb bot"
-        }
-      },
-      "id": "7150694a-5b82-5809-af20-4718b846fb2f",
-      "name": "Save story",
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "dataToSend": "mapWithFields",
-        "fieldsMapper": {
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false,
-          "mappingMode": "defineBelow",
-          "matchingColumns": [],
-          "schema": [],
-          "value": {
-            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
-            "source": "lark",
-            "summary": "={{ $('Decide').first().json.args.split('\\n')[0].slice(0, 120) }}",
-            "text": "={{ $('Decide').first().json.args + ($('Decide').first().json.who ? '\\n(told by ' + $('Decide').first().json.who + ')' : '') }}"
-          }
-        },
-        "operation": "create",
-        "projectId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "povrpvxg4mvxbba"
-        },
-        "resource": "row",
-        "table": {
-          "__rl": true,
-          "mode": "id",
-          "value": "m10sv4qudn9bby2"
-        }
-      },
-      "position": [
-        2420,
-        -460
-      ],
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 4
-    },
-    {
-      "id": "cbbf62c9-e926-50f0-9cf3-23ea122c307e",
-      "name": "Story reply",
-      "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nreturn [{ json: { reply_to: d.reply_to, text: `📖 Saved story #${$json.id}. I use it when a post needs a real moment like this.` } }];"
-      },
-      "position": [
-        2640,
-        -460
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "9c7d7fe4-6b88-54da-abda-f8a90243aae2",
-      "name": "Story usage",
-      "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nreturn [{ json: { reply_to: d.reply_to, text: 'Usage: /story <what happened, in your own words>' } }];"
-      },
-      "position": [
-        2420,
-        -360
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "e52af9cb-021d-52bc-a3f2-9e904790db57",
-      "name": "Screenshots given?",
-      "parameters": {
-        "conditions": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "id": "8ba6899b-9bec-59da-af73-d9702a0c2f13",
-              "leftValue": "={{ $json.images.length > 0 }}",
-              "operator": {
-                "operation": "true",
-                "singleValue": true,
-                "type": "boolean"
-              },
-              "rightValue": ""
-            }
-          ],
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          }
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "position": [
-        2200,
-        -260
-      ],
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2
-    },
-    {
-      "id": "49433a63-b455-5a67-ba92-ebd8ab2de4f4",
-      "name": "Capture input",
-      "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nreturn [{ json: { images: d.images, message_id: d.message_id, text: d.args, reply_to: d.reply_to } }];"
-      },
-      "position": [
-        2420,
-        -300
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "32c674c2-8c52-5d50-869c-acd67c049cc9",
-      "name": "Capture",
-      "parameters": {
-        "options": {
-          "waitForSubWorkflow": false
-        },
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "O2nnOVlFYja7Uz3G"
-        }
-      },
-      "position": [
-        2640,
-        -300
-      ],
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2
-    },
-    {
-      "id": "703658db-97b5-5512-a657-54707dd160f5",
-      "name": "Inspiring usage",
-      "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nreturn [{ json: { reply_to: d.reply_to, text: 'I found no pictures. Send /inspiring as a reply to the screenshots of the post (add its link if you have it), or in the same message as them.' } }];"
-      },
-      "position": [
-        2420,
-        -200
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "alwaysOutputData": true,
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "yivJ4Lyu7IrsQ45q",
-          "name": "Nocodb bot"
-        }
-      },
-      "executeOnce": true,
-      "id": "01ff5557-d91c-5bb5-bd2d-bbd275685b07",
-      "name": "Picture post",
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "limit": 1,
-        "operation": "search",
-        "options": {
-          "where": "=(Id,eq,{{ $('Decide').first().json.post_id || 0 }})"
-        },
-        "projectId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "povrpvxg4mvxbba"
-        },
-        "resource": "row",
-        "returnAll": false,
-        "table": {
-          "__rl": true,
-          "mode": "id",
-          "value": "mu013k4ij3s0jii"
-        }
-      },
-      "position": [
-        1980,
-        100
-      ],
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 4
-    },
-    {
-      "id": "12b1bd6e-a3e2-5bdf-b673-5d8fb33dcb7f",
-      "name": "Attach pictures",
-      "parameters": {
-        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => $(name).all()\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst parseDate = (s) => DateTime.fromISO(String(s || '').trim().slice(0, 10), { zone: TZ });\n// settings.post_window, e.g. \"07:00-22:00\": the times posts may go out.\nconst windowOf = (v) => {\n  const m = String(v || '').match(/(\\d{1,2}):(\\d{2})\\s*-\\s*(\\d{1,2}):(\\d{2})/);\n  return m ? { from: `${m[1].padStart(2, '0')}:${m[2]}`, to: `${m[3].padStart(2, '0')}:${m[4]}` } : { from: '07:00', to: '22:00' };\n};\nconst validTime = (t) => /^([01]\\d|2[0-3]):[0-5]\\d$/.test(t);\nconst slotOf = (dt) => { const h = Math.floor(dt.hour / 3) * 3; return `${String(h).padStart(2, '0')}-${String(h + 3).padStart(2, '0')}h`; };\n\nconst d = $('Decide').first().json;\nconst p = rowsOf('Picture post')[0];\nif (!p) return [{ json: { ok: false, reply_to: d.reply_to, text: `Post #${d.post_id} does not exist.` } }];\nif (!['planned', 'awaiting_approval', 'approved', 'publish_failed'].includes(p.status)) {\n  return [{ json: { ok: false, reply_to: d.reply_to, text: `Post #${p.Id} is ${p.status}; the picture was not added.` } }];\n}\nconst lines = (p.images || '').split('\\n').filter((l) => l.trim());\nd.images.forEach((key) => lines.push(`${d.message_id} ${key}`));\nconst kept = lines.slice(-10);\nreturn [{\n  json: {\n    ok: true,\n    Id: p.Id,\n    images: kept.join('\\n'),\n    reply_to: d.reply_to,\n    text: `📷 Got ${d.images.length} picture${d.images.length > 1 ? 's' : ''} for post #${p.Id}. ${kept.length > 1 ? `All ${kept.length} go` : 'It goes'} out with it.${lines.length > 10 ? ' Facebook takes 10 at most, so only the last 10 are kept.' : ''}`,\n    event: `${d.who} sent ${d.images.length} picture(s) for post #${p.Id} \"${p.title}\"`,\n  },\n}];"
-      },
-      "position": [
-        2200,
-        100
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "d8e36a7a-e3bc-54ae-9087-3dc96234e979",
-      "name": "Picture added?",
-      "parameters": {
-        "conditions": {
-          "combinator": "and",
-          "conditions": [
-            {
-              "id": "9081c0c5-9ac5-592a-a376-a8ae27afb250",
-              "leftValue": "={{ $json.ok }}",
-              "operator": {
-                "operation": "true",
-                "singleValue": true,
-                "type": "boolean"
-              },
-              "rightValue": ""
-            }
-          ],
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 2
-          }
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "position": [
-        2420,
-        100
-      ],
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2
-    },
-    {
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "yivJ4Lyu7IrsQ45q",
-          "name": "Nocodb bot"
-        }
-      },
-      "id": "536d663f-2490-55a3-9f5a-ddbb5637192d",
-      "name": "Save pictures",
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "dataToSend": "mapWithFields",
-        "fieldsMapper": {
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false,
-          "mappingMode": "defineBelow",
-          "matchingColumns": [],
-          "schema": [],
-          "value": {
-            "images": "={{ $json.images }}"
-          }
-        },
-        "id": "={{ $json.Id }}",
-        "operation": "update",
-        "projectId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "povrpvxg4mvxbba"
-        },
-        "resource": "row",
-        "table": {
-          "__rl": true,
-          "mode": "id",
-          "value": "mu013k4ij3s0jii"
-        }
-      },
-      "position": [
-        2640,
-        0
-      ],
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 4
-    },
-    {
-      "credentials": {
-        "nocoDbApiToken": {
-          "id": "yivJ4Lyu7IrsQ45q",
-          "name": "Nocodb bot"
-        }
-      },
-      "id": "1c327d55-25b9-564f-96c8-6413b6496d21",
-      "name": "Log pictures",
-      "parameters": {
-        "authentication": "nocoDbApiToken",
-        "dataToSend": "mapWithFields",
-        "fieldsMapper": {
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false,
-          "mappingMode": "defineBelow",
-          "matchingColumns": [],
-          "schema": [],
-          "value": {
-            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
-            "post_id": "={{ $('Attach pictures').first().json.Id }}",
-            "text": "={{ $('Attach pictures').first().json.event }}",
-            "type": "manager_note"
-          }
-        },
-        "operation": "create",
-        "projectId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "povrpvxg4mvxbba"
-        },
-        "resource": "row",
-        "table": {
-          "__rl": true,
-          "mode": "id",
-          "value": "mshxx3am3y82dr8"
-        }
-      },
-      "position": [
-        2860,
-        0
-      ],
-      "type": "n8n-nodes-base.nocoDb",
-      "typeVersion": 4
-    },
-    {
-      "id": "790e7a98-6a4e-5451-b350-b5c8a0bf4950",
-      "name": "Capture from DM",
-      "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nreturn [{ json: { images: d.images, message_id: d.message_id, text: d.text, reply_to: d.reply_to } }];"
-      },
-      "position": [
-        1980,
-        300
-      ],
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2
-    },
-    {
-      "id": "999ecbd7-951e-5971-97f2-e36973c06d34",
-      "name": "Capture DM",
-      "parameters": {
-        "options": {
-          "waitForSubWorkflow": false
-        },
-        "workflowId": {
-          "__rl": true,
-          "mode": "id",
-          "value": "O2nnOVlFYja7Uz3G"
-        }
-      },
-      "position": [
-        2200,
-        300
-      ],
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.2
     },
     {
       "id": "533a6ee4-43c9-577e-b1d9-aedc6c1d8b74",
@@ -1237,7 +764,7 @@
       "id": "5d828665-a9a3-5c2a-8881-cd45fd4442bf",
       "name": "Agent input",
       "parameters": {
-        "jsCode": "const d = $('Decide').first().json;\nconst lines = [];\nif (d.access === 'link_owner') lines.push('(This is the first message from the owner: introduce yourself in two lines and, if goals or brand docs are missing, ask for them.)');\nif (d.history.length) lines.push(`Conversation so far in this thread:\\n${d.history.join('\\n')}`);\nif (d.post_id || d.offer_id) lines.push(`This thread is about ${d.post_id ? `post #${d.post_id}` : `offer #${d.offer_id}`}.`);\nlines.push(`${d.who} wrote now: <<<\\n${d.text}\\n>>>`);\nconst mode = d.is_command ? (d.command === 'review' ? 'review' : 'command') : 'chat';\nreturn [{\n  json: {\n    mode,\n    command: d.is_command ? d.command : '',\n    args: d.args,\n    text: lines.join('\\n\\n'),\n    reply_to: d.reply_to,\n    event: {\n      type: (d.post_id && (d.parent_id || d.thread_id)) ? 'change_request' : 'manager_note',\n      post_id: d.post_id,\n      offer_id: d.offer_id,\n      text: `${d.who}: ${d.text}`,\n    },\n  },\n}];"
+        "jsCode": "const d = $('Decide').first().json;\nconst lines = [];\nif (d.access === 'link_owner') lines.push('(This is the first message from the owner: introduce yourself in two lines and, if goals or brand docs are missing, ask for them.)');\nif (d.history.length) lines.push(`Conversation so far in this thread:\\n${d.history.join('\\n')}`);\nif (d.post_id || d.offer_id) lines.push(`This thread is about ${d.post_id ? `post #${d.post_id}` : `offer #${d.offer_id}`}.`);\nif (d.pictures.length) lines.push(`Pictures you can see, in this order:\\n${d.pictures.map((p, i) => `Picture ${i + 1}: reference \"${p.ref}\", from ${p.from}, ${p.where}`).join('\\n')}`);\nlines.push(`${d.who} wrote now: <<<\\n${d.text || '(pictures only)'}\\n>>>`);\nif (d.is_command) lines.push(`That is the command /${d.command}: run the ${d.command} procedure exactly.`);\nlines.push('(Reply in plain text: Lark shows markdown as raw symbols.)');\nreturn [{\n  json: {\n    agent: 'front',\n    task: lines.join('\\n\\n'),\n    reply_to: d.reply_to,\n    auth: d.auth,\n    pictures: d.pictures,\n    event: {\n      type: (d.post_id && (d.parent_id || d.thread_id)) ? 'change_request' : 'manager_note',\n      post_id: d.post_id,\n      offer_id: d.offer_id,\n      text: `${d.who}: ${d.text}${(d.images || []).length ? ` [${d.images.length} picture(s)]` : ''}`,\n    },\n  },\n}];"
       },
       "position": [
         1980,
@@ -1293,10 +820,10 @@
       "typeVersion": 4
     },
     {
-      "id": "eeab10d9-d6c0-5222-841d-ab6d9c2e727e",
-      "name": "Agent task",
+      "id": "b0cb72c5-abe3-4b86-8e56-7f63c1897db3",
+      "name": "Context input",
       "parameters": {
-        "jsCode": "const a = $('Agent input').first().json;\nreturn [{ json: { mode: a.mode, command: a.command, args: a.args, text: a.text, reply_to: a.reply_to } }];"
+        "jsCode": "return [{ json: { agent: 'front' } }];"
       },
       "position": [
         2420,
@@ -1306,16 +833,16 @@
       "typeVersion": 2
     },
     {
-      "id": "c590e887-f913-5ed0-8fcf-393821f93ae7",
-      "name": "Ask agent",
+      "id": "b92e237e-bdab-4759-b5f4-f18b9cac7aef",
+      "name": "Get context",
       "parameters": {
         "options": {
-          "waitForSubWorkflow": false
+          "waitForSubWorkflow": true
         },
         "workflowId": {
           "__rl": true,
           "mode": "id",
-          "value": "rfEEzkFE1lDOKyoQ"
+          "value": "CEEbmzngGyOZVjL9"
         }
       },
       "position": [
@@ -1324,6 +851,1442 @@
       ],
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2
+    },
+    {
+      "id": "4525a901-56d1-486b-b70a-447e6c80991a",
+      "name": "Any pictures?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d7856290-782c-4587-8a29-b3cbe499800b",
+              "leftValue": "={{ $('Agent input').first().json.pictures.length > 0 }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        2860,
+        600
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "ee77b0ce-4559-431e-8451-07f7c3533961",
+      "name": "Picture requests",
+      "parameters": {
+        "jsCode": "const a = $('Agent input').first().json;\nreturn a.pictures.map((p) => {\n  const [messageId, key] = p.ref.split(' ');\n  return { json: { message_id: messageId, key, auth: a.auth } };\n});"
+      },
+      "position": [
+        3080,
+        450
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "21018257-42e6-4b3c-a80a-e32cd354b27d",
+      "name": "Download picture",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.auth }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {
+          "response": {
+            "response": {
+              "outputPropertyName": "data",
+              "responseFormat": "file"
+            }
+          }
+        },
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $json.message_id }}/resources/{{ $json.key }}?type=image"
+      },
+      "position": [
+        3300,
+        450
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "ff9482d7-4cfe-4d45-8375-397021bcdbea",
+      "name": "Front input",
+      "parameters": {
+        "jsCode": "const a = $('Agent input').first().json;\nconst c = $('Get context').first().json;\n// The agent passes every image binary of its input item to the model: picture_1, picture_2, ...\nconst binary = {};\nconst missing = [];\nif ($('Download picture').isExecuted) {\n  $('Download picture').all().forEach((item, i) => {\n    const b = item.binary && item.binary.data;\n    if (b && String(b.mimeType || '').startsWith('image/')) binary[`picture_${i + 1}`] = b;\n    else missing.push(i + 1);\n  });\n}\nconst note = missing.length ? `\\n\\n(Picture ${missing.join(', ')} could not be downloaded, so you cannot see ${missing.length > 1 ? 'them' : 'it'}.)` : '';\nreturn [{ json: { system: c.system, task: a.task + note }, binary }];"
+      },
+      "position": [
+        3520,
+        600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "9e29023a-579e-416e-b18b-b7c197cd268b",
+      "name": "Front agent",
+      "parameters": {
+        "options": {
+          "maxIterations": 30,
+          "passthroughBinaryImages": true,
+          "systemMessage": "={{ $json.system }}"
+        },
+        "promptType": "define",
+        "text": "={{ $json.task }}"
+      },
+      "position": [
+        3960,
+        600
+      ],
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1
+    },
+    {
+      "credentials": {
+        "deepSeekApi": {
+          "id": "0kIQ7WLWq3QZFpAf",
+          "name": "DeepSeek bot"
+        }
+      },
+      "id": "40133a38-55c8-4753-be57-0fa2add3c944",
+      "name": "DeepSeek flash",
+      "parameters": {
+        "model": "deepseek-flash",
+        "options": {
+          "maxRetries": 3,
+          "timeout": 300000
+        }
+      },
+      "position": [
+        3760,
+        900
+      ],
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1
+    },
+    {
+      "id": "3df1622b-fe70-4d50-8477-f51965f49045",
+      "name": "calendar",
+      "parameters": {
+        "description": "Offers and the day-by-day post calendar. Shows each post's status, kind, offer, hook, angle, hypothesis and brief, and free days.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "from",
+              "id": "from",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "to",
+              "id": "to",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "from": "={{ $fromAI('from', 'First day, YYYY-MM-DD. Empty for today.', 'string') }}",
+            "mode": "chat",
+            "to": "={{ $fromAI('to', 'Last day, YYYY-MM-DD, at most 62 days after from. Empty for two weeks.', 'string') }}",
+            "tool": "calendar"
+          }
+        }
+      },
+      "position": [
+        3960,
+        900
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "ff3ce267-2cc1-4ac8-98cc-1d14d8f1d126",
+      "name": "find_stories",
+      "parameters": {
+        "description": "Search the story bank of real moments.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "query",
+              "id": "query",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "mode": "chat",
+            "query": "={{ $fromAI('query', 'A word or phrase, or empty for the latest', 'string') }}",
+            "tool": "find_stories"
+          }
+        }
+      },
+      "position": [
+        4140,
+        900
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "3ff6e1b5-1400-41ef-9f79-5489ca103b16",
+      "name": "reference_posts",
+      "parameters": {
+        "description": "Search the Facebook posts your manager saved as good examples: hooks and why they work.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "query",
+              "id": "query",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "mode": "chat",
+            "query": "={{ $fromAI('query', 'A word or phrase, or empty for the best performing', 'string') }}",
+            "tool": "reference_posts"
+          }
+        }
+      },
+      "position": [
+        4320,
+        900
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "7d930ae8-9593-4ef5-b4f9-1f0e1556e977",
+      "name": "performance",
+      "parameters": {
+        "description": "Goal progress, post results by kind/hook/weekday, approvals, rejections, change requests, what your manager said, audience comments, offer results, playbook changes, and unreviewed signals.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "days",
+              "id": "days",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "days": "={{ $fromAI('days', 'How many days back, 1-90', 'number') }}",
+            "mode": "chat",
+            "tool": "performance"
+          }
+        }
+      },
+      "position": [
+        4500,
+        900
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "dc81374f-53d2-4243-ad69-40aec2df48be",
+      "name": "record",
+      "parameters": {
+        "description": "Record a result: how an offer sold, a notable audience comment, or the follower count.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "type",
+              "id": "type",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "offer_id",
+              "id": "offer_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_id",
+              "id": "post_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "sales_count",
+              "id": "sales_count",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "revenue",
+              "id": "revenue",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "value",
+              "id": "value",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "text",
+              "id": "text",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "mode": "chat",
+            "offer_id": "={{ $fromAI('offer_id', 'Offer id for offer_result, else 0', 'number') }}",
+            "post_id": "={{ $fromAI('post_id', 'Post id if it is about a post, else 0', 'number') }}",
+            "revenue": "={{ $fromAI('revenue', 'Revenue in VND, or empty', 'string') }}",
+            "sales_count": "={{ $fromAI('sales_count', 'Number of sales, or empty', 'string') }}",
+            "text": "={{ $fromAI('text', 'What was said or noticed', 'string') }}",
+            "tool": "record",
+            "type": "={{ $fromAI('type', 'offer_result|audience_comment|followers', 'string') }}",
+            "value": "={{ $fromAI('value', 'Follower count, or empty', 'string') }}"
+          }
+        }
+      },
+      "position": [
+        4680,
+        900
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "8986e59d-9199-493b-a8e7-9cb1162a3967",
+      "name": "update_post",
+      "parameters": {
+        "description": "Change or cancel a post that is not published yet (title, brief, date, time, hook_type, angle, hypothesis, image_brief). Changing what a drafted post says sends it back to planned; moving its date or time does not.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_id",
+              "id": "post_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "changes",
+              "id": "changes",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "changes": "={{ $fromAI('changes', 'JSON object with any of title, brief, date, time, hook_type, angle, hypothesis, image_brief; or cancel set to true', 'string') }}",
+            "mode": "chat",
+            "post_id": "={{ $fromAI('post_id', 'Post id', 'number') }}",
+            "tool": "update_post"
+          }
+        }
+      },
+      "position": [
+        4860,
+        900
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "0f2fca90-6bb8-4f27-8905-1494bfa1d0b8",
+      "name": "upsert_story",
+      "parameters": {
+        "description": "Save a real moment your manager told you, for future stories. Without id it adds a story; with id it corrects that saved story.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "text",
+              "id": "text",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "id",
+              "id": "id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "id": "={{ $fromAI('id', 'Story id to correct, or 0 for a new story', 'number') }}",
+            "mode": "chat",
+            "text": "={{ $fromAI('text', 'The story in full, in your manager’s words', 'string') }}",
+            "tool": "upsert_story"
+          }
+        }
+      },
+      "position": [
+        5040,
+        900
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "4e0304c3-dbe7-4e24-9b17-e462cdb33f68",
+      "name": "upsert_goal",
+      "parameters": {
+        "description": "Save a goal your manager is giving you right now. Without id it adds a goal; with id it updates that goal.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "title",
+              "id": "title",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "metric",
+              "id": "metric",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "target",
+              "id": "target",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "unit",
+              "id": "unit",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "due_on",
+              "id": "due_on",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "status",
+              "id": "status",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "notes",
+              "id": "notes",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "id",
+              "id": "id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "due_on": "={{ $fromAI('due_on', 'YYYY-MM-DD or empty', 'string') }}",
+            "id": "={{ $fromAI('id', 'Goal id to update, or 0 for a new goal', 'number') }}",
+            "metric": "={{ $fromAI('metric', 'revenue|sales|followers|engagement|reach|leads|other', 'string') }}",
+            "mode": "chat",
+            "notes": "={{ $fromAI('notes', 'Anything else they said about it', 'string') }}",
+            "status": "={{ $fromAI('status', 'active|achieved|dropped', 'string') }}",
+            "target": "={{ $fromAI('target', 'Target number, or empty', 'string') }}",
+            "title": "={{ $fromAI('title', 'The goal in one line', 'string') }}",
+            "tool": "upsert_goal",
+            "unit": "={{ $fromAI('unit', 'e.g. VND per month', 'string') }}"
+          }
+        }
+      },
+      "position": [
+        3960,
+        1100
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "c090cb94-918a-4538-b14d-3faeb0f15d49",
+      "name": "upsert_playbook",
+      "parameters": {
+        "description": "Your playbook: short lessons and long guidelines. Without id it adds an entry; with id it revises that entry, retires it (status retired), or restores a guideline's text from before its last revision (status previous). Needs evidence. A lesson is one sentence; a guideline is a long document with a title, and a revision sends its full new text with change. Entries from your manager (source manager) are added only while talking with them.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "lesson",
+              "id": "lesson",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "category",
+              "id": "category",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "evidence",
+              "id": "evidence",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "confidence",
+              "id": "confidence",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "source",
+              "id": "source",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "id",
+              "id": "id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "status",
+              "id": "status",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "kind",
+              "id": "kind",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "title",
+              "id": "title",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "change",
+              "id": "change",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "category": "={{ $fromAI('category', 'voice|hooks|formats|topics|timing|offers|planning|process', 'string') }}",
+            "change": "={{ $fromAI('change', 'For a guideline revision, one line on what changed and why; else empty', 'string') }}",
+            "confidence": "={{ $fromAI('confidence', 'low|medium|high', 'string') }}",
+            "evidence": "={{ $fromAI('evidence', 'The data or your manager’s words behind it', 'string') }}",
+            "id": "={{ $fromAI('id', 'Lesson id to revise or retire, or 0 to add a lesson', 'number') }}",
+            "kind": "={{ $fromAI('kind', 'lesson or guideline; only for a new entry', 'string') }}",
+            "lesson": "={{ $fromAI('lesson', 'A lesson as one imperative sentence, or the full text of a guideline', 'string') }}",
+            "mode": "chat",
+            "source": "={{ $fromAI('source', 'manager when your manager told you, else self', 'string') }}",
+            "status": "={{ $fromAI('status', 'active, retired to retire it, or previous to restore a guideline', 'string') }}",
+            "title": "={{ $fromAI('title', 'The guideline name, or empty for a lesson', 'string') }}",
+            "tool": "upsert_playbook"
+          }
+        }
+      },
+      "position": [
+        4140,
+        1100
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "512a316a-e872-4747-b89a-3f7cf5a84f8c",
+      "name": "upsert_inspiration",
+      "parameters": {
+        "description": "Save a post the team likes, read from its screenshots, or correct a saved one. Without id it saves a new post; with id (as reference_posts shows it) it changes only the fields you fill, and an empty field stays as it is.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "id",
+              "id": "id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "text",
+              "id": "text",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "author_name",
+              "id": "author_name",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "source_type",
+              "id": "source_type",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "posted_at",
+              "id": "posted_at",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "format",
+              "id": "format",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "reaction_count",
+              "id": "reaction_count",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "comment_count",
+              "id": "comment_count",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "share_count",
+              "id": "share_count",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "comments",
+              "id": "comments",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_url",
+              "id": "post_url",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "why_it_works",
+              "id": "why_it_works",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "notes",
+              "id": "notes",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "author_name": "={{ $fromAI('author_name', 'The page or person that posted it', 'string') }}",
+            "comment_count": "={{ $fromAI('comment_count', 'Comments as a whole number', 'string') }}",
+            "comments": "={{ $fromAI('comments', 'Every visible comment: name, reaction count and text, replies indented', 'string') }}",
+            "format": "={{ $fromAI('format', 'text, image, carousel, video, reel, link or live', 'string') }}",
+            "id": "={{ $fromAI('id', 'Saved post id to correct, or 0 for a new post', 'number') }}",
+            "mode": "chat",
+            "notes": "={{ $fromAI('notes', 'What the team said about it', 'string') }}",
+            "post_url": "={{ $fromAI('post_url', 'The link of the post if given', 'string') }}",
+            "posted_at": "={{ $fromAI('posted_at', 'When it was posted, ISO 8601 with +07:00', 'string') }}",
+            "reaction_count": "={{ $fromAI('reaction_count', 'Reactions as a whole number, 1,2K is 1200', 'string') }}",
+            "share_count": "={{ $fromAI('share_count', 'Shares as a whole number', 'string') }}",
+            "source_type": "={{ $fromAI('source_type', 'page, profile or group', 'string') }}",
+            "text": "={{ $fromAI('text', 'The post text exactly as shown, keeping line breaks', 'string') }}",
+            "tool": "upsert_inspiration",
+            "why_it_works": "={{ $fromAI('why_it_works', 'Why it works, 3 to 6 sentences', 'string') }}"
+          }
+        }
+      },
+      "position": [
+        4320,
+        1100
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "782e9e00-69c4-4798-b923-d282dd57128c",
+      "name": "attach_picture",
+      "parameters": {
+        "description": "Attach pictures from this conversation to a planned post, so they go out with it (10 at most). pictures are their references as listed in the message, one per line.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_id",
+              "id": "post_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "pictures",
+              "id": "pictures",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "mode": "chat",
+            "pictures": "={{ $fromAI('pictures', 'Picture references, one per line, each the message id, a space and the key', 'string') }}",
+            "post_id": "={{ $fromAI('post_id', 'Post id', 'number') }}",
+            "tool": "attach_picture"
+          }
+        }
+      },
+      "position": [
+        4500,
+        1100
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "0abc95b1-5cd4-44ea-90be-d6299c7c3d91",
+      "name": "hand_off",
+      "parameters": {
+        "description": "Hand heavy work to the content strategist: offers, plan, draft or review. It runs in the background and posts its result in this thread. The brief carries what they asked in their words, the thread context, ids, and what any pictures show; a draft brief starts with the post id.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "procedure",
+              "id": "procedure",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "brief",
+              "id": "brief",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "reply_to",
+              "id": "reply_to",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "brief": "={{ $fromAI('brief', 'Everything the strategist needs, in full', 'string') }}",
+            "mode": "chat",
+            "procedure": "={{ $fromAI('procedure', 'offers, plan, draft or review', 'string') }}",
+            "reply_to": "={{ $('Decide').first().json.reply_to }}",
+            "tool": "hand_off"
+          }
+        }
+      },
+      "position": [
+        4680,
+        1100
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "17f4dedc-dca6-4d97-9afb-38194ba9bc01",
+      "name": "read_link",
+      "parameters": {
+        "description": "Read a Lark doc or wiki page from its link. Set remember to true when the team wants it followed from now on: it then becomes one of the brand docs you read on every run.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "F9itc3ibxfrk0nUV"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "url",
+              "id": "url",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "remember",
+              "id": "remember",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "mode": "chat",
+            "remember": "={{ $fromAI('remember', 'true to read it on every run from now on', 'boolean') }}",
+            "tool": "read_link",
+            "url": "={{ $fromAI('url', 'The Lark doc or wiki link', 'string') }}"
+          }
+        }
+      },
+      "position": [
+        4860,
+        1100
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "7dd96553-de49-49ba-982e-429a44fa95f2",
+      "name": "Log front run",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "created_at": "={{ $now.toISO({ suppressMilliseconds: true }) }}",
+            "text": "={{ '[chat] ' + String($('Front agent').first().json.output || '').slice(0, 3000) }}",
+            "type": "agent_run"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "povrpvxg4mvxbba"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mshxx3am3y82dr8"
+        }
+      },
+      "position": [
+        4180,
+        600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "8adede13-7788-4caa-ac44-d1736f9535d0",
+      "name": "Front reply",
+      "parameters": {
+        "jsCode": "const out = String($('Front agent').first().json.output || '').trim();\n// NO_REPLY: a thread message meant for someone else.\nreturn out && out !== 'NO_REPLY' ? [{ json: { text: out, reply_to: $('Agent input').first().json.reply_to } }] : [];"
+      },
+      "position": [
+        4400,
+        600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
     }
   ],
   "pinData": null,
