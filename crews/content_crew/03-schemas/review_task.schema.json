@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review_task@1",
+  "title": "The period under review",
+  "type": "object",
+  "required": ["period", "posts", "active_lessons", "slots"],
+  "additionalProperties": false,
+  "properties": {
+    "period": {
+      "type": "object",
+      "required": ["from", "to"],
+      "additionalProperties": false,
+      "properties": {
+        "from": { "type": "string", "format": "date-time" },
+        "to": { "type": "string", "format": "date-time" }
+      }
+    },
+    "posts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["post_id", "content_type", "text", "published_at", "slot", "outcomes", "settled"],
+        "additionalProperties": false,
+        "properties": {
+          "post_id": { "type": "integer" },
+          "content_type": { "type": "string" },
+          "text": { "type": "string" },
+          "published_at": { "type": "string", "format": "date-time" },
+          "slot": { "type": "string", "description": "e.g. sat-20:00" },
+          "settled": {
+            "type": "boolean",
+            "description": "True once the 7d checkpoint has been taken. Unsettled posts are context, not evidence."
+          },
+          "owner_edited": {
+            "type": "boolean",
+            "description": "The owner changed the text before approving. Evidence the numbers cannot give."
+          },
+          "owner_rejected": { "type": "boolean" },
+          "outcomes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["checkpoint", "reach", "reactions", "comments", "shares"],
+              "additionalProperties": false,
+              "properties": {
+                "checkpoint": { "type": "string", "enum": ["2h", "24h", "7d"] },
+                "reach": { "type": "integer" },
+                "reactions": { "type": "integer" },
+                "comments": { "type": "integer" },
+                "shares": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "active_lessons": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "lesson", "evidence", "written_at"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "integer" },
+          "lesson": { "type": "string", "maxLength": 250 },
+          "evidence": { "type": "string" },
+          "written_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slot", "posts_behind_it"],
+        "additionalProperties": false,
+        "properties": {
+          "slot": { "type": "string" },
+          "posts_behind_it": { "type": "integer" },
+          "median_reach": { "type": ["number", "null"] }
+        }
+      }
+    }
+  }
+}

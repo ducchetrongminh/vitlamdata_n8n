@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review_result@1",
+  "title": "What the week changed",
+  "description": "All four fields may be empty. A week that changed nothing is a valid week.",
+  "type": "object",
+  "required": ["report", "lessons_new", "lessons_retire", "slot_changes"],
+  "additionalProperties": false,
+  "properties": {
+    "report": {
+      "type": "string",
+      "minLength": 20,
+      "description": "For the owner: what changed, and what it was based on, in their language."
+    },
+    "lessons_new": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["lesson", "evidence"],
+        "additionalProperties": false,
+        "properties": {
+          "lesson": {
+            "type": "string",
+            "maxLength": 250,
+            "description": "One claim. Not a paragraph of advice — something the next review can confirm or refute."
+          },
+          "evidence": {
+            "type": "object",
+            "required": ["post_ids", "numbers"],
+            "additionalProperties": false,
+            "properties": {
+              "post_ids": {
+                "type": "array",
+                "minItems": 2,
+                "description": "One post is an anecdote. Code rejects a lesson with fewer than two.",
+                "items": { "type": "integer" }
+              },
+              "numbers": { "type": "string", "description": "The figures behind the claim, stated plainly." }
+            }
+          },
+          "retires": {
+            "type": ["integer", "null"],
+            "description": "The id of the active lesson this one contradicts. A contradicting lesson may not sit beside the old one."
+          }
+        }
+      }
+    },
+    "lessons_retire": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "why"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "integer" },
+          "why": { "type": "string", "minLength": 10 }
+        }
+      }
+    },
+    "slot_changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to", "why", "n"],
+        "additionalProperties": false,
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "why": { "type": "string" },
+          "n": {
+            "type": "integer",
+            "description": "How many posts sit behind this call. Code applies the change only above the floor in settings."
+          }
+        }
+      }
+    },
+    "cannot_tell": {
+      "type": ["string", "null"],
+      "description": "Where the data does not answer the question — above all, what sold rather than what travelled."
+    }
+  }
+}

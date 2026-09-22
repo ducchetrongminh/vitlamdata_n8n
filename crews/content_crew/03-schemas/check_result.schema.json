@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "check_result@1",
+  "title": "The pre-publish verdict",
+  "type": "object",
+  "required": ["pass", "issues"],
+  "additionalProperties": false,
+  "properties": {
+    "pass": {
+      "type": "boolean",
+      "description": "True if and only if issues is empty. Code branches on this, never on the prose."
+    },
+    "issues": {
+      "type": "array",
+      "description": "Empty when the post passes. Each entry names one of the strategy's three points and a concrete reason in the post's own words.",
+      "items": {
+        "type": "object",
+        "required": ["point", "why"],
+        "additionalProperties": false,
+        "properties": {
+          "point": { "type": "string", "enum": ["relevant", "closer", "connected"] },
+          "why": { "type": "string", "minLength": 10, "maxLength": 400 }
+        }
+      }
+    }
+  }
+}
