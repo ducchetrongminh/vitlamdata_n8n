@@ -15,8 +15,8 @@
   HTTPS, new `tavily` credential (API key).
 - **Q4. Good posting time slots:** no fixed table. Seed the scheduler with the owner's instinct
   (weekends, ~8pm), then let outcome data (2h/24h/7d checks) adjust it over time — test and
-  learn, not a locked schedule. Phase 1 needs to decide who adjusts the seed (code heuristic vs.
-  a review step) and where it's stored.
+  learn, not a locked schedule. Phase 1 decided: slots live in the `settings` table, the digest
+  shows the numbers per slot, and the owner changes them in chat. No optimizer in v1.
 
 ## Still open (deferred from v1)
 
