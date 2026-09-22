@@ -19,6 +19,14 @@
 
 ## Still open
 
+**Q8. The owner's voice — blocking.** `04-prompts/_shared.md` has a Voice section with nothing
+real in it. Everything else in the crew can be designed from the task; a voice cannot. What is
+needed: three to five of the owner's own posts, in full, ideally ones they were happy with, plus
+a line on any they regret. Without them the crew writes generic Vietnamese content copy, which
+is the one failure the whole design exists to avoid — and no amount of prompt structure covers
+for it.
+Answer:
+
 **Q7. A selling signal.** The weekly review only sees reach, reactions, comments and shares, so
 it can learn what travels but not what sells — the exact problem that sent the owner to the two
 frameworks in the first place. Closest proxies available today: comments and inbox messages on
