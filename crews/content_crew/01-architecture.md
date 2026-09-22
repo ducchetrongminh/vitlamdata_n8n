@@ -5,63 +5,71 @@ From `00-task-spec.md`. Nothing here runs; the built workflows will live in
 
 ## Chosen topology
 
-**One agent with tools, surrounded by code paths.**
+**One agent, one chain, and code around both.**
 
-The only open-ended job in the whole SOP is reading what the owner sent — free-form Vietnamese,
-often with a screenshot, sometimes an idea, sometimes a story, sometimes "sửa lại bài #3". That
-is one job, done by one agent with a small tool set. Everything else in the SOP is a procedure
-with known steps, so it is code: the access check in front of the agent, the offer cadence, the
-rework counter, the approval gate, the scheduler, the outcome checks.
+The crew proposes work rather than waiting for it. Every day, code fills an idea bank (search),
+picks what to write, and runs a drafting chain per idea; each finished draft arrives in Lark as
+a card the owner approves or kills in seconds. The owner can also drop an idea at any time and
+get a draft out of the same chain.
 
-Two fixed chains sit beside the agent, each a model call inside a procedure rather than an agent:
+Three jobs need a model with judgment:
 
-- **Scouting digest** — search (Tavily) → summarize → send to Lark. Fixed steps, no judgment
-  about what to do next.
-- **Pre-publish check** — one call with the Relevant/Closer/Connected rubric, returning
-  `{pass, issues[]}`. A separate call, not the writing agent reviewing itself, because a
-  reviewer that shares the writer's context agrees with it.
+- **Chat agent** — reads what the owner sends: free-form Vietnamese, screenshots, corrections,
+  ideas, questions. The one genuinely open input in the system, so the one agent with tools.
+- **Drafting chain** — one idea in, one finished draft card out: write → image → check. The
+  steps are known in advance, so this is a chain of model calls with code between them, not an
+  agent. It is called from two places (the daily batch and the chat agent), which is why it is
+  its own thing.
+- **Weekly review** — reads the last weeks' posts against their outcomes and writes what it
+  learned into `lessons`, which go back into the writing and selection prompts. This is the loop
+  that makes the numbers matter; without it `outcomes` is a table nobody reads.
 
-The agent writes the post itself. Writing is what the model does natively; a "writer agent"
-behind a tool would add a hop and a handoff without adding judgment.
+Everything else is code: the access check, the mix and cadence rules, the rework counter, the
+approval gate, the scheduler, the outcome checks, and the caps on what the review may write.
 
 ## Rejected alternatives
 
-- **Fixed pipeline, no agent** (trigger → classify → draft → image → publish): rejected. The
-  owner's input is deliberately unstructured — that is the point of dropping ideas as they come.
-  Code that decides what a message means will be wrong exactly on the messages that matter.
-- **Crew of specialists** (researcher / writer / editor / publisher): rejected. Apply the
-  splitting rule and nothing splits. They share one tool set, one model tier, one voice, and the
-  handoffs between them would be prose — the cheapest way to lose the owner's idea in transit.
-  Four agents in a fixed order is a chain wearing a costume.
-- **Orchestrator–workers**: rejected. Subtasks are known in advance (draft, image, check); there
-  is nothing for a planner to plan.
-- **Evaluator–optimizer as two agents**: rejected as a topology, kept as a step. The check is one
-  call in a code-counted loop (max one rework), not an agent in a conversation with another
-  agent.
-- **Decentralized handoff**: rejected. One domain, one owner, one chat.
+- **Owner-initiated only** (nothing happens until the owner writes): rejected. The task spec's
+  bottleneck is the owner's time, and a system that waits inherits it. Cadence has to be the
+  crew's job, judgment the owner's.
+- **Crew of specialists** (researcher / writer / editor / publisher): rejected. Nothing splits
+  under the splitting rule — they would share one tool set, one model tier and one voice, and
+  hand each other prose. Four agents in a fixed order is a chain wearing a costume.
+- **Drafting as a second agent**: rejected. Write, image, check is a fixed sequence. An agent
+  there would only be deciding what it was always going to do next, at tool-calling prices.
+- **Orchestrator–workers**: rejected. Subtasks are known in advance; there is nothing to plan.
+- **Digest to the owner as a separate message**: rejected. The draft cards are the digest. A
+  morning list of links the owner must read is the manual browsing step rebuilt.
 
 ## Diagram
 
 ```
-Lark ──► lark (webhook, answers Lark at once)
-          ├─ card click ────────► code: approve / reject, queue for a slot
-          └─ message ─► GATE (code): is it for the bot? fetch thread + pictures
-                          AGENT (deepseek-flash, sees the pictures)
-                            ├─ save_idea ─────────► ideas
-                            ├─ writes the draft ─► save_draft ─► CHECK (model: pass/issues)
-                            │                                     ├─ pass ─► posts + approval card
-                            │                                     └─ fail ─► back to the agent, once
-                            ├─ make_image ───────► OpenRouter ──► posts
-                            └─ reads: calendar, ideas, outcomes
-Schedules (code):
-  scout      ─► Tavily ─► summarize ─► digest to Lark
-  publisher  ─► approved posts whose slot has come ─► Facebook
+CRON (four schedule triggers, one workflow)
+  scout      ─► web search over the standing topics ─► ideas (source: scout)
+  propose    ─► select today's ideas (1 call; code applies the mix and cadence rules)
+                  └─ loop, one per idea ─► DRAFT ─► card in Lark
+  publish    ─► approved posts whose slot has come ─► Facebook
   outcomes   ─► posts due 2h / 24h / 7d ─► Facebook insights ─► outcomes
-```
+  review     ─► posts + their outcomes + active lessons (weekly)
+                  ├─ lessons: written, retired (code caps the count and demands evidence)
+                  ├─ slots: adjusted, once a slot has enough posts behind it
+                  └─ report ─► Lark
 
-Provisional workflow split (firmed up at build time): `lark` (webhook, gate, agent, reply),
-`tools` (every tool behind one Switch), `lark send`, `scout`, `publisher`, `outcomes`, `errors`.
-The gate and the agent share a workflow so pictures never have to be passed between workflows.
+OWNER (lark webhook)
+  card click ─► code: approve ─► queue for the next slot | reject ─► closed
+  message ───► GATE (code: is it for the bot; fetch thread and pictures)
+                 CHAT AGENT (vision)
+                   ├─ saves an idea, corrects a post, answers, reads the bank
+                   └─ draft(idea) ─────────────► DRAFT ─► card in Lark
+
+DRAFT (one idea in, one card out)
+  write (model, JSON: text + image prompt + content type)
+    │                                    ▲
+    ▼                                    │ one rework, counted in code
+  image (OpenRouter) ─► check (model: {pass, issues})
+                              └─ pass ─► posts + Lark card
+                              └─ fail twice ─► card anyway, with the failing point named
+```
 
 ## Data on the arrows
 
@@ -70,81 +78,145 @@ Shapes are named here and specified in Phase 3 (`03-schemas/`).
 | Arrow | Carries |
 |---|---|
 | Lark → gate | Lark event (message id, chat, sender, thread, image keys) |
-| gate → agent | `task`: message text, thread history with names, picture binaries, ids of the post/idea the thread is about |
-| agent → tool | one `$fromAI` argument per field, never a JSON blob in a string |
-| `save_draft` → check | `{post_id, content_type, text, idea}` |
+| gate → chat agent | message text, thread history with names, picture binaries, the post or idea the thread is about |
+| chat agent → tool | one `$fromAI` argument per field, never a JSON blob in a string |
+| select → draft | `{idea_id, content_type, why_today}` |
+| write → code | `{text, image_prompt, content_type, idea_id}` |
 | check → code | `{pass: bool, issues: [{point, why}]}` |
-| code → approval card | `{post_id, text, image, content_type, scheduled_for, check}` |
-| card click → code | `{post_id, action: approve|reject, actor}` |
-| publisher → Facebook | `{message, attached_media}` (page feed) |
-| Facebook → `outcomes` | `{post_id, checkpoint, reach, reactions, comments, shares}` |
-| scout → digest | `{items: [{title, url, why_it_matters, hook}]}` |
+| draft → card | `{post_id, text, image, content_type, scheduled_for, check}` |
+| card click → code | `{post_id, action: approve\|reject, actor}` |
+| publisher → Facebook | `{message, attached_media}` |
+| Facebook → outcomes | `{post_id, checkpoint, reach, reactions, comments, shares}` |
 
 ## Control boundary
 
 | Decision | Made by | Why | Cost if wrong |
 |---|---|---|---|
 | Does this Lark message concern the bot | code | finite rules (sender, mention, thread, `/`); group chatter must not reach a model | low — owner repeats it |
-| What the owner's message means | model | free-form text plus pictures; the input space is the point | medium — wrong action, corrected in chat |
-| Which content type (observation / story / education / offer) | model, within the strategy | judgment about this idea against the current mix | medium |
-| May an offer post be created now | code (two per month, from `docs/Content Strategy.md`) | a cadence rule the strategy calls non-negotiable | high — the strategy says this trades long-term goodwill |
+| What the owner's message means | model | free-form text plus pictures; the input space is the point | medium — corrected in chat |
+| What to search for | model, from the standing topics in `settings` | open-ended | low — a dull bank |
+| Which ideas are worth banking | model | open-ended | low |
+| How many posts to draft today, and the mix | code (quota in `settings`, offer cadence from the strategy) | a cadence rule the strategy calls non-negotiable | high — the strategy says over-selling costs goodwill |
+| Which ideas fill today's quota | model (one call, returns ids + why) | judgment about what fits now | low — the owner kills the card |
+| Content type and text | model | the writing itself | medium — the owner kills the card |
 | Is the draft publishable (Relevant / Closer / Connected) | model judges, code branches | rubric judgment, auditable branch | medium — the owner still sees it |
-| How many rework loops | code (counter, max 1) | never let a model decide it is finished | high — cost and latency runaway |
+| How many rework loops | code (counter, max 1) | termination is never the model's call | high — cost and latency runaway |
 | Does this post go live | **human** (owner approves the card) | hard constraint in the task spec | very high — irreversible public post |
 | When an approved post goes live | code (slot table in `settings`) | deterministic scheduling | low/medium — weaker reach |
-| Which slots are good | human, from the outcome numbers in the digest | test-and-learn; no optimizer in v1 | low |
 | When to pull outcomes | code (2h / 24h / 7d from `published_at`) | fixed offsets | low |
-| What to search for, and what is worth the digest | model | open-ended | low — a dull digest |
-| When the agent stops | code (max steps, timeout) | termination is always code | high |
+| What the numbers mean (what worked, what to change) | model, weekly | judgment over evidence | medium — a wrong lesson skews the writing until the next review retires it |
+| Whether a lesson may be written | code (max 10 active, one claim each, evidence field must name real posts) | small n invents patterns; the caps are what keep it honest | high — an unbounded self-edited prompt drifts with no way back |
+| Which slots are good | model proposes, code applies only once a slot has enough posts behind it | test-and-learn, with a floor against noise | low |
+| When the chat agent stops | code (max steps, timeout) | termination is always code | high |
 
-The agent holds **no publishing tool at all**. It proposes; the card click and the publisher
-dispose. Same for spending: image generation is the only paid tool and it is called once per
-post, from a tool whose code caps it.
+The agent holds **no publishing tool**. It proposes; the card click and the publisher dispose.
+Image generation is the only paid call, and it is made by the drafting chain once per draft —
+code decides it happens, not a model.
+
+## Workflows (4)
+
+| Workflow | Trigger | Holds |
+|---|---|---|
+| `Content crew: lark` | webhook | Lark verification, card clicks, the gate, the chat agent, the reply |
+| `Content crew: draft` | called | write → image → check → save → card. Attached to the chat agent as a workflow tool, and called in a loop by cron |
+| `Content crew: cron` | schedule ×4 | scout + propose (daily), publish + outcome checks (frequent), review (weekly). One trigger node per cadence, each feeding its own branch, rather than one trigger and a tangle of time IFs |
+| `Content crew: errors` | error trigger | failed runs → Lark |
+
+Most tools need no sub-workflow: regular nodes attach to the agent directly with `$fromAI()` in
+their parameters, so the NocoDB reads and writes hang straight off the chat agent. Only work
+that carries rules gets its own workflow, which here is just the drafting chain. (Verify the
+direct-node-as-tool support on 2.38.7 before building — if it is missing, the reads collapse
+into one small tools workflow and this becomes 5.)
+
+Sending to Lark is two HTTP nodes (token, then message) duplicated in `lark`, `draft`, `cron`
+(the weekly report only) and `errors`, rather than a shared sender workflow. Publishing and
+outcome checks stay silent; the cards come from `draft`.
+
+Branch order inside `cron` matters: database writes go above outbound calls, because branches run
+top to bottom and an error stops the rest (`CLAUDE.md`).
 
 ## State model
 
 NocoDB base `content_crew` (tables defined later as `nocodb/content_crew/*.json`):
 
-- **`posts`** — the idea it came from, content type, draft text, image, status
+- **`ideas`** — the bank: theme, hook, angle, source (owner or scout, with link or picture), the
+  owner's note, used/unused. Both the scout and the chat agent write here; the daily selection
+  reads here.
+- **`posts`** — idea it came from, content type, draft text, image, status
   (`drafting|needs_owner|approved|scheduled|published|failed|rejected`), `scheduled_for`,
   `fb_post_id`, `published_at`, check result, rework count.
-- **`ideas`** — captured inspiration: theme, hook, angle, source link or picture, the owner's
-  note. The bank the agent draws from when it needs something to write.
-- **`outcomes`** — one row per checkpoint: post, `2h|24h|7d`, reach, reactions, comments, shares,
-  taken at. Rows rather than columns because the checkpoints repeat and the digest queries them.
-- **`settings`** — Lark ids, posting slots, scouting topics and cadence. What the owner changes
-  without a deploy.
+- **`outcomes`** — one row per checkpoint: post, `2h|24h|7d`, reach, reactions, comments,
+  shares, taken at. Rows rather than columns because checkpoints repeat and get queried.
+- **`lessons`** — what the review learned: one claim per row, the evidence (the post ids and
+  numbers behind it), status (`active|retired`), written at. Active lessons are injected into
+  the write and select prompts. Code enforces the caps: at most 10 active, one claim each, at
+  most 250 characters, and an evidence field naming real posts — a lesson that cannot point at
+  posts is not written. Retiring keeps the row, so a reversed call is visible.
+- **`settings`** — Lark ids, posting slots, daily quota, standing scouting topics. What the
+  owner changes without a deploy, and what the review adjusts for slots.
 
-No run/trace tables in v1: `GET /executions?workflowId=` already answers "what happened", and
-the method says add tracing when evaluation needs it (Gate 6).
+No run or trace tables in v1: `GET /executions?workflowId=` already answers "what happened", and
+tracing arrives when evaluation needs it (Gate 6).
 
-Memory: **thread scope, fetched not stored.** The gate reads the Lark thread (last N messages)
-and passes it in with the pictures. The thread is already the record of the conversation, so no
-chat-memory node and no memory table. Nothing persists between unrelated conversations except
-the four tables above.
+Memory: **thread scope, fetched not stored.** The gate reads the Lark thread and passes it in
+with the pictures; the thread is already the record of the conversation, so there is no
+chat-memory node and no memory table. The drafting chain is stateless — everything it needs
+comes in on the item.
 
-Passed vs looked up: the message, thread and pictures are **passed** on the item; the strategy,
-the owner's voice and the procedures are **in the system prompt**, built in code from
-`crews/content_crew/04-prompts/` and versioned in git; posts, ideas, outcomes and settings are
-**looked up** through tools.
+Passed vs looked up: the message, thread and pictures are **passed**; the strategy, the owner's
+voice and the procedures live **in the prompts**, built in code from `crews/content_crew/04-prompts/`
+and versioned in git; ideas, posts, outcomes and settings are **looked up**.
 
 Concurrency is free and wanted: each Lark message is its own n8n execution, so an idea dropped
-while another draft is being written runs in parallel and cannot be lost. That satisfies the
-task spec's "never drop an idea" without any queue machinery.
+while a draft is running cannot be lost. No queue machinery.
+
+## Models
+
+Everything goes through **OpenRouter** (`lmChatOpenRouter` for agent and chain nodes, HTTP
+Request for image generation and web search). One vendor, one credential. Model ids are the
+OpenRouter ones (`deepseek/…`, and an image-capable model for pictures), written into the node
+and committed, so a provider-side change is a visible diff rather than a silent regression.
+
+| Step | Model | Why |
+|---|---|---|
+| Chat agent | a DeepSeek model with vision | screenshots arrive in chat |
+| Scout | a model with OpenRouter's web search plugin | search and summarize in one call |
+| Select today's ideas | cheap DeepSeek | short judgment over a list |
+| Write the draft | cheap DeepSeek to start | **first upgrade lever:** move only this call to the stronger DeepSeek if drafts read thin |
+| Check | cheap DeepSeek | rubric judgment, separate context from the writer on purpose |
+| Weekly review | the stronger DeepSeek | reasoning over a table of numbers, once a week, so the cost is irrelevant and the quality is not |
+| Image | an image-capable model on OpenRouter | generate from a prompt, or edit a picture the owner supplied |
+
+Exact OpenRouter model ids are filled in at build time, verified against the live API rather
+than assumed.
+
+**Verify first, before anything else is built:** `CLAUDE.md` records that n8n patches
+`@langchain/openai` to send DeepSeek's `reasoning_content` back, which DeepSeek requires once
+tools are involved. That patch rides on the DeepSeek node. Going through OpenRouter may break
+agent tool-calling, so the thinnest possible test — one agent node, one tool, over OpenRouter —
+comes before any other work. If it fails, either a non-thinking model or the DeepSeek node
+stays for the chat agent, and the rest still goes through OpenRouter.
 
 ## Non-functional targets
 
-- **Latency.** Plain chat answer under 30s. A draft turn (write + image + check) under 3
-  minutes. No "đang viết…" acknowledgement in v1 — add one if draft turns routinely pass a
-  minute of silence.
-- **Cost.** Provisional, to verify once built: under $0.02 per chat turn, under $0.15 per post
-  end to end (draft + check + one generated image). `deepseek-flash` everywhere to start; it is
-  the only DeepSeek model with vision and the pictures arrive in chat. **First upgrade lever:**
-  if drafts read thin, move only the drafting call to `deepseek-v4-pro` (4-7x the cost, no
-  vision, so the agent would describe the picture and pass a brief).
+- **Latency.** Plain chat answer under 30s. A draft (write + image + check) under 3 minutes; the
+  daily batch runs on a schedule so nobody is waiting. A chat-triggered draft blocks the chat
+  agent while it runs — acceptable because the card and the reply then arrive together. If that
+  reads as silence in practice, make the call asynchronous and acknowledge first.
+- **Cost.** Provisional, to verify once built: under $0.02 per chat turn, under $0.15 per draft
+  (write + check + one image). Daily batch of 3 ≈ $0.45/day.
 - **Concurrency.** Unbounded per message; posts are independent rows.
 - **Failure mode.** Fail closed on publishing: any error, any uncertainty, nothing goes out.
-  Everything else escalates to Lark through an error workflow, with partial work left in `posts`
-  so a failed draft is still there to look at.
-- **Model pinning.** Model names are set per node and committed, so a provider-side change is a
-  visible diff rather than a silent regression.
+  Everything else escalates to Lark through the error workflow, with partial work left in
+  `posts` so a failed draft is still there to look at.
+
+## Known limits
+
+- **The review learns attention, not selling.** Reach, reactions, comments and shares are all it
+  gets, so it can find what travels and not what converts — the exact gap the task spec names.
+  The closest proxies available are comments and messages on offer posts; a real answer needs a
+  signal the crew does not have yet. Open question.
+- **Small n.** At 4-7 posts a week, a weekly review sees a handful of data points. The caps on
+  `lessons` exist because of this, and a lesson should be read as a hypothesis, not a finding.
+- **The owner sees proposals, not the raw finds.** The scout's results reach the owner as draft
+  cards, with the source named. Nothing shows the bank unless they ask in chat.

@@ -4,43 +4,47 @@ v1 scope only. Other platforms and video are deferred — see `open-questions.md
 
 ## Trigger
 
-Four shapes:
+The crew proposes; the owner judges. Five shapes:
 
-1. **Idea drop** (human) — a raw idea, observation, or story, ready to become a post now.
-2. **Inspiration capture** (human) — a screenshot or link the owner forwards while browsing
-   (data-domain or not); not necessarily written today.
-3. **Scouting digest** (schedule) — the agent searches (Tavily) for data-domain updates and
-   notable cross-domain hooks, summarizes what it found, and shares the digest with the owner.
-   The owner reacts with their own thoughts on top (same as inspiration capture from there). Not
-   literal feed-scrolling — built-in n8n nodes have no login/JS-rendering, so this is a search
-   API, not a browser.
+1. **Daily proposal** (schedule) — the crew picks ideas from the bank and sends the owner
+   finished drafts as approval cards. This is the main loop: the owner has to remember nothing.
+2. **Scouting** (schedule) — a web search over standing topics fills the idea bank with
+   data-domain updates and cross-domain hooks. Not literal feed-scrolling: built-in n8n nodes
+   have no login or JS-rendering, so this is a search API, not a browser.
+3. **Idea drop** (human, any time) — a raw idea, observation, story, screenshot or link. It goes
+   into the bank, and the owner can ask for a draft of it right away instead of waiting for the
+   next daily batch.
 4. **Outcome check** (schedule, per published post) — three fixed offsets after publish: 2h
    (viral signal), 24h (content quality signal), 7d (final numbers; some posts pick up later).
+5. **Weekly review** (schedule) — reads the posts against their outcomes, writes what it learned
+   into `lessons` that feed back into the writing, adjusts the posting slots, and reports.
 
 ## Inputs
 
 | Name | Type | Source | Required | Notes |
 |---|---|---|---|---|
 | Idea/story text | text | owner, chat | for idea drop | Stories must be the owner's own words/experience — the agent never invents a personal story. |
-| Screenshot/link | image or URL | owner, chat | for inspiration capture | May be outside the data domain; agent extracts theme/hook/angle, not the literal content. |
+| Screenshot/link | image or URL | owner, chat | for idea drop | May be outside the data domain; agent extracts theme/hook/angle, not the literal content. |
+| Scouted material | search results | web search over standing topics | for scouting | Fills the idea bank between the owner's own drops. |
 | Content strategy | doc | `docs/Content Strategy.md` | yes | Offer/Education/Story split, Daily Seinfeld Sequence cadence, pre-publish check. |
+| Lessons | rows | the weekly review's own output | yes, once there are any | What past outcomes taught, fed back into writing and idea selection. |
 | Image for the post | image | stock / OpenRouter-generated / OpenRouter-edited from owner's image or prompt / owner-attached | yes, before publish | Method picked per post, flexibly. |
 | Approval | yes/no + edits | owner, chat | yes, before every publish | See Hard constraints. |
 
 ## Procedure (the SOP)
 
-0. On schedule, the agent runs the scouting digest, shares it with the owner. The owner may
-   react with thoughts, which folds into step 1 as an idea drop or inspiration capture.
-1. Owner sends an idea, a story, or forwards inspiration material (directly, or reacting to a
-   digest).
-   - decision point: **write now vs. save for later** — explicit ("viết bài này") vs. "lưu ý này
-     lại" defaults to save.
-2. If inspiration: extract the theme/hook/angle and store it against future ideas; no draft yet.
-3. If write-now: pick the content type (funny observation / story / education / sales offer)
-   from what the owner said and the current mix (two offers/month, rest education+story, per
-   `docs/Content Strategy.md`).
-   - decision point: an idea dropped mid-flow (while another draft is in progress) must not be
-     lost — queue it, don't discard it.
+0. On schedule, scouting searches the standing topics and files what it finds in the idea bank:
+   theme, hook, angle, source.
+1. The owner drops an idea, a story, a screenshot or a link whenever one comes to them. It goes
+   into the same bank.
+   - decision point: **draft it now vs. bank it** — an explicit ask ("viết bài này đi") drafts
+     now; anything else is banked for the daily batch to pick up.
+2. On schedule, the crew picks today's ideas from the bank.
+   - decision point: **which ideas, and what mix** — how many and the offer cadence (two per
+     month, per `docs/Content Strategy.md`) are fixed rules; which ideas fill the quota is
+     judgment about what fits now.
+3. For each picked idea, pick the content type (funny observation / story / education / sales
+   offer).
 4. Draft the post text in the owner's voice/intent from the idea. Stories keep the owner's own
    words; the agent doesn't fabricate a personal experience.
 5. Get an image: stock lookup, generate from a prompt via OpenRouter, edit an image the owner
@@ -49,34 +53,37 @@ Four shapes:
 6. Run the pre-publish check (Relevant / Closer / Connected, `docs/Content Strategy.md`). A
    failing draft is reworked once, then shown to the owner with the failure noted rather than
    silently forced through.
-7. Show the draft + image to the owner for approval.
+7. Send the draft + image to the owner as an approval card.
    - decision point: approve as-is, edit, or reject — owner's call, always.
 8. On approval, queue the post for the next good time slot (code-scheduled, seeded with the
-   owner's instinct — weekends, ~8pm — then adjusted over time from outcome data) rather than
-   publishing that instant.
+   owner's instinct — weekends, ~8pm — then adjusted from outcome data) rather than publishing
+   that instant.
 9. At each of 2h / 24h / 7d after publish, pull reach/reactions/comments/shares and log it
-   against the post, for the owner's own read and for future idea/topic decisions (the "viral
-   but doesn't sell" problem).
+   against the post.
+10. Weekly, read the posts against their outcomes: what worked, what did not, which slots earn
+    their place. Write the conclusions down as lessons that change how the next posts are
+    written and picked, retire the ones the numbers stopped supporting, and report the changes
+    to the owner. This is the step that used to happen in the owner's head.
 
 ## Deliverable
 
-A Facebook post (text + image) on the Vịt làm Data page, approved by the owner in chat then
-published at the next good time slot. Each post's outcome logged at 2h/24h/7d and retrievable
-later. Plus, on schedule, a scouting digest shared with the owner.
+A Facebook post (text + image) on the Vịt làm Data page, approved by the owner on a card then
+published at the next good time slot. Each post's outcome logged at 2h/24h/7d. Weekly, a report
+of what the numbers changed.
 
 ## Definition of done
 
-- [ ] From idea/material arriving to draft+image ready for approval takes under 10 minutes
-      (removes the "needs a dedicated sitting" bottleneck the manual process had).
-- [ ] Every draft shown for approval already passed the 3-point pre-publish check, or is shown
-      with the specific failing point named.
+- [ ] Draft cards arrive on schedule without the owner asking, and an idea the owner does drop
+      becomes a card in under 10 minutes.
+- [ ] Every card already passed the 3-point pre-publish check, or names the point it failed.
 - [ ] Every published post carries an image.
 - [ ] Every published post gets outcome checks logged at 2h, 24h and 7d, retrievable without the
       owner opening Facebook Business Suite by hand.
-- [ ] An idea dropped in while a draft is in progress is not lost (shows up after, doesn't
-      silently vanish).
-- [ ] Sustained output reaches at least 4 posts/week (target: daily) without the owner needing a
-      dedicated browsing/writing session.
+- [ ] An idea dropped while a draft is in progress is not lost.
+- [ ] Sustained output reaches at least 4 posts/week (target: daily) with the owner's time spent
+      only on ideas and approvals.
+- [ ] The weekly review changes something real — a lesson written or retired, or a slot moved —
+      and every lesson names the posts behind it.
 
 ## Hard constraints (never allowed)
 
@@ -86,6 +93,9 @@ later. Plus, on schedule, a scouting digest shared with the owner.
 - Never publish a sales/offer post outside the two-per-month cadence in `docs/Content
   Strategy.md`.
 - Never drop an idea the owner sends while another is in progress.
+- Never write a lesson that cannot name the posts and numbers behind it, and never let the
+  active set grow past its cap — the crew edits its own instructions here, so the caps are what
+  make that safe.
 - Repo-wide (CLAUDE.md): built-in n8n nodes only, no `$env`, no secrets in workflow/credential
   JSON, no private-network HTTP targets.
 
