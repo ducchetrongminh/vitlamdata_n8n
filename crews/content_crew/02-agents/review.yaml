@@ -1,0 +1,88 @@
+id: review
+version: 1
+goal: >
+  Read the recent posts against what they actually did, decide what that changes, and write it
+  down as lessons the next posts are written by.
+non_goals:
+  - does not rewrite or republish posts
+  - does not change the strategy, the offer cadence, or the three checks; those are the owner's
+  - does not invent a metric it was not given, or reason about selling from numbers that only
+    measure attention
+  - does not write a lesson it cannot evidence
+
+# --- T = (I, O, R) -------------------------------------------------------
+input:
+  schema: crews/content_crew/03-schemas/review_task.schema.json
+  description: >
+    The posts of the period with their 2h / 24h / 7d outcomes, their content types and slots;
+    the active lessons; the current slots with how many posts each has behind it; the posts the
+    owner edited or rejected.
+  preconditions:
+    - only posts whose 7d checkpoint has been taken count as settled
+    - active lessons arrive with the evidence they were written on
+
+output:
+  schema: crews/content_crew/03-schemas/review_result.schema.json
+  description: >
+    `{report, lessons_new: [{lesson, evidence}], lessons_retire: [{id, why}],
+    slot_changes: [{from, to, why, n}]}`.
+  postconditions:
+    - every new lesson is one claim, at most 250 characters
+    - every new lesson's evidence names at least two post ids and the numbers behind them
+    - every slot change carries n, the number of posts that slot has behind it
+    - all four fields may be empty
+
+requirements:
+  - "nothing changed this week" is a valid and sometimes correct answer; inventing a change to
+    look useful is the failure this call is most prone to, and the most expensive, because the
+    lesson then steers every post until something retires it
+  - one post is an anecdote; a lesson needs at least two behind it, and says so
+  - a new lesson that contradicts an active one retires that one explicitly instead of sitting
+    beside it
+  - it reads what the owner did as evidence too: a post they rewrote before approving says
+    something the numbers do not
+  - it distinguishes what travelled from what sold, and says plainly when it cannot tell the
+    difference from the data it has
+  - the report is for the owner: what changed, what it was based on, in their language
+
+# --- Capability ----------------------------------------------------------
+tools: []
+model:
+  tier: frontier
+  rationale: >
+    Reasoning over a table of numbers to decide what the crew believes next. It runs once a
+    week, so the cost is irrelevant and the quality is not.
+memory:
+  scope: long-term
+  store: the `lessons` table
+  rationale: >
+    This is the crew's only long-term memory, and it is a database with caps and evidence
+    columns rather than a growing prompt — which is what keeps it auditable and reversible.
+
+# --- Control -------------------------------------------------------------
+max_iterations: 1
+timeout_seconds: 300
+stop_conditions:
+  - output validates against the schema
+on_failure:
+  action: escalate
+  to: the owner, with the period's numbers and no changes applied
+  retries: 1
+
+why_not_merged: >
+  Not merged into the chat agent, although the owner could ask for the same analysis: this one
+  writes the instructions the crew works by, so it runs on a schedule, with code checking its
+  caps, not as a favour in a conversation. Not code either — deciding what a fortnight of
+  numbers means is exactly the judgment the owner used to do in their head.
+
+# --- Observability -------------------------------------------------------
+logs:
+  - token_usage
+  - final_output
+  - lessons_written
+  - lessons_retired
+eval:
+  dataset: crews/content_crew/06-evals/review.jsonl
+  metrics: [evidence_validity, no_change_when_no_signal, lesson_survival_rate]
+
+owner: Duc Che

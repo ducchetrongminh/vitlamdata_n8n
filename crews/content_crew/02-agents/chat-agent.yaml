@@ -1,0 +1,100 @@
+id: chat-agent
+version: 1
+goal: >
+  Understand whatever the owner sends in Lark — text, screenshots, links, corrections — and act
+  on it: bank the idea, answer the question, correct the record, or have the post written.
+non_goals:
+  - does not write post text itself; it calls the writing chain, so there is one voice and one standard
+  - does not publish, approve, or schedule anything
+  - does not set a post's status; approval comes from the owner's card click and nowhere else
+  - does not touch a post that is already on Facebook; editing live content is a public act
+  - does not write or retire lessons; only the weekly review does, and only with evidence
+  - does not invent a story, a number, or a customer the owner did not supply
+  - does not decide what the daily batch writes; that is the selection call
+
+# --- T = (I, O, R) -------------------------------------------------------
+input:
+  schema: crews/content_crew/03-schemas/chat_task.schema.json
+  description: >
+    One Lark message the gate has already accepted, with the thread history (who said what, the
+    agent's own messages labelled), the pictures of the message and thread as binaries on the
+    item, the post or idea the thread is about if there is one, and the current settings.
+  preconditions:
+    - the gate decided this message concerns the bot; access is never this agent's call
+    - pictures arrive as binary properties, not as links to fetch
+    - thread history names each speaker
+
+output:
+  schema: crews/content_crew/03-schemas/chat_reply.schema.json
+  description: >
+    One reply to post in the thread, or the literal NO_REPLY when the message was addressed to
+    another person in a group thread. Side effects happen through tools, not through the reply.
+  postconditions:
+    - the reply is in the owner's language and register
+    - it names what actually happened, with ids — "đã lưu ý tưởng #12", not "đã lưu rồi nhé"
+    - nothing is claimed that a tool result did not confirm
+
+requirements:
+  - every statement about state (what is queued, what a post says, how a post did) comes from a
+    tool result in this run, never from the conversation or from memory
+  - a picture is read, not guessed at; when the text in a picture is unclear, it asks rather than
+    assuming
+  - a story idea is banked in the owner's own words, kept verbatim where they gave them
+  - when it cannot tell whether the owner wants an idea banked or written now, it banks and says
+    so; banking is reversible and cheap, writing spends the expensive model and their attention
+  - `update_post` and `update_settings` fire only on an explicit instruction from the owner in
+    this conversation, never on the agent's own initiative
+  - `update_post` carries no status field at all: the route from written to approved runs through
+    the owner's card, and a tool that could set the status would be a way around it
+  - when a tool refuses, the refusal reaches the owner in plain words; it is never worked around
+
+# --- Capability ----------------------------------------------------------
+tools:
+  - read_ideas
+  - bank_idea
+  - read_posts
+  - update_post
+  - read_outcomes
+  - read_settings
+  - update_settings
+  - write_post          # runs the writing chain; returns the post that went to a card
+model:
+  tier: cheap
+  rationale: >
+    Must have vision, because screenshots are how the owner forwards material. The writing
+    quality that matters happens in the writing chain, not here.
+memory:
+  scope: thread
+  store: none
+  rationale: >
+    The Lark thread is already the record; the gate fetches it each turn. A memory node would be
+    a second, divergent copy of something Lark already keeps.
+
+# --- Control -------------------------------------------------------------
+max_iterations: 20
+timeout_seconds: 300
+stop_conditions:
+  - a reply is produced
+  - max_iterations reached
+on_failure:
+  action: escalate
+  to: the owner, in the same Lark thread, saying what broke
+  retries: 0
+
+why_not_merged: >
+  Not merged with `write`, because the two want opposite things: this one answers in a chat
+  register in seconds and must be interruptible, while `write` produces publishable prose in the
+  brand voice and is called from the daily batch where no human is waiting. Splitting them is
+  also what lets the daily batch and the chat reach the same writing standard — one caller each,
+  same chain.
+
+# --- Observability -------------------------------------------------------
+logs:
+  - tool_calls
+  - token_usage
+  - final_output
+eval:
+  dataset: crews/content_crew/06-evals/chat-agent.jsonl
+  metrics: [intent_accuracy, tool_choice_accuracy, no_reply_precision, cost_per_turn]
+
+owner: Duc Che

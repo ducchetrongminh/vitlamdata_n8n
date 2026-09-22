@@ -1,0 +1,74 @@
+id: select
+version: 1
+goal: >
+  Choose which ideas from the bank get written today, and say why each one fits today.
+non_goals:
+  - does not set the quota or the mix; code hands both in
+  - does not write anything
+  - does not delete, edit or retire ideas
+  - does not reach outside the bank it was given
+
+# --- T = (I, O, R) -------------------------------------------------------
+input:
+  schema: crews/content_crew/03-schemas/select_task.schema.json
+  description: >
+    Today's quota, the content types still allowed today (code has already applied the offer
+    cadence), the unused ideas in the bank with their age and source, the posts that went out
+    recently, and the active lessons.
+  preconditions:
+    - every idea in the bank carries an id, a theme and a source
+    - allowed_types already excludes offer when the month's two are used
+
+output:
+  schema: crews/content_crew/03-schemas/selection.schema.json
+  description: >
+    `{picks: [{idea_id, content_type, why_today}], short: bool, short_reason}` with at most
+    `quota` picks.
+  postconditions:
+    - every idea_id appears in the input bank
+    - every content_type is in allowed_types
+    - when fewer than quota ideas are worth writing, short is true and short_reason says why
+
+requirements:
+  - it returns fewer picks rather than padding with weak ideas; a thin bank is reported, not
+    hidden, because the fix is the owner dropping ideas and they can only do that if they know
+  - no two picks that would produce near-duplicate posts, and none that repeats a recent post
+  - an idea the owner dropped wins over a scouted one when both fit; their material is the
+    stronger signal about what this page sounds like
+  - why_today is a reason tied to this idea now — a date, a recent event, the mix, an offer
+    coming — not a restatement of the idea
+
+# --- Capability ----------------------------------------------------------
+tools: []
+model:
+  tier: cheap
+  rationale: short judgment over a list of titles; no generation quality needed
+memory:
+  scope: none
+  store: none
+  rationale: everything relevant is in the input
+
+# --- Control -------------------------------------------------------------
+max_iterations: 1
+timeout_seconds: 60
+stop_conditions:
+  - output validates against the schema
+on_failure:
+  action: degrade
+  to: fall back to the oldest unused ideas that fit allowed_types, and note it in the run
+  retries: 1
+
+why_not_merged: >
+  Not merged into `write`, because a writer told to pick its own subject will pick the one it
+  finds easiest to write, not the one the mix needs. Not merged into code either: which of forty
+  banked ideas suits today is judgment, even though how many and what type are not.
+
+# --- Observability -------------------------------------------------------
+logs:
+  - token_usage
+  - final_output
+eval:
+  dataset: crews/content_crew/06-evals/select.jsonl
+  metrics: [quota_respected, duplicate_rate, owner_idea_preference, short_honesty]
+
+owner: Duc Che

@@ -1,0 +1,74 @@
+id: scout
+version: 1
+goal: >
+  Search the standing topics and come back with ideas worth banking: what happened, and the
+  angle that could carry a post.
+non_goals:
+  - does not write posts
+  - does not message the owner; its output reaches them later as cards
+  - does not bank anything it cannot cite
+  - does not judge which ideas get written; selection does
+
+# --- T = (I, O, R) -------------------------------------------------------
+input:
+  schema: crews/content_crew/03-schemas/scout_task.schema.json
+  description: >
+    The standing topics from settings, the themes already in the bank so it can avoid them, and
+    how many items to bring back.
+  preconditions:
+    - topics is non-empty
+    - recent_themes may be empty on the first run
+
+output:
+  schema: crews/content_crew/03-schemas/scouted_ideas.schema.json
+  description: >
+    `[{theme, hook, angle, source_url, why_it_matters}]`, at most the number asked for.
+  postconditions:
+    - every source_url came from the search results, not from the model's memory
+    - no theme duplicates one in recent_themes
+
+requirements:
+  - the hook is the angle a post would take, not a summary of the article; a summary is a link,
+    and the owner does not need more links
+  - material from outside the data field is welcome when the hook transfers — the theme, the
+    structure or the joke can come from anywhere, the subject stays ours
+  - nothing the page would not touch: politics, tragedy used as a hook, other people's failures
+    named, anything that needs a disclaimer
+  - when the search turns up nothing worth banking, it returns an empty list; an empty week is
+    information, a padded one is noise the selection call then has to wade through
+
+# --- Capability ----------------------------------------------------------
+tools:
+  - web_search          # OpenRouter's own, in the same call
+model:
+  tier: cheap
+  rationale: search and summarise in one call; judgment about what to write happens elsewhere
+memory:
+  scope: none
+  store: none
+  rationale: the bank is the memory; recent_themes arrives on the item
+
+# --- Control -------------------------------------------------------------
+max_iterations: 1
+timeout_seconds: 180
+stop_conditions:
+  - output validates against the schema
+on_failure:
+  action: degrade
+  to: no ideas banked this run; the batch works from what the bank already holds
+  retries: 1
+
+why_not_merged: >
+  Not merged with `select`, because they run on different clocks and different inputs: scouting
+  fills the bank whether or not anything is written today. Merging them would tie the day's
+  output to whatever the search happened to return that morning.
+
+# --- Observability -------------------------------------------------------
+logs:
+  - token_usage
+  - final_output
+eval:
+  dataset: crews/content_crew/06-evals/scout.jsonl
+  metrics: [citation_validity, duplicate_rate, ideas_later_written_rate]
+
+owner: Duc Che

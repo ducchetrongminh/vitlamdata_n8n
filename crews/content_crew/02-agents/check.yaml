@@ -1,0 +1,73 @@
+id: check
+version: 1
+goal: >
+  Judge one written post against the strategy's three questions — Relevant, Closer, Connected —
+  and return a verdict code can branch on.
+non_goals:
+  - does not rewrite, suggest wording, or edit
+  - does not judge style, grammar or taste; that is the writer's job and second-guessing it here
+    produces two voices
+  - does not approve publication; the owner does
+  - does not see the writer's reasoning, and must not ask for it
+
+# --- T = (I, O, R) -------------------------------------------------------
+input:
+  schema: crews/content_crew/03-schemas/check_task.schema.json
+  description: >
+    The post text, its content type, the idea behind it, and the offer it claims to lead toward.
+    Nothing from the writing call's context.
+  preconditions:
+    - text is the final text, not a summary of it
+    - the three questions come from `docs/Content Strategy.md`, unchanged
+
+output:
+  schema: crews/content_crew/03-schemas/check_result.schema.json
+  description: >
+    `{pass: bool, issues: [{point, why}]}` where point is relevant | closer | connected.
+  postconditions:
+    - pass is false if and only if issues is non-empty
+    - every issue names one point and one concrete reason
+
+requirements:
+  - a failure names what specifically fails, in terms of the post's own words — never "could be
+    stronger", never a general impression
+  - it judges the post as a reader on Facebook would meet it, not as the intent behind it
+  - a post that answers all three questions passes, even if it is plain; dullness is not this
+    call's business
+  - it does not invent a fourth criterion
+  - it is willing to pass; a checker that never passes is as useless as one that never fails
+
+# --- Capability ----------------------------------------------------------
+tools: []
+model:
+  tier: cheap
+  rationale: a three-question rubric over one short text; the value is the separate context, not the horsepower
+memory:
+  scope: none
+  store: none
+  rationale: must not carry anything from the writing call
+
+# --- Control -------------------------------------------------------------
+max_iterations: 1
+timeout_seconds: 60
+stop_conditions:
+  - output validates against the schema
+on_failure:
+  action: degrade
+  to: treat as pass with an issue noted on the card, so a broken checker cannot block the crew
+  retries: 1
+
+why_not_merged: >
+  Kept separate from `write` deliberately: the same call reviewing its own output rationalises
+  it. Separate context is the whole mechanism. Not promoted to an agent either — it makes one
+  judgment with no tools and no next step to choose.
+
+# --- Observability -------------------------------------------------------
+logs:
+  - token_usage
+  - final_output
+eval:
+  dataset: crews/content_crew/06-evals/check.jsonl
+  metrics: [agreement_with_owner, false_fail_rate, false_pass_rate]
+
+owner: Duc Che
