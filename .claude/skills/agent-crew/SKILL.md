@@ -1,30 +1,36 @@
-# Building an AI Agent Crew — Design & Implementation Guide
-
-A phased methodology for designing, building and operating a multi-agent LLM system,
-with implementation mapping for **n8n (self-hosted)**.
-
-This document is both a **method** and a **set of fill-in templates**. It is written to be
-committed to a repo and used as working context for an AI coding assistant.
-
+---
+name: agent-crew
+description: >
+  Phased methodology (task spec, architecture, agent contracts, interaction design, prompts,
+  tools, evaluation) for designing and building a new multi-agent LLM system as an n8n crew in
+  this repo, with a mapping of every design artifact to real n8n nodes, NocoDB state tables,
+  and this repo's credentials/scripts conventions. Use whenever the user wants to design, plan,
+  spec out, or build a new AI agent, agent crew, agent system, orchestrator, chatbot, or
+  multi-agent workflow — even if they don't say "crew" or "methodology" explicitly, e.g. "I
+  want an agent that monitors X and posts to Y", "help me design a research bot for Lark",
+  "add a new automation with an LLM step", "should this be one agent or two". Also use when
+  extending or reviewing an existing crew under `crews/<crew_name>/` or `workflows/<crew_name>/`.
 ---
 
-## 0. How to use this document
+# Building an AI agent crew
 
-### 0.1 With Claude Code (or any coding agent)
+A phased method for designing, building and operating a multi-agent LLM system, mapped to
+this repo's n8n instance. It is both a method and a set of fill-in templates (in `assets/`).
+
+## How to use this
 
 This repo hosts multiple crews, not one. A crew's blueprint lives in `crews/<crew_name>/`,
 its built n8n workflows in `workflows/<crew_name>/` (per `CLAUDE.md`'s loop: edit the file,
-`scripts/push.sh`), and its architecture notes in `docs/<Crew Name>.md`. `crews/` is design —
-diagrams, contracts, prompts, evals — none of it runs. `workflows/` is what actually runs.
+`scripts/push.sh`). `crews/` is design — diagrams, contracts, prompts, evals — none of it
+runs. `workflows/` is what actually runs.
 
-Paste this at the start of a session:
+When the user wants to build something agent-shaped, find out which crew this is (existing or
+new) and which phase they're at, then work through that phase: ask the questions listed under
+it, produce the phase's artifact into `crews/<crew_name>/`, and stop at the phase gate for
+approval before moving on. Don't skip ahead to implementation (writing prompts or n8n JSON)
+before the phase that produces it.
 
-> Read `docs/Agent Crew Guide.md`. We are building the `<crew_name>` crew, at Phase `<N>`.
-> Do not skip ahead to implementation. Work through the phase with me, ask me the questions
-> listed under that phase, and produce the phase's artifact into `crews/<crew_name>/`. Stop
-> at the phase gate and wait for my approval.
-
-Rules for the assistant working with this document:
+Rules:
 
 1. **Never generate agent prompts before the agent contracts in `crews/<crew_name>/02-agents/`
    exist.** A prompt written before a contract is a guess.
@@ -37,20 +43,17 @@ Rules for the assistant working with this document:
 6. Before writing a tool spec or a node-level note, check `CLAUDE.md`'s Nodes / DeepSeek /
    Lark / Facebook sections for a quirk already verified on this instance — don't re-derive it.
 
-### 0.2 Repo layout
+### Repo layout
 
 ```
 .
 ├── CLAUDE.md                    # instance rules, scripts, verified API/node quirks
-├── docs/
-│   ├── Agent Crew Guide.md      # this file — the method, shared by every crew
-│   └── <Crew Name>.md           # one crew's architecture notes + open questions log
+├── .claude/skills/agent-crew/   # this skill — the method, shared by every crew
 ├── crews/
 │   └── <crew_name>/             # blueprint — nothing here runs
 │       ├── 00-task-spec.md      # Phase 0 — the SOP
 │       ├── 01-architecture.md   # Phase 1 — topology + control boundary
 │       ├── 02-agents/
-│       │   ├── _template.yaml
 │       │   └── researcher.yaml  # Phase 2 — one contract per agent
 │       ├── 03-interaction.md    # Phase 3 — protocol, acquaintance matrix
 │       ├── 03-schemas/
@@ -60,7 +63,6 @@ Rules for the assistant working with this document:
 │       │   ├── _shared.md       # global rules injected into every agent
 │       │   └── researcher.md    # Phase 4 — one per agent, generated from its contract
 │       ├── 05-tools/
-│       │   ├── _template.yaml
 │       │   └── registry.md      # Phase 5 — tool registry
 │       ├── 06-evaluation.md     # Phase 6 — eval plan
 │       ├── 06-evals/
@@ -70,8 +72,6 @@ Rules for the assistant working with this document:
 │       └── open-questions.md    # ongoing
 ├── workflows/
 │   └── <crew_name>/             # built — exported n8n JSON, source of truth for n8n
-│       ├── orchestrator.json
-│       └── agent_researcher.json
 ├── nocodb/                      # shared/blackboard state and run traces, if the crew needs them
 ├── credentials/
 └── scripts/
@@ -165,35 +165,7 @@ the most common and most expensive mistake.
 
 ### 2.2 Artifact: `crews/<crew_name>/00-task-spec.md`
 
-```markdown
-# Task specification
-
-## Trigger
-<what starts a run>
-
-## Inputs
-| Name | Type | Source | Required | Notes |
-|---|---|---|---|---|
-
-## Procedure (the SOP)
-1. <step a human would perform>
-2. ...
-   - decision point: <what is decided, on what basis>
-
-## Deliverable
-<exact format and destination>
-
-## Definition of done
-- [ ] criterion 1 (measurable)
-- [ ] criterion 2
-- [ ] criterion 3
-
-## Hard constraints (never allowed)
-- ...
-
-## Baseline
-Manual cost per run: <time>. Runs per week: <n>. Target: <what improvement justifies this project>
-```
+Copy `assets/task-spec-template.md` as the starting point.
 
 ### 2.3 Gate 0
 
@@ -257,32 +229,7 @@ Rules of thumb:
 
 ### 3.3 Artifact: `crews/<crew_name>/01-architecture.md`
 
-```markdown
-# Architecture
-
-## Chosen topology
-<pattern name> — because <reason>
-
-## Rejected alternatives
-- <pattern>: rejected because <reason>
-
-## Diagram
-<mermaid or ASCII: stages, agents, data flow, gates>
-
-## Control boundary
-| Decision | Made by | Why | Cost if wrong |
-
-## State model
-- Shared state store: <where>
-- Per-agent memory: <scope, TTL>
-- What is passed vs. what is looked up
-
-## Non-functional targets
-- Latency budget per run:
-- Cost budget per run:
-- Max concurrency:
-- Failure mode: <fail closed / fail open / escalate>
-```
+Copy `assets/architecture-template.md` as the starting point.
 
 ### 3.4 Gate 1
 
@@ -297,76 +244,12 @@ Rules of thumb:
 
 **Goal:** one contract per agent. No prompts yet.
 
-### 4.1 Agent contract template
+### 4.1 Agent contract
 
-`crews/<crew_name>/02-agents/_template.yaml`:
-
-```yaml
-id: researcher                      # stable identifier, used in code and logs
-version: 1
-goal: >
-  One sentence. What this agent is responsible for producing.
-non_goals:                          # explicit scope fence — prevents drift
-  - does not write prose
-  - does not decide publication
-
-# --- T = (I, O, R) -------------------------------------------------------
-input:
-  schema: crews/<crew_name>/03-schemas/brief.schema.json
-  description: >
-    Admissible inputs. Include what is guaranteed present, and what may be null.
-  preconditions:
-    - topic is non-empty
-    - audience is one of [...]
-
-output:
-  schema: crews/<crew_name>/03-schemas/research_result.schema.json
-  description: >
-    Exact output shape. Prefer arrays of objects over prose.
-  postconditions:
-    - every claim has at least one source_url
-    - sources are deduplicated by domain+path
-
-requirements:                       # R — what makes an output valid
-  - no claim without a retrievable source
-  - prefer primary sources over aggregators
-  - flag conflicting evidence rather than resolving it silently
-
-# --- Capability ----------------------------------------------------------
-tools:                              # least privilege — only what this role needs
-  - web_search
-  - fetch_page
-  - vector_retrieve
-model:
-  tier: mid                         # cheap | mid | frontier
-  rationale: reasoning over search results, not generation quality
-memory:
-  scope: run                        # none | run | thread | long-term
-  store: none
-  rationale: no cross-run context needed
-
-# --- Control -------------------------------------------------------------
-max_iterations: 8
-timeout_seconds: 180
-stop_conditions:
-  - output validates against schema
-  - max_iterations reached
-on_failure:
-  action: escalate                  # retry | escalate | fail_closed | degrade
-  to: human_review
-  retries: 1
-
-# --- Observability -------------------------------------------------------
-logs:
-  - tool_calls
-  - token_usage
-  - final_output
-eval:
-  dataset: crews/<crew_name>/06-evals/researcher.jsonl
-  metrics: [source_validity, claim_coverage, cost_per_run]
-
-owner: <person>
-```
+One file per agent at `crews/<crew_name>/02-agents/<id>.yaml`. Copy
+`assets/agent-contract-template.yaml` as the starting point — it has the full field set
+(`T = (I, O, R)`, tools, model tier, memory scope, iteration/timeout limits, `on_failure`,
+observability, eval) with comments explaining each.
 
 ### 4.2 Filling `non_goals` matters
 
@@ -414,31 +297,12 @@ tables and retrieval, not by growing a context window.
 ### 5.1 Structured messaging, always
 
 Agents exchange **typed messages**, never free prose. Prose handoffs degrade information
-silently and make failures unattributable.
+silently and make failures unattributable. Every message follows the envelope in
+`assets/envelope.schema.json` (`run_id`, `from`, `to`, `type`, `payload`, `payload_schema`,
+`status: ok|partial|failed`, `issues[]`, `cost`, `trace.depth`) — copy it to
+`crews/<crew_name>/03-schemas/envelope.schema.json` and version payload schemas from day one
+(`research_result@1`).
 
-Standard envelope — `crews/<crew_name>/03-schemas/envelope.schema.json`:
-
-```json
-{
-  "run_id": "uuid",
-  "message_id": "uuid",
-  "from": "researcher",
-  "to": "outliner",
-  "type": "result",
-  "ts": "2026-09-22T10:00:00Z",
-  "attempt": 1,
-  "payload": { },
-  "payload_schema": "research_result@1",
-  "status": "ok",
-  "issues": [],
-  "cost": { "input_tokens": 0, "output_tokens": 0 },
-  "trace": { "parent_message_id": "uuid", "depth": 1 }
-}
-```
-
-Rules:
-
-- Payloads validate against a versioned schema. Version them (`@1`) from day one.
 - `status` is one of `ok | partial | failed`. `partial` is what prevents silent degradation.
 - `issues[]` carries machine-readable problems, not apologies in prose.
 - `depth` lets you cap delegation depth in code.
@@ -518,53 +382,15 @@ detail of the contract, not the other way round.
 
 ### 6.1 Prompt anatomy
 
-Fixed order. Deviating costs you reliability.
-
-```markdown
-# 1. Identity and scope
-You are the <role>. You are responsible for <goal>.
-You do not <non_goals, as a list>.
-
-# 2. Input contract
-You will receive: <description of input + schema summary>.
-If a required field is missing or malformed, do not guess — return status "failed"
-with an issue of type "bad_input".
-
-# 3. Procedure
-Follow these steps in order:
-1. ...
-2. ...
-(derived from the Phase 0 SOP, narrowed to this role)
-
-# 4. Tool policy
-Available tools: <list>.
-- Use <tool> when <condition>.
-- Do NOT use <tool> for <anti-condition>.
-- Never call more than <n> tools before producing output.
-- If a tool fails twice, stop and return status "partial".
-
-# 5. Output contract
-Return ONLY JSON matching this schema:
-<schema>
-No prose, no markdown fences, no explanation.
-
-# 6. Quality requirements
-<the R list from the contract, as checkable rules>
-
-# 7. Escalation
-If <condition>, return status "failed" with issue code <code>. Do not attempt to
-work around it.
-
-# 8. Examples
-<2–3 input→output pairs, including at least one failure case>
-```
+Fixed order — identity/scope, input contract, procedure, tool policy, output contract,
+quality requirements, escalation, examples. Deviating costs you reliability. Copy
+`assets/prompt-template.md` and fill it from the agent's `crews/<crew_name>/02-agents/<id>.yaml`.
 
 ### 6.2 Shared block
 
 Put everything global in `crews/<crew_name>/04-prompts/_shared.md` and inject it into every
-agent: house rules,
-terminology conventions, formatting conventions, refusal rules, date handling. One place to
-change, all agents updated.
+agent: house rules, terminology conventions, formatting conventions, refusal rules, date
+handling. One place to change, all agents updated.
 
 ### 6.3 Practical rules
 
@@ -594,38 +420,12 @@ change, all agents updated.
 
 **Goal:** a registry of capabilities with explicit privilege and failure semantics.
 
-### 7.1 Tool spec template
+### 7.1 Tool spec
 
-`crews/<crew_name>/05-tools/_template.yaml`:
-
-```yaml
-id: web_search
-description: >
-  THIS IS A PROMPT. The model reads this to decide when to call the tool.
-  Say what it does, what it returns, and when NOT to use it.
-  e.g. "Search the public web for recent sources on a topic. Returns up to 10
-  results with title, url, snippet. Use for facts after <cutoff>. Do not use to
-  fetch a page you already have a URL for — use fetch_page."
-parameters:
-  type: object
-  properties:
-    query: { type: string, maxLength: 200 }
-    recency_days: { type: integer, minimum: 1, maximum: 365 }
-  required: [query]
-returns:
-  schema: crews/<crew_name>/03-schemas/search_results.schema.json
-side_effect: read            # read | write | destructive | spend
-auth: api_key:TAVILY
-rate_limit: 60/min
-timeout_seconds: 20
-cost_per_call: 0.005
-errors:
-  - code: rate_limited     -> behavior: backoff, then return partial
-  - code: no_results       -> behavior: return empty array, not an error
-  - code: upstream_5xx     -> behavior: retry once, then partial
-allowed_roles: [researcher]  # least privilege
-idempotent: true
-```
+One entry per tool in `crews/<crew_name>/05-tools/registry.md`. Copy
+`assets/tool-spec-template.yaml` as the starting point for each — description (a prompt: what
+it does, what it returns, when NOT to use it), parameters, returns schema, `side_effect`
+class, auth, rate limit, timeout, cost, per-error behavior, `allowed_roles`, idempotency.
 
 ### 7.2 Side-effect classes and gating
 
@@ -722,61 +522,11 @@ You will want this within the first week of real use. Add it before you need it.
 
 ---
 
-## 9. Implementation in n8n (self-hosted)
+## 9. Implementation in n8n
 
-### 9.1 Mapping design artifacts to n8n
-
-| Design artifact | n8n implementation |
-|---|---|
-| Agent (role model) | one workflow per agent under `workflows/<crew_name>/`, **Execute Workflow trigger** |
-| Agent contract → prompt | AI Agent node system prompt (content pulled from `crews/<crew_name>/04-prompts/`) |
-| Output contract | Structured Output Parser sub-node + a code-level schema validation step |
-| Acquaintance matrix | which sub-workflows are attached to which agent as **Call n8n Workflow Tool** |
-| Tool registry | tool sub-nodes / HTTP Request Tool, one per registry entry |
-| Blackboard / shared state | a NocoDB table under `nocodb/<base>/`, keyed by `run_id` (see `CLAUDE.md`'s NocoDB section) |
-| Agent memory (`thread`) | Postgres Chat Memory sub-node (n8n's own DB) or a NocoDB table if you need to query history outside the agent |
-| Lifecycle gates | IF / Switch nodes, Code nodes — never model judgment alone |
-| Termination limits | agent `maxIterations` + explicit counters in the orchestrator loop |
-| Human-in-the-loop | Wait node with webhook resume, or Form/Slack approval |
-| Tracing | a Code node after every stage writing a row to a NocoDB trace table, or `GET /executions` for a quick look |
-| Credentials | `credentials/<type>_<id>.json` + `scripts/push-credentials.sh` — never inline keys in nodes |
-| Versioning | `workflows/<crew_name>/<id>.json` via `scripts/pull.sh` / `push.sh`, committed to git |
-
-### 9.2 Node-level notes
-
-- The **Tools Agent** is the default agent type; it selects tools from their descriptions, so
-  the registry description field is load-bearing.
-- **Call n8n Workflow Tool** is what turns a workflow into a sub-agent. Give each one a
-  description written like a tool spec, not like a workflow name.
-- Sub-agents should accept and return **one JSON object**, matching the envelope. Map fields
-  explicitly with a Set node at both ends — do not rely on implicit passthrough.
-- Use **Split Out + Loop Over Items** to process sections/chunks as separate model calls.
-  Cheaper retries, better quality, isolated failures.
-- Attach an **error output** to every tool-bearing node and route it to a dead-letter path.
-- For loops (evaluator–optimizer), use an explicit counter in a Set node and an IF node.
-  Never let the agent decide when to stop.
-
-### 9.3 State and tracing in NocoDB
-
-Docker, Traefik and the n8n VM belong to `vitlamdata_infras`, not here — nothing in this repo
-configures the instance itself. What *is* in scope: state a crew needs beyond n8n's own
-execution log. Use NocoDB, following the existing convention in `CLAUDE.md`'s NocoDB section
-(`nocodb/<base>/`, `scripts/nocodb-push.sh`, `.n8n-state/nocodb/`), not a hand-rolled Postgres
-schema:
-
-- **`runs` table** — `run_id`, `trigger_type`, `input`, `status`
-  (`running|done|failed|cancelled`), `started_at`, `ended_at`, `total_cost`.
-- **`stage_traces` table** — `run_id`, `stage`, `agent_id`, `agent_version`, `prompt_version`,
-  `model`, `input_tokens`, `output_tokens`, `cost`, `latency_ms`, `tool_calls`, `status`,
-  `issues`, `created_at`.
-- **`artifacts` table** — `run_id`, `stage`, `payload`, `payload_schema`, `created_at`. Lets you
-  resume a failed run from the last good stage instead of re-running the whole crew.
-
-Only add these tables once a crew's evaluation or debugging actually needs them (Gate 6) —
-`GET /executions?workflowId=` already gives per-run history for free. Define them as
-`nocodb/<base>/<table>.json` per the existing schema (`id title description display_field
-fields`), push with `scripts/nocodb-push.sh`, and reference the base/table ids from the
-workflow nodes that write to them.
+See `references/n8n-mapping.md` for the full mapping of every design artifact to n8n nodes
+(AI Agent, Call n8n Workflow Tool, Structured Output Parser, ...), node-level quirks, and how
+to model shared state and tracing in NocoDB rather than a hand-rolled Postgres schema.
 
 ---
 
@@ -796,83 +546,6 @@ Build order, once gates are passed: **thinnest end-to-end path first** (trigger 
 call → output), run it on real inputs 10 times, then add stages one at a time, re-running
 evals after each. Add the orchestrator last, not first.
 
----
-
-## 11. Worked skeleton — research/content crew
-
-An illustration of the method applied, not a prescription.
-
-```
-trigger (brief)
-  └─ code: validate brief, create run_id, write runs row
-  └─ AGENT researcher            [tools: web_search, fetch_page, vector_retrieve]
-       → research_result@1
-  └─ GATE G1: schema + >=5 sources + URLs resolve        (code)
-  └─ code: dedupe claims vs covered_topics (embeddings)  (no model)
-  └─ LLM outliner (no tools)     → outline@1
-  └─ GATE G2: section count, required sections           (code)
-  └─ loop over sections:
-       └─ LLM writer (no tools)  → section@1
-  └─ LLM editor                  → {pass, issues[]}
-  └─ GATE G3: if !pass and attempts<2 → loop to writer   (code counter)
-  └─ code: terminology/glossary check against DB table   (no model)
-  └─ HUMAN approval (Wait node)
-  └─ publish (code-executed intent, not an agent tool)
-```
-
-Notes on why it is shaped this way:
-
-- Only **one** true agent (the researcher) — it's the only stage whose next action depends on
-  what it just found. Everything else is a fixed chain, which is cheaper and far easier to
-  debug.
-- Dedupe and terminology compliance are **code**, because they are checkable rules; models
-  drift on exactly this kind of constraint.
-- The editor produces a **judgment object**, and code decides what to do with it.
-- Publishing is never an agent-held tool.
-
----
-
-## 12. Reading list
-
-**Classical agent-oriented software engineering** — still the best source for role and
-interaction modelling:
-
-- **Gaia** — roles model, interactions model; then agent, services and acquaintance models.
-- **Prometheus** — system specification → architectural design → detailed design.
-- **Tropos** (goal-oriented), **MaSE** (organization-oriented).
-
-**LLM-era practice:**
-
-- Anthropic, *Building Effective Agents* — the pattern catalogue (chaining, routing,
-  parallelization, orchestrator-workers, evaluator-optimizer, autonomous agents).
-- OpenAI, *A Practical Guide to Building Agents* — single-agent-first, manager vs handoff.
-- MetaGPT — encoding human SOPs as agent roles.
-- CrewAI docs — role/goal/backstory + tasks + sequential/hierarchical process, useful as a
-  design template regardless of implementation.
-
-**Research worth reading before you scale:**
-
-- **SEMAP** — behavioral contracts, structured messaging, lifecycle-guided execution with
-  verification, as a protocol layer.
-- **MAST** (Multi-Agent System Failure Taxonomy) — use as a pre-mortem checklist.
-- **"Know the Ropes"** — decompose a known procedure into stages, each a well-formulated
-  task `T = (I, O, R)`.
-- Surveys of multi-agent orchestration comparing LangGraph / CrewAI / AutoGen / OpenAI
-  Agents SDK / MetaGPT / DSPy on state granularity, token cost, and failure recovery.
-
----
-
-## 13. Glossary
-
-| Term | Meaning here |
-|---|---|
-| **Agent** | a model call loop that can choose tools and iterate |
-| **Chain** | fixed sequence of model calls, no choice |
-| **Crew** | a set of agents coordinating toward one deliverable |
-| **Contract** | the `I/O/R` specification of an agent, in `crews/<crew_name>/02-agents/` |
-| **Control boundary** | the line between code-made and model-made decisions |
-| **Gate** | a code-enforced check between stages |
-| **Envelope** | the typed message wrapper passed between agents |
-| **Acquaintance matrix** | who may invoke whom |
-| **Blackboard** | shared state store all agents can read/write |
-| **Golden set** | curated evaluation dataset with expected outputs |
+A worked example of the method applied to a research/content crew is in
+`references/worked-skeleton.md`. Further reading and a glossary of terms used throughout are
+in `references/reading-list.md`.

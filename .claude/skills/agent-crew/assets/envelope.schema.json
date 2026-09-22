@@ -1,0 +1,15 @@
+{
+  "run_id": "uuid",
+  "message_id": "uuid",
+  "from": "researcher",
+  "to": "outliner",
+  "type": "result",
+  "ts": "2026-09-22T10:00:00Z",
+  "attempt": 1,
+  "payload": { },
+  "payload_schema": "research_result@1",
+  "status": "ok",
+  "issues": [],
+  "cost": { "input_tokens": 0, "output_tokens": 0 },
+  "trace": { "parent_message_id": "uuid", "depth": 1 }
+}

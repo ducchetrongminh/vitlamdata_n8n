@@ -1,0 +1,64 @@
+id: researcher                      # stable identifier, used in code and logs
+version: 1
+goal: >
+  One sentence. What this agent is responsible for producing.
+non_goals:                          # explicit scope fence — prevents drift
+  - does not write prose
+  - does not decide publication
+
+# --- T = (I, O, R) -------------------------------------------------------
+input:
+  schema: crews/<crew_name>/03-schemas/brief.schema.json
+  description: >
+    Admissible inputs. Include what is guaranteed present, and what may be null.
+  preconditions:
+    - topic is non-empty
+    - audience is one of [...]
+
+output:
+  schema: crews/<crew_name>/03-schemas/research_result.schema.json
+  description: >
+    Exact output shape. Prefer arrays of objects over prose.
+  postconditions:
+    - every claim has at least one source_url
+    - sources are deduplicated by domain+path
+
+requirements:                       # R — what makes an output valid
+  - no claim without a retrievable source
+  - prefer primary sources over aggregators
+  - flag conflicting evidence rather than resolving it silently
+
+# --- Capability ----------------------------------------------------------
+tools:                              # least privilege — only what this role needs
+  - web_search
+  - fetch_page
+  - vector_retrieve
+model:
+  tier: mid                         # cheap | mid | frontier
+  rationale: reasoning over search results, not generation quality
+memory:
+  scope: run                        # none | run | thread | long-term
+  store: none
+  rationale: no cross-run context needed
+
+# --- Control -------------------------------------------------------------
+max_iterations: 8
+timeout_seconds: 180
+stop_conditions:
+  - output validates against schema
+  - max_iterations reached
+on_failure:
+  action: escalate                  # retry | escalate | fail_closed | degrade
+  to: human_review
+  retries: 1
+
+# --- Observability -------------------------------------------------------
+logs:
+  - tool_calls
+  - token_usage
+  - final_output
+eval:
+  dataset: crews/<crew_name>/06-evals/researcher.jsonl
+  metrics: [source_validity, claim_coverage, cost_per_run]
+
+owner: <person>
