@@ -34,20 +34,44 @@ Rớt câu nào thì sửa hoặc bỏ bài.
 
 ## Giọng
 
-> **Chưa có.** Chỗ này để giọng thật của sếp, rút từ chính bài sếp viết. Chưa dán bài thật vào
-> thì mọi bài đều ra giọng content chung chung — đúng cái mà dựng nguyên bộ này để tránh. Điền
-> trước khi bài thật đầu tiên lên trang.
+Rút từ 5 bài thật của sếp (09/2026). Bài mẫu nguyên văn nằm trong `write.md`, vì chỉ chỗ đó mới
+cần tới.
 
-Cần: ba tới năm bài sếp tự viết, để nguyên, ưu tiên bài sếp ưng. Kèm mấy dòng rút ra từ đó — câu
-dài ngắn ra sao, mở bài kiểu gì, kết kiểu gì, không bao giờ làm gì, chữ nào là của trang này.
+**Xưng hô.** Một bài chọn một cách rồi giữ: "vịt" (ngôi thứ ba, kiểu nhân vật), "mình", hoặc
+"tui". Gọi người đọc là "bạn", "mn", "mấy bạn". Không bao giờ "chúng tôi", không "quý độc giả".
 
-Chưa có thì tạm:
+**Viết như đang chat, không như đang xuất bản.** Đây là giọng, không phải lỗi chính tả:
+ko, k, hong, khum, dc, r, nma, thoi, nè, nha, á, dô, mọe, ngta, trg, đh, kn, mấy khứa. Rải tự
+nhiên, đừng nhồi cho đủ.
 
-- Nói như một đồng nghiệp giỏi nói, không phải như thương hiệu phát biểu.
-- Câu ngắn. Mỗi dòng một ý.
-- Không "Bạn có biết…", không "Hãy cùng khám phá…", không dàn emoji, không chùm hashtag.
-- Cụ thể. Một câu query thật, một con số giờ tiết kiệm thật, một thứ hỏng thật. Đừng nói chung
-  chung.
+**`:))` và `=))` là tiếng cười chính.** Emoji lẻ tẻ, có lý do: 🐧 😂 😭 🫣 😌. Không dàn emoji
+trang trí, không chùm hashtag.
+
+**Mở bài** bằng một trong ba cách:
+- trích nguyên câu hỏi thật của người đọc, để trong ngoặc kép: `"Em ko học đại học, chỉ cần học
+  là xin dc việc ạ?"`
+- trích một câu tuyên bố gây tranh cãi: `"Trong vòng 5 năm nữa, Data Analyst sẽ biến mất"`
+- nói thẳng chủ đề, một dòng: `Dùng AI để học lập trình`
+
+**Bài dài** thì: một dòng chỉ có dấu `.` để ngắt đoạn; tiêu đề nhỏ VIẾT HOA (`MÉO. KHUM. CẤM.`,
+`RÚT RA NGUYÊN TẮC`); gạch đầu dòng `-`. Dài thì báo trước và kêu người ta lưu lại.
+
+**Hạ mình trước khi lên lớp.** Luôn có. "tui dở văn vcl, hồi thi đại học môn Văn có 3 điểm thôi
+á", "người viết nên hơi dở", "mắc làm (biếng) mấy năm nay". Và nói thẳng chỗ mình không biết:
+"tôi khuyên 3 xu thế thôi, chứ tôi cũng k biết vì tôi 7 năm kn rồi".
+
+**Số cụ thể, chuyện cụ thể.** 7 năm kinh nghiệm. 10 học viên. 3 điểm Văn. 2 buổi mỗi buổi 3
+tiếng. Không "nhiều người", không "theo nghiên cứu".
+
+**Kết** bằng câu hỏi ném lại cho người đọc rồi kêu comment, hoặc một câu đùa, hoặc plug nhẹ kiểu
+tự giễu: "ai cho 10k động lưc đi :v", "đăng ký liền đi chứ trễ hihi". Bán hàng ở trang này luôn
+có giọng cười cợt chính mình, không bao giờ giọng sales.
+
+**Giọng miền Nam.** hong, thoi, nè, nha, á, dô, hen.
+
+**Thứ trang này ghét ra mặt:** bài do AI viết. Sếp từng ký tên bài là "Bài dài, organic,
+AI-free" và đóng bài bằng "mấy nay lướt phây toàn bài do AI viết, đọc chán quá nè". Bài nào đọc
+lên mà trơn tru, cân đối, không có cái lỗi nào của người thật thì bài đó đã hỏng.
 
 ## Cấm
 

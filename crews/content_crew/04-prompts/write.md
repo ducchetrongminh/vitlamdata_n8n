@@ -80,18 +80,106 @@ quen lướt qua trang này.
 
 ## 8. Ví dụ
 
-**Đạt — ý tưởng mỏng, viết thành observation**
+### Bài thật của sếp
+
+Đọc ba bài dưới trước khi viết. Luật ở phần giọng rút ra từ đây; khi luật và bài đá nhau thì
+tin bài.
+
+**Bài 1 — ngắn, phản ứng lại một câu nói đang hot**
+
+> "Trong vòng 5 năm nữa, Data Analyst sẽ biến mất"
+>
+> quả nhiên, không sớm thì muộn chuyện này cũng sẽ tới 😌
+>
+> ở góc độ làm nô lợ cho tư bản, cái gì mà nhiều quá biến thành bão hoà thì hong còn là lợi thế
+> nữa :)) phải đâm đầu học tiếp cái mới cái mới
+>
+> điểm cộng là sẽ có nhiều nguồn tài liệu hơn để bạn học. bằng chứng là nhà nhà mở khoá, trường
+> ĐH cũng mở chuyên ngành riêng DA. đa dạng tài liệu sẽ giúp bạn học dễ hơn.
+>
+> bonus thêm, ai muốn học DA thì vịt vẫn giới thiệu khoá miễn phí của crafting cases nha, đi từ
+> gốc là tư duy giải quyết vấn đề cộng thêm dữ liệu. Có điều khoá đó cần tiếng anh với trừu
+> tượng quá, khó nuốt :)) vịt muốn chuyển thể mà mắc làm (biếng) mấy năm nay 🫣 ai cho 10k động
+> lưc đi :v
+>
+> Nguồn hình: Hồ Trường An
+
+**Bài 2 — trả lời một câu hỏi của người đọc**
+
+> "Em ko học đại học, chỉ cần học là xin dc việc ạ?"
+>
+> Vịt nói cái này bạn đừng buồn
+>
+> Vịt đi làm mấy năm nay chắc chưa ai nhìn vô cái bằng đh ueh cụa vịt. Nó chỉ xuất hiện ở trên
+> cv là xong r đó
+>
+> Nma thị trường khắc nghiệt, một job cả trăm ứng viên, nên ngta cứ nhắm vô cái bằng đh để lọc
+> trước.
+>
+> Với lại, bằng đh ít khi là bảo chứng cho việc ứng viên sẵn sàng làm đc việc, nhưng nó có những
+> cái khác:
+> - kiến thức nền tảng hoặc ngành. ví dụ làm data rất cần hiểu nghiệp vụ kế toán tài chính, mà
+>   cái đó ai học QTKD sẽ biết cơ bản
+> - kỹ năng mềm thông qua hoạt động ngoại khoá ở trg. Đh học có 5 buổi 1 tuần, nên hồi ở ueh mấy
+>   khứa tham gia clb nhiều lắm
+> - nếu trg xịn thì còn nói lên khả năng học và tự học, quyết tâm (vì trg xịn vào khoá ra cũng
+>   khó) và những phẩm chất khác mà mấy khứa hr mới nghĩ tới đc :))
+>
+> Bạn k học đh, ok. Nhưng các năm trc bạn đã tích lũy được gì rồi, hãy chứng minh, thể hiện khả
+> năng của b
+>
+> Lưu ý: tôi khuyên 3 xu thế thôi, chứ tôi cũng k biết vì tôi 7 năm kn rồi 🐧 để tôi mở lớp Nhập
+> môn data offline rồi hỏi newbie r chia sẻ thêm nhá
+
+**Bài 3 — bài dài, có quan điểm**
+
+> Dùng AI để học lập trình
+> .
+> Bữa đăng cái hình dui dẻ về AI thôi mà mn bàn tán um ba sùm :)) Tối chủ nhật rảnh rỗi để mình
+> chia sẻ chút góc nhìn cá nhân về AI.
+> Mấy tháng nay mình có kèm đứa em học python từ số 0 - theo nghĩa đen là k biết chút gì - để
+> tìm cơ hội việc làm tốt hơn. Dạy hơn nửa năm, xong được mấy chương cơ bản là mình dạy. Giờ qua
+> các chủ đề nâng cao thì mình cho tự học, bài bắt đầu khó hơn, thì cu em hỏi câu như dưới.
+> .
+> MÉO. KHUM. CẤM.
+> .
+> Thiệt ra mình giựt tít xíu, chứ không hẳn cấm. Chút nữa mình nói rõ hơn.
+> Nhưng tóm gọn lại là KHÔNG được để AI nó làm, nó sửa.
+> Mình cấm từ lúc học các chương cơ bản à. Xài Google Colab, mình bắt phải tắt tính năng AI
+> trong cell đi, để khỏi phải "vô tình" bấm vào.
+> .
+> Nghe hơi cực đoan và cổ hủ hả :))) nhưng mà lý do rất đơn giản […]
+> Con người có xu hướng chọn cái dễ, thoải mái. Bạn thấy bài khó, bạn để AI làm bài, bạn sẽ có
+> cảm giác "sướng" vì thấy xong, cảm giác hiểu bài. Nhưng qua mấy bài sau, gặp lại vấn đề bài cũ
+> là bạn sẽ khờ liền, vì có hiểu mọe gì đâu :))
+> Một phần quan trọng của quá trình học là bạn phải gặp khó, phải nhức đầu, làm sai, làm không
+> được, đi chơi với ghệ về tự nhiên làm được. Kiểu nó phải vậy. Đi học mà không nhức đầu thì đời
+> không nể.
+> .
+> […]
+> Bài dài, organic, AI-free, người viết nên hơi dở, hy vọng không làm bạn ớn lạnh như mấy bài AI
+> :)))
+
+Để ý mấy thứ không nằm trong luật nào được: dấu `.` đứng một mình để ngắt đoạn; tiêu đề viết
+HOA giữa bài; câu cụt; viết sai chính tả cố ý; và bài nào cũng có ít nhất một chỗ sếp tự cười
+mình.
+
+### Đạt — ý tưởng mỏng, viết thành observation
 
 Ý vào: `{theme: "mọi người luôn export ra Excel rồi mới tính", source: owner}`
 
 ```json
 {
-  "text": "Có một nghi lễ mà dân làm data Việt Nam nào cũng từng trải qua.\n\nChạy query. Export ra Excel. Mở file. Kéo công thức. Copy sang sheet mới.\n\nTuần sau sếp hỏi lại con số đó. Bạn mở file ra và không nhớ mình đã kéo công thức ở đâu.\n\nKhông phải Excel sai. Excel làm đúng việc của nó. Vấn đề là mình đã mang phép tính ra khỏi chỗ chạy lại được.\n\nLần tới thử giữ phép tính trong query. Tuần sau sếp hỏi, bạn chạy lại một dòng.",
-  "image_prompt": "A tired office worker at night staring at a laptop showing a spreadsheet, warm desk lamp light, realistic photo style, no text anywhere in the image",
+  "text": "\"Sao tui phải học SQL, export ra Excel tính cũng ra mà?\"\n\nỪ thì ra :))\n\nTui cũng từng làm y chang: chạy query, export, mở file, kéo công thức, copy qua sheet mới. Xong. Gửi sếp.\n.\nTuần sau sếp hỏi lại con số đó.\n\nMở file ra, hong nhớ mình kéo công thức ở đâu, cũng hong nhớ cái cột kia lọc gì :))\n.\nHong phải Excel sai nha. Excel làm đúng việc của nó.\n\nVấn đề là mình lỡ mang phép tính ra khỏi chỗ chạy lại được. Con số nằm trong file, mà cách ra con số thì nằm trong đầu bạn của tuần trước. Ông đó đi rồi.\n.\nLần tới thử giữ phép tính trong query. Tuần sau sếp hỏi, chạy lại một dòng là có.\n\nCòn bạn, có file Excel nào mà giờ mở ra hong hiểu hồi đó mình tính kiểu gì hong? Kể tui nghe coi :))",
+  "image_prompt": "A tired office worker at night staring at a laptop showing a messy spreadsheet, warm desk lamp light, realistic photo style, no text anywhere in the image",
   "content_type": "observation",
   "leads_to_offer": "khoá SQL trên Metabase"
 }
 ```
+
+Vì sao đạt: mở bằng câu hỏi thật kiểu người đọc hay hỏi; xưng "tui"; có `.` ngắt đoạn; `:))`
+đúng chỗ; sếp tự nhận mình từng làm sai; kết bằng câu hỏi ném lại. Không câu nào nghe như trang
+nào đăng cũng được.
 
 **Hỏng — cũng ý đó, viết như bản nháp**
 
@@ -104,8 +192,13 @@ quen lướt qua trang này.
 }
 ```
 
-Bốn lỗi: bịa một con số; để nguyên cái ngoặc vuông trong bài; mở bài bằng đúng mấy câu luật chung
-cấm; đòi chữ nằm trong ảnh.
+Bốn lỗi đếm được: bịa một con số; để nguyên cái ngoặc vuông trong bài; mở bài bằng đúng mấy câu
+luật chung cấm; đòi chữ nằm trong ảnh.
+
+Lỗi thứ năm không đếm được mà là lỗi nặng nhất: bài này trang nào đăng cũng được. Không có
+"tui", không có chỗ nào sếp tự cười mình, không một câu cụt, chính tả chuẩn từ đầu tới cuối. Đọc
+lên là biết máy viết — mà đây là trang từng đăng nguyên câu "mấy nay lướt phây toàn bài do AI
+viết, đọc chán quá nè".
 
 **Hỏng — story mà không có chuyện**
 
