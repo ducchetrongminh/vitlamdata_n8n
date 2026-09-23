@@ -58,7 +58,7 @@ memory:
 
 # --- Control -------------------------------------------------------------
 max_iterations: 1
-timeout_seconds: 120
+timeout_seconds: 420        # measured 198s on a real post; kimi-k3 thinks, so leave headroom
 stop_conditions:
   - output validates against the schema
 on_failure:

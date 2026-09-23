@@ -1,0 +1,21 @@
+{
+  "run": "smoke test 2026-09-23",
+  "model": "moonshotai/kimi-k3",
+  "tokens": {
+    "in": 7585,
+    "out": 5365
+  },
+  "cost_usd": 0.103,
+  "latency_s": 198,
+  "input_idea": {
+    "theme": "ten file/cot kieu final, final_v2",
+    "source": "owner",
+    "content_type": "observation"
+  },
+  "output": {
+    "text": "\"BáoCao_Final_v2_Fix_That_Su_FINAL_Dung_Cai_Nay.xlsx\"\n.\nTui thề là tui từng thấy tên file như vậy :))\n\nMở folder ra, một bầy file: `Final.xlsx`, `Final_v2.xlsx`, `Final_v2_final.xlsx`, `Final_moi_nhat_hom_nay.xlsx`. Tới lúc cần tìm lại con số hôm qua thì không biết cái nào mới đúng, thử hết 3 cái vẫn thấy sai sai.\n\n.\n\nRỒI SAO NỮA?\n\nRồi bạn mất 15 phút để mở từng file ra so, rồi thấy cái `v2` mới đúng, rồi đổi tên thành `v2_FIX_FINAL`. Vòng lặp tiếp tục.\n\nVấn đề là khi mình phải đánh dấu phiên bản bằng chữ trong tên file, tức là mình đang tin cái đầu mình hơn cái hệ thống. Mà cái đầu này hay quên lắm, tuần sau nhìn lại là khờ.\n\nCó cách nào để không cần cái đuôi `FINAL` nữa không? Có, nhưng mà phải chạy lại từ đầu thay vì sửa file cũ. Chạy lại từ đầu thì phải có cái để chạy. Cái để chạy đó người ta gọi là query :))\n\nAi trong folder còn lưu ít nhất một cái file có chữ \"final\" mà không phải final, giơ tay coi 🐧",
+    "image_prompt": "A computer screen showing a messy file folder with many Excel files named slightly differently, overwhelming chaotic feeling, realistic photo style, no text visible on screen",
+    "content_type": "observation",
+    "leads_to_offer": "khoá SQL trên Metabase"
+  }
+}

@@ -63,8 +63,8 @@ Chỉ JSON, đúng `written_post@1`:
 
 - KHÔNG chừa chỗ trống. Hong `[tên khách hàng]`, hong `TODO`, hong "chèn số liệu ở đây". Code
   loại thẳng.
-- KHÔNG bịa chi tiết. Số liệu, tên khách, kết quả, ảnh chụp màn hình — input hong đưa thì hong
-  có.
+- KHÔNG bịa thứ ngta sẽ đem đi tin: thống kê, phần trăm, kết quả đo được, tên khách, ảnh chụp
+  màn hình. Input hong đưa thì hong có. Số ước chừng trong một cảnh kể cho vui thì được.
 - Story xài lời sếp ở chỗ sếp đã kể. Được cắt, được sắp lại. KHÔNG được thêm chuyện sếp chưa kể.
 - Trong ảnh KHÔNG có chữ. Model vẽ chữ tiếng Việt sai, mà chữ sai trên ảnh của trang còn tệ hơn
   hong có ảnh.

@@ -83,7 +83,7 @@ Every path has a provable end.
 | Path | Limit |
 |---|---|
 | chat agent | 20 steps, 300s |
-| writing chain | 1 rewrite; 120s per model call; 300s for the chain |
+| writing chain | 1 rewrite; 420s per writing call (measured 198s, kimi-k3 thinks); 900s for the chain with a rewrite in it |
 | select, check | 1 call each, 60s |
 | scout | 1 call, 180s |
 | review | 1 call, 300s |

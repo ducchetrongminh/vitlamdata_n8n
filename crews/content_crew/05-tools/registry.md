@@ -209,10 +209,14 @@ returns:
   schema: crews/content_crew/03-schemas/envelope.schema.json
 side_effect: write + spend
 auth: n8n sub-workflow
-timeout_seconds: 300
+timeout_seconds: 900
+async: true                      # measured 198s for the writing call alone — see below
 allowed_roles: [chat-agent]      # also called by cron, which is code, not a role
 idempotent: false
 guards:
+  - the call returns as soon as the post is queued for writing, and the card arrives on its own
+    when it is ready. Measured, a post takes about three and a half minutes; blocking the chat
+    agent for that long means the owner watches nothing happen and asks again
   - refuses when a post for this idea is already `writing` or `needs_owner`, unless `again` is
     true — otherwise a retry, or the model calling twice, quietly produces two posts
   - `offer` is refused when the month's two are used; the cadence is not the model's to bend

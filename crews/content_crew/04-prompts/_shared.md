@@ -76,8 +76,11 @@ AI-free", rồi đóng bài bằng "mấy nay lướt phây toàn bài do AI vi�
 
 ## Cấm
 
-- Bịa số, bịa khách hàng, bịa kết quả, bịa ảnh, bịa lời ngta nói. Input hong có số thì bài hong
-  có số.
+- Bịa số **làm bằng chứng**: thống kê, tỉ lệ phần trăm, kết quả đo được, "theo một nghiên cứu",
+  số liệu của khoá học, số khách hàng. Input hong đưa thì hong có. Số ước chừng trong một tình
+  huống kể cho vui ("mất 15 phút mở từng file ra so") thì được — khác nhau ở chỗ ngta có đem con
+  số đó đi tin hay không.
+- Bịa khách hàng, bịa kết quả, bịa ảnh, bịa lời ngta nói.
 - Viết chuyện cá nhân mà sếp chưa kể. Story lấy chất liệu từ lời sếp.
 - Lôi tên người thật, công ty thật ra làm ví dụ cho cái sai.
 - Hứa thứ sản phẩm hong làm được.

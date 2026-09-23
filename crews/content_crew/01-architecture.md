@@ -200,30 +200,44 @@ means a screenshot could reach the writer directly if that ever proves useful. A
 call now goes through OpenRouter, the chat agent is no longer tied to DeepSeek for vision, which
 is how Gemini Flash won that slot.
 
-Cost per post, at these prices: the write call is roughly 8k tokens in and 800 out ≈ $0.036,
-check ≈ $0.002, image $0.0003. Call it **$0.04 a post**, so a daily batch of three costs about
-$0.12 — well under the earlier guess, because the expensive model is only in one call.
+**Measured, not estimated** (smoke test, 2026-09-23, one real post from one real idea through
+the real prompts):
+
+| | |
+|---|---|
+| kimi-k3 tokens | 7,585 in, **5,365 out** |
+| kimi-k3 cost | $0.023 + $0.080 = **$0.10 a post** |
+| kimi-k3 latency | **198 s** |
+| gemini-2.5-flash + one tool call | 107 tokens, 3.2 s |
+
+The output tokens are the surprise: 5,365 for a 1,148-character post. kimi-k3 is a reasoning
+model, so most of that is thinking, and it drives both the cost and the three minutes. An earlier
+guess of 800 output tokens put the post at $0.04; it is $0.10, and a daily batch of three is
+about $0.31, so roughly $9 a month. Still small, but the lever if it ever matters is
+`reasoning_effort`, which OpenRouter exposes for this model — it trades thinking for both price
+and latency.
 
 The credential type `openRouterApi` exists on this instance (required field: `apiKey`), so the
 n8n side is in place. `credentials/openRouterApi_new.json` is committed and waiting for a key in
 `.credentials.env`.
 
-**Verify first, before anything else is built:** `CLAUDE.md` records that n8n patches
-`@langchain/openai` to send DeepSeek's `reasoning_content` back, which DeepSeek requires once
-tools are involved. That patch rides on the DeepSeek node. Going through OpenRouter may break
-agent tool-calling, so the thinnest possible test — one agent node, one tool, over OpenRouter —
-comes before any other work. If it fails, either a non-thinking model or the DeepSeek node
-stays for the chat agent, and the rest still goes through OpenRouter.
+**Verified 2026-09-23, so this is no longer a risk.** The concern was that n8n patches
+`@langchain/openai` to send DeepSeek's `reasoning_content` back — a patch that rides on the
+DeepSeek node — so tool-calling might break through OpenRouter. It does not: an `agent` 3.1 node
+with `lmChatOpenRouter` on `google/gemini-2.5-flash` and one Calculator tool called the tool and
+answered correctly in 3.2 s. And the writing path is not exposed to it at all, since that call
+has no tools.
 
 ## Non-functional targets
 
-- **Latency.** Plain chat answer under 30s. A post (write + image + check) under 3 minutes; the
-  daily batch runs on a schedule so nobody is waiting. A chat-triggered post blocks the chat
-  agent while it runs — acceptable because the card and the reply then arrive together. If that
-  reads as silence in practice, make the call asynchronous and acknowledge first.
-- **Cost.** Provisional, to verify once built and dominated by whichever writing model is
-  chosen. Everything around it is cheap by design: under $0.02 per chat turn, and one image per
-  post.
+- **Latency.** Plain chat answer under 30 s. A post takes **about 3.5 minutes** — the writing
+  call alone measured 198 s — so the earlier "under 3 minutes" was wrong. The daily batch does
+  not care; nobody is waiting on a schedule. What this does settle is the acknowledgement: a
+  chat-triggered post leaves the owner watching nothing for three and a half minutes, so
+  `write_post` **acknowledges first and replies when the card lands**, rather than blocking
+  silently. That was written as "add it if silence becomes a problem"; the measurement says it
+  is a problem.
+- **Cost.** $0.10 a post, measured. A chat turn is a rounding error next to it.
 - **Concurrency.** Unbounded per message; posts are independent rows.
 - **Failure mode.** Fail closed on publishing: any error, any uncertainty, nothing goes out.
   Everything else escalates to Lark through the error workflow, with partial work left in
