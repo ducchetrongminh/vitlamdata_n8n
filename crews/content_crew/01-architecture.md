@@ -147,7 +147,8 @@ NocoDB base `content_crew` (tables defined later as `nocodb/content_crew/*.json`
   reads here.
 - **`posts`** — idea it came from, content type, the text, image, status
   (`writing|needs_owner|approved|scheduled|published|failed|rejected`), `scheduled_for`,
-  `fb_post_id`, `published_at`, check result, rewrite count.
+  `fb_post_id`, `published_at`, check result, rewrite count, and the columns that stand in for a
+  trace table: `owner_edited`, `cost`, `write_model`, `prompt_version` (see `06-evaluation.md`).
 - **`outcomes`** — one row per checkpoint: post, `2h|24h|7d`, reach, reactions, comments,
   shares, taken at. Rows rather than columns because checkpoints repeat and get queried.
 - **`lessons`** — what the review learned: one claim per row, the evidence (the post ids and
@@ -158,8 +159,9 @@ NocoDB base `content_crew` (tables defined later as `nocodb/content_crew/*.json`
 - **`settings`** — Lark ids, posting slots, daily quota, standing scouting topics. What the
   owner changes without a deploy, and what the review adjusts for slots.
 
-No run or trace tables in v1: `GET /executions?workflowId=` already answers "what happened", and
-tracing arrives when evaluation needs it (Gate 6).
+No run or trace tables. Every number this crew needs is about a post rather than about a stage,
+so they are columns on `posts`; `GET /executions?workflowId=` covers the rest. Reasoning in
+`06-evaluation.md`.
 
 Memory: **thread scope, fetched not stored.** The gate reads the Lark thread and passes it in
 with the pictures; the thread is already the record of the conversation, so there is no
