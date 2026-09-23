@@ -26,6 +26,7 @@
     "content_type": { "type": "string", "enum": ["observation", "story", "education", "offer"] },
     "why_today": { "type": ["string", "null"] },
     "note": { "type": ["string", "null"], "description": "What the owner asked for this post, through write_post." },
+    "owner_rules": { "type": "array", "items": { "type": "string" }, "description": "settings.rules: the owner's standing writing rules." },
     "now": { "type": "string", "format": "date-time" },
     "lessons": {
       "type": "array",
@@ -69,8 +70,8 @@
             "properties": {
               "point": {
                 "type": "string",
-                "enum": ["relevant", "closer", "connected", "format"],
-                "description": "format: the draft failed the code checks (G2), not the check call."
+                "enum": ["relevant", "closer", "connected", "format", "owner"],
+                "description": "format: the draft failed the code checks (G2). owner: the owner's feedback when revising a post."
               },
               "why": { "type": "string" }
             }

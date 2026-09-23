@@ -124,6 +124,32 @@ guards:
     in full so it lands back in the thread where they can see it
 ```
 
+### revise_post
+
+```yaml
+id: revise_post
+description: >
+  Sửa một bài chưa đăng theo góp ý của sếp: dây chuyền viết lại theo góp ý, chấm lại, gửi thẻ mới;
+  thẻ cũ hết dùng được. Kèm ảnh thì bài xài ảnh đó, sửa theo picture_note.
+parameters:
+  type: object
+  properties:
+    post_id: { type: integer }
+    note: { type: string, description: the owner's feedback on the text, verbatim }
+    picture: { type: string, description: "<message id> <image key> of the picture to use" }
+    picture_note: { type: string, description: how the owner wants the picture edited, verbatim }
+  required: [post_id]
+returns: "{status: ok, payload: {post_id}} at once; the new card follows in the thread"
+side_effect: write + spend
+auth: n8n sub-workflow (write, mode start with post_id)
+allowed_roles: [chat-agent]
+guards:
+  - only needs_owner or approved posts; an approved post goes back to needs_owner and must be
+    approved again
+  - needs note or picture
+  - the feedback rides in the rewrite as point owner, so the check's own rewrite keeps it
+```
+
 ### read_outcomes
 
 ```yaml

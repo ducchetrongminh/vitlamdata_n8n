@@ -44,6 +44,15 @@ hash it was written with (`prompt_version`).
   owner's instinct (weekends, 8pm) plus two weekdays to reach the 4 posts a week in the
   definition of done. The owner changes both in chat.
 - **Status `scheduled` dropped.** `approved` with a `scheduled_for` is the queue.
+- **`revise_post`, a ninth chat tool.** The design had only `update_post`, which replaces the text
+  with words the owner supplies, while the chat agent may not write post text. So "sửa bài này"
+  had no path and the agent pasted the owner's feedback in as the post. `revise_post` sends the
+  post back through `write` (`mode: start` with `post_id`): the feedback goes in as a rewrite
+  issue with `point: owner`, a picture the owner sends is edited per `picture_note`, a text-only
+  revision keeps the old picture, and the post returns to `needs_owner` with a new card and token.
+- **Owner rules in `settings.rules`**, handed to the writer as `owner_rules`. Not lessons:
+  lessons need two settled posts as evidence, are capped at 10 and are retired by the review;
+  the owner's rules need none of that and must never be retired by the crew.
 
 ## Verified on the instance, 2026-09-23
 
@@ -58,6 +67,7 @@ hash it was written with (`prompt_version`).
 | card click | bad token refused; approve books the next free slot; a second click changes nothing |
 | scout | banked ideas whose `source_url` is among the search citations; ideas without one are dropped |
 | propose | quota 1, one pick through G1, write started |
+| revise | post #7: owner feedback applied (dashes gone, rest kept), owner's screenshot edited per the note and uploaded, new card in the thread, $0.12; a rejected post refused |
 | review G8 | `Apply` run offline against crafted outputs: unsettled or single-post evidence, over-long lessons, the 10-lesson cap, a lesson retiring another, a slot change under the floor |
 
 Not yet exercised live: a publish (nothing approved has come due), an outcome checkpoint (nothing
