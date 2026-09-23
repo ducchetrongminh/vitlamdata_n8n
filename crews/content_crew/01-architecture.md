@@ -192,7 +192,7 @@ Checked against OpenRouter's model list on 2026-09-23.
 | Select today's ideas | `deepseek/deepseek-chat` | short judgment over a list |
 | Scout | `google/gemini-2.5-flash` with OpenRouter's `web` plugin | search and summarise in one call; the plugin returns `url_citation` annotations, which is what the grounding check compares `source_url` against |
 | Weekly review | `moonshotai/kimi-k3` | once a week over a table of numbers, so cost is irrelevant and quality is not |
-| Image | `google/gemini-2.5-flash-image` | **$0.039 per image**, measured (1,290 output tokens); the listed $0.0003 is the price of an image going *in*. Takes an image as input too, so one model covers both generating from a prompt and editing a picture the owner supplied |
+| Image | `bytedance-seed/seedream-5-0-lite` (owner's pick, 2026-09-23) | **$0.035 per image**, about 30 s, measured. Image out only, so the request asks for `modalities: ["image"]`. Takes an image as input too, so one model covers both drawing from a prompt and editing a picture the owner supplied. Replaced `google/gemini-2.5-flash-image` ($0.039)
 
 What the check turned up that changed a choice: **kimi-k3 has vision** (text+image+video in), so
 the chat agent could share the writing model — it is not worth $15/1M for a chat turn, but it
@@ -217,7 +217,7 @@ about $0.31, so roughly $9 a month. Still small, but the lever if it ever matter
 `reasoning_effort`, which OpenRouter exposes for this model — it trades thinking for both price
 and latency.
 
-With the check, the picture ($0.039) and the occasional rewrite, a whole post measured $0.14
+With the check, the picture ($0.035) and the occasional rewrite, a whole post measured $0.14
 without a rewrite and $0.21 with one (`07-build.md`), so about $0.15 on average.
 
 **Verified 2026-09-23, so this is no longer a risk.** The concern was that n8n patches

@@ -285,8 +285,9 @@ parameters:
 returns: { image: binary, provider_id: string }
 side_effect: spend
 auth: api_key:OPENROUTER
+model: bytedance-seed/seedream-5-0-lite, modalities ["image"]
 timeout_seconds: 120
-cost_per_call: to be measured once the model is picked
+cost_per_call: $0.035, about 30 s (measured 2026-09-23)
 allowed_roles: []
 idempotent: false
 guards:

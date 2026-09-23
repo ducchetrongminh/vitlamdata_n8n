@@ -325,6 +325,10 @@ Verified 2026-09-23 with credential `OpenRouter`.
   and agent nodes, and an `agent` 3.1 on it calls tools.
 - `usage: {include: true}` in the body returns `usage.cost` in USD, the only way to record a
   call's cost; chain nodes do not expose it.
+- An image-only model (`bytedance-seed/seedream-5-0-lite`: $0.035 an image, ~30 s, edits a picture
+  given as `image_url` too) must be asked for `modalities: ["image"]`; `["image", "text"]` answers
+  404 `No endpoints found that support the requested output modalities`. It also does not appear
+  in `GET /models` without `?output_modalities=image`. The picture comes back in the same place.
 - `google/gemini-2.5-flash-image` with `modalities: ["image", "text"]` returns the picture as a
   data URL in `choices[0].message.images[0].image_url.url`. A 1024px PNG is 1,290 output tokens,
   $0.039. A Code node turns it into binary by returning `binary: {data: {data: <base64>,
