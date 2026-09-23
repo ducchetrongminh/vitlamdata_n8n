@@ -309,9 +309,10 @@ Verified with the Lark content bot (custom app, credential `Lark content bot`).
   message already in a thread stays in it. `GET im/v1/messages?container_id_type=thread&container_id=<thread_id>`
   lists a thread's messages (in groups it needs the read-all-group-messages permission).
 - `GET im/v1/chats/<chat_id>/members` (member names) needs `im:chat.members:read` or `im:chat:readonly`.
-- `POST im/v1/images` (multipart `image_type=message`, `image`) answers `99991672 Access denied`
-  without the scope `im:resource:upload` or `im:resource`, which the Lark content bot does not have
-  yet. Downloading a picture from a message works without it.
+- `POST im/v1/images` (multipart `image_type=message`, `image`) returns `data.image_key`; it
+  answers `99991672 Access denied` without the scope `im:resource:upload` or `im:resource` (the
+  content bot has it since 2026-09-23). `GET im/v1/images/<key>` downloads a picture the bot
+  uploaded. Downloading a picture from a message needs neither.
 - An execution retried with `POST /executions/<id>/retry` reuses the stored output of the nodes
   before the failed one, so a stale token is reused. Replay the webhook body instead.
 

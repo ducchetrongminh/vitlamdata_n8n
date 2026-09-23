@@ -79,8 +79,7 @@ group; nothing reaches Facebook unless you tap Duyệt. Design and build record:
 - **Costs** about $0.15 a post on OpenRouter (credential `OpenRouter`).
 
 The Lark app and Facebook token set up for the content agent below are the ones the crew uses,
-at the same webhook URL. The crew also needs the scope `im:resource:upload` to put a post's
-picture on its card and publish it.
+at the same webhook URL, plus the scope `im:resource:upload` for post pictures.
 
 ## Content agent (retired)
 

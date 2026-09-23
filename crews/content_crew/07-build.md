@@ -52,7 +52,7 @@ hash it was written with (`prompt_version`).
 | write, first try | post #2: passed the check first time, $0.138, 81 s |
 | write, with a rewrite | post #3: check failed on `connected`, rewrite passed, $0.212, 136 s |
 | write guards | missing idea, idea without theme, idea with a post already waiting: refused |
-| image | `gemini-2.5-flash-image` draws the picture ($0.039, not the $0.0003 estimated). **Lark refuses the upload** — see below — so cards carry a warning instead of the picture |
+| image | `gemini-2.5-flash-image` draws the picture ($0.039, not the $0.0003 estimated). Posts #2 and #6 were written before the Lark app had `im:resource:upload`, so their cards say the picture is missing; the scope is in since, and upload plus download (`GET im/v1/images/<key>`, what the publisher uses) both work |
 | chat agent | answers from `read_ideas` / `read_posts`, banks an idea with the owner's words and asks before writing, calls `write_post` on "viết luôn đi", returns `NO_REPLY` to chatter between people |
 | tools | create, dedupe refusal, partial update, `update_post` on an approved post re-records `approved_text`, settings validation |
 | card click | bad token refused; approve books the next free slot; a second click changes nothing |
@@ -64,20 +64,12 @@ Not yet exercised live: a publish (nothing approved has come due), an outcome ch
 published), a review with settled posts, a picture the owner sends with an idea, the gate on a
 real Lark message.
 
-## Blocked on the owner
-
-**Lark scope `im:resource:upload`.** Uploading the post's picture answers `99991672 Access
-denied. One of the following scopes is required: [im:resource:upload, im:resource]`. Until the
-Lark app has it (and a new app version is published), cards say the picture is missing and posts
-go out as text. The publisher downloads the picture from Lark again at publish time
-(`GET im/v1/images/<key>`), which needs the same scope.
-
 ## Acceptance tests for the owner, in Lark
 
 1. DM the bot an idea; it answers with the idea number and asks whether to write it.
 2. Answer "viết luôn"; a card arrives in the thread within about 4 minutes.
 3. Reply to the card asking for a change; the bot edits the post and quotes the new text.
 4. Approve the card; the reply names the slot. After the slot, the post is on the page.
-5. A picture sent with an idea is used for that post's image (needs the scope above).
+5. A picture sent with an idea is used for that post's image.
 6. In the team group, a message between two people in a bot thread gets no reply.
 7. Monday after the first week with two posts 7 days old: a review report arrives.
