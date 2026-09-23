@@ -5,9 +5,11 @@
 - **Q1. Chat channel:** Lark.
 - **Q2. AI provider:** OpenRouter for everything — chat agent, writing, check, review, image
   generation and web search. One vendor, one credential, model ids written per node and
-  committed. Exact ids and request shapes verified against the live API at build time. The
-  writing model is chosen for writing quality, not price, and the owner will name candidates;
-  the rest stay cheap so the bill has room for it.
+  committed. Exact ids and request shapes verified against the live API at build time. The rest
+  stay cheap so the bill has room for the writing call.
+- **Writing model:** `kimi-m3`, the owner's pick. To verify before building, none of it assumed:
+  that OpenRouter carries it, its exact model id, its price, and whether it holds a JSON output
+  format — the chain breaks if this call cannot return `written_post@1` reliably.
 - **Q3. Scouting method:** OpenRouter's own web search (the `:online` suffix / `web` plugin),
   not a second vendor. Built-in n8n nodes can't scroll a real feed (no login/JS-rendering), so
   "browsing" means search, and the results go into the idea bank rather than a digest the owner

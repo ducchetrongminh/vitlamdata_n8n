@@ -185,7 +185,7 @@ and committed, so a provider-side change is a visible diff rather than a silent 
 | Chat agent | a DeepSeek model with vision | screenshots arrive in chat |
 | Scout | a model with OpenRouter's web search plugin | search and summarize in one call |
 | Select today's ideas | cheap DeepSeek | short judgment over a list |
-| Write the post | **a model picked for writing, not for price** — the owner will name candidates | this call is the deliverable. What goes on a card must be publishable as it stands, so this is the one place not to economise, and not necessarily a DeepSeek model |
+| Write the post | **kimi-m3** (owner's pick) | this call is the deliverable, so it is the one place not to economise. Picked for writing quality, not price. Verify before building: that it is on OpenRouter, its exact id, and that it holds JSON output — the whole chain depends on this call returning `written_post@1` |
 | Check | cheap DeepSeek | rubric judgment, separate context from the writer on purpose |
 | Weekly review | the stronger DeepSeek | reasoning over a table of numbers, once a week, so the cost is irrelevant and the quality is not |
 | Image | an image-capable model on OpenRouter | generate from a prompt, or edit a picture the owner supplied |
