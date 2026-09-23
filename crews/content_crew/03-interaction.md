@@ -71,6 +71,11 @@ judgment.
 G6's "the text still matches what was approved" is the gate that makes the approval mean
 something: the owner approved that text, not that row.
 
+One caller may move that line: `update_post`, when the owner themselves asks for a change to an
+already-approved post. It re-records the approved text along with the edit, so the publish is
+not silently blocked, and returns the new text in full so it lands in the thread where they can
+read it. The gate exists to stop the crew changing text after approval, not the owner.
+
 ## Termination
 
 Every path has a provable end.
