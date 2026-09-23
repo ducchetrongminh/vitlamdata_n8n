@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "chat_reply@1",
+  "title": "What the chat agent returns",
+  "description": "The agent's final answer. Side effects already happened through tools; this is only what gets said.",
+  "type": "object",
+  "required": ["reply"],
+  "additionalProperties": false,
+  "properties": {
+    "reply": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The text to post in the thread, or the literal NO_REPLY when the message was meant for someone else."
+    },
+    "did": {
+      "type": "array",
+      "description": "What the agent changed this turn, for the log. Each entry names a row.",
+      "items": {
+        "type": "object",
+        "required": ["action", "id"],
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["banked_idea", "updated_idea", "updated_post", "wrote_post", "updated_settings"]
+          },
+          "id": { "type": ["integer", "string"] }
+        }
+      }
+    }
+  }
+}

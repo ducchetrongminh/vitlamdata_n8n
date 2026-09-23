@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scouted_ideas@1",
+  "title": "What scouting found",
+  "type": "object",
+  "required": ["ideas"],
+  "additionalProperties": false,
+  "properties": {
+    "ideas": {
+      "type": "array",
+      "description": "May be empty. An empty week is information; a padded one is noise the selection call then has to wade through.",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["theme", "hook", "angle", "source_url", "why_it_matters"],
+        "additionalProperties": false,
+        "properties": {
+          "theme": { "type": "string", "maxLength": 120 },
+          "hook": {
+            "type": "string",
+            "description": "The angle a post would take. Not a summary of the article — a summary is a link, and the owner does not need more links."
+          },
+          "angle": { "type": "string" },
+          "source_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Must come from the search results, not from the model's memory."
+          },
+          "why_it_matters": { "type": "string", "maxLength": 400 },
+          "cross_domain": {
+            "type": "boolean",
+            "description": "True when the material is from outside the data field and only the hook transfers."
+          }
+        }
+      }
+    }
+  }
+}

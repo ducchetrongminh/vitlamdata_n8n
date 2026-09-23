@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "selection@1",
+  "title": "What to write today",
+  "type": "object",
+  "required": ["picks", "short"],
+  "additionalProperties": false,
+  "properties": {
+    "picks": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["idea_id", "content_type", "why_today"],
+        "additionalProperties": false,
+        "properties": {
+          "idea_id": { "type": "integer" },
+          "content_type": { "type": "string", "enum": ["observation", "story", "education", "offer"] },
+          "why_today": {
+            "type": "string",
+            "minLength": 10,
+            "description": "A reason tied to now — a date, a recent event, the mix, an offer coming — not a restatement of the idea."
+          }
+        }
+      }
+    },
+    "short": {
+      "type": "boolean",
+      "description": "True when fewer ideas were worth writing than the quota asked for. Padding the list is the failure this flag exists to prevent."
+    },
+    "short_reason": { "type": ["string", "null"] }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "chat_task@1",
+  "title": "What the gate hands the chat agent",
+  "type": "object",
+  "required": ["message", "thread", "pictures", "settings"],
+  "additionalProperties": false,
+  "properties": {
+    "message": {
+      "type": "object",
+      "required": ["message_id", "chat_id", "sender_name", "text", "sent_at"],
+      "additionalProperties": false,
+      "properties": {
+        "message_id": { "type": "string" },
+        "chat_id": { "type": "string" },
+        "thread_id": { "type": ["string", "null"] },
+        "sender_name": { "type": "string" },
+        "sender_is_owner": { "type": "boolean" },
+        "text": { "type": "string" },
+        "sent_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "thread": {
+      "type": "array",
+      "description": "Oldest first. The crew's own messages are marked is_agent.",
+      "items": {
+        "type": "object",
+        "required": ["speaker", "text", "is_agent"],
+        "additionalProperties": false,
+        "properties": {
+          "speaker": { "type": "string" },
+          "text": { "type": "string" },
+          "is_agent": { "type": "boolean" },
+          "sent_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "pictures": {
+      "type": "array",
+      "description": "Binary properties on the item, newest first, capped. This lists what is there.",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["property", "source"],
+        "additionalProperties": false,
+        "properties": {
+          "property": { "type": "string", "pattern": "^picture_[0-9]+$" },
+          "source": { "type": "string", "description": "<message_id> <image_key>" },
+          "from_this_message": { "type": "boolean" }
+        }
+      }
+    },
+    "about": {
+      "type": ["object", "null"],
+      "description": "The post or idea this thread is already about, if any.",
+      "additionalProperties": false,
+      "properties": {
+        "post_id": { "type": ["integer", "null"] },
+        "idea_id": { "type": ["integer", "null"] }
+      }
+    },
+    "settings": {
+      "type": "object",
+      "description": "Current slots, quota and topics, so the agent can answer about them without a lookup.",
+      "additionalProperties": true
+    },
+    "now": { "type": "string", "format": "date-time" }
+  }
+}

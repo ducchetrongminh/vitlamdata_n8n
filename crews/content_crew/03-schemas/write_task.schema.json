@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "write_task@1",
+  "title": "One idea to write",
+  "type": "object",
+  "required": ["idea", "content_type", "lessons", "recent_posts"],
+  "additionalProperties": false,
+  "properties": {
+    "idea": {
+      "type": "object",
+      "required": ["idea_id", "theme"],
+      "additionalProperties": false,
+      "properties": {
+        "idea_id": { "type": "integer" },
+        "theme": { "type": "string" },
+        "hook": { "type": ["string", "null"] },
+        "angle": { "type": ["string", "null"] },
+        "source_url": { "type": ["string", "null"] },
+        "source": { "type": "string", "enum": ["owner", "scout"] },
+        "owner_words": {
+          "type": ["string", "null"],
+          "description": "The owner's own text, verbatim. A story without this is not a story."
+        }
+      }
+    },
+    "content_type": { "type": "string", "enum": ["observation", "story", "education", "offer"] },
+    "why_today": { "type": ["string", "null"] },
+    "lessons": {
+      "type": "array",
+      "maxItems": 10,
+      "items": { "type": "string", "maxLength": 250 }
+    },
+    "recent_posts": {
+      "type": "array",
+      "description": "What went out lately, so it does not repeat itself.",
+      "items": {
+        "type": "object",
+        "required": ["post_id", "content_type", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "post_id": { "type": "integer" },
+          "content_type": { "type": "string" },
+          "text": { "type": "string" },
+          "published_at": { "type": ["string", "null"], "format": "date-time" }
+        }
+      }
+    },
+    "next_offer": {
+      "type": ["object", "null"],
+      "description": "The offer this post should lead toward, when one is planned.",
+      "additionalProperties": true
+    },
+    "rewrite": {
+      "type": ["object", "null"],
+      "description": "Present only on the second attempt.",
+      "required": ["previous_text", "issues"],
+      "additionalProperties": false,
+      "properties": {
+        "previous_text": { "type": "string" },
+        "issues": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["point", "why"],
+            "additionalProperties": false,
+            "properties": {
+              "point": { "type": "string", "enum": ["relevant", "closer", "connected"] },
+              "why": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "owner_picture": {
+      "type": ["object", "null"],
+      "description": "A picture the owner supplied for this post; the image step edits it instead of generating one.",
+      "additionalProperties": true
+    }
+  }
+}

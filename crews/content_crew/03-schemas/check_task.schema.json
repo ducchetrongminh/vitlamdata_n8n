@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "check_task@1",
+  "title": "A post to judge",
+  "description": "Deliberately excludes the writing call's reasoning: a reviewer who shares the writer's context agrees with the writer.",
+  "type": "object",
+  "required": ["text", "content_type", "idea_theme", "leads_to_offer"],
+  "additionalProperties": false,
+  "properties": {
+    "text": { "type": "string" },
+    "content_type": { "type": "string", "enum": ["observation", "story", "education", "offer"] },
+    "idea_theme": { "type": "string" },
+    "leads_to_offer": { "type": "string" },
+    "audience": {
+      "type": ["string", "null"],
+      "description": "Who the page is for, from settings."
+    }
+  }
+}

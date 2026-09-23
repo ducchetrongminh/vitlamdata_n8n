@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "envelope@1",
+  "title": "What crosses a workflow boundary",
+  "description": "Used on the one edge that has two callers and can half-succeed: the writing chain's return. Inline chain steps pass their payload schema directly — wrapping them would be ceremony, since n8n already records every step of an execution.",
+  "type": "object",
+  "required": ["run_id", "from", "status", "payload", "issues"],
+  "additionalProperties": false,
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "The n8n execution id of the caller, so a card can be traced back to the batch or the conversation that asked for it."
+    },
+    "from": { "type": "string", "enum": ["write"] },
+    "called_by": { "type": "string", "enum": ["cron", "chat-agent"] },
+    "status": {
+      "type": "string",
+      "enum": ["ok", "partial", "failed"],
+      "description": "partial is the one that matters: the post reached a card but something about it is known to be off — the check failed twice, or the image could not be made."
+    },
+    "payload": {
+      "type": ["object", "null"],
+      "required": ["post_id"],
+      "additionalProperties": true,
+      "properties": {
+        "post_id": { "type": "integer" },
+        "text": { "type": "string" },
+        "content_type": { "type": "string" },
+        "image": { "type": ["string", "null"] },
+        "scheduled_for": { "type": ["string", "null"], "format": "date-time" }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "description": "Machine-readable problems, not apologies in prose.",
+      "items": {
+        "type": "object",
+        "required": ["code", "detail"],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": ["check_failed_twice", "image_failed", "write_invalid", "idea_missing"]
+          },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  }
+}
