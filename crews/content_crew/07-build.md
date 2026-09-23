@@ -61,7 +61,7 @@ hash it was written with (`prompt_version`).
 | write, first try | post #2: passed the check first time, $0.138, 81 s |
 | write, with a rewrite | post #3: check failed on `connected`, rewrite passed, $0.212, 136 s |
 | write guards | missing idea, idea without theme, idea with a post already waiting: refused |
-| image | `seedream-5-0-lite` draws or edits the picture: $0.035, about 30 s, called directly (not yet run inside n8n). `gemini-2.5-flash-image` drew posts #2 to #7 ($0.039, not the $0.0003 estimated). Posts #2 and #6 were written before the Lark app had `im:resource:upload`, so their cards say the picture is missing; the scope is in since, and upload plus download (`GET im/v1/images/<key>`, what the publisher uses) both work |
+| image | `seedream-5-0-lite` draws or edits the picture: $0.035, about 30 s, called directly; live in `write` since 2026-09-23, first run inside n8n is the next card. `gemini-2.5-flash-image` drew posts #2 to #7 ($0.039, not the $0.0003 estimated). Posts #2 and #6 were written before the Lark app had `im:resource:upload`, so their cards say the picture is missing; the scope is in since, and upload plus download (`GET im/v1/images/<key>`, what the publisher uses) both work |
 | chat agent | answers from `read_ideas` / `read_posts`, banks an idea with the owner's words and asks before writing, calls `write_post` on "viết luôn đi", returns `NO_REPLY` to chatter between people |
 | tools | create, dedupe refusal, partial update, `update_post` on an approved post re-records `approved_text`, settings validation |
 | card click | bad token refused; approve books the next free slot; a second click changes nothing |
