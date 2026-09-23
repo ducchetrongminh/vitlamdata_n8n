@@ -182,20 +182,31 @@ Request for image generation and web search). One vendor, one credential. Model 
 OpenRouter ones (`deepseek/…`, and an image-capable model for pictures), written into the node
 and committed, so a provider-side change is a visible diff rather than a silent regression.
 
+Checked against OpenRouter's model list on 2026-09-23.
+
 | Step | Model | Why |
 |---|---|---|
-| Chat agent | a DeepSeek model with vision | screenshots arrive in chat |
-| Scout | a model with OpenRouter's web search plugin | search and summarize in one call |
-| Select today's ideas | cheap DeepSeek | short judgment over a list |
-| Write the post | **kimi-k3** (owner's pick) | this call is the deliverable, so it is the one place not to economise. Picked for writing quality, not price. Verify before building: that it is on OpenRouter, its exact id, and that it holds JSON output — the whole chain depends on this call returning `written_post@1` |
-| Check | cheap DeepSeek | rubric judgment, separate context from the writer on purpose |
-| Weekly review | the stronger DeepSeek | reasoning over a table of numbers, once a week, so the cost is irrelevant and the quality is not |
-| Image | an image-capable model on OpenRouter | generate from a prompt, or edit a picture the owner supplied |
+| Write the post | `moonshotai/kimi-k3` (owner's pick) | the deliverable, so the one place not to economise. $3.00 / $15.00 per 1M, 1M context, and it supports `structured_outputs`, `response_format` and `tools` — so `written_post@1` is safe |
+| Chat agent | `google/gemini-2.5-flash` | needs vision, tools and a cheap per-turn price: $0.30 / $2.50 per 1M with image input, tools and structured outputs. Going through OpenRouter removed the reason this had to be a DeepSeek model |
+| Check | `deepseek/deepseek-chat` | $0.32 / $0.89 per 1M, structured outputs. A three-question rubric; the value is the separate context, not the horsepower |
+| Select today's ideas | `deepseek/deepseek-chat` | short judgment over a list |
+| Scout | a model with OpenRouter's web plugin | search and summarise in one call |
+| Weekly review | a strong reasoning model | once a week over a table of numbers, so cost is irrelevant and quality is not |
+| Image | `google/gemini-2.5-flash-image` | $0.0003 per image, takes an image as input too, so one model covers both generating from a prompt and editing a picture the owner supplied |
 
-Exact OpenRouter model ids are filled in at build time, verified against the live API rather
-than assumed. The writing model is the owner's call and can come from any provider OpenRouter
-carries; the cheap models above exist to keep the calls around it from mattering to the bill,
-which is what leaves room to pay for the writing.
+What the check turned up that changed a choice: **kimi-k3 has vision** (text+image+video in), so
+the chat agent could share the writing model — it is not worth $15/1M for a chat turn, but it
+means a screenshot could reach the writer directly if that ever proves useful. And since every
+call now goes through OpenRouter, the chat agent is no longer tied to DeepSeek for vision, which
+is how Gemini Flash won that slot.
+
+Cost per post, at these prices: the write call is roughly 8k tokens in and 800 out ≈ $0.036,
+check ≈ $0.002, image $0.0003. Call it **$0.04 a post**, so a daily batch of three costs about
+$0.12 — well under the earlier guess, because the expensive model is only in one call.
+
+The credential type `openRouterApi` exists on this instance (required field: `apiKey`), so the
+n8n side is in place. `credentials/openRouterApi_new.json` is committed and waiting for a key in
+`.credentials.env`.
 
 **Verify first, before anything else is built:** `CLAUDE.md` records that n8n patches
 `@langchain/openai` to send DeepSeek's `reasoning_content` back, which DeepSeek requires once

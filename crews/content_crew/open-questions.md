@@ -7,9 +7,11 @@
   generation and web search. One vendor, one credential, model ids written per node and
   committed. Exact ids and request shapes verified against the live API at build time. The rest
   stay cheap so the bill has room for the writing call.
-- **Writing model:** `kimi-k3`, the owner's pick. To verify before building, none of it assumed:
-  that OpenRouter carries it, its exact model id, its price, and whether it holds a JSON output
-  format — the chain breaks if this call cannot return `written_post@1` reliably.
+- **Writing model:** `moonshotai/kimi-k3`, the owner's pick. Verified against OpenRouter's model
+  list on 2026-09-23: it is carried, costs $3.00 / $15.00 per 1M with a 1M context, and supports
+  `structured_outputs`, `response_format` and `tools`, so `written_post@1` is safe. It also has
+  vision, which the design does not need but which removes a constraint if it ever does. All
+  model picks are now in `01-architecture.md` with prices.
 - **Q3. Scouting method:** OpenRouter's own web search (the `:online` suffix / `web` plugin),
   not a second vendor. Built-in n8n nodes can't scroll a real feed (no login/JS-rendering), so
   "browsing" means search, and the results go into the idea bank rather than a digest the owner
