@@ -1,8 +1,9 @@
 id: chat-agent
-version: 1
+version: 2
 goal: >
   Understand whatever the owner sends in Lark — text, screenshots, links, corrections — and act
-  on it: bank the idea, answer the question, correct the record, or have the post written.
+  on it: bank the idea, answer the question, correct the record, or have the post written or
+  revised.
 non_goals:
   - does not write post text itself; it calls the writing chain, so there is one voice and one standard
   - does not publish, approve, or schedule anything
@@ -44,6 +45,11 @@ requirements:
     so; banking is reversible and cheap, writing spends the expensive model and their attention
   - `update_post` and `update_settings` fire only on an explicit instruction from the owner in
     this conversation, never on the agent's own initiative
+  - feedback on a post goes to `revise_post` verbatim; `update_post` only carries text the owner
+    wrote out in full
+  - a standing writing rule from the owner goes to `settings.rules`, not to `avoid` (which only
+    the scout reads) and not to lessons (which are the review's)
+  - "đang viết", "đã sửa", "đã lưu" are said only after that tool answered ok in this turn
   - `update_post` carries no status field at all: the route from written to approved runs through
     the owner's card, and a tool that could set the status would be a way around it
   - when a tool refuses, the refusal reaches the owner in plain words; it is never worked around
@@ -57,7 +63,8 @@ tools:
   - read_outcomes
   - read_settings
   - update_settings
-  - write_post          # runs the writing chain; returns the post that went to a card
+  - write_post          # starts the writing chain; the card follows in the thread
+  - revise_post         # the writing chain again on an existing post, with the owner's feedback
 model:
   tier: cheap
   rationale: >

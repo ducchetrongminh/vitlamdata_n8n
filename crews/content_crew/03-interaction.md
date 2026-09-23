@@ -24,7 +24,7 @@ failure, and the card has to say which.
 | Edge | Mode | Note |
 |---|---|---|
 | chat agent → its tools | tool call | caller keeps control, gets a typed result |
-| chat agent → writing chain | tool call (synchronous) | it waits; the card and the reply then arrive together |
+| chat agent → writing chain | tool call, answered at once | `write_post` and `revise_post` start the chain as its own execution; the card follows in the thread |
 | cron → writing chain | tool call, in a loop, one per picked idea | isolated failures, cheap retries |
 | cron → select, scout, review | inline chain steps | fixed sequence, no handoff |
 | writing chain → check | inline call with a fresh context | the separation is the mechanism |
@@ -75,6 +75,9 @@ One caller may move that line: `update_post`, when the owner themselves asks for
 already-approved post. It re-records the approved text along with the edit, so the publish is
 not silently blocked, and returns the new text in full so it lands in the thread where they can
 read it. The gate exists to stop the crew changing text after approval, not the owner.
+
+`revise_post` does not move the line: a post the crew rewrites from the owner's feedback goes
+back to `needs_owner` with a new card and token, so the rewritten text needs a new approval.
 
 ## Termination
 

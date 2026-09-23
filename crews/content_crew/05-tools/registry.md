@@ -2,7 +2,7 @@
 
 Every capability in the crew, with who may call it and what it costs if it goes wrong.
 
-The chat agent holds eight tools, all of them `read` or `write`. Nothing `destructive` is held by
+The chat agent holds nine tools, all of them `read` or `write`. Nothing `destructive` is held by
 any model — publishing is code, called by the scheduler. The one `spend` tool is called by the
 writing chain, never chosen by a model.
 
@@ -97,14 +97,15 @@ idempotent: true
 ```yaml
 id: update_post
 description: >
-  Sửa một bài chưa đăng: nội dung, hoặc giờ đăng. CHỈ gọi khi sếp kêu rõ. Trả về bài sau khi
-  sửa, nguyên văn — nói lại cho sếp coi. ĐỪNG xài để duyệt bài: hong có đường nào duyệt ở đây,
-  sếp bấm nút trên thẻ mới là duyệt. Bài đã lên Facebook thì hong sửa được.
+  Thay nguyên văn một bài chưa đăng bằng đúng chữ sếp đưa, hoặc đổi giờ đăng. CHỈ khi sếp gửi
+  nguyên bài mới (hay kêu đổi giờ). Sếp góp ý, kêu sửa, kêu đổi hình thì ĐỪNG xài cái này — đó là
+  revise_post. ĐỪNG xài để duyệt bài: sếp bấm nút trên thẻ mới là duyệt. Bài đã lên Facebook thì
+  hong sửa được.
 parameters:
   type: object
   properties:
     post_id: { type: integer }
-    text: { type: string, maxLength: 3000 }
+    text: { type: string, maxLength: 3000, description: the whole new post, copied from the owner }
     scheduled_for: { type: string, format: date-time }
   required: [post_id]
 returns:
@@ -117,7 +118,10 @@ idempotent: true
 guards:
   - no status parameter exists — the route from written to approved runs through the owner's card
     and a parameter here would be a way around it
-  - refuses when the post has an `fb_post_id`, or its status is `publishing` or `published`
+  - refuses when the post has an `fb_post_id`, or its status is `publishing` or `published`, or
+    `writing`
+  - the text is the owner's own words, never the agent's: feedback on a post goes to revise_post,
+    because the chat agent writes no post text
   - on an already-approved post the text change keeps the approval and re-records the approved
     text, so G6 does not silently block the publish. Safe because the only caller is the chat
     agent and the only trigger is the owner's own instruction — and the tool returns the new text
@@ -178,11 +182,11 @@ idempotent: true
 ```yaml
 id: read_settings
 description: >
-  Đọc cấu hình: khung giờ đăng, ngày mấy bài, mấy chủ đề đang theo dõi. Xài khi sếp hỏi giờ đăng
-  hay chủ đề hiện tại.
+  Đọc cấu hình: khung giờ đăng, ngày mấy bài, chủ đề theo dõi, chủ đề tránh, luật viết của sếp.
+  Xài khi sếp hỏi giờ đăng hay chủ đề hiện tại.
 parameters: { type: object, properties: {} }
 returns:
-  row: { slots: [...], daily_quota, topics: [...], avoid: [...] }
+  row: { slots: [...], daily_quota, topics: [...], avoid: [...], rules: [...], next_offer }
 side_effect: read
 auth: nocodb
 timeout_seconds: 10
@@ -195,17 +199,20 @@ idempotent: true
 ```yaml
 id: update_settings
 description: >
-  Đổi khung giờ đăng, số bài mỗi ngày, hoặc chủ đề theo dõi. CHỈ gọi khi sếp kêu rõ. Trả về cấu
-  hình sau khi đổi — nhắc lại cho sếp.
+  Đổi khung giờ đăng, số bài mỗi ngày, chủ đề theo dõi, chủ đề tránh, hoặc luật viết của sếp. CHỈ
+  gọi khi sếp kêu rõ. rules là luật mọi bài sau phải theo; avoid chỉ là chủ đề lúc đi tìm ý tưởng
+  thì tránh, người viết bài hong đọc. Mỗi trường gửi là thay nguyên danh sách đó. Trả về cấu hình
+  trước và sau khi đổi — nhắc lại cho sếp.
 parameters:
   type: object
   properties:
     slots: { type: array, items: { type: string }, maxItems: 14, description: "vd: sat-20:00" }
     daily_quota: { type: integer, minimum: 0, maximum: 5 }
     topics: { type: array, items: { type: string }, maxItems: 20 }
-    avoid: { type: array, items: { type: string }, maxItems: 20 }
+    avoid: { type: array, items: { type: string }, maxItems: 20, description: subjects the scout skips }
+    rules: { type: array, items: { type: string }, maxItems: 20, description: the owner's writing rules, handed to the writer as owner_rules }
 returns:
-  row: { slots, daily_quota, topics, avoid }
+  row: { before, after }
 side_effect: write
 auth: nocodb
 timeout_seconds: 10
@@ -213,6 +220,8 @@ allowed_roles: [chat-agent]
 idempotent: true
 guards:
   - daily_quota is capped at 5 here as well as in the schema, because it multiplies the spend tool
+  - rules are the owner's and never expire; they are not lessons, which need evidence, are
+    capped at 10 and are retired by the review
   - the previous values go into the run log, so a mistaken change is visible and reversible
 ```
 
@@ -365,7 +374,7 @@ guards:
 |---|---|---|---|---|---|
 | read_ideas, read_posts, read_outcomes, read_settings | ✅ | | | | chat agent |
 | bank_idea, update_post, update_settings | | ✅ | | | chat agent |
-| write_post | | ✅ | | ✅ | chat agent (spend is capped and structural) |
+| write_post, revise_post | | ✅ | | ✅ | chat agent (spend is capped and structural) |
 | web_search | ✅ | | | | scout |
 | make_image | | | | ✅ | **no** |
 | publish_facebook | | | ✅ | | **no** |

@@ -62,8 +62,8 @@ OWNER (lark webhook)
   card click ─► code: approve ─► queue for the next slot | reject ─► closed
   message ───► GATE (code: is it for the bot; fetch thread and pictures)
                  CHAT AGENT (vision)
-                   ├─ saves an idea, corrects a post, answers, reads the bank
-                   └─ write(idea) ─────────────► WRITE ─► card in Lark
+                   ├─ saves an idea, replaces a post's text, answers, reads the bank
+                   └─ write(idea) / revise(post, feedback) ─► WRITE ─► card in Lark
 
 WRITE (one idea in, one finished post out)
   write (model, JSON: text + image prompt + content type)
@@ -155,7 +155,8 @@ NocoDB base `content_crew` (tables defined later as `nocodb/content_crew/*.json`
   the write and select prompts. Code enforces the caps: at most 10 active, one claim each, at
   most 250 characters, and an evidence field naming real posts — a lesson that cannot point at
   posts is not written. Retiring keeps the row, so a reversed call is visible.
-- **`settings`** — Lark ids, posting slots, daily quota, standing scouting topics. What the
+- **`settings`** — Lark ids, posting slots, daily quota, standing scouting topics, subjects to
+  avoid, and the owner's writing rules (`rules`, given to the writer). What the
   owner changes without a deploy, and what the review adjusts for slots.
 
 No run or trace tables. Every number this crew needs is about a post rather than about a stage,
