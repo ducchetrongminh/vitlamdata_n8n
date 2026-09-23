@@ -59,9 +59,9 @@ judgment.
 |---|---|---|---|---|
 | **G0** | Lark message arrives | does this concern the bot: sender, mention, thread, `/` | code | nothing happens, silently |
 | **G1** | after `select` | every `idea_id` is in the bank; every type is in `allowed_types`; at most `quota` picks | code | drop invalid picks; if none survive, tell the owner the bank is thin |
-| **G2** | after `write` | validates `written_post@1`; no placeholder patterns (`[`, `TODO`, `XXX`); length band; `leads_to_offer` non-empty | code | one retry, then fail closed — no card, the row stays in `writing` |
+| **G2** | after `write` | validates `written_post@1`; no placeholder patterns (`[...]` holding words, `TODO`, `XXX`); length band; `leads_to_offer` non-empty; no `story` without `owner_words` | code | the one rewrite, with the reasons; a second failure fails closed — no card, the row goes to `failed` and the error reaches Lark |
 | **G3** | after `check` | `pass` is a boolean and matches `issues` being empty | code | treat a malformed verdict as a pass with the issue noted; a broken checker must not block the crew |
-| **G3a** | `check` failed | rewrites so far | code (counter, max 1) | first failure loops to `write` with the issues; second sends the card anyway, naming the failing point |
+| **G3a** | `check` failed | rewrites so far | code (counter, max 1, shared with G2) | first failure loops to `write` with the issues; second sends the card anyway, naming the failing point |
 | **G4** | before the card | the post row is saved; an image exists or its absence is stated; status is `needs_owner` | code | no card; escalate to the owner with the reason |
 | **G5** | the card | approve or reject | **human** | reject sets `rejected`; nothing else happens |
 | **G6** | before publishing | status is `approved`; `fb_post_id` is null; the slot is due; the text still matches what was approved | code | skip this run, no publish |
@@ -97,8 +97,8 @@ exceed `quota` writes, each write is at most two model calls plus one image, and
 is capped at 20 steps. The bill is therefore bounded by the day's quota, not by anything a model
 chooses. Worth revisiting if a spend cap ever becomes available.
 
-**Partial work is always kept.** A failed write leaves its row in `writing` with whatever it
-produced. A failed publish leaves `publish_failed` with the text intact. Nothing is deleted on
+**Partial work is always kept.** A failed write leaves its row in `failed` with the reasons in
+`issues`. A failed publish leaves `publish_failed` with the text intact. Nothing is deleted on
 the way out.
 
 ## Idempotency

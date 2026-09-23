@@ -53,6 +53,7 @@ parameters:
     source_url: { type: string }
     owner_words: { type: string, maxLength: 4000, description: nguyên văn lời sếp, hong gọt }
     note: { type: string, maxLength: 500 }
+    picture: { type: string, description: "<message id> <image key> of a picture in the conversation; the image step edits it for the post" }
   required: [theme]
 returns:
   row: { idea_id, theme, hook, angle, source, owner_words, banked_at }
@@ -79,7 +80,7 @@ parameters:
   type: object
   properties:
     post_id: { type: integer, description: có thì trả nguyên văn bài đó }
-    status: { type: string, enum: [writing, needs_owner, approved, scheduled, published, failed, rejected] }
+    status: { type: string, enum: [writing, needs_owner, approved, publishing, published, publish_failed, failed, rejected] }
     limit: { type: integer, minimum: 1, maximum: 20, default: 10 }
 returns:
   rows: [{ post_id, content_type, status, scheduled_for, published_at, preview }]
@@ -194,8 +195,8 @@ guards:
 ```yaml
 id: write_post
 description: >
-  Viết một bài từ một ý tưởng trong kho, r gửi thẻ cho sếp duyệt. Mất một hai phút. Trả về bài đã
-  viết và số của nó. Gọi khi sếp kêu viết. ĐỪNG gọi khi sếp chỉ kể chuyện hay gửi ý tưởng — cái
+  Viết một bài từ một ý tưởng trong kho, r gửi thẻ cho sếp duyệt ngay trong luồng này. Trả lời
+  liền là đã bắt đầu viết, còn thẻ tới sau khoảng 4 phút. Gọi khi sếp kêu viết. ĐỪNG gọi khi sếp chỉ kể chuyện hay gửi ý tưởng — cái
   đó bank_idea. Mỗi yêu cầu gọi một lần thôi.
 parameters:
   type: object
@@ -206,7 +207,8 @@ parameters:
     again: { type: boolean, default: false, description: viết lại dù ý này đã có bài đang chờ }
   required: [idea_id]
 returns:
-  schema: crews/content_crew/03-schemas/envelope.schema.json
+  now: "{status: ok, payload: {post_id}, note} as soon as the row exists, or {status: failed, issues} when a guard refuses"
+  later: the card in the thread; the chain's own result follows envelope.schema.json
 side_effect: write + spend
 auth: n8n sub-workflow
 timeout_seconds: 900
@@ -224,7 +226,10 @@ guards:
 errors:
   - code: check_failed_twice -> status partial, card still sent with the failing point named
   - code: image_failed       -> status partial, card sent without a picture
-  - code: write_invalid      -> status failed, row left in `writing`, nothing sent
+  - code: write_invalid      -> status failed, row set to `failed`, error to Lark, nothing sent
+  - code: idea_missing       -> refused: no such idea, or it has no theme
+  - code: already_writing    -> refused: the idea has a post writing or waiting, and again is false
+  - code: offer_cadence      -> refused: two offers this month already
 ```
 
 ## Called by code, held by nobody

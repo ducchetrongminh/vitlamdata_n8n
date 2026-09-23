@@ -58,7 +58,35 @@ scripts/nocodb-pull.sh          # refresh the files after edits in the NocoDB UI
 Add a field by appending it without `id`. Rename by changing `title` (the `id` stays). Removing a
 field from the file deletes its data, so push refuses unless given `--delete`.
 
-## Content agent
+## Content crew
+
+Writes the Vịt Làm Data page's Facebook posts and learns from their numbers. The crew proposes, you
+judge: every morning it picks ideas from its bank and sends you finished posts as cards in the team
+group; nothing reaches Facebook unless you tap Duyệt. Design and build record: `crews/content_crew/`
+(`07-build.md` first).
+
+- **Drop ideas any time.** DM the bot or @mention it in the team group: a thought, a story in your
+  own words, a screenshot, a link. It banks the idea, tells you its number and asks whether to
+  write it now. "Viết luôn" gets you a card in the thread in a few minutes.
+- **Cards.** Duyệt books the post into the next free slot and says when; Bỏ drops it. To change a
+  post, reply to its card; the bot edits it and quotes the new text back.
+- **Ask it things.** What is in the bank, what goes out tomorrow, how last week's posts did.
+- **Change how it runs,** in chat: posting slots (`sat-20:00`, one per line), posts a day (0 to 5),
+  the topics it searches, the subjects it avoids. They live in `content_crew.settings`.
+- **On its own:** it searches the web for ideas at 01:30, writes the day's posts at 06:30, publishes
+  approved posts at their slot, reads each post's numbers 2 hours, 24 hours and 7 days after
+  publishing, and every Monday reports what the numbers changed in how it writes.
+- **Costs** about $0.15 a post on OpenRouter (credential `OpenRouter`).
+
+The Lark app and Facebook token set up for the content agent below are the ones the crew uses,
+at the same webhook URL. The crew also needs the scope `im:resource:upload` to put a post's
+picture on its card and publish it.
+
+## Content agent (retired)
+
+Deactivated on 2026-09-23 and replaced by the content crew above; its workflows stay in
+`workflows/content_agent/` and its data in the `content_agent` base. The Lark and Facebook setup
+in this section is still how the crew's bot and page token are made.
 
 An AI employee that runs `docs/Content Strategy.md` for the Vịt Làm Data page and gets better at it
 from what happens to its work. You are its manager and talk to it in Lark. How it is built and
@@ -167,7 +195,8 @@ agents plan with these posts.
 2. Permissions & Scopes, add: `im:message`, `im:message:send_as_bot`,
    `im:message.p2p_msg:readonly`, `im:message.group_at_msg:readonly`, `im:message.group_msg` (read
    group messages, needed for /commands without an @mention and for thread history),
-   `im:chat.members:read` (names of who is talking), `docx:document:readonly`, `wiki:wiki:readonly`.
+   `im:chat.members:read` (names of who is talking), `docx:document:readonly`, `wiki:wiki:readonly`,
+   and for the content crew `im:resource:upload` (post pictures on cards).
 3. Events & Callbacks: request URL `https://n8n.vitlamdata.com/webhook/content-agent`, no Encrypt
    Key, event `im.message.receive_v1`. Set the same URL as the card callback URL (card action
    `card.action.trigger`, or "Message card request URL" under the Bot feature in older consoles).

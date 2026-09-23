@@ -1,7 +1,7 @@
 # Architecture
 
-From `00-task-spec.md`. Nothing here runs; the built workflows will live in
-`workflows/content_crew/`.
+From `00-task-spec.md`. Nothing here runs; the built workflows live in `workflows/content_crew/`,
+and `07-build.md` records what was built and where it departs from this.
 
 ## Chosen topology
 
@@ -19,7 +19,7 @@ Three jobs need a model with judgment:
 
 - **Chat agent** — reads what the owner sends: free-form Vietnamese, screenshots, corrections,
   ideas, questions. The one genuinely open input in the system, so the one agent with tools.
-- **Writing chain** — one idea in, one finished post out: write → image → check. The steps are
+- **Writing chain** — one idea in, one finished post out: write → check → image. The steps are
   known in advance, so this is a chain of model calls with code between them, not an agent. It
   is called from two places (the daily batch and the chat agent), which is why it is its own
   thing.
@@ -69,9 +69,9 @@ WRITE (one idea in, one finished post out)
   write (model, JSON: text + image prompt + content type)
     │                                    ▲
     ▼                                    │ one rewrite, counted in code
-  image (OpenRouter) ─► check (model: {pass, issues})
-                              └─ pass ─► posts + Lark card
-                              └─ fail twice ─► card anyway, with the failing point named
+  G2 (code) ─► check (model: {pass, issues})
+                    └─ pass, or fail twice ─► image (OpenRouter) ─► posts + Lark card
+                                              (a failed check is named on the card)
 ```
 
 ## Data on the arrows
@@ -116,20 +116,19 @@ The agent holds **no publishing tool**. It proposes; the card click and the publ
 Image generation is the only paid call, and the writing chain makes it once per post — code
 decides it happens, not a model.
 
-## Workflows (4)
+## Workflows (5)
 
 | Workflow | Trigger | Holds |
 |---|---|---|
 | `Content crew: lark` | webhook | Lark verification, card clicks, the gate, the chat agent, the reply |
-| `Content crew: write` | called | write → image → check → save → card. Attached to the chat agent as a workflow tool, and called in a loop by cron |
+| `Content crew: write` | called | write → check → image → save → card. Attached to the chat agent as a workflow tool, and called in a loop by cron |
+| `Content crew: tools` | called | the chat agent's other tools, each with its guard in code |
 | `Content crew: cron` | schedule ×4 | scout + propose (daily), publish + outcome checks (frequent), review (weekly). One trigger node per cadence, each feeding its own branch, rather than one trigger and a tangle of time IFs |
 | `Content crew: errors` | error trigger | failed runs → Lark |
 
-Most tools need no sub-workflow: regular nodes attach to the agent directly with `$fromAI()` in
-their parameters, so the NocoDB reads and writes hang straight off the chat agent. Only work
-that carries rules gets its own workflow, which here is just the writing chain. (Verify the
-direct-node-as-tool support on 2.38.7 before building — if it is missing, the reads collapse
-into one small tools workflow and this becomes 5.)
+Every chat tool turned out to carry a rule (a cap, a refusal, a dedupe, a status it must not
+touch), so none hangs off the agent as a bare NocoDB node: they share one `tools` workflow whose
+Code node decides and whose NocoDB nodes write.
 
 Sending to Lark is two HTTP nodes (token, then message) duplicated in `lark`, `write`, `cron`
 (the weekly report only) and `errors`, rather than a shared sender workflow. Publishing and
@@ -190,9 +189,9 @@ Checked against OpenRouter's model list on 2026-09-23.
 | Chat agent | `google/gemini-2.5-flash` | needs vision, tools and a cheap per-turn price: $0.30 / $2.50 per 1M with image input, tools and structured outputs. Going through OpenRouter removed the reason this had to be a DeepSeek model |
 | Check | `deepseek/deepseek-chat` | $0.32 / $0.89 per 1M, structured outputs. A three-question rubric; the value is the separate context, not the horsepower |
 | Select today's ideas | `deepseek/deepseek-chat` | short judgment over a list |
-| Scout | a model with OpenRouter's web plugin | search and summarise in one call |
-| Weekly review | a strong reasoning model | once a week over a table of numbers, so cost is irrelevant and quality is not |
-| Image | `google/gemini-2.5-flash-image` | $0.0003 per image, takes an image as input too, so one model covers both generating from a prompt and editing a picture the owner supplied |
+| Scout | `google/gemini-2.5-flash` with OpenRouter's `web` plugin | search and summarise in one call; the plugin returns `url_citation` annotations, which is what the grounding check compares `source_url` against |
+| Weekly review | `moonshotai/kimi-k3` | once a week over a table of numbers, so cost is irrelevant and quality is not |
+| Image | `google/gemini-2.5-flash-image` | **$0.039 per image**, measured (1,290 output tokens); the listed $0.0003 is the price of an image going *in*. Takes an image as input too, so one model covers both generating from a prompt and editing a picture the owner supplied |
 
 What the check turned up that changed a choice: **kimi-k3 has vision** (text+image+video in), so
 the chat agent could share the writing model — it is not worth $15/1M for a chat turn, but it
@@ -217,9 +216,8 @@ about $0.31, so roughly $9 a month. Still small, but the lever if it ever matter
 `reasoning_effort`, which OpenRouter exposes for this model — it trades thinking for both price
 and latency.
 
-The credential type `openRouterApi` exists on this instance (required field: `apiKey`), so the
-n8n side is in place. `credentials/openRouterApi_new.json` is committed and waiting for a key in
-`.credentials.env`.
+With the check, the picture ($0.039) and the occasional rewrite, a whole post measured $0.14
+without a rewrite and $0.21 with one (`07-build.md`), so about $0.15 on average.
 
 **Verified 2026-09-23, so this is no longer a risk.** The concern was that n8n patches
 `@langchain/openai` to send DeepSeek's `reasoning_content` back — a patch that rides on the
@@ -230,14 +228,15 @@ has no tools.
 
 ## Non-functional targets
 
-- **Latency.** Plain chat answer under 30 s. A post takes **about 3.5 minutes** — the writing
-  call alone measured 198 s — so the earlier "under 3 minutes" was wrong. The daily batch does
+- **Latency.** Plain chat answer under 30 s. A post takes **up to about 3.5 minutes** — the
+  writing call alone measured 198 s in the smoke test; whole posts took 81 s and 136 s in the
+  build. The daily batch does
   not care; nobody is waiting on a schedule. What this does settle is the acknowledgement: a
   chat-triggered post leaves the owner watching nothing for three and a half minutes, so
   `write_post` **acknowledges first and replies when the card lands**, rather than blocking
   silently. That was written as "add it if silence becomes a problem"; the measurement says it
   is a problem.
-- **Cost.** $0.10 a post, measured. A chat turn is a rounding error next to it.
+- **Cost.** About $0.15 a post, measured end to end. A chat turn is a rounding error next to it.
 - **Concurrency.** Unbounded per message; posts are independent rows.
 - **Failure mode.** Fail closed on publishing: any error, any uncertainty, nothing goes out.
   Everything else escalates to Lark through the error workflow, with partial work left in

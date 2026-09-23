@@ -40,7 +40,7 @@
         "properties": {
           "code": {
             "type": "string",
-            "enum": ["check_failed_twice", "image_failed", "write_invalid", "idea_missing"]
+            "enum": ["check_failed_twice", "image_failed", "write_invalid", "idea_missing", "already_writing", "offer_cadence", "publish_failed"]
           },
           "detail": { "type": "string" }
         }

@@ -25,6 +25,8 @@
     },
     "content_type": { "type": "string", "enum": ["observation", "story", "education", "offer"] },
     "why_today": { "type": ["string", "null"] },
+    "note": { "type": ["string", "null"], "description": "What the owner asked for this post, through write_post." },
+    "now": { "type": "string", "format": "date-time" },
     "lessons": {
       "type": "array",
       "maxItems": 10,
@@ -65,7 +67,11 @@
             "required": ["point", "why"],
             "additionalProperties": false,
             "properties": {
-              "point": { "type": "string", "enum": ["relevant", "closer", "connected"] },
+              "point": {
+                "type": "string",
+                "enum": ["relevant", "closer", "connected", "format"],
+                "description": "format: the draft failed the code checks (G2), not the check call."
+              },
               "why": { "type": "string" }
             }
           }
