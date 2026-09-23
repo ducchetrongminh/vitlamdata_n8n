@@ -1,0 +1,2452 @@
+{
+  "active": true,
+  "connections": {
+    "Anything to pick?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Select",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Picks",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Apply": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "New lessons",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Retired lessons",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Slot change",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Report",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Approved": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Due post",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Branch": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Scout settings",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Propose settings",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Approved",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Published",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Review settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Claim": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Has picture?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Download picture": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Upload photo",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Due checks": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Engagement",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Due post": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Claim",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Engagement": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Insight requests",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Has picture?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Publish token",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Text body",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Insight requests": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Insights",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Insights": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Outcome rows",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "New lessons": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Create lessons",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Outcome": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save publish",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Outcome rows": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save outcomes",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Outcomes every 30 min": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Published",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Photo body": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Publish",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Picks": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Write inputs",
+            "type": "main"
+          },
+          {
+            "index": 0,
+            "node": "Short?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Propose 06:30": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Propose settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Propose bank": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Propose posts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Propose lessons": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Select prompts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Propose posts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Propose lessons",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Propose settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Propose bank",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Propose token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Tell thin bank",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Publish": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Outcome",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Publish every 5 min": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Approved",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Publish token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Download picture",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Published": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Taken",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Report": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Review token",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Retired lessons": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Retire lessons",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Apply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review Mon 03:00": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Review settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review lessons": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Review prompts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review outcomes": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Review lessons",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review posts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Review outcomes",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review prompts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Review task",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Review posts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review task": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Worth a review?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Review token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Send report",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Run by hand": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Branch",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save publish": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Raise",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Scout": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Scouted",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Scout 01:30": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Scout settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Scout bank": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Scout prompts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Scout prompts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Scout task",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Scout settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Scout bank",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Scout task": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Scout",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Scouted": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Bank scouted",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Select": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Picks",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Select prompts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Select task",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Select task": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Anything to pick?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Short?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Propose token",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Slot change": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save slots",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Taken": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Due checks",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Text body": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Publish",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Upload photo": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Photo body",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Worth a review?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Review",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Apply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Write inputs": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Write each",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": null,
+  "id": "khte5EFhBM16qfui",
+  "isArchived": false,
+  "name": "Content crew: cron",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "3bdc3bcf-dda6-5a9e-9658-1ebe94d6ce28",
+      "name": "Scout 01:30",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "expression": "30 1 * * *",
+              "field": "cronExpression"
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "a3d183e6-899d-5378-8bb7-5cf59e1faa16",
+      "name": "Scout settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mpcgut4v7x3qjlc"
+        }
+      },
+      "position": [
+        200,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "881b3b66-df3a-5447-bbbf-eeaae74b337d",
+      "name": "Scout bank",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mkc7snjus8thf08"
+        }
+      },
+      "position": [
+        400,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "eaae59e9-40aa-52d8-85ca-76c558ece89c",
+      "name": "Scout prompts",
+      "notes": "prompts: content_crew scout",
+      "parameters": {
+        "jsCode": "// Generated by scripts/embed-prompts.py from crews/content_crew/04-prompts/. Edit the .md files, not this.\nreturn [{ json: {\n  \"version\": \"8e24d585\",\n  \"scout\": \"# Luật chung\\n\\nPhần này gắn vào mọi lời gọi model trong crew. Sửa ở đây, mọi chỗ đổi theo. Luật nào code cũng\\nkiểm thì có ghi chú: prompt nói, code mới là thứ chặn.\\n\\n## Trang này\\n\\nVịt Làm Data. Trang Facebook về SQL, báo cáo, tự động hoá.\\n\\nNgười đọc là dân làm data trong công ty Việt. Analyst. Người tự nhiên bị quăng cho cái job làm\\nbáo cáo. Người học SQL để khỏi làm tay.\\n\\nBán hai thứ: khoá SQL dạy trên Metabase, và tư vấn dữ liệu cho doanh nghiệp.\\n\\n## Bốn loại bài\\n\\nTheo `docs/Content Strategy.md`.\\n\\n- **offer** — bán hàng. Tháng hai bài, hết. Code giữ con số này.\\n- **education** — dạy một thứ, để tới lúc bán thì ngta tin mà mua. Viết theo từng bước, từng ý.\\n  Bài education đứng trước offer nào thì dọn đường cho đúng offer đó.\\n- **story** — định làm gì, vướng gì, gỡ sao. Chất liệu là chuyện thật của sếp.\\n- **observation** — một chuyện đúng mà buồn cười trong nghề data. Nó đi kiếm sự chú ý, để\\n  education với offer có cái mà tiêu.\\n\\n## Ba câu phải trả lời được\\n\\n1. **Relevant** — ngta đọc được gì? Đừng hỏi \\\"có đúng chủ đề hong\\\". Hỏi **có lý do gì để dừng\\n   tay lại đọc hong**.\\n2. **Closer** — đọc xong có tin trang này hơn hong?\\n3. **Connected** — dẫn tới offer nào?\\n\\nRớt câu nào thì sửa, hoặc bỏ bài.\\n\\n## Giọng\\n\\nRút từ 5 bài thật của sếp (09/2026). Bài mẫu để nguyên văn trong `write.md`, vì chỉ chỗ đó mới\\ncần.\\n\\n**Xưng hô.** Một bài chọn một kiểu rồi giữ nguyên tới cuối: \\\"vịt\\\" (ngôi thứ ba), \\\"mình\\\", hoặc\\n\\\"tui\\\". Gọi người đọc là \\\"bạn\\\", \\\"mn\\\", \\\"mấy bạn\\\". KHÔNG \\\"chúng tôi\\\". KHÔNG \\\"quý độc giả\\\".\\n\\n**Viết như đang chat, đừng viết như đang xuất bản.** Mấy chữ này là giọng, hong phải lỗi chính\\ntả: ko, k, hong, khum, dc, r, nma, thoi, nè, nha, á, dô, mọe, ngta, trg, đh, kn, mấy khứa. Rải\\ntự nhiên thôi, đừng nhồi cho đủ chỉ tiêu.\\n\\n**`:))` và `=))` là tiếng cười chính.** Emoji thì lẻ tẻ và có lý do: 🐧 😂 😭 🫣 😌. KHÔNG dàn\\nemoji trang trí. KHÔNG chùm hashtag.\\n\\n**Mở bài** một trong ba kiểu:\\n- trích nguyên câu hỏi thật của người đọc, để trong ngoặc kép: `\\\"Em ko học đại học, chỉ cần học\\n  là xin dc việc ạ?\\\"`\\n- trích một câu đang gây tranh cãi: `\\\"Trong vòng 5 năm nữa, Data Analyst sẽ biến mất\\\"`\\n- nói thẳng chủ đề, một dòng: `Dùng AI để học lập trình`\\n\\n**Bài dài** thì: một dòng chỉ có dấu `.` để ngắt đoạn; tiêu đề nhỏ VIẾT HOA (`MÉO. KHUM. CẤM.`,\\n`RÚT RA NGUYÊN TẮC`); gạch đầu dòng `-`. Dài thì báo trước một câu, kêu ngta lưu về tường.\\n\\n**Tự cười mình trước, rồi hãy lên lớp.** Bài nào cũng phải có. \\\"tui dở văn vcl, hồi thi đại học\\nmôn Văn có 3 điểm thôi á\\\", \\\"người viết nên hơi dở\\\", \\\"mắc làm (biếng) mấy năm nay\\\". Và nói thẳng\\nchỗ mình hong biết: \\\"tôi khuyên 3 xu thế thôi, chứ tôi cũng k biết vì tôi 7 năm kn rồi\\\".\\n\\n**Số cụ thể, chuyện cụ thể.** 7 năm kinh nghiệm. 10 học viên. 3 điểm Văn. 2 buổi mỗi buổi 3\\ntiếng. KHÔNG \\\"nhiều người\\\". KHÔNG \\\"theo nghiên cứu\\\".\\n\\n**Kết** bằng câu hỏi ném lại cho ngta rồi kêu comment. Hoặc một câu đùa. Hoặc plug nhẹ kiểu tự\\ngiễu: \\\"ai cho 10k động lưc đi :v\\\", \\\"đăng ký liền đi chứ trễ hihi\\\". Bán hàng ở trang này luôn có\\ngiọng cười cợt chính mình, hong bao giờ giọng sales.\\n\\n**Giọng miền Nam.** hong, thoi, nè, nha, á, dô, hen.\\n\\n**Thứ trang này ghét ra mặt: bài do AI viết.** Sếp từng ký tên bài là \\\"Bài dài, organic,\\nAI-free\\\", rồi đóng bài bằng \\\"mấy nay lướt phây toàn bài do AI viết, đọc chán quá nè\\\". Bài nào\\nđọc lên mà trơn tru, cân đối, chính tả chuẩn từ đầu tới cuối, hong có cái lỗi nào của người thật\\n— bài đó hỏng r.\\n\\n## Cấm\\n\\n- Bịa số **làm bằng chứng**: thống kê, tỉ lệ phần trăm, kết quả đo được, \\\"theo một nghiên cứu\\\",\\n  số liệu của khoá học, số khách hàng. Input hong đưa thì hong có. Số ước chừng trong một tình\\n  huống kể cho vui (\\\"mất 15 phút mở từng file ra so\\\") thì được — khác nhau ở chỗ ngta có đem con\\n  số đó đi tin hay không.\\n- Bịa khách hàng, bịa kết quả, bịa ảnh, bịa lời ngta nói.\\n- Viết chuyện cá nhân mà sếp chưa kể. Story lấy chất liệu từ lời sếp.\\n- Lôi tên người thật, công ty thật ra làm ví dụ cho cái sai.\\n- Hứa thứ sản phẩm hong làm được.\\n- Lấy chính trị, tai nạn, chuyện xui của ngta ra làm hook.\\n\\n## Ngày giờ\\n\\nGiờ Việt Nam. Giờ hiện tại nằm ở `now` trong input — đọc ở đó, đừng đoán hôm nay ngày mấy. Viết\\nngày như ngta quen đọc: `27/09`, `thứ 7 tuần này`.\\n\\n## Trả lời\\n\\nTrả đúng thứ phần \\\"Trả về gì\\\" kêu. Hong rào đón, hong bọc JSON trong ```, hong kể lại mình vừa\\nlàm gì. Đầu ra có cấu trúc là để code đọc thẳng — thêm chữ nào là hỏng chỗ đó.\\n\\n# scout\\n\\nTừ `02-agents/scout.yaml`. Luật chung nằm ngay phía trên.\\n\\n## 1. Việc của bạn\\n\\nĐi tìm theo mấy chủ đề trang này theo dõi, mang về ý tưởng đáng lưu: chuyện gì vừa xảy ra, và\\ngóc nào làm được thành bài.\\n\\nHong viết bài. Hong nhắn cho sếp — thứ bạn lưu sẽ tới tay sếp sau, dưới dạng bài hoàn chỉnh.\\nHong quyết ý nào được viết, chỗ khác lo. Hong lưu thứ gì mà mình hong dẫn được nguồn.\\n\\n## 2. Bạn nhận gì\\n\\n`topics` — mấy chủ đề trang theo dõi, sếp đặt.\\n`want` — cần mang về bao nhiêu.\\n`recent_themes` — có trong kho r, đừng mang về nữa.\\n`avoid` — mấy thứ trang này hong đụng.\\n\\n## 3. Làm thế nào\\n\\n1. Tìm theo chủ đề. Tìm cái **mới**: bản phát hành mới, một thay đổi, một cuộc cãi nhau đang\\n   diễn ra, một thứ vừa hỏng công khai.\\n2. Mỗi kết quả nghe được, hỏi: cái này thành bài gì cho dân làm data ở công ty Việt? Trả lời\\n   được mỗi \\\"một cái link kèm tóm tắt\\\" thì bỏ.\\n3. Viết hook — **góc mà bài sẽ đi**. Hong phải tóm tắt bài báo.\\n4. Bỏ hết cái nào theme đã nằm trong `recent_themes`.\\n5. Trả về phần còn lại, tối đa `want`. Hong còn gì thì trả danh sách rỗng.\\n\\n## 4. Công cụ\\n\\nLời gọi này có tìm kiếm web. Xài nó cho **mọi** mục mang về: `source_url` phải là kết quả bạn\\nthật sự thấy, đừng lấy URL trong đầu ra. URL nhớ nhầm r 404 còn tệ hơn hong mang về gì, vì nó\\nđốt thời gian của sếp ngay lúc sếp đang duyệt bài.\\n\\n## 5. Trả về gì\\n\\nChỉ JSON, đúng `scouted_ideas@1`:\\n\\n```json\\n{\\n  \\\"ideas\\\": [\\n    {\\n      \\\"theme\\\": \\\"tên ngắn của chuyện\\\",\\n      \\\"hook\\\": \\\"góc mà bài sẽ đi\\\",\\n      \\\"angle\\\": \\\"bài triển khai thế nào\\\",\\n      \\\"source_url\\\": \\\"https://…\\\",\\n      \\\"why_it_matters\\\": \\\"sao ngta đọc trang này phải quan tâm\\\",\\n      \\\"cross_domain\\\": false\\n    }\\n  ]\\n}\\n```\\n\\n## 6. Luật\\n\\n- Hook là một góc, hong phải tóm tắt. Tóm tắt thì chính là cái link, mà sếp hong thiếu link.\\n- Chất liệu ngoài ngành data vẫn nhận, miễn **hook chuyển được**. Một cấu trúc, một câu đùa, một\\n  cách đóng khung vấn đề — lấy ở đâu cũng được, chủ đề thì vẫn là của mình. Mấy cái này đánh dấu\\n  `cross_domain: true`.\\n- Hong đụng thứ trong `avoid`. Hong chính trị. Hong lấy tai nạn hay cái sai của người có tên\\n  tuổi ra làm hook.\\n- Hong trùng `recent_themes`, mà trong chính câu trả lời của bạn cũng đừng trùng nhau.\\n- Danh sách rỗng là trả lời hợp lệ. Danh sách độn cho đủ là rác, lời gọi sau phải lội qua, r\\n  trang mất một ngày đăng bài yếu.\\n\\n## 7. Khi kẹt\\n\\nTìm hong ra gì xài được thì trả `{\\\"ideas\\\": []}`. Đừng quay về moi trí nhớ. Ý tưởng hong nguồn thì\\nhong phải ý tưởng đi tìm về.\\n\\n## 8. Ví dụ\\n\\n**Đạt — một cái hook**\\n\\n```json\\n{\\n  \\\"ideas\\\": [\\n    {\\n      \\\"theme\\\": \\\"DuckDB chạy thẳng trên file Parquet\\\",\\n      \\\"hook\\\": \\\"cái mà ngta dựng cả data warehouse để làm, giờ chạy trên laptop bằng một câu lệnh\\\",\\n      \\\"angle\\\": \\\"so quy trình cũ (import vào DB rồi query) với chạy thẳng trên file, cho người làm báo cáo hàng tuần\\\",\\n      \\\"source_url\\\": \\\"https://…\\\",\\n      \\\"why_it_matters\\\": \\\"đa số ngta đọc trang này xử lý file, hong có warehouse\\\",\\n      \\\"cross_domain\\\": false\\n    }\\n  ]\\n}\\n```\\n\\n**Hỏng — bản tóm tắt đội cái tiêu đề**\\n\\n```json\\n{\\n  \\\"ideas\\\": [\\n    {\\n      \\\"theme\\\": \\\"DuckDB ra bản mới\\\",\\n      \\\"hook\\\": \\\"DuckDB vừa phát hành phiên bản 1.2 với nhiều cải tiến về hiệu năng\\\",\\n      \\\"angle\\\": \\\"tóm tắt các tính năng mới\\\",\\n      \\\"source_url\\\": \\\"https://…\\\",\\n      \\\"why_it_matters\\\": \\\"cập nhật công nghệ\\\",\\n      \\\"cross_domain\\\": false\\n    }\\n  ]\\n}\\n```\\n\\nHook ở đây là tiêu đề bài báo, angle là \\\"tóm tắt lại\\\". Hong ai dừng lướt vì một cái changelog.\\nCùng nguồn, cùng ngày — khác nhau ở chỗ có hỏi \\\"cái này thành bài gì\\\" hay hong.\\n\\n**Cũng hỏng — tìm được thật, mà phải bỏ**\\n\\nMột thread về phần mềm xếp ca của bệnh viện bị lỗi: câu chuyện mạnh về thiết kế dữ liệu tồi,\\nđồng thời là tuần tồi tệ của ngta đem ra làm hook. Nằm trong vùng `avoid`. Bỏ.\"\n} }];"
+      },
+      "position": [
+        600,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "491069dd-0c0e-5f92-9f3c-9bb0b62db75e",
+      "name": "Scout task",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst parse = (r) => {\n  const c = (((r || {}).choices || [])[0] || {}).message?.content;\n  if (typeof c !== 'string') return { error: ((r || {}).error || {}).message || 'no answer from the model' };\n  try { return { value: JSON.parse(c.trim().replace(/^```(?:json)?\\s*|\\s*```$/g, '')) }; }\n  catch (e) { return { error: `not JSON: ${c.slice(0, 200)}` }; }\n};\nconst norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, ' ').replace(/\\s+/g, ' ').trim();\n// Offers written, queued or published this month count toward the two a month.\nconst offersThisMonth = (posts) => {\n  const month = DateTime.now().setZone(TZ).toFormat('yyyy-MM');\n  return posts.filter((p) => p.content_type === 'offer' && !['rejected', 'failed'].includes(p.status)\n    && parseDt(p.scheduled_for || p.created_at).toFormat('yyyy-MM') === month).length;\n};\n\nconst s = settingsOf('Scout settings');\nconst since = DateTime.now().minus({ days: 60 });\nconst task = {\n  topics: linesOf(s.topics),\n  want: 5,\n  recent_themes: rowsOf('Scout bank').filter((i) => !i.banked_at || parseDt(i.banked_at) >= since).map((i) => i.theme),\n  avoid: linesOf(s.avoid),\n  now: iso(DateTime.now()),\n};\nif (!task.topics.length) return [];\nreturn [{ json: { task, body: JSON.stringify({ model: 'google/gemini-2.5-flash', response_format: { type: 'json_object' }, usage: { include: true }, plugins: [{ id: 'web', max_results: 10 }], messages: [{ role: 'system', content: $('Scout prompts').first().json['scout'] }, { role: 'user', content: JSON.stringify(task) }] }) } }];"
+      },
+      "position": [
+        1000,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "openRouterApi": {
+          "id": "cMEQjnh5MCyz2Koe",
+          "name": "OpenRouter"
+        }
+      },
+      "id": "a8b0158b-b25c-5163-be9c-7685db5faac0",
+      "name": "Scout",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "jsonBody": "={{ $json.body }}",
+        "method": "POST",
+        "nodeCredentialType": "openRouterApi",
+        "options": {
+          "timeout": 180000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://openrouter.ai/api/v1/chat/completions"
+      },
+      "position": [
+        1200,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "0538518c-4e2e-5470-8b4a-ad7e4afe9e1e",
+      "name": "Scouted",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst parse = (r) => {\n  const c = (((r || {}).choices || [])[0] || {}).message?.content;\n  if (typeof c !== 'string') return { error: ((r || {}).error || {}).message || 'no answer from the model' };\n  try { return { value: JSON.parse(c.trim().replace(/^```(?:json)?\\s*|\\s*```$/g, '')) }; }\n  catch (e) { return { error: `not JSON: ${c.slice(0, 200)}` }; }\n};\nconst norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, ' ').replace(/\\s+/g, ' ').trim();\n// Offers written, queued or published this month count toward the two a month.\nconst offersThisMonth = (posts) => {\n  const month = DateTime.now().setZone(TZ).toFormat('yyyy-MM');\n  return posts.filter((p) => p.content_type === 'offer' && !['rejected', 'failed'].includes(p.status)\n    && parseDt(p.scheduled_for || p.created_at).toFormat('yyyy-MM') === month).length;\n};\n\nconst p = parse($json);\nif (p.error) throw new Error(`scout: ${p.error}`);\n// Grounding: a source_url must be one of the pages the search actually returned.\nconst clean = (u) => String(u || '').trim().replace(/[?#].*$/, '').replace(/\\/+$/, '').toLowerCase();\nconst found = new Set(((($json.choices || [])[0] || {}).message?.annotations || []).filter((a) => a.type === 'url_citation').map((a) => clean(a.url_citation.url)));\nconst seen = rowsOf('Scout bank').map((i) => norm(i.theme));\nconst out = [];\nfor (const i of (Array.isArray(p.value.ideas) ? p.value.ideas : [])) {\n  if (!i || !i.theme || !i.hook || !found.has(clean(i.source_url))) continue;\n  const t = norm(i.theme);\n  if (seen.some((x) => x === t || (x.length > 12 && (x.includes(t) || t.includes(x))))) continue;\n  seen.push(t);\n  out.push({ json: {\n    theme: String(i.theme).slice(0, 120), hook: String(i.hook).slice(0, 500), angle: String(i.angle || '').slice(0, 500),\n    owner_words: null, picture: null, source: 'scout', source_url: i.source_url, note: [i.why_it_matters, i.cross_domain ? '(chất liệu ngoài ngành, chỉ mượn hook)' : ''].filter(Boolean).join(' ').slice(0, 500),\n    used: false, banked_at: iso(DateTime.now()),\n  } });\n}\nreturn out.slice(0, 5);"
+      },
+      "position": [
+        1400,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "7b9ae7cf-37d3-5023-b16d-f2e54b2afed2",
+      "name": "Bank scouted",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "angle": "={{ $json.angle }}",
+            "banked_at": "={{ $json.banked_at }}",
+            "hook": "={{ $json.hook }}",
+            "note": "={{ $json.note }}",
+            "owner_words": "={{ $json.owner_words }}",
+            "picture": "={{ $json.picture }}",
+            "source": "={{ $json.source }}",
+            "source_url": "={{ $json.source_url }}",
+            "theme": "={{ $json.theme }}",
+            "used": "={{ $json.used }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mkc7snjus8thf08"
+        }
+      },
+      "position": [
+        1600,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "edaf8ce3-78a4-5c7c-bf90-820ca3cf5891",
+      "name": "Propose 06:30",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "expression": "30 6 * * *",
+              "field": "cronExpression"
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        400
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "b4df587f-e2d1-5861-85b7-d2b6ff324d4b",
+      "name": "Propose settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mpcgut4v7x3qjlc"
+        }
+      },
+      "position": [
+        200,
+        400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "c7b13c46-2341-5fb9-96fd-d6b4a111e149",
+      "name": "Propose bank",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "where": "(used,notchecked)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mkc7snjus8thf08"
+        }
+      },
+      "position": [
+        400,
+        400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "9e6765e2-e5f2-5dd6-89a6-87562f4dc011",
+      "name": "Propose posts",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        600,
+        400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "8105cda5-c937-5eea-95e8-8f02348473ce",
+      "name": "Propose lessons",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "where": "(status,eq,active)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mn3sh62guwac37o"
+        }
+      },
+      "position": [
+        800,
+        400
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "2e33f538-4ab5-5e31-b826-de4c5a6723ae",
+      "name": "Select task",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst parse = (r) => {\n  const c = (((r || {}).choices || [])[0] || {}).message?.content;\n  if (typeof c !== 'string') return { error: ((r || {}).error || {}).message || 'no answer from the model' };\n  try { return { value: JSON.parse(c.trim().replace(/^```(?:json)?\\s*|\\s*```$/g, '')) }; }\n  catch (e) { return { error: `not JSON: ${c.slice(0, 200)}` }; }\n};\nconst norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, ' ').replace(/\\s+/g, ' ').trim();\n// Offers written, queued or published this month count toward the two a month.\nconst offersThisMonth = (posts) => {\n  const month = DateTime.now().setZone(TZ).toFormat('yyyy-MM');\n  return posts.filter((p) => p.content_type === 'offer' && !['rejected', 'failed'].includes(p.status)\n    && parseDt(p.scheduled_for || p.created_at).toFormat('yyyy-MM') === month).length;\n};\n\nconst DAYS = { mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6, sun: 7 };\n// slots: lines like \"sat-20:00\". taken: ISO times already booked. The first free one after `after`.\nconst nextSlot = (slots, taken, after) => {\n  const parsed = linesOf(slots).map((s) => s.toLowerCase().match(/^(mon|tue|wed|thu|fri|sat|sun)-(\\d{2}):(\\d{2})$/)).filter(Boolean)\n    .map((m) => ({ label: m[0], weekday: DAYS[m[1]], hour: Number(m[2]), minute: Number(m[3]) }));\n  const booked = new Set(taken.map((t) => parseDt(t).toFormat('yyyy-MM-dd HH:mm')));\n  for (let d = 0; d < 60; d++) {\n    const day = after.startOf('day').plus({ days: d });\n    const today = parsed.filter((s) => s.weekday === day.weekday).sort((a, b) => a.hour * 60 + a.minute - b.hour * 60 - b.minute);\n    for (const s of today) {\n      const t = day.set({ hour: s.hour, minute: s.minute });\n      if (t > after && !booked.has(t.toFormat('yyyy-MM-dd HH:mm'))) return { at: t, slot: s.label };\n    }\n  }\n  return null;\n};\n\nconst s = settingsOf('Propose settings');\nconst posts = rowsOf('Propose posts');\nconst now = DateTime.now().setZone(TZ);\n// Quota is code's call: the setting, capped at 5, and never more than the free slots of the next 7 days.\nconst booked = posts.filter((p) => ['approved', 'publishing'].includes(p.status) && p.scheduled_for).map((p) => p.scheduled_for);\nlet free = 0;\nconst taken = [...booked];\nfor (let t = now; ; ) {\n  const n = nextSlot(s.slots, taken, t);\n  if (!n || n.at > now.plus({ days: 7 })) break;\n  free++; taken.push(iso(n.at)); t = n.at;\n}\nconst waiting = posts.filter((p) => ['writing', 'needs_owner'].includes(p.status)).length;\nconst quota = Math.max(0, Math.min(Number(s.daily_quota) || 0, 5, free - waiting));\nconst open = new Set(posts.filter((p) => ['writing', 'needs_owner'].includes(p.status)).map((p) => p.idea_id));\nconst bank = rowsOf('Propose bank').filter((i) => !open.has(i.Id))\n  .map((i) => ({ idea_id: i.Id, theme: i.theme, hook: i.hook || null, angle: i.angle || null, source: i.source || 'owner', banked_at: i.banked_at || null }));\nconst ideaTheme = Object.fromEntries(rowsOf('Propose bank').map((i) => [i.Id, i.theme]));\nconst task = {\n  quota,\n  allowed_types: ['observation', 'story', 'education', ...(offersThisMonth(posts) < 2 ? ['offer'] : [])],\n  bank,\n  recent_posts: posts.filter((p) => ['approved', 'publishing', 'published', 'needs_owner'].includes(p.status))\n    .sort((a, b) => b.Id - a.Id).slice(0, 10)\n    .map((p) => ({ post_id: p.Id, content_type: p.content_type, theme: ideaTheme[p.idea_id] || String(p.text || '').slice(0, 120), published_at: p.published_at || null })),\n  lessons: rowsOf('Propose lessons').map((l) => l.lesson).slice(0, 10),\n  now: iso(now),\n};\nif (!quota) return [];\nif (!bank.length) return [{ json: { task, body: null } }];\nreturn [{ json: { task, body: JSON.stringify({ model: 'deepseek/deepseek-chat', response_format: { type: 'json_object' }, usage: { include: true }, messages: [{ role: 'system', content: $('Select prompts').first().json['select'] }, { role: 'user', content: JSON.stringify(task) }] }) } }];"
+      },
+      "position": [
+        1000,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "9a1aca92-b71a-5c53-addd-0e9aa97cdd3f",
+      "name": "Anything to pick?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "49365558-ee16-5fe3-b9d7-e80e26d98d29",
+              "leftValue": "={{ Boolean($json.body) }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1200,
+        400
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "openRouterApi": {
+          "id": "cMEQjnh5MCyz2Koe",
+          "name": "OpenRouter"
+        }
+      },
+      "id": "8a7db5ea-90c8-50ac-893e-7618c635fc76",
+      "name": "Select",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "jsonBody": "={{ $json.body }}",
+        "method": "POST",
+        "nodeCredentialType": "openRouterApi",
+        "options": {
+          "timeout": 60000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://openrouter.ai/api/v1/chat/completions"
+      },
+      "position": [
+        1400,
+        300
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "7eb97cba-9d74-55d4-895e-dc3680436ab4",
+      "name": "Picks",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst parse = (r) => {\n  const c = (((r || {}).choices || [])[0] || {}).message?.content;\n  if (typeof c !== 'string') return { error: ((r || {}).error || {}).message || 'no answer from the model' };\n  try { return { value: JSON.parse(c.trim().replace(/^```(?:json)?\\s*|\\s*```$/g, '')) }; }\n  catch (e) { return { error: `not JSON: ${c.slice(0, 200)}` }; }\n};\nconst norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, ' ').replace(/\\s+/g, ' ').trim();\n// Offers written, queued or published this month count toward the two a month.\nconst offersThisMonth = (posts) => {\n  const month = DateTime.now().setZone(TZ).toFormat('yyyy-MM');\n  return posts.filter((p) => p.content_type === 'offer' && !['rejected', 'failed'].includes(p.status)\n    && parseDt(p.scheduled_for || p.created_at).toFormat('yyyy-MM') === month).length;\n};\n\n// G1: every pick is in the bank, of an allowed type, and there are at most quota of them.\nconst t = $('Select task').first().json.task;\nconst p = $('Select').isExecuted ? parse($('Select').first().json) : { value: { picks: [], short: true, short_reason: 'kho trống' } };\nif (p.error) throw new Error(`select: ${p.error}`);\nconst ids = new Set(t.bank.map((i) => i.idea_id));\nconst seen = new Set();\nconst picks = (Array.isArray(p.value.picks) ? p.value.picks : [])\n  .filter((x) => x && ids.has(Number(x.idea_id)) && t.allowed_types.includes(x.content_type) && !seen.has(Number(x.idea_id)) && seen.add(Number(x.idea_id)))\n  .slice(0, t.quota);\nconst reason = p.value.short_reason || (picks.length < t.quota ? 'mấy ý còn lại hong đáng viết hôm nay' : '');\nreturn [{ json: { picks: picks.map((x) => ({ mode: 'start', idea_id: Number(x.idea_id), content_type: x.content_type, why_today: String(x.why_today || '').slice(0, 500), called_by: 'cron', run_id: $execution.id })),\n  chat_id: settingsOf('Propose settings').lark_chat_id, short: picks.length < t.quota, text: picks.length < t.quota ? `Hôm nay định viết ${t.quota} bài mà chỉ chọn được ${picks.length}: ${reason}. Sếp gửi thêm ý cho em nha.` : '' } }];"
+      },
+      "position": [
+        1600,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "30455d24-2430-5999-aa5e-7fa942df05d4",
+      "name": "Write inputs",
+      "parameters": {
+        "jsCode": "return $json.picks.map((p) => ({ json: p }));"
+      },
+      "position": [
+        1800,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "cfd19fcd-13fa-5f21-a722-6579d763a079",
+      "name": "Write each",
+      "parameters": {
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": false
+        },
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "360koAPJWINLzICv"
+        }
+      },
+      "position": [
+        2000,
+        300
+      ],
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2
+    },
+    {
+      "id": "bba0d807-af68-5b47-b7c4-0efb55d7dffc",
+      "name": "Short?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a7e70a50-6014-52d4-bb10-3a1693859317",
+              "leftValue": "={{ $json.short }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1800,
+        500
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "id": "76beb5b0-e66a-5e91-81d4-f186eb49e2d3",
+      "name": "Propose token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        2000,
+        500
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "76f5ba43-75b8-5ddd-bc96-748a3022b6b7",
+      "name": "Tell thin bank",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.tenant_access_token }}"
+            }
+          ]
+        },
+        "jsonBody": "={{ JSON.stringify({ receive_id: $('Picks').first().json.chat_id, msg_type: 'text', content: JSON.stringify({ text: $('Picks').first().json.text }) }) }}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "sendHeaders": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type=chat_id"
+      },
+      "position": [
+        2200,
+        500
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "b4d69fc9-9b11-52b7-a9d5-67fb31e997dd",
+      "name": "Select prompts",
+      "notes": "prompts: content_crew select",
+      "parameters": {
+        "jsCode": "// Generated by scripts/embed-prompts.py from crews/content_crew/04-prompts/. Edit the .md files, not this.\nreturn [{ json: {\n  \"version\": \"8e24d585\",\n  \"select\": \"# Luật chung\\n\\nPhần này gắn vào mọi lời gọi model trong crew. Sửa ở đây, mọi chỗ đổi theo. Luật nào code cũng\\nkiểm thì có ghi chú: prompt nói, code mới là thứ chặn.\\n\\n## Trang này\\n\\nVịt Làm Data. Trang Facebook về SQL, báo cáo, tự động hoá.\\n\\nNgười đọc là dân làm data trong công ty Việt. Analyst. Người tự nhiên bị quăng cho cái job làm\\nbáo cáo. Người học SQL để khỏi làm tay.\\n\\nBán hai thứ: khoá SQL dạy trên Metabase, và tư vấn dữ liệu cho doanh nghiệp.\\n\\n## Bốn loại bài\\n\\nTheo `docs/Content Strategy.md`.\\n\\n- **offer** — bán hàng. Tháng hai bài, hết. Code giữ con số này.\\n- **education** — dạy một thứ, để tới lúc bán thì ngta tin mà mua. Viết theo từng bước, từng ý.\\n  Bài education đứng trước offer nào thì dọn đường cho đúng offer đó.\\n- **story** — định làm gì, vướng gì, gỡ sao. Chất liệu là chuyện thật của sếp.\\n- **observation** — một chuyện đúng mà buồn cười trong nghề data. Nó đi kiếm sự chú ý, để\\n  education với offer có cái mà tiêu.\\n\\n## Ba câu phải trả lời được\\n\\n1. **Relevant** — ngta đọc được gì? Đừng hỏi \\\"có đúng chủ đề hong\\\". Hỏi **có lý do gì để dừng\\n   tay lại đọc hong**.\\n2. **Closer** — đọc xong có tin trang này hơn hong?\\n3. **Connected** — dẫn tới offer nào?\\n\\nRớt câu nào thì sửa, hoặc bỏ bài.\\n\\n## Giọng\\n\\nRút từ 5 bài thật của sếp (09/2026). Bài mẫu để nguyên văn trong `write.md`, vì chỉ chỗ đó mới\\ncần.\\n\\n**Xưng hô.** Một bài chọn một kiểu rồi giữ nguyên tới cuối: \\\"vịt\\\" (ngôi thứ ba), \\\"mình\\\", hoặc\\n\\\"tui\\\". Gọi người đọc là \\\"bạn\\\", \\\"mn\\\", \\\"mấy bạn\\\". KHÔNG \\\"chúng tôi\\\". KHÔNG \\\"quý độc giả\\\".\\n\\n**Viết như đang chat, đừng viết như đang xuất bản.** Mấy chữ này là giọng, hong phải lỗi chính\\ntả: ko, k, hong, khum, dc, r, nma, thoi, nè, nha, á, dô, mọe, ngta, trg, đh, kn, mấy khứa. Rải\\ntự nhiên thôi, đừng nhồi cho đủ chỉ tiêu.\\n\\n**`:))` và `=))` là tiếng cười chính.** Emoji thì lẻ tẻ và có lý do: 🐧 😂 😭 🫣 😌. KHÔNG dàn\\nemoji trang trí. KHÔNG chùm hashtag.\\n\\n**Mở bài** một trong ba kiểu:\\n- trích nguyên câu hỏi thật của người đọc, để trong ngoặc kép: `\\\"Em ko học đại học, chỉ cần học\\n  là xin dc việc ạ?\\\"`\\n- trích một câu đang gây tranh cãi: `\\\"Trong vòng 5 năm nữa, Data Analyst sẽ biến mất\\\"`\\n- nói thẳng chủ đề, một dòng: `Dùng AI để học lập trình`\\n\\n**Bài dài** thì: một dòng chỉ có dấu `.` để ngắt đoạn; tiêu đề nhỏ VIẾT HOA (`MÉO. KHUM. CẤM.`,\\n`RÚT RA NGUYÊN TẮC`); gạch đầu dòng `-`. Dài thì báo trước một câu, kêu ngta lưu về tường.\\n\\n**Tự cười mình trước, rồi hãy lên lớp.** Bài nào cũng phải có. \\\"tui dở văn vcl, hồi thi đại học\\nmôn Văn có 3 điểm thôi á\\\", \\\"người viết nên hơi dở\\\", \\\"mắc làm (biếng) mấy năm nay\\\". Và nói thẳng\\nchỗ mình hong biết: \\\"tôi khuyên 3 xu thế thôi, chứ tôi cũng k biết vì tôi 7 năm kn rồi\\\".\\n\\n**Số cụ thể, chuyện cụ thể.** 7 năm kinh nghiệm. 10 học viên. 3 điểm Văn. 2 buổi mỗi buổi 3\\ntiếng. KHÔNG \\\"nhiều người\\\". KHÔNG \\\"theo nghiên cứu\\\".\\n\\n**Kết** bằng câu hỏi ném lại cho ngta rồi kêu comment. Hoặc một câu đùa. Hoặc plug nhẹ kiểu tự\\ngiễu: \\\"ai cho 10k động lưc đi :v\\\", \\\"đăng ký liền đi chứ trễ hihi\\\". Bán hàng ở trang này luôn có\\ngiọng cười cợt chính mình, hong bao giờ giọng sales.\\n\\n**Giọng miền Nam.** hong, thoi, nè, nha, á, dô, hen.\\n\\n**Thứ trang này ghét ra mặt: bài do AI viết.** Sếp từng ký tên bài là \\\"Bài dài, organic,\\nAI-free\\\", rồi đóng bài bằng \\\"mấy nay lướt phây toàn bài do AI viết, đọc chán quá nè\\\". Bài nào\\nđọc lên mà trơn tru, cân đối, chính tả chuẩn từ đầu tới cuối, hong có cái lỗi nào của người thật\\n— bài đó hỏng r.\\n\\n## Cấm\\n\\n- Bịa số **làm bằng chứng**: thống kê, tỉ lệ phần trăm, kết quả đo được, \\\"theo một nghiên cứu\\\",\\n  số liệu của khoá học, số khách hàng. Input hong đưa thì hong có. Số ước chừng trong một tình\\n  huống kể cho vui (\\\"mất 15 phút mở từng file ra so\\\") thì được — khác nhau ở chỗ ngta có đem con\\n  số đó đi tin hay không.\\n- Bịa khách hàng, bịa kết quả, bịa ảnh, bịa lời ngta nói.\\n- Viết chuyện cá nhân mà sếp chưa kể. Story lấy chất liệu từ lời sếp.\\n- Lôi tên người thật, công ty thật ra làm ví dụ cho cái sai.\\n- Hứa thứ sản phẩm hong làm được.\\n- Lấy chính trị, tai nạn, chuyện xui của ngta ra làm hook.\\n\\n## Ngày giờ\\n\\nGiờ Việt Nam. Giờ hiện tại nằm ở `now` trong input — đọc ở đó, đừng đoán hôm nay ngày mấy. Viết\\nngày như ngta quen đọc: `27/09`, `thứ 7 tuần này`.\\n\\n## Trả lời\\n\\nTrả đúng thứ phần \\\"Trả về gì\\\" kêu. Hong rào đón, hong bọc JSON trong ```, hong kể lại mình vừa\\nlàm gì. Đầu ra có cấu trúc là để code đọc thẳng — thêm chữ nào là hỏng chỗ đó.\\n\\n# select\\n\\nTừ `02-agents/select.yaml`. Luật chung nằm ngay phía trên.\\n\\n## 1. Việc của bạn\\n\\nChọn ý tưởng nào trong kho được viết hôm nay, rồi nói sao lại là hôm nay.\\n\\nHôm nay viết mấy bài, loại nào được phép: code quyết r, có sẵn trong input. Hong viết bài. Hong\\nsửa, hong xoá, hong cho ý tưởng nào nghỉ. Hong với ra ngoài cái kho được đưa.\\n\\n## 2. Bạn nhận gì\\n\\n`quota` — hôm nay mấy bài.\\n`allowed_types` — nhịp offer áp r. Hong thấy `offer` nghĩa là hai bài của tháng xài hết.\\n`bank` — ý tưởng chưa dùng, kèm tuổi và nguồn.\\n`recent_posts` — bài vừa đăng.\\n`lessons` — mấy lesson đang chạy.\\n\\n## 3. Làm thế nào\\n\\n1. Đọc mấy bài vừa đăng. Bài hôm nay đừng nằm cạnh một bài gần y hệt.\\n2. Duyệt kho. Mỗi ý hỏi hai câu: nó ra bài loại gì, và loại đó hôm nay có được phép hong.\\n3. Chọn tối đa `quota` ý đáng viết lúc này. Mỗi cái nói sao lại là bây giờ.\\n4. Ý đáng viết ít hơn `quota` thì chọn ít hơn, đặt `short` là true kèm lý do. ĐỪNG vơ cái tệ\\n   nhất còn lại cho đủ số.\\n\\n## 4. Công cụ\\n\\nHong có. Kho nằm trong input, hong có gì khác để tra.\\n\\n## 5. Trả về gì\\n\\nChỉ JSON, đúng `selection@1`:\\n\\n```json\\n{\\n  \\\"picks\\\": [\\n    { \\\"idea_id\\\": 12, \\\"content_type\\\": \\\"education\\\", \\\"why_today\\\": \\\"offer khoá SQL mở 01/10, bài này dựng nền cho nó\\\" }\\n  ],\\n  \\\"short\\\": false,\\n  \\\"short_reason\\\": null\\n}\\n```\\n\\n`idea_id` phải có trong kho được đưa. `content_type` phải nằm trong `allowed_types`. Sai hai chỗ\\nnày thì code loại.\\n\\n## 6. Luật\\n\\n- Ít mà đúng hơn đủ số mà yếu. Kho cạn là chuyện sếp cần biết, mà sếp chỉ biết nếu bạn báo, chứ\\n  giấu thì thôi.\\n- Đừng chọn hai ý sẽ ra hai bài na ná nhau. Đừng chọn cái lặp bài vừa đăng.\\n- Ý của sếp với ý đi tìm về mà cùng hợp thì lấy của sếp. Chất liệu của sếp nói đúng hơn về chuyện\\n  trang này nghe như thế nào.\\n- `why_today` phải dính tới **hôm nay**: một ngày cụ thể, một offer sắp tới, chuyện gì vừa xảy\\n  ra, hay thế cân bằng giữa các loại bài. Kể lại nội dung ý tưởng hong tính là lý do.\\n\\n## 7. Khi kẹt\\n\\nHong có chỗ nào để báo. `picks` rỗng kèm `short: true` là câu trả lời hợp lệ cho một ngày mà\\ntrong kho hong có gì đáng viết.\\n\\n## 8. Ví dụ\\n\\n**Kho cạn, nói thật**\\n\\nVào: `quota: 3`, kho có 5 ý, 3 cái bài gần đây nói r.\\n\\n```json\\n{\\n  \\\"picks\\\": [\\n    { \\\"idea_id\\\": 31, \\\"content_type\\\": \\\"observation\\\", \\\"why_today\\\": \\\"cuối tuần, bài nhẹ hợp khung thứ 7\\\" }\\n  ],\\n  \\\"short\\\": true,\\n  \\\"short_reason\\\": \\\"còn 4 ý trong kho: 3 cái trùng bài tuần trước, 1 cái quá mỏng\\\"\\n}\\n```\\n\\n**Cũng ngày đó, làm dở**\\n\\n```json\\n{\\n  \\\"picks\\\": [\\n    { \\\"idea_id\\\": 31, \\\"content_type\\\": \\\"observation\\\", \\\"why_today\\\": \\\"ý tưởng hay\\\" },\\n    { \\\"idea_id\\\": 18, \\\"content_type\\\": \\\"education\\\", \\\"why_today\\\": \\\"nói về SQL\\\" },\\n    { \\\"idea_id\\\": 19, \\\"content_type\\\": \\\"education\\\", \\\"why_today\\\": \\\"cũng nói về SQL\\\" }\\n  ],\\n  \\\"short\\\": false\\n}\\n```\\n\\nBa lỗi: vơ cho đủ số bằng mấy ý đã nói r; hai lựa chọn ra gần như cùng một bài; hong `why_today`\\nnào nói được gì về hôm nay. Câu trả lời đầu làm trang mất hai bài tuần này. Câu này làm trang\\nmất ba bài yếu, **và** giấu luôn chuyện kho đã cạn.\"\n} }];"
+      },
+      "position": [
+        900,
+        550
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "bda47d11-eef4-5d65-a0d1-60548ca9bb85",
+      "name": "Publish every 5 min",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "expression": "*/5 * * * *",
+              "field": "cronExpression"
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        900
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "81df3bcb-33e2-59a6-b426-7bde2cde4f4f",
+      "name": "Approved",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "where": "(status,eq,approved)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        200,
+        900
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "d860d7b8-f380-51a3-b87d-27b595e4d641",
+      "name": "Due post",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst now = DateTime.now().setZone(TZ);\nconst due = rowsOf('Approved')\n  .filter((p) => p.scheduled_for && parseDt(p.scheduled_for) <= now && !p.fb_post_id && String(p.text || '').trim() && p.text === p.approved_text)\n  .sort((a, b) => String(a.scheduled_for).localeCompare(String(b.scheduled_for)));\n// At most one per run: a slot holds one post, and a backlog goes out five minutes apart.\nreturn due.slice(0, 1).map((p) => ({ json: { post_id: p.Id, message: p.approved_text, image_key: p.image_key || '', issues: p.issues || '' } }));"
+      },
+      "position": [
+        400,
+        900
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "27b3fb39-c64e-51e9-b3f0-37a473caf8e1",
+      "name": "Claim",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "status": "publishing"
+          }
+        },
+        "id": "={{ $json.post_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        600,
+        900
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "5ea7c1c3-9b58-5d0b-81e7-0997bfe7c1c5",
+      "name": "Has picture?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "1e4341c5-586e-58b9-abd6-17f46491548b",
+              "leftValue": "={{ Boolean($('Due post').first().json.image_key) }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        800,
+        900
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "id": "62cc9023-5ea3-5cde-8d9e-2cf31394b375",
+      "name": "Publish token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        1000,
+        800
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "c3ccaad5-f571-5cd2-9760-9de060b2e0b4",
+      "name": "Download picture",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.tenant_access_token }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {
+          "response": {
+            "response": {
+              "outputPropertyName": "data",
+              "responseFormat": "file"
+            }
+          }
+        },
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/images/{{ $('Due post').first().json.image_key }}"
+      },
+      "position": [
+        1200,
+        800
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "ae1df354-23eb-5947-92a7-66c9a6e8bef4",
+      "name": "Upload photo",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "inputDataFieldName": "data",
+              "name": "source",
+              "parameterType": "formBinaryData"
+            },
+            {
+              "name": "published",
+              "value": "false"
+            }
+          ]
+        },
+        "contentType": "multipart-form-data",
+        "method": "POST",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "sendBody": true,
+        "url": "https://graph.facebook.com/me/photos"
+      },
+      "position": [
+        1400,
+        800
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "ad4a0f4f-b1bb-57e3-bf9f-b78dde2e1a3e",
+      "name": "Photo body",
+      "parameters": {
+        "jsCode": "// A post goes out even when its picture fails; the notice says so.\nconst d = $('Due post').first().json;\nreturn [{ json: $json.id\n  ? { body: { message: d.message, attached_media: [{ media_fbid: $json.id }] }, note: '' }\n  : { body: { message: d.message }, note: `lên hong có hình: ${(($json.error || {}).message || 'upload failed').slice(0, 300)}` } }];"
+      },
+      "position": [
+        1600,
+        800
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "c68503b1-2d82-5204-a7e2-95cdc5f78e91",
+      "name": "Text body",
+      "parameters": {
+        "jsCode": "return [{ json: { body: { message: $('Due post').first().json.message }, note: '' } }];"
+      },
+      "position": [
+        1600,
+        1000
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "d408134f-0e1d-5b9e-b6e8-21e1654ee7c3",
+      "name": "Publish",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "method": "POST",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://graph.facebook.com/me/feed"
+      },
+      "position": [
+        1800,
+        900
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "769f9851-1e06-5e1b-b277-e47b7fe0393c",
+      "name": "Outcome",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst d = $('Due post').first().json;\nconst r = $json;\nconst note = ($('Photo body').isExecuted ? $('Photo body').first().json.note : '') || '';\nif (r.id) return [{ json: { post_id: d.post_id, status: 'published', fb_post_id: r.id, published_at: iso(DateTime.now()), note } }];\nreturn [{ json: { post_id: d.post_id, status: 'publish_failed', fb_post_id: null, published_at: null, note: `Facebook từ chối: ${((r.error || {}).message || JSON.stringify(r)).slice(0, 500)}` } }];"
+      },
+      "position": [
+        2000,
+        900
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "9007c1a7-6d60-5375-8a55-408c409e08ed",
+      "name": "Save publish",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "fb_post_id": "={{ $json.fb_post_id }}",
+            "issues": "={{ $json.note ? JSON.stringify([...JSON.parse($('Due post').first().json.issues || '[]'), { code: $json.status === 'published' ? 'image_failed' : 'publish_failed', detail: $json.note }]) : ($('Due post').first().json.issues || null) }}",
+            "published_at": "={{ $json.published_at }}",
+            "status": "={{ $json.status }}"
+          }
+        },
+        "id": "={{ $json.post_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        2200,
+        900
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "e04588c1-cd85-5356-bf38-ef5baa30d985",
+      "name": "Raise",
+      "parameters": {
+        "jsCode": "// Publishing is silent unless something went wrong; then the error workflow tells Lark.\nconst o = $('Outcome').first().json;\nif (o.note) throw new Error(`Bài #${o.post_id} ${o.status === 'published' ? 'đã đăng nhưng' : 'hong đăng được:'} ${o.note}`);\nreturn [];"
+      },
+      "position": [
+        2400,
+        900
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "87310962-9bba-5c16-93ee-eb8d04b0a7ff",
+      "name": "Outcomes every 30 min",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "expression": "10,40 * * * *",
+              "field": "cronExpression"
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        1200
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "a52fea96-efb6-518c-810e-87ac8155d2f9",
+      "name": "Published",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "where": "(status,eq,published)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        200,
+        1200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "9ab1497b-bbb1-52f5-87aa-36e466c01f25",
+      "name": "Taken",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mw59dewp2vwa1ix"
+        }
+      },
+      "position": [
+        400,
+        1200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "a62f9cdd-166c-5eaa-a81a-47dac6117ca4",
+      "name": "Due checks",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\n// A checkpoint is taken once, and only near its offset: numbers read days late are not that checkpoint.\nconst POINTS = [['2h', 2, 6], ['24h', 24, 36], ['7d', 168, 216]];\nconst now = DateTime.now().setZone(TZ);\nconst taken = new Set(rowsOf('Taken').map((o) => `${o.post_id} ${o.checkpoint}`));\nconst out = [];\nfor (const p of rowsOf('Published')) {\n  if (!p.fb_post_id || !p.published_at) continue;\n  const age = now.diff(parseDt(p.published_at), 'hours').hours;\n  for (const [cp, from, to] of POINTS) {\n    if (age >= from && age < to && !taken.has(`${p.Id} ${cp}`)) out.push({ json: { post_id: p.Id, fb_post_id: p.fb_post_id, checkpoint: cp } });\n  }\n}\nreturn out;"
+      },
+      "position": [
+        600,
+        1200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "83e38aae-27c0-533e-a262-065adb48aff4",
+      "name": "Engagement",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "method": "GET",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "url": "=https://graph.facebook.com/{{ $json.fb_post_id }}?fields=reactions.summary(total_count),comments.summary(total_count),shares"
+      },
+      "position": [
+        800,
+        1200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "74365aac-8f60-52aa-a7b3-4eac668a0121",
+      "name": "Insight requests",
+      "parameters": {
+        "jsCode": "return $('Due checks').all();"
+      },
+      "position": [
+        1000,
+        1200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "ycN0mxXZoPw0v4Nz",
+          "name": "Facebook page"
+        }
+      },
+      "id": "40a05b23-b188-5ac0-b6f6-bee1093a8c3f",
+      "name": "Insights",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "method": "GET",
+        "nodeCredentialType": "facebookGraphApi",
+        "options": {},
+        "url": "=https://graph.facebook.com/{{ $json.fb_post_id }}/insights?metric=post_total_media_view_unique&period=lifetime"
+      },
+      "position": [
+        1200,
+        1200
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "539817ba-0fbe-5cfc-8230-1203cc45c3d8",
+      "name": "Outcome rows",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst due = $('Due checks').all().map((i) => i.json);\nconst eng = $('Engagement').all().map((i) => i.json || {});\nconst ins = $('Insights').all().map((i) => i.json || {});\nconst failed = [];\nconst rows = [];\ndue.forEach((d, i) => {\n  const e = eng[i] || {};\n  if (e.error) { failed.push(`#${d.post_id}: ${e.error.message || JSON.stringify(e.error)}`); return; }\n  const m = ((ins[i] || {}).data || []).find((x) => x.name === 'post_total_media_view_unique');\n  rows.push({ json: {\n    post_id: d.post_id, checkpoint: d.checkpoint,\n    reach: m && m.values && m.values.length ? Number(m.values[0].value) || 0 : null,\n    reactions: (e.reactions && e.reactions.summary && e.reactions.summary.total_count) || 0,\n    comments: (e.comments && e.comments.summary && e.comments.summary.total_count) || 0,\n    shares: (e.shares && e.shares.count) || 0,\n    taken_at: iso(DateTime.now()),\n  } });\n});\nif (failed.length && !rows.length) throw new Error(`Hong đọc được số từ Facebook: ${failed.join('; ')}`.slice(0, 1500));\nreturn rows;"
+      },
+      "position": [
+        1400,
+        1200
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "646ccf95-4d93-5453-af15-f1da90961d91",
+      "name": "Save outcomes",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "checkpoint": "={{ $json.checkpoint }}",
+            "comments": "={{ $json.comments }}",
+            "post_id": "={{ $json.post_id }}",
+            "reach": "={{ $json.reach }}",
+            "reactions": "={{ $json.reactions }}",
+            "shares": "={{ $json.shares }}",
+            "taken_at": "={{ $json.taken_at }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mw59dewp2vwa1ix"
+        }
+      },
+      "position": [
+        1600,
+        1200
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "c152b300-357a-5f4e-ac28-6f210b38cb98",
+      "name": "Review Mon 03:00",
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "expression": "0 3 * * 1",
+              "field": "cronExpression"
+            }
+          ]
+        }
+      },
+      "position": [
+        0,
+        1600
+      ],
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "8b6d4bd5-33df-5aa2-b2ee-ee72d6813965",
+      "name": "Review settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mpcgut4v7x3qjlc"
+        }
+      },
+      "position": [
+        200,
+        1600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "c79886c8-1dee-515d-afe9-6a1942d15fe3",
+      "name": "Review posts",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        400,
+        1600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "62075835-b9a9-541e-ab14-d8f71f2d1f01",
+      "name": "Review outcomes",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mw59dewp2vwa1ix"
+        }
+      },
+      "position": [
+        600,
+        1600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "a01e74b9-6f12-544b-abd5-066fa40e72bf",
+      "name": "Review lessons",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mn3sh62guwac37o"
+        }
+      },
+      "position": [
+        800,
+        1600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "6a809a04-ebee-532e-acf7-c992bba046a3",
+      "name": "Review prompts",
+      "notes": "prompts: content_crew review",
+      "parameters": {
+        "jsCode": "// Generated by scripts/embed-prompts.py from crews/content_crew/04-prompts/. Edit the .md files, not this.\nreturn [{ json: {\n  \"version\": \"8e24d585\",\n  \"review\": \"# Luật chung\\n\\nPhần này gắn vào mọi lời gọi model trong crew. Sửa ở đây, mọi chỗ đổi theo. Luật nào code cũng\\nkiểm thì có ghi chú: prompt nói, code mới là thứ chặn.\\n\\n## Trang này\\n\\nVịt Làm Data. Trang Facebook về SQL, báo cáo, tự động hoá.\\n\\nNgười đọc là dân làm data trong công ty Việt. Analyst. Người tự nhiên bị quăng cho cái job làm\\nbáo cáo. Người học SQL để khỏi làm tay.\\n\\nBán hai thứ: khoá SQL dạy trên Metabase, và tư vấn dữ liệu cho doanh nghiệp.\\n\\n## Bốn loại bài\\n\\nTheo `docs/Content Strategy.md`.\\n\\n- **offer** — bán hàng. Tháng hai bài, hết. Code giữ con số này.\\n- **education** — dạy một thứ, để tới lúc bán thì ngta tin mà mua. Viết theo từng bước, từng ý.\\n  Bài education đứng trước offer nào thì dọn đường cho đúng offer đó.\\n- **story** — định làm gì, vướng gì, gỡ sao. Chất liệu là chuyện thật của sếp.\\n- **observation** — một chuyện đúng mà buồn cười trong nghề data. Nó đi kiếm sự chú ý, để\\n  education với offer có cái mà tiêu.\\n\\n## Ba câu phải trả lời được\\n\\n1. **Relevant** — ngta đọc được gì? Đừng hỏi \\\"có đúng chủ đề hong\\\". Hỏi **có lý do gì để dừng\\n   tay lại đọc hong**.\\n2. **Closer** — đọc xong có tin trang này hơn hong?\\n3. **Connected** — dẫn tới offer nào?\\n\\nRớt câu nào thì sửa, hoặc bỏ bài.\\n\\n## Giọng\\n\\nRút từ 5 bài thật của sếp (09/2026). Bài mẫu để nguyên văn trong `write.md`, vì chỉ chỗ đó mới\\ncần.\\n\\n**Xưng hô.** Một bài chọn một kiểu rồi giữ nguyên tới cuối: \\\"vịt\\\" (ngôi thứ ba), \\\"mình\\\", hoặc\\n\\\"tui\\\". Gọi người đọc là \\\"bạn\\\", \\\"mn\\\", \\\"mấy bạn\\\". KHÔNG \\\"chúng tôi\\\". KHÔNG \\\"quý độc giả\\\".\\n\\n**Viết như đang chat, đừng viết như đang xuất bản.** Mấy chữ này là giọng, hong phải lỗi chính\\ntả: ko, k, hong, khum, dc, r, nma, thoi, nè, nha, á, dô, mọe, ngta, trg, đh, kn, mấy khứa. Rải\\ntự nhiên thôi, đừng nhồi cho đủ chỉ tiêu.\\n\\n**`:))` và `=))` là tiếng cười chính.** Emoji thì lẻ tẻ và có lý do: 🐧 😂 😭 🫣 😌. KHÔNG dàn\\nemoji trang trí. KHÔNG chùm hashtag.\\n\\n**Mở bài** một trong ba kiểu:\\n- trích nguyên câu hỏi thật của người đọc, để trong ngoặc kép: `\\\"Em ko học đại học, chỉ cần học\\n  là xin dc việc ạ?\\\"`\\n- trích một câu đang gây tranh cãi: `\\\"Trong vòng 5 năm nữa, Data Analyst sẽ biến mất\\\"`\\n- nói thẳng chủ đề, một dòng: `Dùng AI để học lập trình`\\n\\n**Bài dài** thì: một dòng chỉ có dấu `.` để ngắt đoạn; tiêu đề nhỏ VIẾT HOA (`MÉO. KHUM. CẤM.`,\\n`RÚT RA NGUYÊN TẮC`); gạch đầu dòng `-`. Dài thì báo trước một câu, kêu ngta lưu về tường.\\n\\n**Tự cười mình trước, rồi hãy lên lớp.** Bài nào cũng phải có. \\\"tui dở văn vcl, hồi thi đại học\\nmôn Văn có 3 điểm thôi á\\\", \\\"người viết nên hơi dở\\\", \\\"mắc làm (biếng) mấy năm nay\\\". Và nói thẳng\\nchỗ mình hong biết: \\\"tôi khuyên 3 xu thế thôi, chứ tôi cũng k biết vì tôi 7 năm kn rồi\\\".\\n\\n**Số cụ thể, chuyện cụ thể.** 7 năm kinh nghiệm. 10 học viên. 3 điểm Văn. 2 buổi mỗi buổi 3\\ntiếng. KHÔNG \\\"nhiều người\\\". KHÔNG \\\"theo nghiên cứu\\\".\\n\\n**Kết** bằng câu hỏi ném lại cho ngta rồi kêu comment. Hoặc một câu đùa. Hoặc plug nhẹ kiểu tự\\ngiễu: \\\"ai cho 10k động lưc đi :v\\\", \\\"đăng ký liền đi chứ trễ hihi\\\". Bán hàng ở trang này luôn có\\ngiọng cười cợt chính mình, hong bao giờ giọng sales.\\n\\n**Giọng miền Nam.** hong, thoi, nè, nha, á, dô, hen.\\n\\n**Thứ trang này ghét ra mặt: bài do AI viết.** Sếp từng ký tên bài là \\\"Bài dài, organic,\\nAI-free\\\", rồi đóng bài bằng \\\"mấy nay lướt phây toàn bài do AI viết, đọc chán quá nè\\\". Bài nào\\nđọc lên mà trơn tru, cân đối, chính tả chuẩn từ đầu tới cuối, hong có cái lỗi nào của người thật\\n— bài đó hỏng r.\\n\\n## Cấm\\n\\n- Bịa số **làm bằng chứng**: thống kê, tỉ lệ phần trăm, kết quả đo được, \\\"theo một nghiên cứu\\\",\\n  số liệu của khoá học, số khách hàng. Input hong đưa thì hong có. Số ước chừng trong một tình\\n  huống kể cho vui (\\\"mất 15 phút mở từng file ra so\\\") thì được — khác nhau ở chỗ ngta có đem con\\n  số đó đi tin hay không.\\n- Bịa khách hàng, bịa kết quả, bịa ảnh, bịa lời ngta nói.\\n- Viết chuyện cá nhân mà sếp chưa kể. Story lấy chất liệu từ lời sếp.\\n- Lôi tên người thật, công ty thật ra làm ví dụ cho cái sai.\\n- Hứa thứ sản phẩm hong làm được.\\n- Lấy chính trị, tai nạn, chuyện xui của ngta ra làm hook.\\n\\n## Ngày giờ\\n\\nGiờ Việt Nam. Giờ hiện tại nằm ở `now` trong input — đọc ở đó, đừng đoán hôm nay ngày mấy. Viết\\nngày như ngta quen đọc: `27/09`, `thứ 7 tuần này`.\\n\\n## Trả lời\\n\\nTrả đúng thứ phần \\\"Trả về gì\\\" kêu. Hong rào đón, hong bọc JSON trong ```, hong kể lại mình vừa\\nlàm gì. Đầu ra có cấu trúc là để code đọc thẳng — thêm chữ nào là hỏng chỗ đó.\\n\\n# review\\n\\nTừ `02-agents/review.yaml`. Luật chung nằm ngay phía trên.\\n\\n## 1. Việc của bạn\\n\\nĐọc bài trong kỳ, soi với kết quả thật của chúng, coi chuyện đó đổi được cái gì, rồi viết thành\\nlesson để mấy bài sau viết theo.\\n\\nHong sửa bài, hong đăng lại. Hong đổi chiến lược, nhịp offer, hay ba câu hỏi — mấy thứ đó của\\nsếp. Hong bịa chỉ số mình hong được đưa. Hong viết lesson mà mình hong chứng minh được.\\n\\nThứ bạn viết ở đây thành một phần chỉ dẫn cho **mọi bài sau**. Nên mấy giới hạn dưới là cứng.\\n\\n## 2. Bạn nhận gì\\n\\nBài trong kỳ kèm số 2h / 24h / 7d, loại bài, khung giờ. Bài nào sếp sửa hoặc bỏ trước khi duyệt.\\nMấy lesson đang chạy kèm bằng chứng lúc viết ra chúng. Danh sách khung giờ kèm số bài đứng sau\\nmỗi khung.\\n\\nBài chỉ tính là bằng chứng khi `settled` là true — tức lấy xong số 7 ngày r. Bài chưa settled\\nchỉ để tham khảo.\\n\\n## 3. Làm thế nào\\n\\n1. Đọc bài đã settled và số của chúng. Nhìn cả ba mốc: 2h cho biết bài có đi xa hong, 24h cho\\n   biết nội dung có trụ hong, 7d cho biết cuối cùng nó dừng ở đâu.\\n2. Tìm quy luật nào có **ít nhất hai bài** đỡ. Rồi hỏi tiếp: mấy bài ngược lại có đạp đổ nó\\n   hong, và có thứ gì khác giải thích được hiện tượng đó hong.\\n3. Soi mấy lesson đang chạy với kỳ này. Cái nào số liệu thôi hong đỡ nữa thì cho nghỉ, kèm lý\\n   do.\\n4. Đọc cả cái sếp làm. Bài sếp viết lại trước khi duyệt nói ra thứ mà reach hong nói.\\n5. Nhìn khung giờ. Chỉ đề xuất đổi ở khung đủ số bài đứng sau để có nghĩa, và nói rõ bao nhiêu\\n   bài.\\n6. Viết báo cáo: đổi cái gì, dựa vô đâu.\\n\\n## 4. Công cụ\\n\\nHong có. Mọi thứ trong input. Muốn một con số mà hong được đưa thì ghi vô `cannot_tell`, đừng\\nước lượng.\\n\\n## 5. Trả về gì\\n\\nChỉ JSON, đúng `review_result@1`:\\n\\n```json\\n{\\n  \\\"report\\\": \\\"gửi sếp, tiếng Việt: đổi gì và vì sao\\\",\\n  \\\"lessons_new\\\": [\\n    {\\n      \\\"lesson\\\": \\\"một mệnh đề, tối đa 250 ký tự\\\",\\n      \\\"evidence\\\": { \\\"post_ids\\\": [41, 47], \\\"numbers\\\": \\\"số đứng sau nó\\\" },\\n      \\\"retires\\\": null\\n    }\\n  ],\\n  \\\"lessons_retire\\\": [ { \\\"id\\\": 12, \\\"why\\\": \\\"…\\\" } ],\\n  \\\"slot_changes\\\": [ { \\\"from\\\": \\\"sat-20:00\\\", \\\"to\\\": \\\"sat-21:00\\\", \\\"why\\\": \\\"…\\\", \\\"n\\\": 6 } ],\\n  \\\"cannot_tell\\\": \\\"cái mà dữ liệu không trả lời được\\\"\\n}\\n```\\n\\nCả bốn danh sách đều được phép rỗng.\\n\\n## 6. Luật\\n\\n- **\\\"Tuần này hong đổi gì\\\" là câu trả lời hợp lệ, và thường là câu đúng.** Bịa ra một thay đổi\\n  cho trông có ích là lỗi bạn dễ mắc nhất, mà cũng đắt nhất: một lesson sai sẽ lái mọi bài viết,\\n  tới khi một kỳ sau cho nó nghỉ mới thôi.\\n- Một bài là một giai thoại. Mỗi lesson phải nêu **ít nhất hai** bài đã settled kèm số. Hong làm\\n  được thì code loại.\\n- Lesson là **một** mệnh đề, ngắn đủ để kỳ sau xác nhận hoặc bác bỏ. \\\"Viết hay hơn, đăng đều\\n  hơn\\\" hong phải mệnh đề. \\\"Bài observation đăng tối thứ 7 reach cao hơn bài education cùng\\n  khung\\\" thì có.\\n- Lesson mới đá nhau với lesson đang chạy thì cho cái cũ nghỉ bằng id. Để hai lesson mâu thuẫn\\n  cùng nằm trong chỉ dẫn nghĩa là đứa viết theo cái nào nó đọc sau.\\n- Nói thẳng cái gì mình hong biết. Bạn thấy reach, reaction, comment, share — nên bạn biết bài\\n  nào **đi xa**. Bạn hong biết bài nào **bán được hàng**. Đừng khoác cái thứ nhất thành cái thứ\\n  hai.\\n\\n## 7. Khi kẹt\\n\\nKỳ này có dưới hai bài đã settled thì trả mấy danh sách rỗng, báo cáo ghi là chưa đủ để đọc ra\\ngì. Đó hong phải thất bại. Đó là tình trạng thật của một trang đăng vài bài một tuần.\\n\\n## 8. Ví dụ\\n\\n**Tuần đáng đổi thứ gì đó**\\n\\n```json\\n{\\n  \\\"report\\\": \\\"Tuần này 5 bài đã đủ 7 ngày. Hai bài observation đăng tối thứ 7 (#41, #47) reach 4.100 và 3.800; hai bài education cùng khung (#43, #45) được 1.200 và 900. Em ghi thành một lesson. Khung giờ chưa đổi: khung 21:00 mới có 2 bài, chưa đủ để kết luận.\\\",\\n  \\\"lessons_new\\\": [\\n    {\\n      \\\"lesson\\\": \\\"Bài observation đăng tối thứ 7 reach cao gấp ~3 lần bài education cùng khung.\\\",\\n      \\\"evidence\\\": { \\\"post_ids\\\": [41, 47], \\\"numbers\\\": \\\"#41 4.100 và #47 3.800 reach 7d, so với #43 1.200 và #45 900\\\" },\\n      \\\"retires\\\": null\\n    }\\n  ],\\n  \\\"lessons_retire\\\": [],\\n  \\\"slot_changes\\\": [],\\n  \\\"cannot_tell\\\": \\\"Không biết bài nào dẫn tới đơn hàng — số đang có chỉ đo tiếp cận và tương tác.\\\"\\n}\\n```\\n\\n**Cũng tuần đó, nhưng độn**\\n\\n```json\\n{\\n  \\\"report\\\": \\\"Tuần này có nhiều tín hiệu tích cực. Nội dung cần hấp dẫn hơn và đăng đều đặn hơn.\\\",\\n  \\\"lessons_new\\\": [\\n    { \\\"lesson\\\": \\\"Nên dùng hook mạnh ở câu đầu để tăng tương tác.\\\", \\\"evidence\\\": { \\\"post_ids\\\": [41], \\\"numbers\\\": \\\"#41 reach cao\\\" } },\\n    { \\\"lesson\\\": \\\"Bài ngắn dễ đọc hơn bài dài.\\\", \\\"evidence\\\": { \\\"post_ids\\\": [47], \\\"numbers\\\": \\\"#47 tốt\\\" } }\\n  ],\\n  \\\"lessons_retire\\\": [],\\n  \\\"slot_changes\\\": [ { \\\"from\\\": \\\"sat-20:00\\\", \\\"to\\\": \\\"sun-20:00\\\", \\\"why\\\": \\\"thử khung mới\\\", \\\"n\\\": 1 } ],\\n  \\\"cannot_tell\\\": null\\n}\\n```\\n\\nSai chỗ nào cũng đáng gọi tên: hai lesson mỗi cái dựa vô đúng một bài; hong mệnh đề nào đủ cụ\\nthể để có ngày bị bác, nên hong bao giờ cho nghỉ được; \\\"hook mạnh\\\" vốn nằm sẵn trong chỉ dẫn\\nviết bài r, nên nó hong đổi gì mà vẫn chiếm một suất trong hạn mức; đổi khung giờ với đúng một\\nbài đứng sau, lý do là \\\"thử khung mới\\\"; và `cannot_tell` để null trong một tuần chẳng có gì đo\\nđược chuyện bán hàng. Câu trả lời đầu có ích hơn mà đổi ít hơn.\\n\\n**Tuần yên ắng**\\n\\n```json\\n{\\n  \\\"report\\\": \\\"Tuần này mới có 1 bài đủ 7 ngày, chưa đủ để rút ra gì hết. Em hong đổi gì.\\\",\\n  \\\"lessons_new\\\": [],\\n  \\\"lessons_retire\\\": [],\\n  \\\"slot_changes\\\": [],\\n  \\\"cannot_tell\\\": null\\n}\\n```\"\n} }];"
+      },
+      "position": [
+        900,
+        1750
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "ed76bb21-8f13-5f0a-a449-2729b7d1e3cb",
+      "name": "Review task",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst parse = (r) => {\n  const c = (((r || {}).choices || [])[0] || {}).message?.content;\n  if (typeof c !== 'string') return { error: ((r || {}).error || {}).message || 'no answer from the model' };\n  try { return { value: JSON.parse(c.trim().replace(/^```(?:json)?\\s*|\\s*```$/g, '')) }; }\n  catch (e) { return { error: `not JSON: ${c.slice(0, 200)}` }; }\n};\nconst norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, ' ').replace(/\\s+/g, ' ').trim();\n// Offers written, queued or published this month count toward the two a month.\nconst offersThisMonth = (posts) => {\n  const month = DateTime.now().setZone(TZ).toFormat('yyyy-MM');\n  return posts.filter((p) => p.content_type === 'offer' && !['rejected', 'failed'].includes(p.status)\n    && parseDt(p.scheduled_for || p.created_at).toFormat('yyyy-MM') === month).length;\n};\n\nconst s = settingsOf('Review settings');\nconst now = DateTime.now().setZone(TZ);\nconst from = now.minus({ days: 35 });\nconst outcomes = rowsOf('Review outcomes');\nconst all = rowsOf('Review posts');\nconst posts = all.filter((p) => p.status === 'published' && p.published_at && parseDt(p.published_at) >= from).map((p) => {\n  const o = outcomes.filter((x) => x.post_id === p.Id).map((x) => ({ checkpoint: x.checkpoint, reach: Number(x.reach) || 0, reactions: Number(x.reactions) || 0, comments: Number(x.comments) || 0, shares: Number(x.shares) || 0 }));\n  return { post_id: p.Id, content_type: p.content_type, text: p.approved_text || p.text || '', published_at: iso(parseDt(p.published_at)), slot: p.slot || parseDt(p.published_at).toFormat('ccc-HH:mm').toLowerCase(),\n    settled: o.some((x) => x.checkpoint === '7d'), owner_edited: Boolean(p.owner_edited), owner_rejected: false, outcomes: o };\n});\nconst rejected = all.filter((p) => p.status === 'rejected' && p.created_at && parseDt(p.created_at) >= from).length;\nconst median = (xs) => { if (!xs.length) return null; const a = [...xs].sort((x, y) => x - y); const m = Math.floor(a.length / 2); return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2; };\nconst reach24 = (p) => (p.outcomes.find((o) => o.checkpoint === '24h') || {}).reach;\nconst task = {\n  period: { from: iso(from), to: iso(now) },\n  posts,\n  active_lessons: rowsOf('Review lessons').filter((l) => l.status === 'active').map((l) => ({ id: l.Id, lesson: l.lesson, evidence: l.evidence || '', written_at: l.written_at ? iso(parseDt(l.written_at)) : iso(now) })),\n  slots: linesOf(s.slots).map((slot) => { const ps = posts.filter((p) => p.slot === slot); return { slot, posts_behind_it: ps.length, median_reach: median(ps.map(reach24).filter((x) => x !== undefined)) }; }),\n  rejected_in_period: rejected,\n  now: iso(now),\n};\nconst settled = posts.filter((p) => p.settled).length;\n// Under two settled posts there is nothing to learn: say so without spending the call.\nif (settled < 2) return [{ json: { task, body: null, report: `Tuần này mới có ${settled} bài đủ 7 ngày, chưa đủ để rút ra gì hết. Em hong đổi gì.` } }];\nreturn [{ json: { task, body: JSON.stringify({ model: 'moonshotai/kimi-k3', response_format: { type: 'json_object' }, usage: { include: true }, messages: [{ role: 'system', content: $('Review prompts').first().json['review'] }, { role: 'user', content: JSON.stringify(task) }] }), report: '' } }];"
+      },
+      "position": [
+        1000,
+        1600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "2f6ee5d4-a5b6-5fd1-aa9a-041e5dcd9aae",
+      "name": "Worth a review?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "49365558-ee16-5fe3-b9d7-e80e26d98d29",
+              "leftValue": "={{ Boolean($json.body) }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1200,
+        1600
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "openRouterApi": {
+          "id": "cMEQjnh5MCyz2Koe",
+          "name": "OpenRouter"
+        }
+      },
+      "id": "bf5a3dab-183f-5742-bc00-8c71d93dde65",
+      "name": "Review",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "jsonBody": "={{ $json.body }}",
+        "method": "POST",
+        "nodeCredentialType": "openRouterApi",
+        "options": {
+          "timeout": 420000
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://openrouter.ai/api/v1/chat/completions"
+      },
+      "position": [
+        1400,
+        1500
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "e75ac97d-b128-5bc4-83d0-4d038d6c3838",
+      "name": "Apply",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst parse = (r) => {\n  const c = (((r || {}).choices || [])[0] || {}).message?.content;\n  if (typeof c !== 'string') return { error: ((r || {}).error || {}).message || 'no answer from the model' };\n  try { return { value: JSON.parse(c.trim().replace(/^```(?:json)?\\s*|\\s*```$/g, '')) }; }\n  catch (e) { return { error: `not JSON: ${c.slice(0, 200)}` }; }\n};\nconst norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, ' ').replace(/\\s+/g, ' ').trim();\n// Offers written, queued or published this month count toward the two a month.\nconst offersThisMonth = (posts) => {\n  const month = DateTime.now().setZone(TZ).toFormat('yyyy-MM');\n  return posts.filter((p) => p.content_type === 'offer' && !['rejected', 'failed'].includes(p.status)\n    && parseDt(p.scheduled_for || p.created_at).toFormat('yyyy-MM') === month).length;\n};\n\n// G8: one claim, at most 250 characters, two settled posts behind it, at most 10 active; slot changes above the floor.\nconst t = $('Review task').first().json;\nconst s = settingsOf('Review settings');\nconst settingsRows = rowsOf('Review settings');\nconst now = iso(DateTime.now());\nif (!$('Review').isExecuted) return [{ json: { report: t.report, creates: [], retires: [], slots: null } }];\nconst p = parse($('Review').first().json);\nif (p.error) throw new Error(`review: ${p.error}`);\nconst v = p.value;\nconst dropped = [];\nconst settled = new Set(t.task.posts.filter((x) => x.settled).map((x) => x.post_id));\nconst active = new Map(t.task.active_lessons.map((l) => [l.id, l]));\nconst retires = [];\nfor (const r of Array.isArray(v.lessons_retire) ? v.lessons_retire : []) {\n  if (active.has(Number(r.id)) && String(r.why || '').length >= 10) { retires.push({ _id: Number(r.id), status: 'retired', retired_at: now, retired_why: String(r.why).slice(0, 1000) }); active.delete(Number(r.id)); }\n  else dropped.push(`hong cho lesson #${r.id} nghỉ: hong có lesson đó đang chạy, hoặc thiếu lý do`);\n}\nconst creates = [];\nfor (const l of Array.isArray(v.lessons_new) ? v.lessons_new : []) {\n  const text = String((l && l.lesson) || '').trim();\n  const ids = [...new Set(((l && l.evidence && l.evidence.post_ids) || []).map(Number))].filter((id) => settled.has(id));\n  if (!text || text.length > 250) { dropped.push(`bỏ lesson \"${text.slice(0, 60)}…\": dài quá 250 ký tự hoặc rỗng`); continue; }\n  if (ids.length < 2) { dropped.push(`bỏ lesson \"${text.slice(0, 60)}\": cần ít nhất 2 bài đã đủ 7 ngày làm bằng chứng`); continue; }\n  if (l.retires && active.has(Number(l.retires))) { retires.push({ _id: Number(l.retires), status: 'retired', retired_at: now, retired_why: `thay bằng: ${text}` }); active.delete(Number(l.retires)); }\n  if (active.size + creates.length >= 10) { dropped.push(`bỏ lesson \"${text.slice(0, 60)}\": đã đủ 10 lesson đang chạy`); continue; }\n  creates.push({ lesson: text, evidence: `bài #${ids.join(', #')}: ${String(l.evidence.numbers || '').slice(0, 800)}`, status: 'active', written_at: now });\n}\nlet slots = linesOf(s.slots);\nconst floor = Number(s.slot_floor) || 4;\nfor (const c of Array.isArray(v.slot_changes) ? v.slot_changes : []) {\n  const ok = slots.includes(c.from) && /^(mon|tue|wed|thu|fri|sat|sun)-([01]\\d|2[0-3]):[0-5]\\d$/.test(c.to) && !slots.includes(c.to);\n  if (!ok || !(Number(c.n) >= floor)) { dropped.push(`hong đổi khung ${c.from} → ${c.to}: ${ok ? `mới có ${c.n} bài, cần ${floor}` : 'khung giờ hong hợp lệ'}`); continue; }\n  slots = slots.map((x) => (x === c.from ? c.to : x));\n}\nconst slotRow = settingsRows.find((r) => r.key === 'slots');\nconst changedSlots = slots.join('\\n') !== linesOf(s.slots).join('\\n') && slotRow ? { _id: slotRow.Id, value: slots.join('\\n') } : null;\nconst report = [String(v.report || '').trim(), v.cannot_tell ? `Hong biết được: ${v.cannot_tell}` : '', dropped.length ? `Code chặn lại:\\n- ${dropped.join('\\n- ')}` : ''].filter(Boolean).join('\\n\\n');\nreturn [{ json: { report, creates, retires, slots: changedSlots } }];"
+      },
+      "position": [
+        1600,
+        1600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "d46339d6-4467-56ce-b6fb-a43e1d2a8f42",
+      "name": "New lessons",
+      "parameters": {
+        "jsCode": "return $('Apply').first().json.creates.map((c) => ({ json: c }));"
+      },
+      "position": [
+        1800,
+        1300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "3a2cce08-4fdc-5e23-8b21-870c77c112b2",
+      "name": "Create lessons",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "evidence": "={{ $json.evidence }}",
+            "lesson": "={{ $json.lesson }}",
+            "status": "={{ $json.status }}",
+            "written_at": "={{ $json.written_at }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mn3sh62guwac37o"
+        }
+      },
+      "position": [
+        2000,
+        1300
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "296ed6c7-0f3a-5755-bdbc-f4150ced349b",
+      "name": "Retired lessons",
+      "parameters": {
+        "jsCode": "return $('Apply').first().json.retires.map((r) => ({ json: r }));"
+      },
+      "position": [
+        1800,
+        1450
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "93a42369-580c-504e-a013-1b4228304281",
+      "name": "Retire lessons",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "retired_at": "={{ $json.retired_at }}",
+            "retired_why": "={{ $json.retired_why }}",
+            "status": "={{ $json.status }}"
+          }
+        },
+        "id": "={{ $json._id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mn3sh62guwac37o"
+        }
+      },
+      "position": [
+        2000,
+        1450
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "79f9bafc-43ac-5f74-ac38-c1ef6a4e52e7",
+      "name": "Slot change",
+      "parameters": {
+        "jsCode": "const s = $('Apply').first().json.slots; return s ? [{ json: s }] : [];"
+      },
+      "position": [
+        1800,
+        1600
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "42a640d5-d32d-52d4-93f1-08610d9bb4c3",
+      "name": "Save slots",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "value": "={{ $json.value }}"
+          }
+        },
+        "id": "={{ $json._id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mpcgut4v7x3qjlc"
+        }
+      },
+      "position": [
+        2000,
+        1600
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "692ad632-638e-5430-aadb-882dc2c38e72",
+      "name": "Report",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst s = settingsOf('Review settings');\nreturn [{ json: { receive_id: s.lark_chat_id || s.lark_open_id, id_type: s.lark_chat_id ? 'chat_id' : 'open_id', text: `📊 Đánh giá tuần\\n\\n${$('Apply').first().json.report}` } }];"
+      },
+      "position": [
+        1800,
+        1750
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "id": "0b7325ec-cf6e-5322-a427-68766016efa9",
+      "name": "Review token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        2000,
+        1750
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "0bb098e9-a94f-5839-b8a9-73860e791542",
+      "name": "Send report",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.tenant_access_token }}"
+            }
+          ]
+        },
+        "jsonBody": "={{ JSON.stringify({ receive_id: $('Report').first().json.receive_id, msg_type: 'text', content: JSON.stringify({ text: $('Report').first().json.text }) }) }}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "sendHeaders": true,
+        "specifyBody": "json",
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type={{ $('Report').first().json.id_type }}"
+      },
+      "position": [
+        2200,
+        1750
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "878329f2-23f7-5ea5-bea3-c27453398b4a",
+      "name": "Run by hand",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        -400,
+        800
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "733aafbd-3068-5ff4-b9ca-ac12cd8669c7",
+      "name": "Branch",
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 5,
+        "output": "={{ ({ scout: 0, propose: 1, publish: 2, outcomes: 3, review: 4 })[$json.branch] ?? 5 }}"
+      },
+      "position": [
+        -200,
+        800
+      ],
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "errorWorkflow": "sfkO2xnRFAQzFcfa",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

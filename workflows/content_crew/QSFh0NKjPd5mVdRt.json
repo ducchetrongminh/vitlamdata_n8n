@@ -1,0 +1,1695 @@
+{
+  "active": true,
+  "connections": {
+    "Acknowledge": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Route",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Agent input": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Prompts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Any pictures?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Picture requests",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Agent input",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Chat agent": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Reply text",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Classify": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Acknowledge",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Click or message": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Clicked post",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Fetch message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Clicked post": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Queue",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Decide click": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Valid click?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Download picture": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Agent input",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Fetch members": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Gate",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Fetch message": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Read message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Fetch thread": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Fetch members",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Gate": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Any pictures?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Gemini flash": {
+      "ai_languageModel": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_languageModel"
+          }
+        ]
+      ]
+    },
+    "Lark event": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Classify",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Lark token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Click or message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Picture requests": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Download picture",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Prompts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Queue": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Decide click",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Read message": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Fetch thread",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Reply text": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Reply",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Route": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Settings",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Save click": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Confirm",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Lark token",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Valid click?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Save click",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Confirm",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "bank_idea": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "read_ideas": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "read_outcomes": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "read_posts": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "read_settings": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "update_post": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "update_settings": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    },
+    "write_post": {
+      "ai_tool": [
+        [
+          {
+            "index": 0,
+            "node": "Chat agent",
+            "type": "ai_tool"
+          }
+        ]
+      ]
+    }
+  },
+  "description": null,
+  "id": "QSFh0NKjPd5mVdRt",
+  "isArchived": false,
+  "name": "Content crew: lark",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "e5b51dc1-d50a-577b-9eb3-d5431d6ec999",
+      "name": "Lark event",
+      "parameters": {
+        "httpMethod": "POST",
+        "options": {},
+        "path": "content-agent",
+        "responseMode": "responseNode"
+      },
+      "position": [
+        0,
+        300
+      ],
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "webhookId": "103eb248-5d52-4997-8b7d-b5156f9b4186"
+    },
+    {
+      "id": "37fb0c32-4714-5bce-a314-a1a21d0af654",
+      "name": "Classify",
+      "parameters": {
+        "jsCode": "// route: 0 card button, 1 message, 2 nothing to do. Lark needs an answer within 3 seconds.\nconst body = $json.body || {};\nif (body.encrypt) return [{ json: { route: 2, response: {} } }];\nif (body.type === 'url_verification') return [{ json: { route: 2, response: { challenge: body.challenge } } }];\nconst header = body.header || {};\nconst event = body.event || {};\nif (header.event_type === 'card.action.trigger') {\n  const value = (event.action && event.action.value) || {};\n  return [{ json: {\n    route: 0, response: { toast: { type: 'info', content: 'Đã nhận' } },\n    action: value.a, id: Number(value.id) || 0, token: value.t,\n    operator: (event.operator && event.operator.open_id) || '',\n    chat_id: (event.context && event.context.open_chat_id) || '',\n    message_id: (event.context && event.context.open_message_id) || '',\n  } }];\n}\nif (header.event_type === 'im.message.receive_v1') {\n  const m = event.message || {};\n  if (!['p2p', 'group'].includes(m.chat_type)) return [{ json: { route: 2, response: {} } }];\n  return [{ json: { route: 1, response: {}, message_id: m.message_id, chat_type: m.chat_type } }];\n}\nreturn [{ json: { route: 2, response: {} } }];"
+      },
+      "position": [
+        200,
+        300
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "6769ecf0-0acc-5edc-9979-3f0d7550da5d",
+      "name": "Acknowledge",
+      "parameters": {
+        "options": {},
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json.response) }}"
+      },
+      "position": [
+        400,
+        300
+      ],
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1
+    },
+    {
+      "id": "3bbee17b-b3a2-5140-bb5a-8bc3e0655a87",
+      "name": "Route",
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 3,
+        "output": "={{ $json.route }}"
+      },
+      "position": [
+        600,
+        300
+      ],
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "fe307309-e81b-5ef3-8e11-9edba61170cc",
+      "name": "Settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mpcgut4v7x3qjlc"
+        }
+      },
+      "position": [
+        800,
+        300
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "1cab1479-f618-59bb-8118-3cfe84efff60",
+      "name": "Lark token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        1000,
+        300
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "03a58178-6578-516d-bb79-0ab7788b2086",
+      "name": "Click or message",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "34cf1e3f-4362-5484-8a30-02603bd6e2ba",
+              "leftValue": "={{ $('Classify').first().json.route === 0 }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1200,
+        300
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "07b23916-0793-5830-b998-d9912d0758ef",
+      "name": "Clicked post",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "limit": 1,
+        "operation": "search",
+        "options": {
+          "where": "=(Id,eq,{{ $('Classify').first().json.id }})"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": false,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        1400,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "ff11efd5-d2b9-5ce5-b00b-d8c8357cbc92",
+      "name": "Queue",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {
+          "where": "(status,eq,approved)~or(status,eq,publishing)"
+        },
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        1600,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "dd650af5-1ea6-5005-ac36-15ca7072fdfc",
+      "name": "Decide click",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst DAYS = { mon: 1, tue: 2, wed: 3, thu: 4, fri: 5, sat: 6, sun: 7 };\n// slots: lines like \"sat-20:00\". taken: ISO times already booked. The first free one after `after`.\nconst nextSlot = (slots, taken, after) => {\n  const parsed = linesOf(slots).map((s) => s.toLowerCase().match(/^(mon|tue|wed|thu|fri|sat|sun)-(\\d{2}):(\\d{2})$/)).filter(Boolean)\n    .map((m) => ({ label: m[0], weekday: DAYS[m[1]], hour: Number(m[2]), minute: Number(m[3]) }));\n  const booked = new Set(taken.map((t) => parseDt(t).toFormat('yyyy-MM-dd HH:mm')));\n  for (let d = 0; d < 60; d++) {\n    const day = after.startOf('day').plus({ days: d });\n    const today = parsed.filter((s) => s.weekday === day.weekday).sort((a, b) => a.hour * 60 + a.minute - b.hour * 60 - b.minute);\n    for (const s of today) {\n      const t = day.set({ hour: s.hour, minute: s.minute });\n      if (t > after && !booked.has(t.toFormat('yyyy-MM-dd HH:mm'))) return { at: t, slot: s.label };\n    }\n  }\n  return null;\n};\n\nconst c = $('Classify').first().json;\nconst s = settingsOf('Settings');\n// The owner, or anyone in the team group.\nif (!(c.operator && c.operator === s.lark_open_id) && !(c.chat_id && c.chat_id === s.lark_chat_id)) return [];\nconst p = rowsOf('Clicked post')[0];\nconst base = { reply_to: c.message_id };\nif (!p || !c.token || p.approval_token !== c.token) return [{ json: { ...base, valid: false, text: 'Thẻ này cũ rồi, hong dùng được nữa.' } }];\nif (p.status !== 'needs_owner') return [{ json: { ...base, valid: false, text: `Bài #${p.Id} đang ở trạng thái ${p.status}, bấm nữa hong đổi gì.` } }];\nif (c.action === 'reject') return [{ json: { ...base, valid: true, row_id: p.Id, status: 'rejected', approved_text: null, scheduled_for: null, slot: null, text: `Đã bỏ bài #${p.Id}.` } }];\nif (c.action !== 'approve') return [];\nconst now = DateTime.now().setZone(TZ);\n// A time the owner set through chat stands; otherwise the next free slot.\nconst own = p.scheduled_for && parseDt(p.scheduled_for) > now ? { at: parseDt(p.scheduled_for), slot: p.slot || 'hẹn riêng' } : null;\nconst taken = rowsOf('Queue').filter((q) => q.Id !== p.Id && q.scheduled_for).map((q) => q.scheduled_for);\nconst next = own || nextSlot(s.slots, taken, now.plus({ minutes: 15 }));\nif (!next) return [{ json: { ...base, valid: false, text: `Hong tìm được khung giờ trống nào cho bài #${p.Id}: coi lại slots trong cấu hình.` } }];\nreturn [{ json: { ...base, valid: true, row_id: p.Id, status: 'approved', approved_text: p.text, scheduled_for: iso(next.at), slot: next.slot,\n  text: `Đã duyệt bài #${p.Id}, lên Facebook lúc ${next.at.setLocale('vi').toFormat('HH:mm cccc dd/MM')}.` } }];"
+      },
+      "position": [
+        1800,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "f3438a98-5d68-500e-9d06-b909767e22c0",
+      "name": "Valid click?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "d439e7ee-c5ac-5a29-a103-05d2f44b5b1c",
+              "leftValue": "={{ $json.valid }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        2000,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "80795ac1-2f9e-5474-8843-a322f746aa1c",
+      "name": "Save click",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "approved_text": "={{ $json.approved_text }}",
+            "scheduled_for": "={{ $json.scheduled_for }}",
+            "slot": "={{ $json.slot }}",
+            "status": "={{ $json.status }}"
+          }
+        },
+        "id": "={{ $json.row_id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        2200,
+        -100
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "4ddab3dc-e3e8-5ede-87bf-cfc675409c64",
+      "name": "Confirm",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Lark token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "jsonBody": "={{ JSON.stringify({ msg_type: 'text', reply_in_thread: true, content: JSON.stringify({ text: $('Decide click').first().json.text }) }) }}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "sendHeaders": true,
+        "specifyBody": "json",
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $('Decide click').first().json.reply_to }}/reply"
+      },
+      "position": [
+        2400,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "fea0953c-3bfa-5db6-a184-9a2c0b92a094",
+      "name": "Fetch message",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Lark token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $('Classify').first().json.message_id }}"
+      },
+      "position": [
+        1400,
+        500
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "592c6ab2-c50a-5b37-8ddb-62b11a043a67",
+      "name": "Read message",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\n// Image keys in a Lark message: pictures, pictures in rich text, and image files.\nconst imagesOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'image' && c.image_key) return [c.image_key];\n    if (msg.msg_type === 'file' && c.file_key && /\\.(png|jpe?g|webp)$/i.test(c.file_name || '')) return [c.file_key];\n    if (msg.msg_type === 'post') return (Array.isArray(c.content) ? c.content : []).flat().filter((el) => el && el.tag === 'img' && el.image_key).map((el) => el.image_key);\n  } catch (e) {}\n  return [];\n};\n// Plain text of a Lark message of any type, for reading and for thread history.\nconst plainOf = (msg) => {\n  const raw = (msg && msg.body && msg.body.content) || '';\n  try {\n    const c = JSON.parse(raw || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => (el.tag === 'img' ? '[ảnh]' : el.text || el.href || '')).join(''))].filter(Boolean).join('\\n');\n    }\n    if (msg.msg_type === 'image' || (msg.msg_type === 'file' && imagesOf(msg).length)) return '[ảnh]';\n    return JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode|img_key|image_key)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ').trim();\n  } catch (e) {\n    return String(raw).slice(0, 2000);\n  }\n};\n\n// G0: only what concerns the bot goes further. What it means is the chat agent's call.\nconst s = settingsOf('Settings');\nconst r = $json;\nif (r.code !== 0) throw new Error(`Lark get message failed: ${r.code} ${r.msg}`);\nconst m = ((r.data && r.data.items) || [])[0];\nif (!m || !m.sender || m.sender.sender_type !== 'user') return [];\nconst mentions = Array.isArray(m.mentions) ? m.mentions : [];\nconst botMentioned = mentions.some((x) => x.id === s.lark_bot_open_id);\nlet text = plainOf(m);\nfor (const x of mentions) text = text.split(x.key).join(x.id === s.lark_bot_open_id ? '' : `@${x.name}`);\ntext = text.replace(/\\[ảnh\\]/g, '').trim();\nconst images = imagesOf(m);\nif (!text && !images.length) return [];\nconst group = $('Classify').first().json.chat_type === 'group';\nconst base = { text, images, group, chat_id: m.chat_id, sender: m.sender.id, message_id: m.message_id, parent_id: m.parent_id || '', root_id: m.root_id || '', thread_id: m.thread_id || '', sent_at: DateTime.fromMillis(Number(m.create_time) || Date.now()).setZone(TZ).toISO({ suppressMilliseconds: true }) };\nif (!group) return m.sender.id === s.lark_open_id ? [{ json: { ...base, access: 'ok' } }] : [];\nif (m.chat_id !== s.lark_chat_id) return [];\nif (botMentioned || text.startsWith('/')) return [{ json: { ...base, access: 'ok' } }];\n// A reply or a thread message counts only where the bot already spoke; Gate checks.\nreturn m.parent_id || m.root_id || m.thread_id ? [{ json: { ...base, access: 'thread_check' } }] : [];"
+      },
+      "position": [
+        1600,
+        500
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "8de12b16-984c-542b-bf1e-b6473c2b0066",
+      "name": "Fetch thread",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Lark token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "={{ $json.thread_id ? 'https://open.larksuite.com/open-apis/im/v1/messages?container_id_type=thread&sort_type=ByCreateTimeAsc&page_size=50&container_id=' + $json.thread_id : 'https://open.larksuite.com/open-apis/im/v1/messages/' + ($json.parent_id || 'none') }}"
+      },
+      "position": [
+        1800,
+        500
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "b5bba4cc-98a1-572c-8487-23e691e09925",
+      "name": "Fetch members",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Lark token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {},
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/chats/{{ $('Read message').first().json.chat_id }}/members?member_id_type=open_id&page_size=100"
+      },
+      "position": [
+        2000,
+        500
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "50eafbc3-4430-5bd5-8a95-0f12dcc82c7d",
+      "name": "Gate",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\n// Image keys in a Lark message: pictures, pictures in rich text, and image files.\nconst imagesOf = (msg) => {\n  try {\n    const c = JSON.parse((msg.body && msg.body.content) || '{}');\n    if (msg.msg_type === 'image' && c.image_key) return [c.image_key];\n    if (msg.msg_type === 'file' && c.file_key && /\\.(png|jpe?g|webp)$/i.test(c.file_name || '')) return [c.file_key];\n    if (msg.msg_type === 'post') return (Array.isArray(c.content) ? c.content : []).flat().filter((el) => el && el.tag === 'img' && el.image_key).map((el) => el.image_key);\n  } catch (e) {}\n  return [];\n};\n// Plain text of a Lark message of any type, for reading and for thread history.\nconst plainOf = (msg) => {\n  const raw = (msg && msg.body && msg.body.content) || '';\n  try {\n    const c = JSON.parse(raw || '{}');\n    if (msg.msg_type === 'text') return c.text || '';\n    if (msg.msg_type === 'post') {\n      const blocks = Array.isArray(c.content) ? c.content : [];\n      return [c.title || '', ...blocks.map((line) => (Array.isArray(line) ? line : []).map((el) => (el.tag === 'img' ? '[ảnh]' : el.text || el.href || '')).join(''))].filter(Boolean).join('\\n');\n    }\n    if (msg.msg_type === 'image' || (msg.msg_type === 'file' && imagesOf(msg).length)) return '[ảnh]';\n    return JSON.stringify(c).replace(/\"(tag|type|template|schema|behaviors|value|width|flex_mode|img_key|image_key)\":\"[^\"]*\",?/g, '').replace(/[{}\\[\\]\"]/g, ' ').replace(/\\s+/g, ' ').trim();\n  } catch (e) {\n    return String(raw).slice(0, 2000);\n  }\n};\n\nconst m = $('Read message').first().json;\nconst s = settingsOf('Settings');\nconst members = (($('Fetch members').first().json.data || {}).items || []);\nconst names = Object.fromEntries(members.map((x) => [x.member_id, x.name]));\n// Lark lists the bot's own messages with its app id as sender.id, not its open_id.\nconst fromBot = (x) => Boolean(x && x.sender && x.sender.sender_type === 'app' && x.sender.id === s.lark_app_id);\nconst nameOf = (x) => (fromBot(x) ? 'bạn (bot)' : names[x && x.sender && x.sender.id] || (x && x.sender && x.sender.id === s.lark_open_id ? 'sếp' : 'một người trong nhóm'));\nconst found = (($('Fetch thread').first().json.data || {}).items || []).filter((x) => x.message_id !== m.message_id);\nif (m.access === 'thread_check' && !found.some(fromBot)) return [];\nconst thread = found.slice(-30).map((x) => ({ speaker: nameOf(x), text: plainOf(x).slice(0, 1500), is_agent: fromBot(x), sent_at: DateTime.fromMillis(Number(x.create_time) || 0).setZone(TZ).toISO({ suppressMilliseconds: true }) }));\n// What the thread is about: the post card (\"Bài #N\") or an idea the bot named (\"ý tưởng #N\").\nconst botText = found.filter(fromBot).map((x) => (x.body && x.body.content) || '').join('\\n');\nconst post = botText.match(/Bài #(\\d+)/);\nconst idea = botText.match(/ý tưởng #(\\d+)/);\nconst who = names[m.sender] || (m.sender === s.lark_open_id ? 'sếp' : 'một người trong nhóm');\n// Pictures of this message first, then those of the thread, newest first: 10 at most.\nconst pictures = [\n  ...m.images.map((k) => ({ source: `${m.message_id} ${k}`, from_this_message: true })),\n  ...[...found].reverse().flatMap((x) => imagesOf(x).map((k) => ({ source: `${x.message_id} ${k}`, from_this_message: false }))),\n].slice(0, 10).map((p, i) => ({ property: `picture_${i + 1}`, ...p }));\nreturn [{ json: { ...m, who, thread, pictures, about: post || idea ? { post_id: post ? Number(post[1]) : null, idea_id: idea ? Number(idea[1]) : null } : null, reply_to: m.message_id } }];"
+      },
+      "position": [
+        2200,
+        500
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "914a4666-7732-5de7-a385-7dfce8527668",
+      "name": "Any pictures?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "fa0aa2cc-54f0-539d-9d46-0762b15870d0",
+              "leftValue": "={{ $json.pictures.length > 0 }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        2400,
+        500
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "4c66c417-23a1-56ce-bfeb-cce5eb0bf3fd",
+      "name": "Picture requests",
+      "parameters": {
+        "jsCode": "return $json.pictures.map((p) => { const [message_id, key] = p.source.split(' '); return { json: { message_id, key } }; });"
+      },
+      "position": [
+        2600,
+        400
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "172d339e-d843-5e05-927a-71e3ada2a0ab",
+      "name": "Download picture",
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Lark token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "method": "GET",
+        "options": {
+          "response": {
+            "response": {
+              "outputPropertyName": "data",
+              "responseFormat": "file"
+            }
+          }
+        },
+        "sendHeaders": true,
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $json.message_id }}/resources/{{ $json.key }}?type=image"
+      },
+      "position": [
+        2800,
+        400
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "8439da14-afc6-5eef-b9a5-5f9662a26841",
+      "name": "Agent input",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst g = $('Gate').first().json;\nconst s = settingsOf('Settings');\n// The agent passes every image binary of its input item to the model: picture_1, picture_2, ...\nconst binary = {};\nconst missing = [];\nif ($('Download picture').isExecuted) {\n  $('Download picture').all().forEach((item, i) => {\n    const b = item.binary && item.binary.data;\n    if (b && String(b.mimeType || '').startsWith('image/')) binary[`picture_${i + 1}`] = b;\n    else missing.push(`picture_${i + 1}`);\n  });\n}\nconst task = {\n  message: { message_id: g.message_id, chat_id: g.chat_id, thread_id: g.thread_id || null, sender_name: g.who, sender_is_owner: g.sender === s.lark_open_id, text: g.text, sent_at: g.sent_at },\n  thread: g.thread,\n  pictures: g.pictures.filter((p) => !missing.includes(p.property)),\n  about: g.about,\n  settings: { slots: linesOf(s.slots), daily_quota: Number(s.daily_quota) || 0, topics: linesOf(s.topics), avoid: linesOf(s.avoid) },\n  now: iso(DateTime.now()),\n};\nconst note = missing.length ? `\\n\\n(${missing.join(', ')} tải hong được nên bạn hong thấy.)` : '';\nreturn [{ json: { task: JSON.stringify(task, null, 1) + note, reply_to: g.message_id }, binary }];"
+      },
+      "position": [
+        3000,
+        500
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "executeOnce": true,
+      "id": "85234747-b4e2-511c-a4f8-c3c69817476e",
+      "name": "Prompts",
+      "notes": "prompts: content_crew chat-agent",
+      "parameters": {
+        "jsCode": "// Generated by scripts/embed-prompts.py from crews/content_crew/04-prompts/. Edit the .md files, not this.\nreturn [{ json: {\n  \"version\": \"8e24d585\",\n  \"chat-agent\": \"# Luật chung\\n\\nPhần này gắn vào mọi lời gọi model trong crew. Sửa ở đây, mọi chỗ đổi theo. Luật nào code cũng\\nkiểm thì có ghi chú: prompt nói, code mới là thứ chặn.\\n\\n## Trang này\\n\\nVịt Làm Data. Trang Facebook về SQL, báo cáo, tự động hoá.\\n\\nNgười đọc là dân làm data trong công ty Việt. Analyst. Người tự nhiên bị quăng cho cái job làm\\nbáo cáo. Người học SQL để khỏi làm tay.\\n\\nBán hai thứ: khoá SQL dạy trên Metabase, và tư vấn dữ liệu cho doanh nghiệp.\\n\\n## Bốn loại bài\\n\\nTheo `docs/Content Strategy.md`.\\n\\n- **offer** — bán hàng. Tháng hai bài, hết. Code giữ con số này.\\n- **education** — dạy một thứ, để tới lúc bán thì ngta tin mà mua. Viết theo từng bước, từng ý.\\n  Bài education đứng trước offer nào thì dọn đường cho đúng offer đó.\\n- **story** — định làm gì, vướng gì, gỡ sao. Chất liệu là chuyện thật của sếp.\\n- **observation** — một chuyện đúng mà buồn cười trong nghề data. Nó đi kiếm sự chú ý, để\\n  education với offer có cái mà tiêu.\\n\\n## Ba câu phải trả lời được\\n\\n1. **Relevant** — ngta đọc được gì? Đừng hỏi \\\"có đúng chủ đề hong\\\". Hỏi **có lý do gì để dừng\\n   tay lại đọc hong**.\\n2. **Closer** — đọc xong có tin trang này hơn hong?\\n3. **Connected** — dẫn tới offer nào?\\n\\nRớt câu nào thì sửa, hoặc bỏ bài.\\n\\n## Giọng\\n\\nRút từ 5 bài thật của sếp (09/2026). Bài mẫu để nguyên văn trong `write.md`, vì chỉ chỗ đó mới\\ncần.\\n\\n**Xưng hô.** Một bài chọn một kiểu rồi giữ nguyên tới cuối: \\\"vịt\\\" (ngôi thứ ba), \\\"mình\\\", hoặc\\n\\\"tui\\\". Gọi người đọc là \\\"bạn\\\", \\\"mn\\\", \\\"mấy bạn\\\". KHÔNG \\\"chúng tôi\\\". KHÔNG \\\"quý độc giả\\\".\\n\\n**Viết như đang chat, đừng viết như đang xuất bản.** Mấy chữ này là giọng, hong phải lỗi chính\\ntả: ko, k, hong, khum, dc, r, nma, thoi, nè, nha, á, dô, mọe, ngta, trg, đh, kn, mấy khứa. Rải\\ntự nhiên thôi, đừng nhồi cho đủ chỉ tiêu.\\n\\n**`:))` và `=))` là tiếng cười chính.** Emoji thì lẻ tẻ và có lý do: 🐧 😂 😭 🫣 😌. KHÔNG dàn\\nemoji trang trí. KHÔNG chùm hashtag.\\n\\n**Mở bài** một trong ba kiểu:\\n- trích nguyên câu hỏi thật của người đọc, để trong ngoặc kép: `\\\"Em ko học đại học, chỉ cần học\\n  là xin dc việc ạ?\\\"`\\n- trích một câu đang gây tranh cãi: `\\\"Trong vòng 5 năm nữa, Data Analyst sẽ biến mất\\\"`\\n- nói thẳng chủ đề, một dòng: `Dùng AI để học lập trình`\\n\\n**Bài dài** thì: một dòng chỉ có dấu `.` để ngắt đoạn; tiêu đề nhỏ VIẾT HOA (`MÉO. KHUM. CẤM.`,\\n`RÚT RA NGUYÊN TẮC`); gạch đầu dòng `-`. Dài thì báo trước một câu, kêu ngta lưu về tường.\\n\\n**Tự cười mình trước, rồi hãy lên lớp.** Bài nào cũng phải có. \\\"tui dở văn vcl, hồi thi đại học\\nmôn Văn có 3 điểm thôi á\\\", \\\"người viết nên hơi dở\\\", \\\"mắc làm (biếng) mấy năm nay\\\". Và nói thẳng\\nchỗ mình hong biết: \\\"tôi khuyên 3 xu thế thôi, chứ tôi cũng k biết vì tôi 7 năm kn rồi\\\".\\n\\n**Số cụ thể, chuyện cụ thể.** 7 năm kinh nghiệm. 10 học viên. 3 điểm Văn. 2 buổi mỗi buổi 3\\ntiếng. KHÔNG \\\"nhiều người\\\". KHÔNG \\\"theo nghiên cứu\\\".\\n\\n**Kết** bằng câu hỏi ném lại cho ngta rồi kêu comment. Hoặc một câu đùa. Hoặc plug nhẹ kiểu tự\\ngiễu: \\\"ai cho 10k động lưc đi :v\\\", \\\"đăng ký liền đi chứ trễ hihi\\\". Bán hàng ở trang này luôn có\\ngiọng cười cợt chính mình, hong bao giờ giọng sales.\\n\\n**Giọng miền Nam.** hong, thoi, nè, nha, á, dô, hen.\\n\\n**Thứ trang này ghét ra mặt: bài do AI viết.** Sếp từng ký tên bài là \\\"Bài dài, organic,\\nAI-free\\\", rồi đóng bài bằng \\\"mấy nay lướt phây toàn bài do AI viết, đọc chán quá nè\\\". Bài nào\\nđọc lên mà trơn tru, cân đối, chính tả chuẩn từ đầu tới cuối, hong có cái lỗi nào của người thật\\n— bài đó hỏng r.\\n\\n## Cấm\\n\\n- Bịa số **làm bằng chứng**: thống kê, tỉ lệ phần trăm, kết quả đo được, \\\"theo một nghiên cứu\\\",\\n  số liệu của khoá học, số khách hàng. Input hong đưa thì hong có. Số ước chừng trong một tình\\n  huống kể cho vui (\\\"mất 15 phút mở từng file ra so\\\") thì được — khác nhau ở chỗ ngta có đem con\\n  số đó đi tin hay không.\\n- Bịa khách hàng, bịa kết quả, bịa ảnh, bịa lời ngta nói.\\n- Viết chuyện cá nhân mà sếp chưa kể. Story lấy chất liệu từ lời sếp.\\n- Lôi tên người thật, công ty thật ra làm ví dụ cho cái sai.\\n- Hứa thứ sản phẩm hong làm được.\\n- Lấy chính trị, tai nạn, chuyện xui của ngta ra làm hook.\\n\\n## Ngày giờ\\n\\nGiờ Việt Nam. Giờ hiện tại nằm ở `now` trong input — đọc ở đó, đừng đoán hôm nay ngày mấy. Viết\\nngày như ngta quen đọc: `27/09`, `thứ 7 tuần này`.\\n\\n## Trả lời\\n\\nTrả đúng thứ phần \\\"Trả về gì\\\" kêu. Hong rào đón, hong bọc JSON trong ```, hong kể lại mình vừa\\nlàm gì. Đầu ra có cấu trúc là để code đọc thẳng — thêm chữ nào là hỏng chỗ đó.\\n\\n# chat-agent\\n\\nTừ `02-agents/chat-agent.yaml`. Luật chung nằm ngay phía trên.\\n\\n## 1. Việc của bạn\\n\\nBạn là đứa sếp nhắn tin trong Lark. Sếp gửi gì cũng được — một ý tưởng, một tấm ảnh chụp màn\\nhình, một cái link, một chỗ cần sửa, một câu hỏi — bạn hiểu sếp muốn gì r làm.\\n\\nHong tự viết nội dung bài. Cần bài thì gọi `write_post`, để mọi bài trên trang ra từ cùng một\\ndây chuyền, cùng một giọng. Hong đăng, hong duyệt, hong đặt lịch. Hong đặt trạng thái cho bài —\\nduyệt là lúc sếp bấm nút trên thẻ, hong chỗ nào khác. Hong đụng bài đã lên Facebook. Hong viết\\nlesson, hong cho lesson nghỉ — bản đánh giá hàng tuần lo, mà phải có bằng chứng.\\n\\n## 2. Bạn nhận gì\\n\\nMột tin nhắn cổng cho qua r. Luồng chat quanh nó, có tên từng người, tin của chính bạn được đánh\\ndấu. Ảnh của tin đó và của luồng, nằm dạng binary trên input. Bài hoặc ý tưởng mà luồng này đang\\nnói tới, nếu có. Cấu hình hiện tại.\\n\\nTin này có phải chuyện của bạn hong thì KHỎI HỎI, chỗ khác quyết r. Việc của bạn là nó **có\\nnghĩa gì**.\\n\\n## 3. Làm thế nào\\n\\n1. Đọc tin và ảnh. Nhìn ảnh cho kỹ, thường chính ảnh mới là nội dung.\\n2. Hiểu sếp muốn gì. Hay gặp mấy ca này:\\n   - **một ý tưởng, một câu chuyện, ảnh chụp bài ngta** → `bank_idea`, r nói đã lưu cái gì, số\\n     mấy\\n   - **\\\"viết bài này đi\\\", \\\"làm bài về cái này\\\"** → `write_post`, r báo thẻ bài sắp tới\\n   - **sửa một thứ đã lưu** → `update_post` hoặc `bank_idea` kèm id\\n   - **hỏi tình hình** — sắp đăng gì, bài vừa r ra sao, mấy giờ lên → đọc bằng công cụ r trả lời\\n     **từ cái đọc được**\\n   - **đổi cách chạy** — giờ đăng, chủ đề, ngày mấy bài → `update_settings`, r nhắc lại đã đổi\\n     thành gì\\n3. Hong rõ sếp muốn **lưu** hay muốn **viết luôn** thì lưu, r nói ra. Lưu thì quay lại được và\\n   hong tốn gì. Viết thì tốn model đắt, tốn cả thời gian sếp ngồi đọc.\\n4. Trả lời trong luồng. Nói rõ đã làm gì, kèm id.\\n\\n## 4. Công cụ\\n\\n`read_ideas`, `bank_idea`, `read_posts`, `update_post`, `read_outcomes`, `read_settings`,\\n`update_settings`, `write_post`.\\n\\n- ĐỌC r hãy trả lời. Câu nào nói về đang có bài gì, bài viết gì, kết quả ra sao — phải từ kết\\n  quả công cụ **trong lượt này**. Hong lấy từ luồng chat, hong lấy từ trí nhớ.\\n- `update_post` với `update_settings` chỉ chạy khi sếp kêu rõ trong cuộc này. Hong tự ý. Hong\\n  \\\"tiện tay sửa luôn\\\".\\n- `write_post` nhận một ý tưởng, trả về một bài đã gửi thành thẻ. Mất một hai phút. Mỗi yêu cầu\\n  gọi một lần.\\n- Công cụ từ chối thì nói lại đúng câu đó, bằng tiếng người. Đừng đi đường khác để làm cái vừa\\n  bị chặn.\\n- Một công cụ hỏng hai lần thì dừng, nói ra.\\n\\n## 5. Trả về gì\\n\\nCâu trả lời cuối chính là tin nhắn gửi vô luồng. Viết như nhắn đồng nghiệp, đừng như nộp báo\\ncáo.\\n\\nTin nhắn là nói với người khác trong nhóm, hong dính gì tới bạn: trả đúng chữ `NO_REPLY`, hong\\ngì thêm.\\n\\n## 6. Luật\\n\\n- Nói rõ vừa xảy ra chuyện gì, kèm id: \\\"đã lưu ý tưởng #12\\\", hong phải \\\"đã lưu rồi nhé\\\". Sếp cần\\n  gọi lại nó sau này.\\n- Đọc ảnh, đừng đoán ảnh. Chữ trong ảnh mờ thì hỏi. Trích sai một câu r lưu thành ý tưởng thì\\n  mai mốt nó thành một bài sai.\\n- Story vô kho bằng nguyên văn lời sếp. Giữ y vậy, đừng gọt cho gọn.\\n- Hong khẳng định thứ gì mà kết quả công cụ hong xác nhận.\\n- Trả lời ngắn. Đây là chat.\\n\\n## 7. Khi kẹt\\n\\nHỏng chỗ nào nói chỗ đó, ngay trong luồng, tiếng người. Đừng đi vòng qua một lời từ chối, đừng\\nbịa là đã làm được một phần, và đừng im.\\n\\n## 8. Ví dụ\\n\\n**Ý tưởng kèm ảnh**\\n\\nSếp gửi ảnh chụp bài ngta, kèm \\\"cái hook này hay nè em\\\".\\n\\n→ `bank_idea` với hook, angle, ghi rõ lấy từ đâu\\n→ trả lời: \\\"Đã lưu thành ý tưởng #18: hook kiểu 'câu hỏi ngược' — mở bằng câu hỏi mà ai đọc cũng\\ntự trả lời sai. Em giữ cả ảnh gốc. Tới lượt em viết sẽ xài.\\\"\\n\\n**Tin hong rõ ý**\\n\\nSếp gửi \\\"hôm qua có ông khách hỏi sao query chạy chậm, hóa ra join nhầm bảng\\\".\\n\\nCái này có thể là chuyện để lưu, cũng có thể là bài để viết liền. Lưu, r hỏi:\\n\\n→ `bank_idea`, giữ nguyên lời sếp\\n→ trả lời: \\\"Đã lưu thành ý tưởng #19, em giữ nguyên lời anh kể. Viết luôn bài này hong anh, hay\\nđể hôm nào tới lượt?\\\"\\n\\n**Cũng tin đó, làm dở**\\n\\nGọi thẳng `write_post` vì một câu chuyện thì \\\"chắc chắn\\\" là một bài. Nếu sếp chỉ định ghi lại,\\ngiờ sếp có thêm một bài phải đọc và phải quyết mà sếp hong hề kêu. Hỏi một câu tốn ba giây. Viết\\nmột bài tốn một phút và một quyết định.\\n\\n**Hỏi tình hình**\\n\\n\\\"Bài mai đăng lúc mấy giờ?\\\"\\n\\n→ `read_posts`\\n→ trả lời từ kết quả: \\\"Bài #47 (observation, 'nghi lễ export Excel') lên 20:00 thứ 7. Sau đó kho\\ncòn 3 bài đã duyệt.\\\"\\n\\nTrả lời \\\"chắc 20h anh ạ\\\" mà hong đọc: đúng cái lỗi luật này sinh ra để chặn.\\n\\n**Hong phải chuyện của bạn**\\n\\nTrong nhóm, một người trả lời đồng nghiệp: \\\"3h chiều nha Minh\\\".\\n\\n→ `NO_REPLY`\"\n} }];"
+      },
+      "position": [
+        3200,
+        500
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "5cb32130-b0f6-5d94-a2a0-b0d52dbcbfc7",
+      "name": "Chat agent",
+      "parameters": {
+        "options": {
+          "maxIterations": 20,
+          "passthroughBinaryImages": true,
+          "systemMessage": "={{ $json['chat-agent'] }}"
+        },
+        "promptType": "define",
+        "text": "={{ $('Agent input').first().json.task }}"
+      },
+      "position": [
+        3450,
+        500
+      ],
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1
+    },
+    {
+      "credentials": {
+        "openRouterApi": {
+          "id": "cMEQjnh5MCyz2Koe",
+          "name": "OpenRouter"
+        }
+      },
+      "id": "c2fdca3c-6915-5344-972d-31aee920d001",
+      "name": "Gemini flash",
+      "parameters": {
+        "model": "google/gemini-2.5-flash",
+        "options": {
+          "maxRetries": 2,
+          "timeout": 120000
+        }
+      },
+      "position": [
+        3300,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1
+    },
+    {
+      "id": "33edc558-ba30-58b6-9fd4-6da590534e6e",
+      "name": "read_ideas",
+      "parameters": {
+        "description": "Đọc kho ý tưởng. Trả về ý tưởng chưa dùng, mới nhất trước: id, theme, hook, nguồn (sếp hay scout), ngày lưu. Xài khi sếp hỏi trong kho có gì, hoặc khi cần kiểm xem một ý đã lưu chưa trước khi lưu trùng. ĐỪNG xài để tìm bài đã viết — cái đó là read_posts.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1jaF548a0UPSdhvi"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "q",
+              "id": "q",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "limit",
+              "id": "limit",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "include_used",
+              "id": "include_used",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "include_used": "={{ $fromAI('include_used', 'true để lấy cả ý đã viết thành bài', 'boolean', false) }}",
+            "limit": "={{ $fromAI('limit', 'số dòng, 1 tới 30, mặc định 10', 'number', 0) }}",
+            "q": "={{ $fromAI('q', 'lọc theo theme, để trống thì lấy hết', 'string', '') }}",
+            "tool": "read_ideas"
+          }
+        }
+      },
+      "position": [
+        3400,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "38db98f0-9005-56fe-b5e0-9c4552058c00",
+      "name": "bank_idea",
+      "parameters": {
+        "description": "Lưu một ý tưởng vào kho, hoặc sửa một ý đã lưu. idea_id là 0 thì tạo mới và trả về số của nó; có idea_id thì chỉ sửa mấy trường bạn gửi, mấy trường để trống giữ nguyên. Trả về nguyên hàng sau khi lưu. Story thì phải để nguyên văn lời sếp vào owner_words. Ảnh sếp gửi kèm ý tưởng thì ghi mã tham chiếu của ảnh vào picture để lúc viết bài xài lại ảnh đó. Kho từ chối ý trùng một ý chưa dùng và chỉ ra ý đó.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1jaF548a0UPSdhvi"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "idea_id",
+              "id": "idea_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "theme",
+              "id": "theme",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "hook",
+              "id": "hook",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "angle",
+              "id": "angle",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "source_url",
+              "id": "source_url",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "owner_words",
+              "id": "owner_words",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "note",
+              "id": "note",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "picture",
+              "id": "picture",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "angle": "={{ $fromAI('angle', 'bài triển khai thế nào, có thể trống', 'string', '') }}",
+            "hook": "={{ $fromAI('hook', 'góc mà bài sẽ đi, có thể trống', 'string', '') }}",
+            "idea_id": "={{ $fromAI('idea_id', 'số ý tưởng muốn sửa, 0 nếu là ý mới', 'number', 0) }}",
+            "note": "={{ $fromAI('note', 'ghi chú thêm, có thể trống', 'string', '') }}",
+            "owner_words": "={{ $fromAI('owner_words', 'nguyên văn lời sếp kể, hong gọt, có thể trống', 'string', '') }}",
+            "picture": "={{ $fromAI('picture', 'mã tham chiếu của một ảnh trong danh sách ảnh, dạng message id cách image key, có thể trống', 'string', '') }}",
+            "source_url": "={{ $fromAI('source_url', 'link nguồn nếu có, có thể trống', 'string', '') }}",
+            "theme": "={{ $fromAI('theme', 'tên ngắn của ý, tối đa 120 ký tự', 'string', '') }}",
+            "tool": "bank_idea"
+          }
+        }
+      },
+      "position": [
+        3520,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "81edf354-f684-50c0-8478-dd6273ad2889",
+      "name": "read_posts",
+      "parameters": {
+        "description": "Đọc bài: đang viết, chờ duyệt, đã duyệt và chờ tới giờ đăng, hoặc đã đăng. Trả về id, loại, trạng thái, giờ đăng dự kiến, 200 ký tự đầu của bài. Xài khi sếp hỏi mai đăng gì, còn bao nhiêu bài, bài nào chưa duyệt. Muốn nguyên văn một bài thì đưa post_id. Trạng thái: writing, needs_owner (chờ sếp duyệt), approved (đã duyệt, chờ giờ đăng), published, rejected, failed.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1jaF548a0UPSdhvi"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_id",
+              "id": "post_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "status",
+              "id": "status",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "limit",
+              "id": "limit",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "limit": "={{ $fromAI('limit', 'số dòng, 1 tới 20, mặc định 10', 'number', 0) }}",
+            "post_id": "={{ $fromAI('post_id', 'số bài muốn đọc nguyên văn, 0 để lấy danh sách', 'number', 0) }}",
+            "status": "={{ $fromAI('status', 'lọc theo trạng thái, để trống thì lấy hết', 'string', '') }}",
+            "tool": "read_posts"
+          }
+        }
+      },
+      "position": [
+        3640,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "6f98ac96-dee0-57c5-a2a8-015a4ac7fb41",
+      "name": "update_post",
+      "parameters": {
+        "description": "Sửa một bài chưa đăng: nội dung, hoặc giờ đăng. CHỈ gọi khi sếp kêu rõ. Trả về bài sau khi sửa, nguyên văn — nói lại cho sếp coi. ĐỪNG xài để duyệt bài: hong có đường nào duyệt ở đây, sếp bấm nút trên thẻ mới là duyệt. Bài đã lên Facebook thì hong sửa được. text là nguyên bài mới, hong phải phần sửa.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1jaF548a0UPSdhvi"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_id",
+              "id": "post_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "text",
+              "id": "text",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "scheduled_for",
+              "id": "scheduled_for",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "post_id": "={{ $fromAI('post_id', 'số bài', 'number', 0) }}",
+            "scheduled_for": "={{ $fromAI('scheduled_for', 'giờ đăng mới dạng 2026-09-27T20:00 giờ Việt Nam, để trống nếu hong đổi', 'string', '') }}",
+            "text": "={{ $fromAI('text', 'nguyên văn bài mới, để trống nếu hong đổi nội dung', 'string', '') }}",
+            "tool": "update_post"
+          }
+        }
+      },
+      "position": [
+        3760,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "89cbdd9b-0a9f-534a-8b4b-b8641db0d979",
+      "name": "read_outcomes",
+      "parameters": {
+        "description": "Đọc số của bài đã đăng: reach, reaction, comment, share, ở mốc 2h / 24h / 7d. Xài khi sếp hỏi bài vừa r ra sao, hay bài nào tuần này chạy tốt nhất. Số chỉ nói bài đi xa tới đâu, hong nói bài bán được hàng hay hong — đừng suy ra chuyện bán hàng từ đây.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1jaF548a0UPSdhvi"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "post_id",
+              "id": "post_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "since_days",
+              "id": "since_days",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "limit",
+              "id": "limit",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "limit": "={{ $fromAI('limit', 'số bài, 1 tới 20, mặc định 10', 'number', 0) }}",
+            "post_id": "={{ $fromAI('post_id', 'số một bài, 0 để lấy các bài gần đây', 'number', 0) }}",
+            "since_days": "={{ $fromAI('since_days', 'mấy ngày gần đây, 1 tới 90, mặc định 14', 'number', 0) }}",
+            "tool": "read_outcomes"
+          }
+        }
+      },
+      "position": [
+        3880,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "984bcbd9-c1d4-53b5-8654-a6c3344f8348",
+      "name": "read_settings",
+      "parameters": {
+        "description": "Đọc cấu hình: khung giờ đăng, ngày mấy bài, mấy chủ đề đang theo dõi, mấy thứ trang hong đụng. Xài khi sếp hỏi giờ đăng hay chủ đề hiện tại.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1jaF548a0UPSdhvi"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "tool": "read_settings"
+          }
+        }
+      },
+      "position": [
+        4000,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "574212c6-1fff-5809-bfcf-45d528522c67",
+      "name": "update_settings",
+      "parameters": {
+        "description": "Đổi khung giờ đăng, số bài mỗi ngày, chủ đề theo dõi, hoặc mấy thứ trang hong đụng. CHỈ gọi khi sếp kêu rõ. Mỗi trường gửi là thay nguyên danh sách đó; để trống là giữ nguyên. Trả về cấu hình trước và sau khi đổi — nhắc lại cho sếp.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "1jaF548a0UPSdhvi"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "tool",
+              "id": "tool",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "slots",
+              "id": "slots",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "daily_quota",
+              "id": "daily_quota",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "topics",
+              "id": "topics",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "avoid",
+              "id": "avoid",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "avoid": "={{ $fromAI('avoid', 'toàn bộ mấy thứ trang hong đụng, mỗi dòng một thứ, để trống nếu hong đổi', 'string', '') }}",
+            "daily_quota": "={{ $fromAI('daily_quota', 'số bài mỗi ngày từ 0 tới 5, để trống nếu hong đổi', 'string', '') }}",
+            "slots": "={{ $fromAI('slots', 'toàn bộ khung giờ đăng, mỗi dòng một khung dạng sat-20:00, để trống nếu hong đổi', 'string', '') }}",
+            "tool": "update_settings",
+            "topics": "={{ $fromAI('topics', 'toàn bộ chủ đề theo dõi, mỗi dòng một chủ đề, để trống nếu hong đổi', 'string', '') }}"
+          }
+        }
+      },
+      "position": [
+        4120,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "0ffb5eea-24fc-5551-ab37-eb6ef86b39cb",
+      "name": "write_post",
+      "parameters": {
+        "description": "Viết một bài từ một ý tưởng trong kho, r gửi thẻ cho sếp duyệt ngay trong luồng này. Trả lời liền là đã bắt đầu viết, còn thẻ tới sau khoảng 4 phút. Gọi khi sếp kêu viết. ĐỪNG gọi khi sếp chỉ kể chuyện hay gửi ý tưởng — cái đó bank_idea. Mỗi yêu cầu gọi một lần thôi. Ý chưa có trong kho thì bank_idea trước để lấy số. Bị từ chối thì nói lại lý do cho sếp.",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "360koAPJWINLzICv"
+        },
+        "workflowInputs": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "mode",
+              "id": "mode",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "called_by",
+              "id": "called_by",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "reply_to",
+              "id": "reply_to",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "idea_id",
+              "id": "idea_id",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "content_type",
+              "id": "content_type",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "note",
+              "id": "note",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            },
+            {
+              "canBeUsedToMatch": true,
+              "defaultMatch": false,
+              "display": true,
+              "displayName": "again",
+              "id": "again",
+              "removed": false,
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "value": {
+            "again": "={{ $fromAI('again', 'true khi sếp muốn viết thêm bài dù ý này đã có bài đang chờ', 'boolean', false) }}",
+            "called_by": "chat-agent",
+            "content_type": "={{ $fromAI('content_type', 'observation, story, education hoặc offer; để trống cho dây chuyền tự chọn', 'string', '') }}",
+            "idea_id": "={{ $fromAI('idea_id', 'số ý tưởng trong kho', 'number', 0) }}",
+            "mode": "start",
+            "note": "={{ $fromAI('note', 'sếp dặn thêm gì cho bài này, có thể trống', 'string', '') }}",
+            "reply_to": "={{ $('Agent input').first().json.reply_to }}"
+          }
+        }
+      },
+      "position": [
+        4240,
+        750
+      ],
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "b6b03fc7-f616-52a7-9377-d4d60b1c4131",
+      "name": "Reply text",
+      "parameters": {
+        "jsCode": "const out = String($json.output || '').trim();\n// NO_REPLY: a thread message meant for someone else.\nreturn out && out !== 'NO_REPLY' ? [{ json: { text: out.slice(0, 15000) } }] : [];"
+      },
+      "position": [
+        3700,
+        500
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "2f3cb149-e6ea-5b7f-a33d-bc4fb258a09b",
+      "name": "Reply",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Lark token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "jsonBody": "={{ JSON.stringify({ msg_type: 'text', reply_in_thread: true, content: JSON.stringify({ text: $json.text }) }) }}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "sendHeaders": true,
+        "specifyBody": "json",
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages/{{ $('Agent input').first().json.reply_to }}/reply"
+      },
+      "position": [
+        3900,
+        500
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "errorWorkflow": "sfkO2xnRFAQzFcfa",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

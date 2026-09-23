@@ -1,0 +1,84 @@
+{
+  "description": "The idea bank. The scout and the chat agent insert; the daily selection reads unused ones.",
+  "display_field": "theme",
+  "fields": [
+    {
+      "id": "cbgqz7qnv5kitpo",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "c7ov7bbvg88embj",
+      "title": "theme",
+      "type": "SingleLineText"
+    },
+    {
+      "description": "The angle a post would take, not a summary.",
+      "id": "ctu5olxc86nnddi",
+      "title": "hook",
+      "type": "LongText"
+    },
+    {
+      "id": "cg1lbtiked6foz1",
+      "title": "angle",
+      "type": "LongText"
+    },
+    {
+      "description": "Set by code: owner for anything the chat agent banks.",
+      "id": "cfw2b9bip6ydgel",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s1nt00gp6e2rxhs",
+            "title": "owner"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s5agirurpjvik5a",
+            "title": "scout"
+          }
+        ]
+      },
+      "title": "source",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "For scouted ideas: a URL from the search results.",
+      "id": "cse6uncrgzbxxna",
+      "title": "source_url",
+      "type": "SingleLineText"
+    },
+    {
+      "description": "The owner's own words, verbatim. A story needs them.",
+      "id": "c0jtiwg2ijp5r0g",
+      "title": "owner_words",
+      "type": "LongText"
+    },
+    {
+      "id": "c8bdm541tacal62",
+      "title": "note",
+      "type": "LongText"
+    },
+    {
+      "description": "A picture the owner sent with the idea: <lark message id> <image key>. The image step edits it instead of generating one.",
+      "id": "czwx75qa1vxbcca",
+      "title": "picture",
+      "type": "SingleLineText"
+    },
+    {
+      "default_value": "false",
+      "description": "A post was written from it.",
+      "id": "che55xrm9wf3tby",
+      "title": "used",
+      "type": "Checkbox"
+    },
+    {
+      "id": "chvcgdm4ng0llen",
+      "title": "banked_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mkc7snjus8thf08",
+  "title": "ideas"
+}

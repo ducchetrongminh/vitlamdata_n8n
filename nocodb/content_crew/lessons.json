@@ -1,0 +1,58 @@
+{
+  "description": "What the weekly review learned. Active ones go into the write and select prompts. Code caps them at 10 active, 250 characters, two evidence posts.",
+  "display_field": "written_at",
+  "fields": [
+    {
+      "id": "cfi26ggfne7wzxc",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "cwkt4kkqjci9px7",
+      "title": "lesson",
+      "type": "LongText"
+    },
+    {
+      "description": "Post ids and numbers behind the lesson.",
+      "id": "cdqra745wc8wtmt",
+      "title": "evidence",
+      "type": "LongText"
+    },
+    {
+      "id": "cz4q5d6cmppxv07",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "sucztkfe6ujnc6a",
+            "title": "active"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s9xje3clk1lmlse",
+            "title": "retired"
+          }
+        ]
+      },
+      "title": "status",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "cj9nvck7cym794x",
+      "title": "written_at",
+      "type": "DateTime"
+    },
+    {
+      "id": "cb4qmfm5a6y1p3j",
+      "title": "retired_at",
+      "type": "DateTime"
+    },
+    {
+      "id": "c0jb2er77e4fkou",
+      "title": "retired_why",
+      "type": "LongText"
+    }
+  ],
+  "id": "mn3sh62guwac37o",
+  "title": "lessons"
+}

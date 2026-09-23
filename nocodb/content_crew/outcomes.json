@@ -1,0 +1,83 @@
+{
+  "description": "Facebook numbers per published post at 2h, 24h and 7d after publishing.",
+  "display_field": "checkpoint",
+  "fields": [
+    {
+      "id": "c34373m8rqtqhbr",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "ckuy6jmaxd8nnhc",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "post_id",
+      "type": "Number"
+    },
+    {
+      "id": "c78doy2m7mk5nsw",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s44xs676hy8qkhz",
+            "title": "2h"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "sl4e3vc6p6stpzo",
+            "title": "24h"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "sp7839h9rxokjry",
+            "title": "7d"
+          }
+        ]
+      },
+      "title": "checkpoint",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "Unique viewers (insight post_total_media_view_unique).",
+      "id": "cunt3fmodioml2m",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "reach",
+      "type": "Number"
+    },
+    {
+      "id": "ca2ktoobpfsus7q",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "reactions",
+      "type": "Number"
+    },
+    {
+      "id": "cuyin6jps7lfwup",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "comments",
+      "type": "Number"
+    },
+    {
+      "id": "cscir0l5k25v0hm",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "shares",
+      "type": "Number"
+    },
+    {
+      "id": "cnwyxvmqfqygfwp",
+      "title": "taken_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "mw59dewp2vwa1ix",
+  "title": "outcomes"
+}

@@ -1,0 +1,173 @@
+{
+  "active": true,
+  "connections": {
+    "Lark token": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Send",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Load settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Message",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Message": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Lark token",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "On error": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Load settings",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": null,
+  "id": "sfkO2xnRFAQzFcfa",
+  "isArchived": false,
+  "name": "Content crew: errors",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "b02d84b2-badf-5ca1-b0e6-1293095b2378",
+      "name": "On error",
+      "parameters": {},
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "73c2a3a9-27a9-540e-8d9f-d0826bc9bca8",
+      "name": "Load settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mpcgut4v7x3qjlc"
+        }
+      },
+      "position": [
+        200,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "d5182ec0-feff-55df-95a2-ee8c7839fd19",
+      "name": "Message",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\nconst e = $('On error').first().json;\nconst x = e.execution || {};\nconst s = settingsOf('Load settings');\nconst text = `⚠️ ${(e.workflow || {}).name || 'Content crew'} hỏng ở \"${x.lastNodeExecuted || '?'}\": ${((x.error || {}).message || 'không rõ lỗi').slice(0, 1500)}${x.url ? `\\n${x.url}` : ''}`;\nreturn [{ json: { receive_id: s.lark_chat_id || s.lark_open_id, id_type: s.lark_chat_id ? 'chat_id' : 'open_id', text } }];"
+      },
+      "position": [
+        400,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "5SpNmcRFSfZL899c",
+          "name": "Lark content bot"
+        }
+      },
+      "id": "6f747b48-8acc-5ee9-ad41-6c5a2bf24c9a",
+      "name": "Lark token",
+      "parameters": {
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "jsonBody": "{}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "specifyBody": "json",
+        "url": "https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal"
+      },
+      "position": [
+        600,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    },
+    {
+      "id": "bed590e7-986f-5742-bfe8-6ccbf78f2310",
+      "name": "Send",
+      "parameters": {
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $('Lark token').first().json.tenant_access_token }}"
+            }
+          ]
+        },
+        "jsonBody": "={{ JSON.stringify({ receive_id: $('Message').first().json.receive_id, msg_type: 'text', content: JSON.stringify({ text: $('Message').first().json.text }) }) }}",
+        "method": "POST",
+        "options": {},
+        "sendBody": true,
+        "sendHeaders": true,
+        "specifyBody": "json",
+        "url": "=https://open.larksuite.com/open-apis/im/v1/messages?receive_id_type={{ $('Message').first().json.id_type }}"
+      },
+      "position": [
+        800,
+        0
+      ],
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

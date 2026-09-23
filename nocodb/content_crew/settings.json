@@ -1,0 +1,28 @@
+{
+  "description": "Key/value settings every crew workflow reads. The owner changes them in chat; the review moves slots.",
+  "display_field": "key",
+  "fields": [
+    {
+      "id": "cdqeovbm7gur3b3",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "c222di0midpz2fb",
+      "title": "key",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "caf94og0i1lirzf",
+      "title": "value",
+      "type": "LongText"
+    },
+    {
+      "id": "cy4dwv8xck79fqg",
+      "title": "description",
+      "type": "LongText"
+    }
+  ],
+  "id": "mpcgut4v7x3qjlc",
+  "title": "settings"
+}

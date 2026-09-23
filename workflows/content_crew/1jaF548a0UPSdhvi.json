@@ -1,0 +1,621 @@
+{
+  "active": true,
+  "connections": {
+    "Any writes?": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Writes",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Create idea": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Ideas": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Posts",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Kind": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Create idea",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Update idea",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Update post",
+            "type": "main"
+          }
+        ],
+        [
+          {
+            "index": 0,
+            "node": "Update settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Outcomes": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Plan",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Plan": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Any writes?",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Posts": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Outcomes",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Ideas",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Update idea": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Update post": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Update settings": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Result",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "When called": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Settings",
+            "type": "main"
+          }
+        ]
+      ]
+    },
+    "Writes": {
+      "main": [
+        [
+          {
+            "index": 0,
+            "node": "Kind",
+            "type": "main"
+          }
+        ]
+      ]
+    }
+  },
+  "description": null,
+  "id": "1jaF548a0UPSdhvi",
+  "isArchived": false,
+  "name": "Content crew: tools",
+  "nodeGroups": [],
+  "nodes": [
+    {
+      "id": "cac79316-55e4-5f86-b0b7-fdb224dce244",
+      "name": "When called",
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "position": [
+        0,
+        0
+      ],
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "c3577a80-cd92-526d-9755-b91356348d27",
+      "name": "Settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mpcgut4v7x3qjlc"
+        }
+      },
+      "position": [
+        200,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "70a57d33-8562-513c-8c24-bee70f36ef04",
+      "name": "Ideas",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mkc7snjus8thf08"
+        }
+      },
+      "position": [
+        400,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "9ada29fb-354c-5bc5-a119-ef78ec05210f",
+      "name": "Posts",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        600,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "alwaysOutputData": true,
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "executeOnce": true,
+      "id": "44dc713c-e1f9-5601-aeeb-a7ce932a8111",
+      "name": "Outcomes",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "search",
+        "options": {},
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "returnAll": true,
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mw59dewp2vwa1ix"
+        }
+      },
+      "position": [
+        800,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "id": "39a21357-9436-5a23-ba18-b3803d90ef46",
+      "name": "Plan",
+      "parameters": {
+        "jsCode": "const TZ = 'Asia/Ho_Chi_Minh';\n// The NocoDB node nests a row as { id, id_fields, fields }.\nconst rowsOf = (name) => ($(name).isExecuted ? $(name).all() : [])\n  .map((i) => i.json || {})\n  .filter((j) => j.id !== undefined && j.id !== null)\n  .map((j) => ({ Id: j.id, ...(j.fields || {}) }));\nconst settingsOf = (name) => Object.fromEntries(\n  rowsOf(name).filter((r) => r.key).map((r) => [r.key, (r.value ?? '').toString().trim()]));\nconst linesOf = (v) => String(v || '').split('\\n').map((s) => s.trim()).filter(Boolean);\n// NocoDB returns DateTime in UTC as \"2026-09-17 13:00:00+00:00\".\nconst parseDt = (s) => DateTime.fromISO(String(s || '').trim().replace(' ', 'T'), { setZone: true }).setZone(TZ);\nconst iso = (dt) => dt.setZone(TZ).toISO({ suppressMilliseconds: true });\n\n// Every chat-agent tool except write_post: reads answer here, writes are returned as `writes`\n// for the NocoDB nodes after this one. The guards live here, not in the prompt.\nconst a = $('When called').first().json;\nconst now = DateTime.now().setZone(TZ);\nconst str = (v) => (v === undefined || v === null ? '' : String(v)).trim();\nconst int = (v, d, lo, hi) => { const n = Number(v); return Number.isInteger(n) && n >= lo && n <= hi ? n : d; };\nconst cut = (s, n) => { s = str(s); return s.length > n ? `${s.slice(0, n)}…` : s; };\nconst when = (s) => (s ? parseDt(s).toFormat('dd/MM HH:mm') : null);\nconst settingsRows = rowsOf('Settings');\nconst settings = settingsOf('Settings');\nconst ideas = rowsOf('Ideas');\nconst posts = rowsOf('Posts');\nconst outcomes = rowsOf('Outcomes');\nconst done = (result, writes = []) => [{ json: { result, writes } }];\nconst refuse = (why) => done({ ok: false, refused: why });\nconst ideaOut = (i) => ({ idea_id: i.Id, theme: i.theme, hook: i.hook || null, angle: i.angle || null, source: i.source, source_url: i.source_url || null, owner_words: i.owner_words || null, note: i.note || null, picture: i.picture || null, banked_at: when(i.banked_at), used: Boolean(i.used) });\nconst postOut = (p) => ({ post_id: p.Id, idea_id: p.idea_id, content_type: p.content_type, status: p.status, scheduled_for: when(p.scheduled_for), published_at: when(p.published_at), preview: cut(p.text, 200) });\nconst settingsOut = (s) => ({ slots: linesOf(s.slots), daily_quota: Number(s.daily_quota) || 0, topics: linesOf(s.topics), avoid: linesOf(s.avoid), next_offer: s.next_offer || null });\nconst norm = (s) => str(s).toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9 ]/g, ' ').replace(/\\s+/g, ' ').trim();\nconst distance = (x, y) => {\n  const d = Array.from({ length: y.length + 1 }, (_, j) => j);\n  for (let i = 1; i <= x.length; i++) {\n    let prev = d[0]; d[0] = i;\n    for (let j = 1; j <= y.length; j++) { const t = d[j]; d[j] = Math.min(d[j] + 1, d[j - 1] + 1, prev + (x[i - 1] === y[j - 1] ? 0 : 1)); prev = t; }\n  }\n  return d[y.length];\n};\n\nswitch (a.tool) {\n  case 'read_ideas': {\n    const q = norm(a.q);\n    const rows = ideas\n      .filter((i) => (a.include_used === true || a.include_used === 'true' || !i.used) && (!q || norm(`${i.theme} ${i.hook}`).includes(q)))\n      .sort((x, y) => y.Id - x.Id)\n      .slice(0, int(a.limit, 10, 1, 30))\n      .map((i) => ({ idea_id: i.Id, theme: cut(i.theme, 200), hook: cut(i.hook, 200) || null, source: i.source, banked_at: when(i.banked_at), used: Boolean(i.used) }));\n    return done({ ok: true, rows, unused_in_bank: ideas.filter((i) => !i.used).length });\n  }\n  case 'bank_idea': {\n    const fields = {};\n    for (const [k, n] of [['theme', 120], ['hook', 500], ['angle', 500], ['source_url', 500], ['owner_words', 4000], ['note', 500], ['picture', 200]]) {\n      if (str(a[k])) fields[k] = str(a[k]).slice(0, n);\n    }\n    if (fields.picture && !/^\\S+ \\S+$/.test(fields.picture)) return refuse('picture phải là mã tham chiếu của ảnh, y như trong danh sách ảnh: <message id> <image key>');\n    const id = Number(a.idea_id) || 0;\n    if (id) {\n      const row = ideas.find((i) => i.Id === id);\n      if (!row) return refuse(`hong có ý tưởng #${id}`);\n      if (!Object.keys(fields).length) return refuse('hong có trường nào để sửa');\n      const merged = { ...row, ...fields };\n      const keep = Object.fromEntries(['theme', 'hook', 'angle', 'source_url', 'owner_words', 'note', 'picture'].map((k) => [k, merged[k] ?? null]));\n      return done({ ok: true, action: 'updated', row: ideaOut(merged) }, [{ table: 'ideas', op: 'update', _id: id, ...keep }]);\n    }\n    if (!fields.theme) return refuse('ý tưởng mới cần theme');\n    const n = norm(fields.theme);\n    const twin = ideas.find((i) => !i.used && norm(i.theme) && distance(norm(i.theme), n) <= Math.max(3, Math.floor(n.length * 0.2)));\n    if (twin) return refuse(`trong kho đã có ý gần y vậy, chưa dùng: #${twin.Id} \"${twin.theme}\". Muốn sửa nó thì gọi lại với idea_id ${twin.Id}.`);\n    const blank = Object.fromEntries(['hook', 'angle', 'source_url', 'owner_words', 'note', 'picture'].map((k) => [k, null]));\n    return done({ ok: true, action: 'created' }, [{ table: 'ideas', op: 'create', ...blank, ...fields, source: 'owner', used: false, banked_at: iso(now) }]);\n  }\n  case 'read_posts': {\n    const id = Number(a.post_id) || 0;\n    if (id) {\n      const p = posts.find((x) => x.Id === id);\n      if (!p) return refuse(`hong có bài #${id}`);\n      return done({ ok: true, row: { ...postOut(p), text: p.text || '', leads_to_offer: p.leads_to_offer || null, check_result: p.check_result ? JSON.parse(p.check_result) : null, issues: p.issues || null, fb_post_id: p.fb_post_id || null } });\n    }\n    const rows = posts.filter((p) => !str(a.status) || p.status === str(a.status))\n      .sort((x, y) => y.Id - x.Id).slice(0, int(a.limit, 10, 1, 20)).map(postOut);\n    const count = (s) => posts.filter((p) => p.status === s).length;\n    return done({ ok: true, rows, counts: { needs_owner: count('needs_owner'), approved: count('approved'), writing: count('writing') } });\n  }\n  case 'update_post': {\n    const id = Number(a.post_id) || 0;\n    const p = posts.find((x) => x.Id === id);\n    if (!p) return refuse(`hong có bài #${id}`);\n    if (p.fb_post_id || ['publishing', 'published'].includes(p.status)) return refuse(`bài #${id} đã lên Facebook (hoặc đang lên), hong sửa ở đây được`);\n    if (p.status === 'writing') return refuse(`bài #${id} còn đang viết; đợi thẻ tới rồi hãy sửa`);\n    const fields = {};\n    const text = str(a.text);\n    if (text) {\n      if (text.length > 3000) return refuse('bài dài quá 3000 ký tự');\n      fields.text = text;\n      fields.owner_edited = true;\n      // The owner changed an approved post themselves: the approval follows their text (G6).\n      if (p.status === 'approved') fields.approved_text = text;\n    }\n    if (str(a.scheduled_for)) {\n      const at = DateTime.fromISO(str(a.scheduled_for), { zone: TZ });\n      if (!at.isValid) return refuse(`giờ đăng \"${a.scheduled_for}\" hong đọc được; gửi dạng 2026-09-27T20:00`);\n      if (at <= now) return refuse('giờ đăng phải ở tương lai');\n      fields.scheduled_for = iso(at);\n    }\n    if (!Object.keys(fields).length) return refuse('hong có gì để sửa: gửi text hoặc scheduled_for');\n    const keep = { text: p.text, owner_edited: Boolean(p.owner_edited), approved_text: p.approved_text ?? null, scheduled_for: p.scheduled_for ? iso(parseDt(p.scheduled_for)) : null };\n    return done({ ok: true, row: { post_id: id, status: p.status, text: fields.text || p.text, scheduled_for: when(fields.scheduled_for || p.scheduled_for) } }, [{ table: 'posts', op: 'update', _id: id, ...keep, ...fields }]);\n  }\n  case 'read_outcomes': {\n    const id = Number(a.post_id) || 0;\n    const since = now.minus({ days: int(a.since_days, 14, 1, 90) });\n    const rows = posts\n      .filter((p) => p.published_at && (id ? p.Id === id : parseDt(p.published_at) >= since))\n      .sort((x, y) => String(y.published_at).localeCompare(String(x.published_at)))\n      .slice(0, int(a.limit, 10, 1, 20))\n      .map((p) => ({\n        post_id: p.Id, content_type: p.content_type, published_at: when(p.published_at), slot: p.slot || null, preview: cut(p.text, 120),\n        checkpoints: Object.fromEntries(outcomes.filter((o) => o.post_id === p.Id).map((o) => [o.checkpoint, { reach: o.reach, reactions: o.reactions, comments: o.comments, shares: o.shares }])),\n      }));\n    return done({ ok: true, rows, note: 'reach = số người xem; số này nói bài đi xa tới đâu, hong nói bài bán được hàng hay hong' });\n  }\n  case 'read_settings':\n    return done({ ok: true, row: settingsOut(settings) });\n  case 'update_settings': {\n    const next = {};\n    if (str(a.slots)) {\n      const slots = linesOf(str(a.slots).replace(/,/g, '\\n')).map((s) => s.toLowerCase());\n      const bad = slots.filter((s) => !/^(mon|tue|wed|thu|fri|sat|sun)-([01]\\d|2[0-3]):[0-5]\\d$/.test(s));\n      if (bad.length) return refuse(`khung giờ sai dạng: ${bad.join(', ')}. Dạng đúng: sat-20:00`);\n      if (!slots.length || slots.length > 14) return refuse('cần từ 1 tới 14 khung giờ');\n      next.slots = [...new Set(slots)].join('\\n');\n    }\n    if (str(a.daily_quota)) {\n      const q = Number(a.daily_quota);\n      if (!Number.isInteger(q) || q < 0 || q > 5) return refuse('daily_quota phải là số nguyên từ 0 tới 5');\n      next.daily_quota = String(q);\n    }\n    for (const k of ['topics', 'avoid']) {\n      if (!str(a[k])) continue;\n      const list = linesOf(str(a[k]));\n      if (list.length > 20) return refuse(`${k} tối đa 20 dòng`);\n      next[k] = list.join('\\n');\n    }\n    if (!Object.keys(next).length) return refuse('hong có gì để đổi');\n    const writes = [];\n    for (const [key, value] of Object.entries(next)) {\n      const row = settingsRows.find((r) => r.key === key);\n      if (!row) return refuse(`bảng settings thiếu dòng ${key}`);\n      writes.push({ table: 'settings', op: 'update', _id: row.Id, value });\n    }\n    return done({ ok: true, before: settingsOut(settings), after: settingsOut({ ...settings, ...next }) }, writes);\n  }\n  default:\n    return refuse(`không có công cụ \"${a.tool}\"`);\n}"
+      },
+      "position": [
+        1000,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "8805cb54-d440-5a64-9846-3de97e396981",
+      "name": "Any writes?",
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "e0bd3b37-1fa6-563e-865d-e734062f6060",
+              "leftValue": "={{ $json.writes.length > 0 }}",
+              "operator": {
+                "operation": "true",
+                "singleValue": true,
+                "type": "boolean"
+              },
+              "rightValue": ""
+            }
+          ],
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          }
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "position": [
+        1200,
+        0
+      ],
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2
+    },
+    {
+      "id": "4a594107-6c46-566c-b8f5-ff89f2b26e2c",
+      "name": "Writes",
+      "parameters": {
+        "jsCode": "return $json.writes.map(({ table, op, ...row }) => ({ json: { kind: `${op} ${table}`, ...row } }));"
+      },
+      "position": [
+        1400,
+        -100
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    },
+    {
+      "id": "13850342-adf6-540c-81a4-5befbdc75952",
+      "name": "Kind",
+      "parameters": {
+        "mode": "expression",
+        "numberOutputs": 4,
+        "output": "={{ ({ 'create ideas': 0, 'update ideas': 1, 'update posts': 2, 'update settings': 3 })[$json.kind] }}"
+      },
+      "position": [
+        1600,
+        -100
+      ],
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "1907d71d-1c44-52ba-836e-934fc0af3bb6",
+      "name": "Create idea",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "angle": "={{ $json.angle }}",
+            "banked_at": "={{ $json.banked_at }}",
+            "hook": "={{ $json.hook }}",
+            "note": "={{ $json.note }}",
+            "owner_words": "={{ $json.owner_words }}",
+            "picture": "={{ $json.picture }}",
+            "source": "={{ $json.source }}",
+            "source_url": "={{ $json.source_url }}",
+            "theme": "={{ $json.theme }}",
+            "used": "={{ $json.used }}"
+          }
+        },
+        "operation": "create",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mkc7snjus8thf08"
+        }
+      },
+      "position": [
+        1800,
+        -300
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "d1b33c16-d72e-5e4a-a2ad-e69abcceb5d3",
+      "name": "Update idea",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "angle": "={{ $json.angle }}",
+            "hook": "={{ $json.hook }}",
+            "note": "={{ $json.note }}",
+            "owner_words": "={{ $json.owner_words }}",
+            "picture": "={{ $json.picture }}",
+            "source_url": "={{ $json.source_url }}",
+            "theme": "={{ $json.theme }}"
+          }
+        },
+        "id": "={{ $json._id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mkc7snjus8thf08"
+        }
+      },
+      "position": [
+        1800,
+        -150
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "264fafab-2902-53b0-9973-fc72590d32cc",
+      "name": "Update post",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "approved_text": "={{ $json.approved_text }}",
+            "owner_edited": "={{ $json.owner_edited }}",
+            "scheduled_for": "={{ $json.scheduled_for }}",
+            "text": "={{ $json.text }}"
+          }
+        },
+        "id": "={{ $json._id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "m63h0gy7t11cnzv"
+        }
+      },
+      "position": [
+        1800,
+        0
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "yivJ4Lyu7IrsQ45q",
+          "name": "Nocodb bot"
+        }
+      },
+      "id": "81ea8d93-fd17-527c-ab5d-0dad9c4e213d",
+      "name": "Update settings",
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "dataToSend": "mapWithFields",
+        "fieldsMapper": {
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false,
+          "mappingMode": "defineBelow",
+          "matchingColumns": [],
+          "schema": [],
+          "value": {
+            "value": "={{ $json.value }}"
+          }
+        },
+        "id": "={{ $json._id }}",
+        "operation": "update",
+        "projectId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "ph3awm32yo72bw0"
+        },
+        "resource": "row",
+        "table": {
+          "__rl": true,
+          "mode": "id",
+          "value": "mpcgut4v7x3qjlc"
+        }
+      },
+      "position": [
+        1800,
+        150
+      ],
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 4
+    },
+    {
+      "executeOnce": true,
+      "id": "788ad148-cc27-5da9-a1e6-92287ff5dd4a",
+      "name": "Result",
+      "parameters": {
+        "jsCode": "// Reached once, after the writes or straight from Plan when there were none.\nconst r = { ...$('Plan').first().json.result };\nif ($('Create idea').isExecuted) {\n  const c = $('Create idea').first().json;\n  const id = c.id ?? c.Id ?? (c.fields || {}).Id;\n  const w = $('Plan').first().json.writes[0];\n  r.row = { idea_id: id, theme: w.theme, hook: w.hook || null, angle: w.angle || null, source: 'owner', owner_words: w.owner_words || null, picture: w.picture || null };\n}\nreturn [{ json: r }];"
+      },
+      "position": [
+        2000,
+        0
+      ],
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "errorWorkflow": "sfkO2xnRFAQzFcfa",
+    "executionOrder": "v1"
+  },
+  "tags": []
+}
