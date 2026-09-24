@@ -73,6 +73,9 @@ hash it was written with (`prompt_version`).
 | scout | banked ideas whose `source_url` is among the search citations; ideas without one are dropped |
 | propose | quota 1, one pick through G1, write started |
 | revise | post #7: owner feedback applied (dashes gone, rest kept), owner's screenshot edited per the note and uploaded, new card in the thread, $0.12; a rejected post refused |
+| set_picture | post #7: the owner's screenshot attached byte for byte (2006×1206, same bytes), shown in the thread, no model called; a rejected post refused |
+| post without a picture | post #9: no picture step ran, card shows the writer's `picture_hint`, $0.097 |
+| revise_post without feedback | refused: a picture change goes to `set_picture`, never to a rewrite |
 | review G8 | `Apply` run offline against crafted outputs: unsettled or single-post evidence, over-long lessons, the 10-lesson cap, a lesson retiring another, a slot change under the floor |
 
 Not yet exercised live: a publish (nothing approved has come due), an outcome checkpoint (nothing

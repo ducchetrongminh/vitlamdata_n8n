@@ -106,8 +106,9 @@
       "type": "LongText"
     },
     {
+      "description": "The writer's one-line suggestion of what picture the owner could attach. Nothing is generated from it.",
       "id": "cs8yrwe5xhubuxx",
-      "title": "image_prompt",
+      "title": "picture_hint",
       "type": "LongText"
     },
     {
