@@ -19,7 +19,7 @@ Three jobs need a model with judgment:
 
 - **Chat agent** — reads what the owner sends: free-form Vietnamese, screenshots, corrections,
   ideas, questions. The one genuinely open input in the system, so the one agent with tools.
-- **Writing chain** — one idea in, one finished post out: write → check → image. The steps are
+- **Writing chain** — one idea in, one finished post out: write → check → the owner's picture if any. The steps are
   known in advance, so this is a chain of model calls with code between them, not an agent. It
   is called from two places (the daily batch and the chat agent), which is why it is its own
   thing.
@@ -38,7 +38,7 @@ approval gate, the scheduler, the outcome checks, and the caps on what the revie
 - **Crew of specialists** (researcher / writer / editor / publisher): rejected. Nothing splits
   under the splitting rule — they would share one tool set, one model tier and one voice, and
   hand each other prose. Four agents in a fixed order is a chain wearing a costume.
-- **Writing as a second agent**: rejected. Write, image, check is a fixed sequence. An agent
+- **Writing as a second agent**: rejected. Write, check, picture is a fixed sequence. An agent
   there would only be deciding what it was always going to do next, at tool-calling prices.
 - **Orchestrator–workers**: rejected. Subtasks are known in advance; there is nothing to plan.
 - **Digest to the owner as a separate message**: rejected. The cards are the digest. A morning
@@ -66,11 +66,11 @@ OWNER (lark webhook)
                    └─ write(idea) / revise(post, feedback) ─► WRITE ─► card in Lark
 
 WRITE (one idea in, one finished post out)
-  write (model, JSON: text + image prompt + content type)
+  write (model, JSON: text + picture hint + content type)
     │                                    ▲
     ▼                                    │ one rewrite, counted in code
   G2 (code) ─► check (model: {pass, issues})
-                    └─ pass, or fail twice ─► image (OpenRouter) ─► posts + Lark card
+                    └─ pass, or fail twice ─► owner's picture, if any (no model) ─► posts + Lark card
                                               (a failed check is named on the card)
 ```
 
@@ -84,7 +84,7 @@ Shapes are named here and specified in Phase 3 (`03-schemas/`).
 | gate → chat agent | message text, thread history with names, picture binaries, the post or idea the thread is about |
 | chat agent → tool | one `$fromAI` argument per field, never a JSON blob in a string |
 | select → write | `{idea_id, content_type, why_today}` |
-| write → code | `{text, image_prompt, content_type, idea_id}` |
+| write → code | `{text, picture_hint, content_type, idea_id}` |
 | check → code | `{pass: bool, issues: [{point, why}]}` |
 | write → card | `{post_id, text, image, content_type, scheduled_for, check}` |
 | card click → code | `{post_id, action: approve\|reject, actor}` |
@@ -113,15 +113,15 @@ Shapes are named here and specified in Phase 3 (`03-schemas/`).
 | When the chat agent stops | code (max steps, timeout) | termination is always code | high |
 
 The agent holds **no publishing tool**. It proposes; the card click and the publisher dispose.
-Image generation is the only paid call, and the writing chain makes it once per post — code
-decides it happens, not a model.
+No picture is generated or edited: a picture is the owner's, used as sent, and changing it is a
+data change (`set_picture`), not writing work.
 
 ## Workflows (5)
 
 | Workflow | Trigger | Holds |
 |---|---|---|
 | `Content crew: lark` | webhook | Lark verification, card clicks, the gate, the chat agent, the reply |
-| `Content crew: write` | called | write → check → image → save → card. Attached to the chat agent as a workflow tool, and called in a loop by cron |
+| `Content crew: write` | called | write → check → owner's picture → save → card. Attached to the chat agent as a workflow tool, and called in a loop by cron |
 | `Content crew: tools` | called | the chat agent's other tools, each with its guard in code |
 | `Content crew: cron` | schedule ×4 | scout + propose (daily), publish + outcome checks (frequent), review (weekly). One trigger node per cadence, each feeding its own branch, rather than one trigger and a tangle of time IFs |
 | `Content crew: errors` | error trigger | failed runs → Lark |
@@ -177,9 +177,9 @@ while another post is being written cannot be lost. No queue machinery.
 
 ## Models
 
-Everything goes through **OpenRouter** (`lmChatOpenRouter` for agent and chain nodes, HTTP
-Request for image generation and web search). One vendor, one credential. Model ids are the
-OpenRouter ones (`deepseek/…`, and an image-capable model for pictures), written into the node
+Everything goes through **OpenRouter** (`lmChatOpenRouter` for the agent, HTTP Request for the
+other calls and web search). One vendor, one credential. Model ids are the OpenRouter ones,
+written into the node
 and committed, so a provider-side change is a visible diff rather than a silent regression.
 
 Checked against OpenRouter's model list on 2026-09-23.
@@ -192,7 +192,6 @@ Checked against OpenRouter's model list on 2026-09-23.
 | Select today's ideas | `deepseek/deepseek-chat` | short judgment over a list |
 | Scout | `google/gemini-2.5-flash` with OpenRouter's `web` plugin | search and summarise in one call; the plugin returns `url_citation` annotations, which is what the grounding check compares `source_url` against |
 | Weekly review | `moonshotai/kimi-k3` | once a week over a table of numbers, so cost is irrelevant and quality is not |
-| Image | `bytedance-seed/seedream-5-0-lite` (owner's pick, 2026-09-23) | **$0.035 per image**, about 30 s, measured. Image out only, so the request asks for `modalities: ["image"]`. Takes an image as input too, so one model covers both drawing from a prompt and editing a picture the owner supplied. Replaced `google/gemini-2.5-flash-image` ($0.039)
 
 What the check turned up that changed a choice: **kimi-k3 has vision** (text+image+video in), so
 the chat agent could share the writing model — it is not worth $15/1M for a chat turn, but it
@@ -217,8 +216,9 @@ about $0.31, so roughly $9 a month. Still small, but the lever if it ever matter
 `reasoning_effort`, which OpenRouter exposes for this model — it trades thinking for both price
 and latency.
 
-With the check, the picture ($0.035) and the occasional rewrite, a whole post measured $0.14
-without a rewrite and $0.21 with one (`07-build.md`), so about $0.15 on average.
+With the check and the occasional rewrite, a whole post measured about $0.10 without a rewrite
+and $0.17 with one once the $0.035-0.039 picture is taken out (`07-build.md`), so about $0.12 on
+average.
 
 **Verified 2026-09-23, so this is no longer a risk.** The concern was that n8n patches
 `@langchain/openai` to send DeepSeek's `reasoning_content` back — a patch that rides on the
@@ -237,7 +237,7 @@ has no tools.
   `write_post` **acknowledges first and replies when the card lands**, rather than blocking
   silently. That was written as "add it if silence becomes a problem"; the measurement says it
   is a problem.
-- **Cost.** About $0.15 a post, measured end to end. A chat turn is a rounding error next to it.
+- **Cost.** About $0.12 a post, measured end to end. A chat turn is a rounding error next to it.
 - **Concurrency.** Unbounded per message; posts are independent rows.
 - **Failure mode.** Fail closed on publishing: any error, any uncertainty, nothing goes out.
   Everything else escalates to Lark through the error workflow, with partial work left in

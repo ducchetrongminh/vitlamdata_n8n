@@ -25,14 +25,16 @@ hash it was written with (`prompt_version`).
 
 ## Where the build departs from the design
 
-- **Check before image, not after.** The picture is drawn from the final text's `image_prompt`,
-  so a rewrite does not pay for a picture that is thrown away.
+- **No generated pictures** (owner's decision, 2026-09-24). Seedream, asked to blur and highlight
+  parts of the owner's screenshot, redrew the whole thing and every word came back as gibberish.
+  A picture is now only ever the owner's, attached as sent; the writer suggests one in
+  `picture_hint`, which the card shows when there is no picture.
 - **One rewrite covers both G2 and G3a.** A draft that fails the code checks goes to the same
   single rewrite as a draft the check failed, with the code's reasons as `point: format` issues.
   A second failure of G2 fails the post closed (`failed`, error to Lark, no card).
 - **Model calls other than the chat agent are HTTP Request nodes to OpenRouter**, not chain
   nodes: that is the only way to read `usage.cost` for the `cost` column, and it gives the web
-  plugin (scout) and image output (write) in the same shape.
+  plugin (scout) in the same shape.
 - **`write_post` is asynchronous**, as `01-architecture.md` already decided after the latency
   measurement: the agent gets `{status: ok, post_id}` in about a second and the card follows.
 - **A fifth workflow, `tools`.** Every chat tool carries a guard, so none could hang off the
@@ -48,8 +50,11 @@ hash it was written with (`prompt_version`).
   with words the owner supplies, while the chat agent may not write post text. So "sửa bài này"
   had no path and the agent pasted the owner's feedback in as the post. `revise_post` sends the
   post back through `write` (`mode: start` with `post_id`): the feedback goes in as a rewrite
-  issue with `point: owner`, a picture the owner sends is edited per `picture_note`, a text-only
-  revision keeps the old picture, and the post returns to `needs_owner` with a new card and token.
+  issue with `point: owner`, the post keeps its picture, and it returns to `needs_owner` with a
+  new card and token.
+- **`set_picture`, a tenth chat tool.** A picture change used to go through `revise_post`, which
+  paid for a rewrite and sent the picture to the image model. Now it is a data change: download
+  from the owner's message, upload as the bot, save the key, show it in the thread. No model.
 - **Owner rules in `settings.rules`**, handed to the writer as `owner_rules`. Not lessons:
   lessons need two settled posts as evidence, are capped at 10 and are retired by the review;
   the owner's rules need none of that and must never be retired by the crew.
@@ -61,7 +66,7 @@ hash it was written with (`prompt_version`).
 | write, first try | post #2: passed the check first time, $0.138, 81 s |
 | write, with a rewrite | post #3: check failed on `connected`, rewrite passed, $0.212, 136 s |
 | write guards | missing idea, idea without theme, idea with a post already waiting: refused |
-| image | `seedream-5-0-lite` draws or edits the picture: $0.035, about 30 s, called directly; live in `write` since 2026-09-23, first run inside n8n is the next card. `gemini-2.5-flash-image` drew posts #2 to #7 ($0.039, not the $0.0003 estimated). Posts #2 and #6 were written before the Lark app had `im:resource:upload`, so their cards say the picture is missing; the scope is in since, and upload plus download (`GET im/v1/images/<key>`, what the publisher uses) both work |
+| picture | Lark upload and download by key (`GET im/v1/images/<key>`, what the publisher uses) work since the owner added `im:resource:upload`. Generated pictures were tried and dropped: Gemini ($0.039) drew posts #2 to #7, and Seedream ($0.035, ~30 s) garbled every word of the owner's screenshot on post #7 |
 | chat agent | answers from `read_ideas` / `read_posts`, banks an idea with the owner's words and asks before writing, calls `write_post` on "viết luôn đi", returns `NO_REPLY` to chatter between people |
 | tools | create, dedupe refusal, partial update, `update_post` on an approved post re-records `approved_text`, settings validation |
 | card click | bad token refused; approve books the next free slot; a second click changes nothing |

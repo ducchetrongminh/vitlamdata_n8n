@@ -2,9 +2,8 @@
 
 Every capability in the crew, with who may call it and what it costs if it goes wrong.
 
-The chat agent holds nine tools, all of them `read` or `write`. Nothing `destructive` is held by
-any model — publishing is code, called by the scheduler. The one `spend` tool is called by the
-writing chain, never chosen by a model.
+The chat agent holds ten tools, all of them `read` or `write`. Nothing `destructive` is held by
+any model — publishing is code, called by the scheduler. No picture is generated, so the only spend is the writing chain's model calls.
 
 Descriptions are prompts: the model picks tools by reading them, so they say what the tool
 returns and when not to use it.
@@ -53,7 +52,8 @@ parameters:
     source_url: { type: string }
     owner_words: { type: string, maxLength: 4000, description: nguyên văn lời sếp, hong gọt }
     note: { type: string, maxLength: 500 }
-    picture: { type: string, description: "<message id> <image key> of a picture in the conversation; the image step edits it for the post" }
+    picture: { type: string, description: "<message id> <image key> of a picture in the conversation; a post written from this idea carries it as sent" }
+    #or the post" }
   required: [theme]
 returns:
   row: { idea_id, theme, hook, angle, source, owner_words, banked_at }
@@ -134,15 +134,13 @@ guards:
 id: revise_post
 description: >
   Sửa một bài chưa đăng theo góp ý của sếp: dây chuyền viết lại theo góp ý, chấm lại, gửi thẻ mới;
-  thẻ cũ hết dùng được. Kèm ảnh thì bài xài ảnh đó, sửa theo picture_note.
+  thẻ cũ hết dùng được. Chỉ cho chữ; hình thì set_picture.
 parameters:
   type: object
   properties:
     post_id: { type: integer }
     note: { type: string, description: the owner's feedback on the text, verbatim }
-    picture: { type: string, description: "<message id> <image key> of the picture to use" }
-    picture_note: { type: string, description: how the owner wants the picture edited, verbatim }
-  required: [post_id]
+  required: [post_id, note]
 returns: "{status: ok, payload: {post_id}} at once; the new card follows in the thread"
 side_effect: write + spend
 auth: n8n sub-workflow (write, mode start with post_id)
@@ -150,8 +148,35 @@ allowed_roles: [chat-agent]
 guards:
   - only needs_owner or approved posts; an approved post goes back to needs_owner and must be
     approved again
-  - needs note or picture
+  - needs note; it has no picture parameter, so a picture change cannot pay for a rewrite
   - the feedback rides in the rewrite as point owner, so the check's own rewrite keeps it
+  - the post keeps its picture
+```
+
+### set_picture
+
+```yaml
+id: set_picture
+description: >
+  Gắn ảnh sếp gửi vào một bài chưa đăng, y như sếp gửi: hong sửa ảnh, hong viết lại chữ, hong tốn
+  model. Ảnh hiện ra trong luồng. Gọi khi sếp gửi ảnh cho một bài, kêu đổi hình, "xài hình này".
+parameters:
+  type: object
+  properties:
+    post_id: { type: integer }
+    picture: { type: string, description: "<message id> <image key> from the picture list" }
+  required: [post_id, picture]
+returns:
+  row: { post_id, status, image: <lark image key> }
+side_effect: write
+auth: nocodb + Lark (download from the message, upload as the bot, which the card and the publisher need)
+timeout_seconds: 60
+allowed_roles: [chat-agent]
+idempotent: true
+guards:
+  - only needs_owner or approved posts; an approved post stays approved, like update_post, since
+    the owner made the change and sees the picture in the thread
+  - no model sees or changes the picture
 ```
 
 ### read_outcomes
@@ -257,10 +282,10 @@ guards:
   - refuses when a post for this idea is already `writing` or `needs_owner`, unless `again` is
     true — otherwise a retry, or the model calling twice, quietly produces two posts
   - `offer` is refused when the month's two are used; the cadence is not the model's to bend
-  - every call spends: one writing call, one image, one check. See the cap under make_image
+  - every call spends: one writing call and one check, two of each with a rewrite
 errors:
   - code: check_failed_twice -> status partial, card still sent with the failing point named
-  - code: image_failed       -> status partial, card sent without a picture
+  - code: image_failed       -> status partial: the owner's picture could not be attached, card sent without it
   - code: write_invalid      -> status failed, row set to `failed`, error to Lark, nothing sent
   - code: idea_missing       -> refused: no such idea, or it has no theme
   - code: already_writing    -> refused: the idea has a post writing or waiting, and again is false
@@ -270,31 +295,6 @@ errors:
 ## Called by code, held by nobody
 
 These have no `allowed_roles`. No model can reach them; the workflow decides when they run.
-
-### make_image
-
-```yaml
-id: make_image
-description: (not a model-facing tool — the writing chain calls it with the image_prompt it wrote)
-parameters:
-  type: object
-  properties:
-    prompt: { type: string }
-    input_image: { type: string, description: base64, when the owner supplied a picture to edit }
-  required: [prompt]
-returns: { image: binary, provider_id: string }
-side_effect: spend
-auth: api_key:OPENROUTER
-model: bytedance-seed/seedream-5-0-lite, modalities ["image"]
-timeout_seconds: 120
-cost_per_call: $0.035, about 30 s (measured 2026-09-23)
-allowed_roles: []
-idempotent: false
-guards:
-  - one call per post, enforced by the chain's structure rather than by a counter
-  - the day's ceiling is `daily_quota` images, and `daily_quota` is capped at 5
-  - a failure never blocks the post: the card goes out without a picture, flagged `partial`
-```
 
 ### web_search
 
@@ -374,10 +374,9 @@ guards:
 | Tool | read | write | destructive | spend | held by a model |
 |---|---|---|---|---|---|
 | read_ideas, read_posts, read_outcomes, read_settings | ✅ | | | | chat agent |
-| bank_idea, update_post, update_settings | | ✅ | | | chat agent |
+| bank_idea, update_post, update_settings, set_picture | | ✅ | | | chat agent |
 | write_post, revise_post | | ✅ | | ✅ | chat agent (spend is capped and structural) |
 | web_search | ✅ | | | | scout |
-| make_image | | | | ✅ | **no** |
 | publish_facebook | | | ✅ | | **no** |
 | send_lark | | ✅ | | | **no** |
 

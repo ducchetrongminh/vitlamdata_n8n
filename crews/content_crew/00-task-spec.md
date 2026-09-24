@@ -28,7 +28,7 @@ The crew proposes; the owner judges. Five shapes:
 | Scouted material | search results | web search over standing topics | for scouting | Fills the idea bank between the owner's own drops. |
 | Content strategy | doc | `docs/Content Strategy.md` | yes | Offer/Education/Story split, Daily Seinfeld Sequence cadence, pre-publish check. |
 | Lessons | rows | the weekly review's own output | yes, once there are any | What past outcomes taught, fed back into writing and idea selection. |
-| Image for the post | image | stock / OpenRouter-generated / OpenRouter-edited from owner's image or prompt / owner-attached | yes, before publish | Method picked per post, flexibly. |
+| Picture for the post | image | the owner's own picture, sent with the idea or later for that post | no | Used exactly as sent. No picture is generated or edited by a model: image models redraw a screenshot's text as gibberish, and the owner chose not to use AI pictures (2026-09-24). A post without one goes out as text. |
 | Approval | yes/no + edits | owner, chat | yes, before every publish | See Hard constraints. |
 
 ## Procedure (the SOP)
@@ -50,13 +50,13 @@ The crew proposes; the owner judges. Five shapes:
    - standard: what goes on the card is the version meant to be published as it stands, not a
      rough pass for the owner to fix. "Good enough, they'll edit it" is not a bar this crew is
      allowed to aim at.
-5. Get an image: stock lookup, generate from a prompt via OpenRouter, edit an image the owner
-   supplied via OpenRouter, or ask the owner to attach one — whichever fits what's available for
-   this post.
+5. Picture: if the owner sent one with the idea, use it exactly as sent. Otherwise the card
+   suggests what picture would suit, and the owner may reply with one; the post can go out as
+   text.
 6. Run the pre-publish check (Relevant / Closer / Connected, `docs/Content Strategy.md`). A
    failing text is rewritten once, then shown to the owner with the failure noted rather than
    silently forced through.
-7. Send the finished post (text + image) to the owner as an approval card.
+7. Send the finished post (text, and the picture if there is one) to the owner as an approval card.
    - decision point: approve as-is, edit, or reject — owner's call, always.
 8. On approval, queue the post for the next good time slot (code-scheduled, seeded with the
    owner's instinct — weekends, ~8pm — then adjusted from outcome data) rather than publishing
@@ -70,7 +70,7 @@ The crew proposes; the owner judges. Five shapes:
 
 ## Deliverable
 
-A Facebook post (text + image) on the Vịt làm Data page, approved by the owner on a card then
+A Facebook post (text, with the owner's picture when they gave one) on the Vịt làm Data page, approved by the owner on a card then
 published at the next good time slot. Each post's outcome logged at 2h/24h/7d. Weekly, a report
 of what the numbers changed.
 
@@ -81,7 +81,7 @@ of what the numbers changed.
 - [ ] Every card already passed the 3-point pre-publish check, or names the point it failed.
 - [ ] Cards are approved as they stand more often than they are edited — if the owner rewrites
       most of them, the crew is producing rough passes and the writing model or prompt is wrong.
-- [ ] Every published post carries an image.
+- [ ] A picture the owner gives is published exactly as sent; no post carries a generated or model-edited picture.
 - [ ] Every published post gets outcome checks logged at 2h, 24h and 7d, retrievable without the
       owner opening Facebook Business Suite by hand.
 - [ ] An idea dropped while another post is being written is not lost.

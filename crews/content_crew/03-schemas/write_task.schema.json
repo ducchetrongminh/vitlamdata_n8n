@@ -81,7 +81,7 @@
     },
     "owner_picture": {
       "type": ["object", "null"],
-      "description": "A picture the owner supplied for this post; the image step edits it instead of generating one.",
+      "description": "Not sent to the writer: the owner's picture is attached by code, as sent.",
       "additionalProperties": true
     }
   }

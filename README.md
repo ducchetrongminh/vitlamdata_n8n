@@ -76,7 +76,10 @@ group; nothing reaches Facebook unless you tap Duyệt. Design and build record:
 - **On its own:** it searches the web for ideas at 01:30, writes the day's posts at 06:30, publishes
   approved posts at their slot, reads each post's numbers 2 hours, 24 hours and 7 days after
   publishing, and every Monday reports what the numbers changed in how it writes.
-- **Costs** about $0.15 a post on OpenRouter (credential `OpenRouter`).
+- **Pictures are yours.** Send one with an idea, or reply to a card with one ("xài hình này"): it
+  goes out exactly as you sent it, with no AI editing and no rewrite. The crew never draws
+  pictures; a card without one suggests what to attach, and the post can go out as text.
+- **Costs** about $0.12 a post on OpenRouter (credential `OpenRouter`).
 
 The Lark app and Facebook token set up for the content agent below are the ones the crew uses,
 at the same webhook URL, plus the scope `im:resource:upload` for post pictures.

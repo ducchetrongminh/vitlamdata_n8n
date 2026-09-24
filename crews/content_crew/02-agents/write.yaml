@@ -27,12 +27,12 @@ input:
 output:
   schema: crews/content_crew/03-schemas/written_post.schema.json
   description: >
-    `{text, image_prompt, content_type, leads_to_offer}`. The text is the post, exactly as it
+    `{text, picture_hint, content_type, leads_to_offer}`. The text is the post, exactly as it
     would appear on Facebook.
   postconditions:
     - text contains no placeholders, no brackets to fill, no notes to the reader
     - the first line works as the hook, because Facebook truncates the rest
-    - image_prompt describes one picture and asks for no words inside it
+    - picture_hint says, in one Vietnamese line, what picture the owner could attach; it invents no screenshot or data
 
 requirements:
   - publishable as it stands — "good enough, the owner will fix it" is not the bar
@@ -41,8 +41,7 @@ requirements:
     did not describe
   - every post can name the offer it leads toward, even when that offer is still weeks away
   - no fabricated specifics: no invented statistics, screenshots, client names, or results
-  - no words inside the generated picture; image models mangle Vietnamese text, and a mangled
-    word on a brand picture is worse than no picture
+  - no picture is generated; the hint is for the owner, who decides whether to attach one
   - on a rewrite, it addresses the issue the check raised instead of rephrasing around it
   - on an owner revision, it does what the owner said and leaves the rest of the post as it was
   - `owner_rules` bind like the shared rules; where they conflict, the owner wins

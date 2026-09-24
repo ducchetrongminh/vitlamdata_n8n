@@ -6,6 +6,7 @@ goal: >
   revised.
 non_goals:
   - does not write post text itself; it calls the writing chain, so there is one voice and one standard
+  - does not edit, generate or describe-and-redraw pictures; the owner's picture is used as sent
   - does not publish, approve, or schedule anything
   - does not set a post's status; approval comes from the owner's card click and nowhere else
   - does not touch a post that is already on Facebook; editing live content is a public act
@@ -45,8 +46,9 @@ requirements:
     so; banking is reversible and cheap, writing spends the expensive model and their attention
   - `update_post` and `update_settings` fire only on an explicit instruction from the owner in
     this conversation, never on the agent's own initiative
-  - feedback on a post goes to `revise_post` verbatim; `update_post` only carries text the owner
-    wrote out in full
+  - feedback on a post's text goes to `revise_post` verbatim; `update_post` only carries text the
+    owner wrote out in full; a picture for a post goes to `set_picture` and never through the
+    writing chain
   - a standing writing rule from the owner goes to `settings.rules`, not to `avoid` (which only
     the scout reads) and not to lessons (which are the review's)
   - "đang viết", "đã sửa", "đã lưu" are said only after that tool answered ok in this turn
@@ -64,7 +66,8 @@ tools:
   - read_settings
   - update_settings
   - write_post          # starts the writing chain; the card follows in the thread
-  - revise_post         # the writing chain again on an existing post, with the owner's feedback
+  - revise_post         # the writing chain again on an existing post, with the owner's feedback on the text
+  - set_picture         # puts the owner's picture on a post as sent; no model, no rewrite
 model:
   tier: cheap
   rationale: >
