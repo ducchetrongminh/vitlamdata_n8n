@@ -335,6 +335,11 @@ Verified 2026-09-23 with credential `OpenRouter`.
   mimeType, fileName}}`.
 - `plugins: [{id: "web", max_results: N}]` searches the web before answering and lists what it
   read in `choices[0].message.annotations` (`type: url_citation`, `url_citation.url`).
+- `deepseek/deepseek-v4.1-flash` ($0.14 / $0.42 per 1M) reads images, calls tools, answers
+  `json_object` and works with the `web` plugin. It thinks by default (11-17 s for a short rubric
+  call); `reasoning: {enabled: false}` or `{effort: "none"}` in the body turns that off (1.2 s).
+  A second tool turn works without the reasoning sent back. `lmChatOpenRouter` has no reasoning
+  option, so an agent on it always thinks.
 - `moonshotai/kimi-k3` with `response_format: {type: json_object}` wrote a whole post in 60-200 s;
   set the node timeout well above that.
 

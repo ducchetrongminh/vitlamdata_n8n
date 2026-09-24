@@ -187,17 +187,18 @@ Checked against OpenRouter's model list on 2026-09-23.
 | Step | Model | Why |
 |---|---|---|
 | Write the post | `moonshotai/kimi-k3` (owner's pick) | the deliverable, so the one place not to economise. $3.00 / $15.00 per 1M, 1M context, and it supports `structured_outputs`, `response_format` and `tools` — so `written_post@1` is safe |
-| Chat agent | `google/gemini-2.5-flash` | needs vision, tools and a cheap per-turn price: $0.30 / $2.50 per 1M with image input, tools and structured outputs. Going through OpenRouter removed the reason this had to be a DeepSeek model |
-| Check | `deepseek/deepseek-chat` | $0.32 / $0.89 per 1M, structured outputs. A three-question rubric; the value is the separate context, not the horsepower |
-| Select today's ideas | `deepseek/deepseek-chat` | short judgment over a list |
-| Scout | `google/gemini-2.5-flash` with OpenRouter's `web` plugin | search and summarise in one call; the plugin returns `url_citation` annotations, which is what the grounding check compares `source_url` against |
+| Chat agent | `deepseek/deepseek-v4.1-flash` (owner's pick, 2026-09-24) | vision, tools and structured outputs at $0.14 / $0.42 per 1M, cheaper than any model it replaced. Thinks by default and n8n's OpenRouter chat node cannot switch that off; tool calls work without the reasoning being sent back. Read the owner's screenshot line exactly in the test |
+| Check | `deepseek/deepseek-v4.1-flash`, thinking on | a three-question rubric; the value is the separate context. About $0.0015 and 11-17 s with thinking; without it 1.2 s, but on the same post the verdict flipped from a `connected` fail to a pass, so it thinks |
+| Select today's ideas | `deepseek/deepseek-v4.1-flash`, thinking on | short judgment over a list, once a day, nobody waiting |
+| Scout | `deepseek/deepseek-v4.1-flash` with OpenRouter's `web` plugin, thinking on | search and summarise in one call, about $0.008; the plugin returns `url_citation` annotations, which is what the grounding check compares `source_url` against |
 | Weekly review | `moonshotai/kimi-k3` | once a week over a table of numbers, so cost is irrelevant and quality is not |
 
 What the check turned up that changed a choice: **kimi-k3 has vision** (text+image+video in), so
 the chat agent could share the writing model — it is not worth $15/1M for a chat turn, but it
 means a screenshot could reach the writer directly if that ever proves useful. And since every
-call now goes through OpenRouter, the chat agent is no longer tied to DeepSeek for vision, which
-is how Gemini Flash won that slot.
+call now goes through OpenRouter, the chat agent is no longer tied to one vendor for vision.
+Gemini 2.5 Flash held it first; DeepSeek V4.1 Flash, which reads images too, replaced it on
+2026-09-24 along with the check, selection and scout calls.
 
 **Measured, not estimated** (smoke test, 2026-09-23, one real post from one real idea through
 the real prompts):
