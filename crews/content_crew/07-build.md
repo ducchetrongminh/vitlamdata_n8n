@@ -55,6 +55,10 @@ hash it was written with (`prompt_version`).
 - **`set_picture`, a tenth chat tool.** A picture change used to go through `revise_post`, which
   paid for a rewrite and sent the picture to the image model. Now it is a data change: download
   from the owner's message, upload as the bot, save the key, show it in the thread. No model.
+- **Pictures reach the chat agent** only since 2026-09-24. The agent hands the model the image
+  binaries of its own input item, and until then that item came from the `Prompts` node, which
+  carries none: the gate downloaded every picture and the model never saw one. `Prompts` now runs
+  before the gate's picture download, and `Agent input` feeds the agent directly.
 - **Owner rules in `settings.rules`**, handed to the writer as `owner_rules`. Not lessons:
   lessons need two settled posts as evidence, are capped at 10 and are retired by the review;
   the owner's rules need none of that and must never be retired by the crew.
@@ -76,6 +80,7 @@ hash it was written with (`prompt_version`).
 | set_picture | post #7: the owner's screenshot attached byte for byte (2006×1206, same bytes), shown in the thread, no model called; a rejected post refused |
 | post without a picture | post #9: no picture step ran, card shows the writer's `picture_hint`, $0.097 |
 | revise_post without feedback | refused: a picture change goes to `set_picture`, never to a rewrite |
+| DeepSeek V4.1 Flash (2026-09-24) | chat agent in n8n: read a line of the owner's screenshot exactly (5 s), answered from `read_posts`, `NO_REPLY` to chatter; check, scout (with citations) and vision checked directly first |
 | review G8 | `Apply` run offline against crafted outputs: unsettled or single-post evidence, over-long lessons, the 10-lesson cap, a lesson retiring another, a slot change under the floor |
 
 Not yet exercised live: a publish (nothing approved has come due), an outcome checkpoint (nothing
