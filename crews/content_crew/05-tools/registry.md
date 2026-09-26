@@ -2,9 +2,8 @@
 
 Every capability in the crew, with who may call it and what it costs if it goes wrong.
 
-The chat agent holds eight tools, all of them `read` or `write`. Nothing `destructive` is held by
-any model — publishing is code, called by the scheduler. The one `spend` tool is called by the
-writing chain, never chosen by a model.
+The chat agent holds ten tools, all of them `read` or `write`. Nothing `destructive` is held by
+any model — publishing is code, called by the scheduler. No picture is generated, so the only spend is the writing chain's model calls.
 
 Descriptions are prompts: the model picks tools by reading them, so they say what the tool
 returns and when not to use it.
@@ -53,6 +52,8 @@ parameters:
     source_url: { type: string }
     owner_words: { type: string, maxLength: 4000, description: nguyên văn lời sếp, hong gọt }
     note: { type: string, maxLength: 500 }
+    picture: { type: string, description: "<message id> <image key> of a picture in the conversation; a post written from this idea carries it as sent" }
+    #or the post" }
   required: [theme]
 returns:
   row: { idea_id, theme, hook, angle, source, owner_words, banked_at }
@@ -79,7 +80,7 @@ parameters:
   type: object
   properties:
     post_id: { type: integer, description: có thì trả nguyên văn bài đó }
-    status: { type: string, enum: [writing, needs_owner, approved, scheduled, published, failed, rejected] }
+    status: { type: string, enum: [writing, needs_owner, approved, publishing, published, publish_failed, failed, rejected] }
     limit: { type: integer, minimum: 1, maximum: 20, default: 10 }
 returns:
   rows: [{ post_id, content_type, status, scheduled_for, published_at, preview }]
@@ -96,14 +97,15 @@ idempotent: true
 ```yaml
 id: update_post
 description: >
-  Sửa một bài chưa đăng: nội dung, hoặc giờ đăng. CHỈ gọi khi sếp kêu rõ. Trả về bài sau khi
-  sửa, nguyên văn — nói lại cho sếp coi. ĐỪNG xài để duyệt bài: hong có đường nào duyệt ở đây,
-  sếp bấm nút trên thẻ mới là duyệt. Bài đã lên Facebook thì hong sửa được.
+  Thay nguyên văn một bài chưa đăng bằng đúng chữ sếp đưa, hoặc đổi giờ đăng. CHỈ khi sếp gửi
+  nguyên bài mới (hay kêu đổi giờ). Sếp góp ý, kêu sửa, kêu đổi hình thì ĐỪNG xài cái này — đó là
+  revise_post. ĐỪNG xài để duyệt bài: sếp bấm nút trên thẻ mới là duyệt. Bài đã lên Facebook thì
+  hong sửa được.
 parameters:
   type: object
   properties:
     post_id: { type: integer }
-    text: { type: string, maxLength: 3000 }
+    text: { type: string, maxLength: 3000, description: the whole new post, copied from the owner }
     scheduled_for: { type: string, format: date-time }
   required: [post_id]
 returns:
@@ -116,11 +118,65 @@ idempotent: true
 guards:
   - no status parameter exists — the route from written to approved runs through the owner's card
     and a parameter here would be a way around it
-  - refuses when the post has an `fb_post_id`, or its status is `publishing` or `published`
+  - refuses when the post has an `fb_post_id`, or its status is `publishing` or `published`, or
+    `writing`
+  - the text is the owner's own words, never the agent's: feedback on a post goes to revise_post,
+    because the chat agent writes no post text
   - on an already-approved post the text change keeps the approval and re-records the approved
     text, so G6 does not silently block the publish. Safe because the only caller is the chat
     agent and the only trigger is the owner's own instruction — and the tool returns the new text
     in full so it lands back in the thread where they can see it
+```
+
+### revise_post
+
+```yaml
+id: revise_post
+description: >
+  Sửa một bài chưa đăng theo góp ý của sếp: dây chuyền viết lại theo góp ý, chấm lại, gửi thẻ mới;
+  thẻ cũ hết dùng được. Chỉ cho chữ; hình thì set_picture.
+parameters:
+  type: object
+  properties:
+    post_id: { type: integer }
+    note: { type: string, description: the owner's feedback on the text, verbatim }
+  required: [post_id, note]
+returns: "{status: ok, payload: {post_id}} at once; the new card follows in the thread"
+side_effect: write + spend
+auth: n8n sub-workflow (write, mode start with post_id)
+allowed_roles: [chat-agent]
+guards:
+  - only needs_owner or approved posts; an approved post goes back to needs_owner and must be
+    approved again
+  - needs note; it has no picture parameter, so a picture change cannot pay for a rewrite
+  - the feedback rides in the rewrite as point owner, so the check's own rewrite keeps it
+  - the post keeps its picture
+```
+
+### set_picture
+
+```yaml
+id: set_picture
+description: >
+  Gắn ảnh sếp gửi vào một bài chưa đăng, y như sếp gửi: hong sửa ảnh, hong viết lại chữ, hong tốn
+  model. Ảnh hiện ra trong luồng. Gọi khi sếp gửi ảnh cho một bài, kêu đổi hình, "xài hình này".
+parameters:
+  type: object
+  properties:
+    post_id: { type: integer }
+    picture: { type: string, description: "<message id> <image key> from the picture list" }
+  required: [post_id, picture]
+returns:
+  row: { post_id, status, image: <lark image key> }
+side_effect: write
+auth: nocodb + Lark (download from the message, upload as the bot, which the card and the publisher need)
+timeout_seconds: 60
+allowed_roles: [chat-agent]
+idempotent: true
+guards:
+  - only needs_owner or approved posts; an approved post stays approved, like update_post, since
+    the owner made the change and sees the picture in the thread
+  - no model sees or changes the picture
 ```
 
 ### read_outcomes
@@ -151,11 +207,11 @@ idempotent: true
 ```yaml
 id: read_settings
 description: >
-  Đọc cấu hình: khung giờ đăng, ngày mấy bài, mấy chủ đề đang theo dõi. Xài khi sếp hỏi giờ đăng
-  hay chủ đề hiện tại.
+  Đọc cấu hình: khung giờ đăng, ngày mấy bài, chủ đề theo dõi, chủ đề tránh, luật viết của sếp.
+  Xài khi sếp hỏi giờ đăng hay chủ đề hiện tại.
 parameters: { type: object, properties: {} }
 returns:
-  row: { slots: [...], daily_quota, topics: [...], avoid: [...] }
+  row: { slots: [...], daily_quota, topics: [...], avoid: [...], rules: [...], next_offer }
 side_effect: read
 auth: nocodb
 timeout_seconds: 10
@@ -168,17 +224,20 @@ idempotent: true
 ```yaml
 id: update_settings
 description: >
-  Đổi khung giờ đăng, số bài mỗi ngày, hoặc chủ đề theo dõi. CHỈ gọi khi sếp kêu rõ. Trả về cấu
-  hình sau khi đổi — nhắc lại cho sếp.
+  Đổi khung giờ đăng, số bài mỗi ngày, chủ đề theo dõi, chủ đề tránh, hoặc luật viết của sếp. CHỈ
+  gọi khi sếp kêu rõ. rules là luật mọi bài sau phải theo; avoid chỉ là chủ đề lúc đi tìm ý tưởng
+  thì tránh, người viết bài hong đọc. Mỗi trường gửi là thay nguyên danh sách đó. Trả về cấu hình
+  trước và sau khi đổi — nhắc lại cho sếp.
 parameters:
   type: object
   properties:
     slots: { type: array, items: { type: string }, maxItems: 14, description: "vd: sat-20:00" }
     daily_quota: { type: integer, minimum: 0, maximum: 5 }
     topics: { type: array, items: { type: string }, maxItems: 20 }
-    avoid: { type: array, items: { type: string }, maxItems: 20 }
+    avoid: { type: array, items: { type: string }, maxItems: 20, description: subjects the scout skips }
+    rules: { type: array, items: { type: string }, maxItems: 20, description: the owner's writing rules, handed to the writer as owner_rules }
 returns:
-  row: { slots, daily_quota, topics, avoid }
+  row: { before, after }
 side_effect: write
 auth: nocodb
 timeout_seconds: 10
@@ -186,6 +245,8 @@ allowed_roles: [chat-agent]
 idempotent: true
 guards:
   - daily_quota is capped at 5 here as well as in the schema, because it multiplies the spend tool
+  - rules are the owner's and never expire; they are not lessons, which need evidence, are
+    capped at 10 and are retired by the review
   - the previous values go into the run log, so a mistaken change is visible and reversible
 ```
 
@@ -194,8 +255,8 @@ guards:
 ```yaml
 id: write_post
 description: >
-  Viết một bài từ một ý tưởng trong kho, r gửi thẻ cho sếp duyệt. Mất một hai phút. Trả về bài đã
-  viết và số của nó. Gọi khi sếp kêu viết. ĐỪNG gọi khi sếp chỉ kể chuyện hay gửi ý tưởng — cái
+  Viết một bài từ một ý tưởng trong kho, r gửi thẻ cho sếp duyệt ngay trong luồng này. Trả lời
+  liền là đã bắt đầu viết, còn thẻ tới sau khoảng 4 phút. Gọi khi sếp kêu viết. ĐỪNG gọi khi sếp chỉ kể chuyện hay gửi ý tưởng — cái
   đó bank_idea. Mỗi yêu cầu gọi một lần thôi.
 parameters:
   type: object
@@ -206,7 +267,8 @@ parameters:
     again: { type: boolean, default: false, description: viết lại dù ý này đã có bài đang chờ }
   required: [idea_id]
 returns:
-  schema: crews/content_crew/03-schemas/envelope.schema.json
+  now: "{status: ok, payload: {post_id}, note} as soon as the row exists, or {status: failed, issues} when a guard refuses"
+  later: the card in the thread; the chain's own result follows envelope.schema.json
 side_effect: write + spend
 auth: n8n sub-workflow
 timeout_seconds: 900
@@ -220,40 +282,19 @@ guards:
   - refuses when a post for this idea is already `writing` or `needs_owner`, unless `again` is
     true — otherwise a retry, or the model calling twice, quietly produces two posts
   - `offer` is refused when the month's two are used; the cadence is not the model's to bend
-  - every call spends: one writing call, one image, one check. See the cap under make_image
+  - every call spends: one writing call and one check, two of each with a rewrite
 errors:
   - code: check_failed_twice -> status partial, card still sent with the failing point named
-  - code: image_failed       -> status partial, card sent without a picture
-  - code: write_invalid      -> status failed, row left in `writing`, nothing sent
+  - code: image_failed       -> status partial: the owner's picture could not be attached, card sent without it
+  - code: write_invalid      -> status failed, row set to `failed`, error to Lark, nothing sent
+  - code: idea_missing       -> refused: no such idea, or it has no theme
+  - code: already_writing    -> refused: the idea has a post writing or waiting, and again is false
+  - code: offer_cadence      -> refused: two offers this month already
 ```
 
 ## Called by code, held by nobody
 
 These have no `allowed_roles`. No model can reach them; the workflow decides when they run.
-
-### make_image
-
-```yaml
-id: make_image
-description: (not a model-facing tool — the writing chain calls it with the image_prompt it wrote)
-parameters:
-  type: object
-  properties:
-    prompt: { type: string }
-    input_image: { type: string, description: base64, when the owner supplied a picture to edit }
-  required: [prompt]
-returns: { image: binary, provider_id: string }
-side_effect: spend
-auth: api_key:OPENROUTER
-timeout_seconds: 120
-cost_per_call: to be measured once the model is picked
-allowed_roles: []
-idempotent: false
-guards:
-  - one call per post, enforced by the chain's structure rather than by a counter
-  - the day's ceiling is `daily_quota` images, and `daily_quota` is capped at 5
-  - a failure never blocks the post: the card goes out without a picture, flagged `partial`
-```
 
 ### web_search
 
@@ -333,10 +374,9 @@ guards:
 | Tool | read | write | destructive | spend | held by a model |
 |---|---|---|---|---|---|
 | read_ideas, read_posts, read_outcomes, read_settings | ✅ | | | | chat agent |
-| bank_idea, update_post, update_settings | | ✅ | | | chat agent |
-| write_post | | ✅ | | ✅ | chat agent (spend is capped and structural) |
+| bank_idea, update_post, update_settings, set_picture | | ✅ | | | chat agent |
+| write_post, revise_post | | ✅ | | ✅ | chat agent (spend is capped and structural) |
 | web_search | ✅ | | | | scout |
-| make_image | | | | ✅ | **no** |
 | publish_facebook | | | ✅ | | **no** |
 | send_lark | | ✅ | | | **no** |
 

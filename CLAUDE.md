@@ -43,7 +43,11 @@ session is needed after `.env` changes. Reading `.env` with the Read tool is den
 - Docs and comments state what is true now, plus a short reason when it isn't obvious. History
   goes in commit messages.
 - Before changing `workflows/content_agent/`, read `docs/Content Agent.md` (architecture, agreed
-  changes, open questions) and keep its status current.
+  changes, open questions) and keep its status current. It is retired: every workflow in it is
+  inactive.
+- Before changing `workflows/<crew>/`, read `crews/<crew>/07-build.md` and the design files it
+  points to, and keep `07-build.md` current. Crew prompts are edited in `crews/<crew>/04-prompts/`,
+  never in a workflow.
 
 ## Scripts
 
@@ -66,6 +70,10 @@ Need `bash`, `python3` (standard library only) and `git`.
   before running it.
 - `.n8n-state/<id>.json` (gitignored) holds that last known live version. Without it, push
   compares against the committed file.
+- `python3 scripts/embed-prompts.py [file...]` (default: every workflow) copies
+  `crews/<crew>/04-prompts/_shared.md` + `<name>.md` into each Code node whose notes read
+  `prompts: <crew> <name>...`, with `version`, a hash of the crew's prompt files. Run it after
+  editing a prompt, then push the workflows it names.
 
 ## Credentials
 
@@ -207,12 +215,20 @@ Verified on this instance.
 - Its `update` operation needs the row id in the top-level `id` parameter. `matchingColumns` is
   not enough: activating fails with `Missing or invalid required parameters: id`.
 - It returns DateTime values in UTC as `2026-09-17 13:00:00+00:00` (space, not `T`).
+- `dataToSend: autoMapInputData` writes nothing: the row is created with every column null. Use
+  `mapWithFields` with `={{ $json.<column> }}` per column, and on an update send the whole
+  editable row, since every mapped column is written.
+- The search option `sort` answers 422 `Field 'unknown' not found`. Sort in a Code node.
 - A node runs once per input item. A search after a node that outputs several items runs that many
   times unless the node has `executeOnce: true`.
 - Activating a workflow with an Execute Workflow node fails while the sub-workflow it calls is
   inactive: `Cannot publish workflow: Node "X" references workflow <id> ("Y") which is not
   published`. Activate sub-workflows first; a sub-workflow with only an Execute Workflow Trigger
-  activates fine.
+  activates fine. Calling an inactive one at run time fails with `Workflow is not active and
+  cannot be executed.`
+- Execute Workflow with `workflowId` `={{ $workflow.id }}` and `waitForSubWorkflow: false` starts
+  the same workflow again as its own execution and returns at once: a way to answer a caller
+  before a long job finishes.
 - `@n8n/n8n-nodes-langchain.chainLlm` with a DeepSeek model set to `responseFormat: json_object`
   outputs the parsed JSON object as the item, not `{text}`. With the default text format it
   outputs `{text}`. Braces in its system message are escaped; the prompt text is passed as a
@@ -234,6 +250,9 @@ Verified on this instance.
   values there may be plain expressions such as `$('Task').first().json.mode`, which the model
   cannot set. Keep quotes and braces out of `$fromAI` descriptions and put formats in the tool
   description.
+- Every `$fromAI` argument without a default is required: a call that leaves one out fails with
+  `Received tool input did not match expected schema ✖ Required → at <key>`, and the model tells
+  the user the tool broke. A fourth argument, the default (`''`, `0`, `false`), makes it optional.
 - An HTTP Request node with `authentication: predefinedCredentialType` and `nodeCredentialType:
   facebookGraphApi` adds the credential's token as the `access_token` query parameter.
 
@@ -290,8 +309,39 @@ Verified with the Lark content bot (custom app, credential `Lark content bot`).
   message already in a thread stays in it. `GET im/v1/messages?container_id_type=thread&container_id=<thread_id>`
   lists a thread's messages (in groups it needs the read-all-group-messages permission).
 - `GET im/v1/chats/<chat_id>/members` (member names) needs `im:chat.members:read` or `im:chat:readonly`.
+- `POST im/v1/images` (multipart `image_type=message`, `image`) returns `data.image_key`; it
+  answers `99991672 Access denied` without the scope `im:resource:upload` or `im:resource` (the
+  content bot has it since 2026-09-23). `GET im/v1/images/<key>` downloads a picture the bot
+  uploaded. Downloading a picture from a message needs neither.
 - An execution retried with `POST /executions/<id>/retry` reuses the stored output of the nodes
   before the failed one, so a stale token is reused. Replay the webhook body instead.
+
+## OpenRouter
+
+Verified 2026-09-23 with credential `OpenRouter`.
+
+- An HTTP Request node with `predefinedCredentialType` / `openRouterApi` authenticates
+  `POST https://openrouter.ai/api/v1/chat/completions`; `lmChatOpenRouter` does the same for chain
+  and agent nodes, and an `agent` 3.1 on it calls tools.
+- `usage: {include: true}` in the body returns `usage.cost` in USD, the only way to record a
+  call's cost; chain nodes do not expose it.
+- An image-only model (`bytedance-seed/seedream-5-0-lite`: $0.035 an image, ~30 s, edits a picture
+  given as `image_url` too) must be asked for `modalities: ["image"]`; `["image", "text"]` answers
+  404 `No endpoints found that support the requested output modalities`. It also does not appear
+  in `GET /models` without `?output_modalities=image`. The picture comes back in the same place.
+- `google/gemini-2.5-flash-image` with `modalities: ["image", "text"]` returns the picture as a
+  data URL in `choices[0].message.images[0].image_url.url`. A 1024px PNG is 1,290 output tokens,
+  $0.039. A Code node turns it into binary by returning `binary: {data: {data: <base64>,
+  mimeType, fileName}}`.
+- `plugins: [{id: "web", max_results: N}]` searches the web before answering and lists what it
+  read in `choices[0].message.annotations` (`type: url_citation`, `url_citation.url`).
+- `deepseek/deepseek-v4.1-flash` ($0.14 / $0.42 per 1M) reads images, calls tools, answers
+  `json_object` and works with the `web` plugin. It thinks by default (11-17 s for a short rubric
+  call); `reasoning: {enabled: false}` or `{effort: "none"}` in the body turns that off (1.2 s).
+  A second tool turn works without the reasoning sent back. `lmChatOpenRouter` has no reasoning
+  option, so an agent on it always thinks.
+- `moonshotai/kimi-k3` with `response_format: {type: json_object}` wrote a whole post in 60-200 s;
+  set the node timeout well above that.
 
 ## Facebook Graph API
 

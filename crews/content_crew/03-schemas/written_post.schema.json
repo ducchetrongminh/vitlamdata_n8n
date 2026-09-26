@@ -4,7 +4,12 @@
   "title": "A finished post",
   "description": "What the writing call returns. The text is what would appear on Facebook, not a draft of it.",
   "type": "object",
-  "required": ["text", "image_prompt", "content_type", "leads_to_offer"],
+  "required": [
+    "text",
+    "picture_hint",
+    "content_type",
+    "leads_to_offer"
+  ],
   "additionalProperties": false,
   "properties": {
     "text": {
@@ -13,12 +18,21 @@
       "maxLength": 3000,
       "description": "The post as published. First line is the hook, because Facebook truncates the rest."
     },
-    "image_prompt": {
+    "picture_hint": {
       "type": "string",
-      "minLength": 10,
-      "description": "One picture. No words inside it: image models mangle Vietnamese text."
+      "minLength": 5,
+      "maxLength": 300,
+      "description": "One Vietnamese line for the owner: what picture would suit this post. Nothing is generated from it."
     },
-    "content_type": { "type": "string", "enum": ["observation", "story", "education", "offer"] },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "observation",
+        "story",
+        "education",
+        "offer"
+      ]
+    },
     "leads_to_offer": {
       "type": "string",
       "minLength": 3,

@@ -15,7 +15,7 @@ running a suite.
 
 ## The golden set
 
-`06-evals/dataset.jsonl`, 32 cases across the six calls. Each row names the call it targets, the
+`06-evals/dataset.jsonl`, 34 cases across the six calls. Each row names the call it targets, the
 input, what must and must not be in the output, and where a human has to look.
 
 Composition, deliberately:
@@ -23,6 +23,7 @@ Composition, deliberately:
 - **typical** — the everyday case for each call
 - **edge** — thin bank, thin idea, one settled post, unreadable picture
 - **adversarial** — input that invites a fabrication, a duplicate, or a quota breach
+- **regression** — real failures from Lark, kept so a prompt change cannot bring them back
 - **should refuse** — cases where the correct answer is fewer, empty, `NO_REPLY`, or "nothing
   changed this week"
 

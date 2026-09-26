@@ -25,6 +25,9 @@
     },
     "content_type": { "type": "string", "enum": ["observation", "story", "education", "offer"] },
     "why_today": { "type": ["string", "null"] },
+    "note": { "type": ["string", "null"], "description": "What the owner asked for this post, through write_post." },
+    "owner_rules": { "type": "array", "items": { "type": "string" }, "description": "settings.rules: the owner's standing writing rules." },
+    "now": { "type": "string", "format": "date-time" },
     "lessons": {
       "type": "array",
       "maxItems": 10,
@@ -65,7 +68,11 @@
             "required": ["point", "why"],
             "additionalProperties": false,
             "properties": {
-              "point": { "type": "string", "enum": ["relevant", "closer", "connected"] },
+              "point": {
+                "type": "string",
+                "enum": ["relevant", "closer", "connected", "format", "owner"],
+                "description": "format: the draft failed the code checks (G2). owner: the owner's feedback when revising a post."
+              },
               "why": { "type": "string" }
             }
           }
@@ -74,7 +81,7 @@
     },
     "owner_picture": {
       "type": ["object", "null"],
-      "description": "A picture the owner supplied for this post; the image step edits it instead of generating one.",
+      "description": "Not sent to the writer: the owner's picture is attached by code, as sent.",
       "additionalProperties": true
     }
   }

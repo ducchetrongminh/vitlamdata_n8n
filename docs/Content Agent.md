@@ -12,8 +12,9 @@ How the content agent is built and why. Written for two readers:
 What the agent does for the business (strategy, commands, Lark and Facebook setup) is in
 `README.md` and `docs/Content Strategy.md`. This document covers how it is put together.
 
-Status: section 2 describes the live system as of 2026-09-18. Left to do: run the acceptance
-tests in Lark (S7, and A16 for the team's final version, S8).
+Status: **retired 2026-09-23.** All its workflows are deactivated and the content crew
+(`crews/content_crew/`, `workflows/content_crew/`) now answers on the same Lark webhook. Section 2
+describes the system as it last ran; nothing here is live.
 
 ## 1. What we want
 

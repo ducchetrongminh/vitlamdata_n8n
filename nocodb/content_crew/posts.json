@@ -1,0 +1,229 @@
+{
+  "description": "One row per written post, from writing to its Facebook id. Also the crew's trace: check result, rewrites, cost, model and prompt version.",
+  "display_field": "idea_id",
+  "fields": [
+    {
+      "id": "c2r9a3tf08k3m0u",
+      "title": "Id",
+      "type": "ID"
+    },
+    {
+      "id": "cxb70mz13hn7xb7",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "idea_id",
+      "type": "Number"
+    },
+    {
+      "id": "c87uka5nrctw6y6",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "s614hs8w3hz1lv6",
+            "title": "observation"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "swemsr56c73qqgh",
+            "title": "story"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "s2oe2oicwu977od",
+            "title": "education"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "s9mynwo3n2isq87",
+            "title": "offer"
+          }
+        ]
+      },
+      "title": "content_type",
+      "type": "SingleSelect"
+    },
+    {
+      "description": "approved means queued for scheduled_for. publishing with no fb_post_id is a crashed publish: look at it by hand, never retry blindly.",
+      "id": "ccgsga8hab567cn",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "sto6mu3kvk73ha8",
+            "title": "writing"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "s8p6vbv2giswejm",
+            "title": "needs_owner"
+          },
+          {
+            "color": "#c2f5e8",
+            "id": "swhetaxoa68s2av",
+            "title": "approved"
+          },
+          {
+            "color": "#ffdaf6",
+            "id": "sjv3pmi3c3ir8fx",
+            "title": "publishing"
+          },
+          {
+            "color": "#ffdce5",
+            "id": "sh0i9fk5r4hksrc",
+            "title": "published"
+          },
+          {
+            "color": "#fee2d5",
+            "id": "sur40c2miycjfxm",
+            "title": "publish_failed"
+          },
+          {
+            "color": "#ffeab6",
+            "id": "sot6k0ju6kt5ztw",
+            "title": "failed"
+          },
+          {
+            "color": "#d1f7c4",
+            "id": "ssvmhjldms8mo8a",
+            "title": "rejected"
+          }
+        ]
+      },
+      "title": "status",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "cjywt8ukev93g2l",
+      "title": "text",
+      "type": "LongText"
+    },
+    {
+      "description": "The text as the owner approved it. The publisher refuses a post whose text differs.",
+      "id": "c84sl2blvpg1753",
+      "title": "approved_text",
+      "type": "LongText"
+    },
+    {
+      "description": "The writer's one-line suggestion of what picture the owner could attach. Nothing is generated from it.",
+      "id": "cs8yrwe5xhubuxx",
+      "title": "picture_hint",
+      "type": "LongText"
+    },
+    {
+      "description": "Lark image key of the post's picture (uploaded by the bot). Empty: text post.",
+      "id": "c5uhz2ybhby35b4",
+      "title": "image_key",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cx1jy3hinyq8lh0",
+      "title": "leads_to_offer",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cw108kq6968l7il",
+      "title": "why_today",
+      "type": "LongText"
+    },
+    {
+      "description": "check_result@1 of the last check, as JSON.",
+      "id": "cchhnkdchny1hbj",
+      "title": "check_result",
+      "type": "LongText"
+    },
+    {
+      "id": "co8k3i1yr8e25wj",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "rewrites",
+      "type": "Number"
+    },
+    {
+      "description": "Envelope issues (check_failed_twice, image_failed, write_invalid) as JSON.",
+      "id": "c20a4nmfkie8a7c",
+      "title": "issues",
+      "type": "LongText"
+    },
+    {
+      "id": "cbml957vrkaqyz8",
+      "title": "approval_token",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "cj7xh5f8cbui5n1",
+      "title": "scheduled_for",
+      "type": "DateTime"
+    },
+    {
+      "description": "Slot it was scheduled into, e.g. sat-20:00.",
+      "id": "c5qdjke6l54cyam",
+      "title": "slot",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "c6z4kwnsp1httux",
+      "title": "fb_post_id",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "coijzl2ccgq29r5",
+      "title": "published_at",
+      "type": "DateTime"
+    },
+    {
+      "default_value": "false",
+      "description": "The owner changed the text through chat before it went out.",
+      "id": "cbq1hvu2tynvzh5",
+      "title": "owner_edited",
+      "type": "Checkbox"
+    },
+    {
+      "description": "USD, all model calls and the image, from OpenRouter usage.",
+      "id": "clpzppi4hijtq9y",
+      "options": {
+        "separator": "none_period"
+      },
+      "title": "cost",
+      "type": "Decimal"
+    },
+    {
+      "id": "cwy1f10vxi1ab48",
+      "title": "write_model",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "crcxr9moeijq5js",
+      "title": "prompt_version",
+      "type": "SingleLineText"
+    },
+    {
+      "id": "c7md57yugkg7mwi",
+      "options": {
+        "choices": [
+          {
+            "color": "#cfdffe",
+            "id": "sh9vv2xtxafsz87",
+            "title": "cron"
+          },
+          {
+            "color": "#d0f1fd",
+            "id": "so16rzi02xo8cau",
+            "title": "chat-agent"
+          }
+        ]
+      },
+      "title": "called_by",
+      "type": "SingleSelect"
+    },
+    {
+      "id": "c3gwkuut10onfyl",
+      "title": "created_at",
+      "type": "DateTime"
+    }
+  ],
+  "id": "m63h0gy7t11cnzv",
+  "title": "posts"
+}

@@ -16,7 +16,7 @@ has two callers, and can half-succeed — the writing chain's return — and now
 inline chain steps would be ceremony.
 
 `status: partial` is the one that earns its place: a post that reached a card with a known
-problem (the check failed twice, the image could not be made) is not a success and not a
+problem (the check failed twice, the owner's picture could not be attached) is not a success and not a
 failure, and the card has to say which.
 
 ## Coordination modes
@@ -24,7 +24,7 @@ failure, and the card has to say which.
 | Edge | Mode | Note |
 |---|---|---|
 | chat agent → its tools | tool call | caller keeps control, gets a typed result |
-| chat agent → writing chain | tool call (synchronous) | it waits; the card and the reply then arrive together |
+| chat agent → writing chain | tool call, answered at once | `write_post` and `revise_post` start the chain as its own execution; the card follows in the thread |
 | cron → writing chain | tool call, in a loop, one per picked idea | isolated failures, cheap retries |
 | cron → select, scout, review | inline chain steps | fixed sequence, no handoff |
 | writing chain → check | inline call with a fresh context | the separation is the mechanism |
@@ -59,10 +59,10 @@ judgment.
 |---|---|---|---|---|
 | **G0** | Lark message arrives | does this concern the bot: sender, mention, thread, `/` | code | nothing happens, silently |
 | **G1** | after `select` | every `idea_id` is in the bank; every type is in `allowed_types`; at most `quota` picks | code | drop invalid picks; if none survive, tell the owner the bank is thin |
-| **G2** | after `write` | validates `written_post@1`; no placeholder patterns (`[`, `TODO`, `XXX`); length band; `leads_to_offer` non-empty | code | one retry, then fail closed — no card, the row stays in `writing` |
+| **G2** | after `write` | validates `written_post@1`; no placeholder patterns (`[...]` holding words, `TODO`, `XXX`); length band; `leads_to_offer` non-empty; no `story` without `owner_words` | code | the one rewrite, with the reasons; a second failure fails closed — no card, the row goes to `failed` and the error reaches Lark |
 | **G3** | after `check` | `pass` is a boolean and matches `issues` being empty | code | treat a malformed verdict as a pass with the issue noted; a broken checker must not block the crew |
-| **G3a** | `check` failed | rewrites so far | code (counter, max 1) | first failure loops to `write` with the issues; second sends the card anyway, naming the failing point |
-| **G4** | before the card | the post row is saved; an image exists or its absence is stated; status is `needs_owner` | code | no card; escalate to the owner with the reason |
+| **G3a** | `check` failed | rewrites so far | code (counter, max 1, shared with G2) | first failure loops to `write` with the issues; second sends the card anyway, naming the failing point |
+| **G4** | before the card | the post row is saved; the owner's picture is on it, or the card shows the picture hint instead; status is `needs_owner` | code | no card; escalate to the owner with the reason |
 | **G5** | the card | approve or reject | **human** | reject sets `rejected`; nothing else happens |
 | **G6** | before publishing | status is `approved`; `fb_post_id` is null; the slot is due; the text still matches what was approved | code | skip this run, no publish |
 | **G7** | after publishing | `fb_post_id` written before any other step in the branch | code | on a Facebook error set `publish_failed` and escalate; never blind-retry a publish |
@@ -75,6 +75,11 @@ One caller may move that line: `update_post`, when the owner themselves asks for
 already-approved post. It re-records the approved text along with the edit, so the publish is
 not silently blocked, and returns the new text in full so it lands in the thread where they can
 read it. The gate exists to stop the crew changing text after approval, not the owner.
+
+`revise_post` does not move the line: a post the crew rewrites from the owner's feedback goes
+back to `needs_owner` with a new card and token, so the rewritten text needs a new approval.
+`set_picture` is the owner's own change, like `update_post`: the approval stands, and the
+picture lands in the thread so they see what will go out.
 
 ## Termination
 
@@ -93,12 +98,12 @@ Every path has a provable end.
 No model decides when it is finished anywhere on this table.
 
 **Cost.** n8n has no native per-run cost kill, so the bound is structural: the daily batch cannot
-exceed `quota` writes, each write is at most two model calls plus one image, and the chat agent
+exceed `quota` writes, each write is at most two writing calls and two checks, and the chat agent
 is capped at 20 steps. The bill is therefore bounded by the day's quota, not by anything a model
 chooses. Worth revisiting if a spend cap ever becomes available.
 
-**Partial work is always kept.** A failed write leaves its row in `writing` with whatever it
-produced. A failed publish leaves `publish_failed` with the text intact. Nothing is deleted on
+**Partial work is always kept.** A failed write leaves its row in `failed` with the reasons in
+`issues`. A failed publish leaves `publish_failed` with the text intact. Nothing is deleted on
 the way out.
 
 ## Idempotency
